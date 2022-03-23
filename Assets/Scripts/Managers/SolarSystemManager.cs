@@ -3,6 +3,8 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class SolarSystemManager : MonoBehaviour
 {
+    public enum OrbitActiveType { All, None, MoonsOnly}
+
     // Distance scale 0.1 = 1:100.000km, scale 1 = 1:1.000.000km
     [Header("Scale")]
     [Range(0.1f, 1f)]
@@ -13,12 +15,14 @@ public class SolarSystemManager : MonoBehaviour
     public float _planetScale = 0.1f;
 
     // Planet rotation scale 0.1 = 1 sec, scale 1 = 1 hour
-    [Range(0.1f, 1f)]
-    [SerializeField] float _rotationScale = 1f;
+    [Range(1, 10)]
+    [SerializeField] int _rotationSpeed = 1;
 
     // Orbit period scale 0.1 = 1 minute, scale 1 = 1 day
     [Range(0.1f, 1f)]
     [SerializeField] float _orbitScale = 1f;
+
+    public OrbitActiveType orbitActive;
 
     public float DistanceScale
     {
@@ -32,10 +36,10 @@ public class SolarSystemManager : MonoBehaviour
         set { _planetScale = value; ApplyChanges(); }
     }
 
-    public float RotationScale
+    public int RotationSpeed
     {
-        get { return _rotationScale * 2f; }
-        set { _rotationScale = value; ApplyChanges(); }
+        get { return _rotationSpeed * 100; }
+        set { _rotationSpeed = value; ApplyChanges(); }
     }
 
     public float OrbitScale
@@ -55,7 +59,7 @@ public class SolarSystemManager : MonoBehaviour
     {
         DistanceScale = _distanceScale;
         PlanetScale = _planetScale;
-        RotationScale = _rotationScale;
+        RotationSpeed = _rotationSpeed;
         OrbitScale = _orbitScale;
 
         ApplyChanges();

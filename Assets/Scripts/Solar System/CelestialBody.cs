@@ -28,23 +28,21 @@ public class CelestialBody : MonoBehaviour
     public float RotationPeriod;
     #endregion
 
-    private SolarSystemManager solarSystemManager;
+    SolarSystemManager solarSystemManager;
+    Ellipse orbitPath;
 
     [SerializeField]
     [Range(0, 1f)] float orbitProgress = 0f;
-    bool orbitActive;
-    float orbitPeriod;
-    Ellipse orbitPath;
+    float orbitPeriod = 0f;
 
-    public const float physicsTimeStep = 0.01f;
+    private const float physicsTimeStep = 0.01f;
+    float sunScale = 139.27f;
 
     void Start()
     {
+        solarSystemManager = GameObject.Find("Solar System Manager").GetComponent<SolarSystemManager>();
         if (Application.isPlaying && parentBody != null && orbitPeriod != 0)
         {
-            orbitActive = true;
-            
-
             SetOrbitingBodyPosition();
             StartCoroutine(AnimateOrbit());
         }
@@ -52,8 +50,7 @@ public class CelestialBody : MonoBehaviour
 
     void FixedUpdate()
     {
-        //transform.Rotate(0,  RotationPeriod * solarSystemManager._rotationScale * Time.fixedDeltaTime, 0, Space.Self);
-        transform.Rotate(0, 360 / (RotationPeriod * solarSystemManager.RotationScale) * physicsTimeStep, 0, Space.Self);
+        transform.Rotate((1 / RotationPeriod) * 1000 * Time.fixedDeltaTime * Vector3.up, Space.World);
     }
 
     void OnValidate()
@@ -70,8 +67,8 @@ public class CelestialBody : MonoBehaviour
         gameObject.name = bodyName;
 
         var trans = gameObject.transform;
-        var axialTilt = Quaternion.Euler(0, BodyAxialTilt, 0);
-        var pos = new Vector3(distance * solarSystemManager.DistanceScale, 0, 0);
+        var axialTilt = Quaternion.Euler(BodyAxialTilt, 0, 0);
+        var pos = new Vector3(sunScale + (distance * solarSystemManager.DistanceScale), 0, 0);
 
         trans.SetPositionAndRotation(pos, axialTilt);
 
@@ -84,22 +81,18 @@ public class CelestialBody : MonoBehaviour
 
             if (bodyType == BodyType.Planet)
                 orbit = distance * solarSystemManager.DistanceScale;
+
             if (bodyType == BodyType.Moon)
             {
-                // Moons are automatically scaled by the planets, scale the moon by (1/planetScale).
-                // (e.g. parent scale is 2, child scale is 0.5)
-                var scale = 1 / (solarSystemManager._planetScale * 10);
-                gameObject.transform.parent.localScale = Vector3.one * scale;
+                // Moons are automatically scaled by orbitting planet, scale the moon by (1/planetScale) e.g. parent scale is 2, child scale is 0.5
+                //var scale = 1 / (solarSystemManager._planetScale * 10);
 
-                orbit = (distance * solarSystemManager._planetScale * 10)
-                  + (parentBody.localScale.x / 2);
-                  //+ (gameObject.transform.localScale.x / 2);
+                orbit = (distance * solarSystemManager._planetScale * 10) + (parentBody.localScale.x / 2);
+
+                //gameObject.transform.parent.localScale = Vector3.one * scale;
             }
 
             orbitPeriod = period * solarSystemManager.OrbitScale;
-            if (bodyName == "Earth")
-                Debug.Log(solarSystemManager.OrbitScale);
-
             orbitPath = new Ellipse(orbit, orbit);
             orbitProgress = orbitPeriod < 0 ? 1 : 0;
 
@@ -110,16 +103,25 @@ public class CelestialBody : MonoBehaviour
     void SetOrbitingBodyPosition()
     {
         Vector2 orbitPos = orbitPath.Evaluate(orbitProgress);
-        gameObject.transform.localPosition = new Vector3(orbitPos.x, 0, orbitPos.y);
+        Vector3 pos = new Vector3(orbitPos.x, 0, orbitPos.y);
+
+        if (bodyType == BodyType.Moon)
+        {
+            pos += parentBody.transform.localPosition;
+            Debug.Log("Pos: " + pos);
+        }
+
+        gameObject.transform.localPosition = pos;
     }
 
     IEnumerator AnimateOrbit()
     {
         float orbitSpeed = 1f / orbitPeriod;
 
-        while (orbitActive)
+        while (solarSystemManager.orbitActive == SolarSystemManager.OrbitActiveType.All
+            || (solarSystemManager.orbitActive == SolarSystemManager.OrbitActiveType.MoonsOnly && bodyType == BodyType.Moon))
         {
-            orbitProgress += physicsTimeStep * orbitSpeed;
+            orbitProgress += Time.fixedDeltaTime * orbitSpeed;
             orbitProgress %= 1f;
             SetOrbitingBodyPosition();
             yield return null;
