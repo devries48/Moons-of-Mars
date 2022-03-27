@@ -3,6 +3,20 @@ using UnityEngine;
 [ExecuteInEditMode]
 public class SolarSystemManager : MonoBehaviour
 {
+    public enum CelestialBodyName
+    {
+        Sun,
+        Mercury,
+        Venus,
+        Earth,
+        Moon,
+        Jupiter,
+        Saturn,
+        Uranus,
+        Neptune,
+        Pluto
+    }
+
     public enum OrbitActiveType { All, None, MoonsOnly}
 
     // Distance scale 0.1 = 1:100.000km, scale 1 = 1:1.000.000km

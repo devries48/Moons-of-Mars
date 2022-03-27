@@ -81,16 +81,8 @@ public class CelestialBody : MonoBehaviour
 
             if (bodyType == BodyType.Planet)
                 orbit = distance * solarSystemManager.DistanceScale;
-
-            if (bodyType == BodyType.Moon)
-            {
-                // Moons are automatically scaled by orbitting planet, scale the moon by (1/planetScale) e.g. parent scale is 2, child scale is 0.5
-                //var scale = 1 / (solarSystemManager._planetScale * 10);
-
+            else if (bodyType == BodyType.Moon)
                 orbit = (distance * solarSystemManager._planetScale * 10) + (parentBody.localScale.x / 2);
-
-                //gameObject.transform.parent.localScale = Vector3.one * scale;
-            }
 
             orbitPeriod = period * solarSystemManager.OrbitScale;
             orbitPath = new Ellipse(orbit, orbit);
@@ -106,10 +98,7 @@ public class CelestialBody : MonoBehaviour
         Vector3 pos = new Vector3(orbitPos.x, 0, orbitPos.y);
 
         if (bodyType == BodyType.Moon)
-        {
             pos += parentBody.transform.localPosition;
-            Debug.Log("Pos: " + pos);
-        }
 
         gameObject.transform.localPosition = pos;
     }
