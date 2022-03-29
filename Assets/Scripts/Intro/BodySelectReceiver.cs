@@ -10,6 +10,6 @@ public class BodySelectReceiver : MonoBehaviour, INotificationReceiver
         var bodySelectMarker = notification as BodySelectMarker;
         if (bodySelectMarker == null && introManager != null) return;
 
-        introManager.MarkBody(bodySelectMarker.CelestialBody, bodySelectMarker.IsDeselect);
+        introManager.ShowBodyInfoWindow(bodySelectMarker.CelestialBody, bodySelectMarker.IsDeselect);
     }
 }
