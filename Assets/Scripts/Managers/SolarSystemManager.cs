@@ -10,12 +10,15 @@ public class SolarSystemManager : MonoBehaviour
         Venus,
         Earth,
         Moon,
+        Mars,
         Jupiter,
         Saturn,
         Uranus,
         Neptune,
         Pluto
     }
+
+    public enum CelestialBodyType { Planet, Moon, Sun }
 
     public enum OrbitActiveType { All, None, MoonsOnly}
 
