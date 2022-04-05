@@ -1,21 +1,30 @@
-using System;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Playables;
 using static SolarSystemManager;
 
 public class IntroManager : MonoBehaviour
 {
-    CelestialBody[] celestialBodies;
     [SerializeField] private GameObject infoWindow;
+    [SerializeField] private GameObject mainMenuWindow;
 
-    private void Awake()
+    private CelestialBody[] celestialBodies;
+    private PlayableDirector director;
+    private GameObject spaceDebri_Particles;
+
+    void Awake()
     {
         celestialBodies = FindObjectsOfType<CelestialBody>();
+
+        director = GetComponent<PlayableDirector>();
+        director.played += Director_played;
+        director.stopped += Director_stopped;
+
+        spaceDebri_Particles = GameObject.Find(Constants.SpaceDebri);
     }
 
     public void ShowBodyInfoWindow(CelestialBodyName name, bool isDeselect)
     {
-
         var infoRect = infoWindow.GetComponent<RectTransform>();
 
         if (isDeselect)
@@ -25,6 +34,20 @@ public class IntroManager : MonoBehaviour
             SetWindowInfo(name);
             LeanTween.move(infoRect, new Vector3(-180f, -200f, 100f), 1f).setEaseOutBack();
         }
+    }
+
+    public void StartTour()
+    {
+        director.Play();
+    }
+
+    public void Quit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
     }
 
     private void SetWindowInfo(CelestialBodyName name)
@@ -38,7 +61,7 @@ public class IntroManager : MonoBehaviour
             var child = infoWindow.transform.GetChild(i).GetComponent<TMPro.TextMeshProUGUI>();
             if (child == null)
                 continue;
-            Debug.Log(child.name);
+
             switch (child.name)
             {
                 case "Value Title":
@@ -52,11 +75,40 @@ public class IntroManager : MonoBehaviour
                     break;
                 case "Value Gravity":
                     child.text = info.gravity;
-                    Debug.Log(info.gravity);
                     break;
                 default:
                     break;
             }
         }
+    }
+
+    private void Director_stopped(PlayableDirector obj)
+    {
+        OpenMenu();
+    }
+
+    private void Director_played(PlayableDirector obj)
+    {
+        CloseMenu();
+    }
+
+    private void OpenMenu()
+    {
+        spaceDebri_Particles.SetActive(true);
+
+        var menuRect = mainMenuWindow.GetComponent<RectTransform>();
+
+        LeanTween.rotate(mainMenuWindow, new Vector3(0, -30, 0), 2f).setEase(LeanTweenType.easeOutExpo);
+        LeanTween.move(menuRect, new Vector3(270f, 0f, 0f), 1f).setEaseOutQuint();
+    }
+
+    private void CloseMenu()
+    {
+        spaceDebri_Particles.SetActive(false);
+
+        var menuRect = mainMenuWindow.GetComponent<RectTransform>();
+
+        LeanTween.rotate(mainMenuWindow, new Vector3(0, -89, 0), 2f).setEase(LeanTweenType.easeOutElastic);
+        LeanTween.move(menuRect, new Vector3(-200f, 0f, 0f), 1f).setEaseInQuint();
     }
 }

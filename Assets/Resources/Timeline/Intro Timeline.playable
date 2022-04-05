@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 6.9
+  m_Time: 10.649999999999999
   _celestialBody: 0
   _isDeselect: 1
   retroactive: 1
@@ -36,6 +36,40 @@ MonoBehaviour:
   m_EmitOnce: 0
   m_Asset: {fileID: 0}
   parameter: 0
+--- !u!114 &-5634537087287485578
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
+  m_Name: BodySelectMarker
+  m_EditorClassIdentifier: 
+  m_Time: 49.699999999999854
+  _celestialBody: 5
+  _isDeselect: 1
+  retroactive: 1
+  emitOnce: 1
+  emitInEditor: 1
+--- !u!114 &-5222350392059757978
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
+  m_Name: CinemachineShot
+  m_EditorClassIdentifier: 
+  DisplayName: 
+  VirtualCamera:
+    exposedName: 3a10245799631e1428f6abdbe6035a39
+    defaultValue: {fileID: 0}
 --- !u!114 &-4566188011961008471
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -48,7 +82,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 17.866666666666667
+  m_Time: 21.383333333333383
   _celestialBody: 1
   _isDeselect: 1
   retroactive: 1
@@ -70,6 +104,24 @@ MonoBehaviour:
   m_Retroactive: 0
   m_EmitOnce: 0
   m_Asset: {fileID: 11400000, guid: a66fa36d622f44445b9ed1fad5f97a58, type: 2}
+--- !u!114 &-3988964472286534406
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
+  m_Name: BodySelectMarker
+  m_EditorClassIdentifier: 
+  m_Time: 44.083333333333194
+  _celestialBody: 5
+  _isDeselect: 0
+  retroactive: 1
+  emitOnce: 1
+  emitInEditor: 1
 --- !u!114 &-1523790717420837721
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -84,7 +136,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   VirtualCamera:
-    exposedName: c80192cdc75eb0041b8e382651c5daff
+    exposedName: 3d8a1a778ee09954ca6ecba337fda7e5
     defaultValue: {fileID: 0}
 --- !u!114 &-932099109945135911
 MonoBehaviour:
@@ -114,9 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 25.116666666666667
+  m_Time: 28.866666666666717
   _celestialBody: 2
-  _isDeselect: 0
+  _isDeselect: 1
   retroactive: 1
   emitOnce: 1
   emitInEditor: 1
@@ -141,6 +193,22 @@ MonoBehaviour:
     m_ScenePreview: 1
   m_DurationMode: 0
   m_MarkerTrack: {fileID: 3168521823094034235}
+--- !u!114 &517132255565966179
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
+  m_Name: CinemachineShot(Clone)(Clone)
+  m_EditorClassIdentifier: 
+  DisplayName: 
+  VirtualCamera:
+    exposedName: 6aa0bea4630bdfa408a9a5475961732e
+    defaultValue: {fileID: 0}
 --- !u!114 &1681796542348970783
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -153,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 1.9666666666666666
+  m_Time: 6.433333333333334
   _celestialBody: 0
   _isDeselect: 0
   retroactive: 1
@@ -173,7 +241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   VirtualCamera:
-    exposedName: 86e6d557b4623fa4fa7beeb9cc6e225d
+    exposedName: e46736eb21c7f004283506ad3f2253d9
     defaultValue: {fileID: 0}
 --- !u!114 &3168521823094034235
 MonoBehaviour:
@@ -210,7 +278,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 21.316666666666666
+  m_Time: 25.066666666666713
   _celestialBody: 2
   _isDeselect: 0
   retroactive: 1
@@ -228,12 +296,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 36.46666666666667
+  m_Time: 40.21666666666652
   _celestialBody: 3
   _isDeselect: 1
   retroactive: 1
   emitOnce: 1
   emitInEditor: 1
+--- !u!114 &5825607990050574252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90fb794a295e73545af71bcdb7375791, type: 3}
+  m_Name: CinemachineShot
+  m_EditorClassIdentifier: 
+  DisplayName: 
+  VirtualCamera:
+    exposedName: f36852a9cf2b4244e92ad65777c98620
+    defaultValue: {fileID: 0}
 --- !u!114 &6643319630687024309
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -246,7 +330,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 12
+  m_Time: 15.75
   _celestialBody: 1
   _isDeselect: 0
   retroactive: 1
@@ -266,7 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DisplayName: 
   VirtualCamera:
-    exposedName: 23fd4805356f6bb43beed3bd8d455a12
+    exposedName: ac66d0169f6d6cf4db1c240fcfc9933f
     defaultValue: {fileID: 0}
 --- !u!114 &8755695527293500172
 MonoBehaviour:
@@ -280,7 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 962fdd4c187a7f845955bdef323223fd, type: 3}
   m_Name: BodySelectMarker
   m_EditorClassIdentifier: 
-  m_Time: 28.966666666666665
+  m_Time: 32.99999999999998
   _celestialBody: 3
   _isDeselect: 0
   retroactive: 1
@@ -308,7 +392,7 @@ MonoBehaviour:
   m_Children: []
   m_Clips:
   - m_Version: 1
-    m_Start: 7.716666666666667
+    m_Start: 11.466666666666672
     m_ClipIn: 0
     m_Asset: {fileID: 8029354361874501887}
     m_Duration: 12.966666666666667
@@ -316,8 +400,8 @@ MonoBehaviour:
     m_ParentTrack: {fileID: 8788766062971402905}
     m_EaseInDuration: 0
     m_EaseOutDuration: 2
-    m_BlendInDuration: 3.5999999999999996
-    m_BlendOutDuration: 2.25
+    m_BlendInDuration: 3.5999999999999925
+    m_BlendOutDuration: 2.2499999999999574
     m_MixInCurve:
       serializedVersion: 2
       m_Curve: []
@@ -339,9 +423,9 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Mercury VCam
+    m_DisplayName: Mercury vCam
   - m_Version: 1
-    m_Start: 18.433333333333334
+    m_Start: 22.18333333333338
     m_ClipIn: 0
     m_Asset: {fileID: -1523790717420837721}
     m_Duration: 10.016666666666666
@@ -349,7 +433,7 @@ MonoBehaviour:
     m_ParentTrack: {fileID: 8788766062971402905}
     m_EaseInDuration: 0
     m_EaseOutDuration: 2
-    m_BlendInDuration: 2.25
+    m_BlendInDuration: 2.2499999999999574
     m_BlendOutDuration: 2.633333333333333
     m_MixInCurve:
       serializedVersion: 2
@@ -372,17 +456,116 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Venus VCam
+    m_DisplayName: Venus vCam
   - m_Version: 1
-    m_Start: 25.816666666666666
+    m_Start: 29.566666666666713
     m_ClipIn: 0
     m_Asset: {fileID: -932099109945135911}
-    m_Duration: 11.883333333333375
+    m_Duration: 13.783333333333335
     m_TimeScale: 1
     m_ParentTrack: {fileID: 8788766062971402905}
     m_EaseInDuration: 0
     m_EaseOutDuration: 0
     m_BlendInDuration: 2.633333333333333
+    m_BlendOutDuration: 2.050000000000203
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Earth vCam
+  - m_Version: 1
+    m_Start: 1.45
+    m_ClipIn: 0
+    m_Asset: {fileID: 2471912892316899088}
+    m_Duration: 13.616666666666665
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8788766062971402905}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 2
+    m_BlendInDuration: 4.26666666666666
+    m_BlendOutDuration: 3.5999999999999925
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Sun vCam
+  - m_Version: 1
+    m_Start: 41.29999999999985
+    m_ClipIn: 0
+    m_Asset: {fileID: 5825607990050574252}
+    m_Duration: 10.883333333333333
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8788766062971402905}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 2.050000000000203
+    m_BlendOutDuration: 1.4499999999999957
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Mars vCam
+  - m_Version: 1
+    m_Start: 50.733333333333185
+    m_ClipIn: 0
+    m_Asset: {fileID: -5222350392059757978}
+    m_Duration: 1.4499999999999957
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8788766062971402905}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: 1.4499999999999957
     m_BlendOutDuration: -1
     m_MixInCurve:
       serializedVersion: 2
@@ -392,75 +575,6 @@ MonoBehaviour:
       m_RotationOrder: 4
     m_MixOutCurve:
       serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_BlendInCurveMode: 0
-    m_BlendOutCurveMode: 0
-    m_ExposedParameterNames: []
-    m_AnimationCurves: {fileID: 0}
-    m_Recordable: 0
-    m_PostExtrapolationMode: 0
-    m_PreExtrapolationMode: 0
-    m_PostExtrapolationTime: 0
-    m_PreExtrapolationTime: 0
-    m_DisplayName: Earth VCam
-  - m_Version: 1
-    m_Start: 0
-    m_ClipIn: 0
-    m_Asset: {fileID: 2471912892316899088}
-    m_Duration: 11.316666666666666
-    m_TimeScale: 1
-    m_ParentTrack: {fileID: 8788766062971402905}
-    m_EaseInDuration: 0
-    m_EaseOutDuration: 2
-    m_BlendInDuration: -1
-    m_BlendOutDuration: 3.5999999999999996
-    m_MixInCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 0
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      - serializedVersion: 3
-        time: 1
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0
-        outWeight: 0
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    m_MixOutCurve:
-      serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -474,7 +588,58 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: Sun VCam
+    m_DisplayName: Mars vCam zoom
+  - m_Version: 1
+    m_Start: 0
+    m_ClipIn: 0
+    m_Asset: {fileID: 517132255565966179}
+    m_Duration: 5.716666666666661
+    m_TimeScale: 1
+    m_ParentTrack: {fileID: 8788766062971402905}
+    m_EaseInDuration: 0
+    m_EaseOutDuration: 0
+    m_BlendInDuration: -1
+    m_BlendOutDuration: 4.26666666666666
+    m_MixInCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_MixOutCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      - serializedVersion: 3
+        time: 1
+        value: 0
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    m_BlendInCurveMode: 0
+    m_BlendOutCurveMode: 0
+    m_ExposedParameterNames: []
+    m_AnimationCurves: {fileID: 0}
+    m_Recordable: 0
+    m_PostExtrapolationMode: 0
+    m_PreExtrapolationMode: 0
+    m_PostExtrapolationTime: 0
+    m_PreExtrapolationTime: 0
+    m_DisplayName: Mars vCam zoom
   m_Markers:
     m_Objects:
     - {fileID: -6661897230788517953}
@@ -486,3 +651,5 @@ MonoBehaviour:
     - {fileID: 4273707961153349683}
     - {fileID: -4566188011961008471}
     - {fileID: -483027225569463363}
+    - {fileID: -3988964472286534406}
+    - {fileID: -5634537087287485578}

@@ -46,7 +46,7 @@ public class CelestialBody : MonoBehaviour
 
     void Start()
     {
-        solarSystemManager = GameObject.Find("Solar System Manager").GetComponent<SolarSystemManager>();
+        solarSystemManager = GameObject.Find(Constants.SolarSystemManager).GetComponent<SolarSystemManager>();
         SetBodyInfo();
 
         if (Application.isPlaying && parentBody != null && orbitPeriod != 0)
@@ -58,7 +58,10 @@ public class CelestialBody : MonoBehaviour
 
     void FixedUpdate()
     {
-        transform.Rotate((1 / RotationPeriod) * 1000 * Time.fixedDeltaTime * Vector3.up, Space.World);
+        var rotationSpeed = solarSystemManager.isDemo ? 30 : (1 / RotationPeriod) * 1000 ;
+        rotationSpeed *= Time.fixedDeltaTime;
+
+        transform.Rotate(0, rotationSpeed, 0);
     }
 
     void OnValidate()
@@ -101,7 +104,7 @@ public class CelestialBody : MonoBehaviour
     /// </summary>
     public void ApplyChanges()
     {
-        solarSystemManager = GameObject.Find("Solar System Manager").GetComponent<SolarSystemManager>();
+        solarSystemManager = GameObject.Find(Constants.SolarSystemManager).GetComponent<SolarSystemManager>();
         gameObject.name = bodyName.ToString();
         SetBodyInfo();
 
@@ -185,7 +188,7 @@ public class CelestialBody : MonoBehaviour
             bodyName = bodyName,
             bodyType = bodyType,
             description = description,
-            diameter = diameter.ToString("N", new CultureInfo("en-US")) + " km",
+            diameter = diameter.ToString("N0", new CultureInfo("en-US")) + " km",
             gravity = gravity.ToString("N2", new CultureInfo("en-US")) + " g"
         };
     }

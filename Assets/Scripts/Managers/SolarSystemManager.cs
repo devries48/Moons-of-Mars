@@ -40,6 +40,7 @@ public class SolarSystemManager : MonoBehaviour
     [SerializeField] float _orbitScale = 1f;
 
     public OrbitActiveType orbitActive;
+    internal bool isDemo = true;
 
     public float DistanceScale
     {
