@@ -7,6 +7,7 @@ public class IntroManager : MonoBehaviour
 {
     [SerializeField] private GameObject infoWindow;
     [SerializeField] private GameObject mainMenuWindow;
+    [SerializeField] private AudioSource slideInSound;
 
     private CelestialBody[] celestialBodies;
     private PlayableDirector director;
@@ -32,6 +33,7 @@ public class IntroManager : MonoBehaviour
         else
         {
             SetWindowInfo(name);
+            slideInSound.Play();
             LeanTween.move(infoRect, new Vector3(-180f, -200f, 100f), 1f).setEaseOutBack();
         }
     }

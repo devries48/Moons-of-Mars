@@ -58,8 +58,9 @@ public class CelestialBody : MonoBehaviour
 
     void FixedUpdate()
     {
-        var rotationSpeed = solarSystemManager.isDemo ? 30 : (1 / RotationPeriod) * 1000 ;
-        rotationSpeed *= Time.fixedDeltaTime;
+        var rotationSpeed = solarSystemManager.isDemo && bodyType != CelestialBodyType.Sun 
+            ? 30 * Time.fixedDeltaTime
+            : (1 / RotationPeriod) * 1000 * Time.fixedDeltaTime;
 
         transform.Rotate(0, rotationSpeed, 0);
     }
