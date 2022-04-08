@@ -96,6 +96,9 @@ public class IntroManager : MonoBehaviour
 
     private void OpenMenu()
     {
+        if (spaceDebri_Particles == null)
+            return;
+
         spaceDebri_Particles.SetActive(true);
 
         var menuRect = mainMenuWindow.GetComponent<RectTransform>();
