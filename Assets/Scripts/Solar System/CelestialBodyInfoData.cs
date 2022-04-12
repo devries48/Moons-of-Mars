@@ -1,6 +1,6 @@
-using static SolarSystemManager;
+using static SolarSystemController;
 
-public class CelestialBodyInfo
+public class CelestialBodyInfoData
 {
     public CelestialBodyType bodyType;
     public CelestialBodyName bodyName;

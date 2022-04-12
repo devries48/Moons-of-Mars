@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class SolarSystemManager : MonoBehaviour
+public class SolarSystemController : MonoBehaviour
 {
     public enum CelestialBodyName
     {
@@ -20,16 +20,16 @@ public class SolarSystemManager : MonoBehaviour
 
     public enum CelestialBodyType { Planet, Moon, Sun }
 
-    public enum OrbitActiveType { All, None, MoonsOnly}
+    public enum OrbitActiveType { All, None, MoonsOnly }
 
     // Distance scale 0.1 = 1:100.000km, scale 1 = 1:1.000.000km
     [Header("Scale")]
     [Range(0.1f, 1f)]
     [SerializeField] float _distanceScale = 1f;
 
-    // Planet diameter scale 0.1 = 1:10.000km, scale 1 = 1:1.000km
-    [Range(0.1f, 1f)]
-    public float _planetScale = 0.1f;
+    // Planet diameter scale 1 = 1unity:10,000km, scale 10 = 1unity:1,000km
+    [Range(1, 10)]
+    [SerializeField] private float _planetScaleMultiplier = 1f;
 
     // Planet rotation scale 0.1 = 1 sec, scale 1 = 1 hour
     [Range(1, 10)]
@@ -48,10 +48,10 @@ public class SolarSystemManager : MonoBehaviour
         set { _distanceScale = value; ApplyChanges(); }
     }
 
-    public float PlanetScale
+    public float PlanetScaleMultiplier
     {
-        get { return _planetScale * 0.001f; }
-        set { _planetScale = value; ApplyChanges(); }
+        get { return _planetScaleMultiplier; }
+        set { _planetScaleMultiplier = value; ApplyChanges(); }
     }
 
     public int RotationSpeed
@@ -66,6 +66,9 @@ public class SolarSystemManager : MonoBehaviour
         set { _orbitScale = value; ApplyChanges(); }
     }
 
+    /// <summary>
+    /// Apply the changes to all celestial bodies.
+    /// </summary>
     private void ApplyChanges()
     {
         var bodies = (CelestialBody[])FindObjectsOfType(typeof(CelestialBody));
@@ -73,10 +76,12 @@ public class SolarSystemManager : MonoBehaviour
             body.ApplyChanges();
     }
 
-    void OnValidate()
+    private void OnValidate()
     {
+        name = Constants.SolarSystemController;
+
         DistanceScale = _distanceScale;
-        PlanetScale = _planetScale;
+        PlanetScaleMultiplier = _planetScaleMultiplier;
         RotationSpeed = _rotationSpeed;
         OrbitScale = _orbitScale;
 

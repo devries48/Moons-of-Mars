@@ -1,7 +1,7 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
-using static SolarSystemManager;
+using static SolarSystemController;
 
 public class IntroManager : MonoBehaviour
 {

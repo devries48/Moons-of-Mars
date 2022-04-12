@@ -2,7 +2,7 @@ using System.ComponentModel;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
-using static SolarSystemManager;
+using static SolarSystemController;
 
 [DisplayName("BodySelectMarker")]
 public class BodySelectMarker : Marker, INotification, INotificationOptionProvider

@@ -1,8 +1,6 @@
-using System;
-using System.Collections;
 using System.Globalization;
 using UnityEngine;
-using static SolarSystemManager;
+using static SolarSystemController;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(Rigidbody))]
@@ -10,7 +8,7 @@ public class CelestialBody : MonoBehaviour
 {
     #region public fields
     public CelestialBodyName bodyName;
-    CelestialBodyType bodyType;
+    public CelestialBodyType bodyType;
     public Transform parentBody;
     [Header("Distance from sun/planet in 10^6 km")]
     public float distance;
@@ -29,36 +27,30 @@ public class CelestialBody : MonoBehaviour
     public float RotationPeriod;
     #endregion
 
-    CelestialBodyInfo _celestialBodyInfo;
+    private SolarSystemController solarSystemManager;
+    private CelestialBodyInfoData _celestialBodyInfo;
 
-    public CelestialBodyInfo Info => _celestialBodyInfo;
+    public CelestialBodyInfoData Info => _celestialBodyInfo;
 
-    SolarSystemManager solarSystemManager;
-    Ellipse orbitPath;
-
-    [SerializeField]
-    [Range(0, 1f)] float orbitProgress = 0f;
+#pragma warning disable IDE0051 // Remove unused private members
     float orbitPeriod = 0f;
+#pragma warning restore IDE0051 // Remove unused private members
 
-    const float physicsTimeStep = 0.01f;
     const float sunDiameter = 1392700;
-    const float sunScale = .25f; // Make the sun smaller
+    const float sunScale = .1f; // Make the sun smaller
 
     void Start()
     {
-        solarSystemManager = GameObject.Find(Constants.SolarSystemManager).GetComponent<SolarSystemManager>();
+        InitSolarSystemManager();
         SetBodyInfo();
-
-        if (Application.isPlaying && parentBody != null && orbitPeriod != 0)
-        {
-            SetOrbitingBodyPosition();
-            StartCoroutine(AnimateOrbit());
-        }
     }
 
+    /// <summary>
+    /// Handle planet rotation
+    /// </summary>
     void FixedUpdate()
     {
-        var rotationSpeed = solarSystemManager.isDemo && bodyType != CelestialBodyType.Sun 
+        var rotationSpeed = solarSystemManager.isDemo && bodyType != CelestialBodyType.Sun
             ? 30 * Time.fixedDeltaTime
             : (1 / RotationPeriod) * 1000 * Time.fixedDeltaTime;
 
@@ -70,78 +62,40 @@ public class CelestialBody : MonoBehaviour
         ApplyChanges();
     }
 
-    void SetOrbitingBodyPosition()
-    {
-        Vector2 orbitPos = orbitPath.Evaluate(orbitProgress);
-        Vector3 pos = new Vector3(orbitPos.y, 0, orbitPos.x);
-
-        if (bodyType == CelestialBodyType.Moon)
-            pos += parentBody.transform.localPosition;
-
-        gameObject.transform.localPosition = pos;
-    }
-
-    IEnumerator AnimateOrbit()
-    {
-        float orbitSpeed = 1f / orbitPeriod;
-
-        while (IsOrbitActive())
-        {
-            orbitProgress += Time.fixedDeltaTime * orbitSpeed;
-            orbitProgress %= 1f;
-            SetOrbitingBodyPosition();
-            yield return null;
-        }
-    }
-
-    bool IsOrbitActive()
-    {
-        return (solarSystemManager.orbitActive == SolarSystemManager.OrbitActiveType.All
-            || (solarSystemManager.orbitActive == SolarSystemManager.OrbitActiveType.MoonsOnly && bodyType == CelestialBodyType.Moon));
-    }
-
     /// <summary>
     /// Sets Celestialbody scale, rotation & orbit
     /// </summary>
     public void ApplyChanges()
     {
-        solarSystemManager = GameObject.Find(Constants.SolarSystemManager).GetComponent<SolarSystemManager>();
-        gameObject.name = bodyName.ToString();
-        SetBodyInfo();
+        InitSolarSystemManager();
 
         var trans = gameObject.transform;
-        var axialTilt = Quaternion.Euler(BodyAxialTilt, 0, 0);
-        var sunSize = sunDiameter * solarSystemManager.PlanetScale * sunScale;
-        var sunDistance = (distance * solarSystemManager.DistanceScale) + sunSize / 2;
+        var scaleMultiplier = 0.0001f;
 
-        var pos = (bodyType == CelestialBodyType.Sun) ? Vector3.zero : new Vector3(sunDistance, 0, 0);
+        if (!Application.isPlaying)
+        {
+            gameObject.name = bodyName.ToString();
+            SetBodyInfo();
 
-        trans.SetPositionAndRotation(pos, axialTilt);
+            var axialTilt = Quaternion.Euler(BodyAxialTilt, 0, 0);
+            trans.SetPositionAndRotation(Vector3.zero, axialTilt);
+        }
 
         if (bodyType == CelestialBodyType.Sun)
         {
             diameter = sunDiameter;
+
+            var sunSize = sunDiameter * sunScale * scaleMultiplier;
             trans.localScale = sunSize * Vector3.one;
         }
         else
-            trans.localScale = diameter * solarSystemManager.PlanetScale * Vector3.one;
+            trans.localScale = diameter * solarSystemManager.PlanetScaleMultiplier * scaleMultiplier * Vector3.one;
+    }
 
-        if (parentBody != null)
-        {
-            float orbit = 0;
-
-            if (bodyType == CelestialBodyType.Planet)
-                orbit = sunDistance;
-            else if (bodyType == CelestialBodyType.Moon)
-                orbit = (distance * solarSystemManager._planetScale * 10) + (parentBody.localScale.x / 2);
-
-            orbitPeriod = period * solarSystemManager.OrbitScale;
-            orbitPath = new Ellipse(orbit, orbit);
-            orbitProgress = orbitPeriod < 0 ? 1 : 0;
-
-            if (IsOrbitActive())
-                SetOrbitingBodyPosition();
-        }
+    private void InitSolarSystemManager()
+    {
+        if (solarSystemManager == null)
+            solarSystemManager = GameObject.Find(Constants.SolarSystemController).GetComponent<SolarSystemController>();
     }
 
     /// <summary>
@@ -184,7 +138,7 @@ public class CelestialBody : MonoBehaviour
                 break;
         }
 
-        _celestialBodyInfo = new CelestialBodyInfo()
+        _celestialBodyInfo = new CelestialBodyInfoData()
         {
             bodyName = bodyName,
             bodyType = bodyType,
