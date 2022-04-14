@@ -11,11 +11,14 @@ public class SolarSystemController : MonoBehaviour
         Earth,
         Moon,
         Mars,
+        Phobos,
+        Deimos,
         Jupiter,
         Saturn,
         Uranus,
         Neptune,
-        Pluto
+        Pluto,
+        Io
     }
 
     public enum CelestialBodyType { Planet, Moon, Sun }

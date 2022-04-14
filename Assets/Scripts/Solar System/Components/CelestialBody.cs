@@ -9,17 +9,15 @@ public class CelestialBody : MonoBehaviour
     #region public fields
     public CelestialBodyName bodyName;
     public CelestialBodyType bodyType;
-    public Transform parentBody;
-    [Header("Distance from sun/planet in 10^6 km")]
-    public float distance;
+    [Tooltip("")]
+    [Header("Distance from sun/planet surface in 10^6 km")]
+    public float distance; 
     [Header("Diameter in km")]
     public float diameter;
     [Header("Surface gravity in g")]
     public float gravity;
     [Header("Orbital period in days")]
     public float period;
-    [Header("Orbital velocity in km/s")]
-    public float velocity;
     [Header("Tilt and incline in degrees")]
     public float BodyAxialTilt;
     public float OrbitalInclination;
@@ -27,7 +25,7 @@ public class CelestialBody : MonoBehaviour
     public float RotationPeriod;
     #endregion
 
-    private SolarSystemController solarSystemManager;
+    private SolarSystemController solarSystemController;
     private CelestialBodyInfoData _celestialBodyInfo;
 
     public CelestialBodyInfoData Info => _celestialBodyInfo;
@@ -41,7 +39,7 @@ public class CelestialBody : MonoBehaviour
 
     void Start()
     {
-        InitSolarSystemManager();
+        InitSolarSystemController();
         SetBodyInfo();
     }
 
@@ -50,7 +48,7 @@ public class CelestialBody : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        var rotationSpeed = solarSystemManager.isDemo && bodyType != CelestialBodyType.Sun
+        var rotationSpeed = solarSystemController.isDemo && bodyType != CelestialBodyType.Sun
             ? 30 * Time.fixedDeltaTime
             : (1 / RotationPeriod) * 1000 * Time.fixedDeltaTime;
 
@@ -67,7 +65,7 @@ public class CelestialBody : MonoBehaviour
     /// </summary>
     public void ApplyChanges()
     {
-        InitSolarSystemManager();
+        InitSolarSystemController();
 
         var trans = gameObject.transform;
         var scaleMultiplier = 0.0001f;
@@ -89,13 +87,13 @@ public class CelestialBody : MonoBehaviour
             trans.localScale = sunSize * Vector3.one;
         }
         else
-            trans.localScale = diameter * solarSystemManager.PlanetScaleMultiplier * scaleMultiplier * Vector3.one;
+            trans.localScale = diameter * solarSystemController.PlanetScaleMultiplier * scaleMultiplier * Vector3.one;
     }
 
-    private void InitSolarSystemManager()
+    private void InitSolarSystemController()
     {
-        if (solarSystemManager == null)
-            solarSystemManager = GameObject.Find(Constants.SolarSystemController).GetComponent<SolarSystemController>();
+        if (solarSystemController == null)
+            solarSystemController = GameObject.Find(Constants.SolarSystemController).GetComponent<SolarSystemController>();
     }
 
     /// <summary>

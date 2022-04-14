@@ -37,13 +37,10 @@ public class KeplerOrbitMover : MonoBehaviour
     [Tooltip("The time scale multiplier.")]
     public float TimeScale = 1f;
 
-    /// <summary>
-    /// The range scale multiplier.
-    /// By default MLT value is 1, but for moons it may be larger than 1 for better visualization.
-    /// </summary>
     [Tooltip("The range scale multiplier.")]
-    public float RangeScale = 1f;
+    public bool IsOrbitingPlanet = false;
 
+    public int OrbitExtraRange = 0;
     /// <summary>
     /// Disable continious editing orbit in update loop, if you don't need it.
     /// It is also very useful in cases, when orbit is not stable due to float precision limits.
@@ -197,7 +194,13 @@ public class KeplerOrbitMover : MonoBehaviour
         /// </summary>
         const float UnitsPerAU = 50f;
 
-        float units = UnitsPerAU + RangeScale;
+        float units = UnitsPerAU;
+
+        if (IsOrbitingPlanet)
+        {
+            var solarSystem = GameObject.Find(Constants.SolarSystemController).GetComponent<SolarSystemController>();
+            units += (OrbitExtraRange * solarSystem.PlanetScaleMultiplier);
+        }
 
         // G constant is used as free parameter to fixate orbits periods values while SemiMajor axis parameter is adjusted for the scene.
         double compensatedGConst = GConstant / Math.Pow(AU / units, 3d);
