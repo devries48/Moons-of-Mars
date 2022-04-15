@@ -18,7 +18,10 @@ public class SolarSystemController : MonoBehaviour
         Uranus,
         Neptune,
         Pluto,
-        Io
+        Io,
+        Europa,
+        Ganymede,
+        Callisto
     }
 
     public enum CelestialBodyType { Planet, Moon, Sun }

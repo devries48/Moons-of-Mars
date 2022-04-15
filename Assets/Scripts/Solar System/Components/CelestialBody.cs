@@ -10,7 +10,7 @@ public class CelestialBody : MonoBehaviour
     public CelestialBodyName bodyName;
     public CelestialBodyType bodyType;
     [Tooltip("")]
-    [Header("Distance from sun/planet surface in 10^6 km")]
+    [Header("Mean distance from sun/planet in 10^6 km")]
     public float distance; 
     [Header("Diameter in km")]
     public float diameter;
@@ -18,9 +18,8 @@ public class CelestialBody : MonoBehaviour
     public float gravity;
     [Header("Orbital period in days")]
     public float period;
-    [Header("Tilt and incline in degrees")]
+    [Header("Tilt in degrees")]
     public float BodyAxialTilt;
-    public float OrbitalInclination;
     [Header("Rotation period in hours")]
     public float RotationPeriod;
     #endregion
