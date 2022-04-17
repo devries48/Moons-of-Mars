@@ -21,7 +21,12 @@ public class SolarSystemController : MonoBehaviour
         Io,
         Europa,
         Ganymede,
-        Callisto
+        Callisto,
+        Mimas,
+        Enceladus,
+        Tethys,
+        Dione,
+        Rhea
     }
 
     public enum CelestialBodyType { Planet, Moon, Sun }
