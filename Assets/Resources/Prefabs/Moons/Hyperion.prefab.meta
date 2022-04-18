@@ -1,10 +1,7 @@
 fileFormatVersion: 2
-guid: 99f1c4e30f26cf8438a6e13547747fa4
-labels:
-- Moon
-NativeFormatImporter:
+guid: 8b0c778476846714eb2918e636e9f727
+PrefabImporter:
   externalObjects: {}
-  mainObjectFileID: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

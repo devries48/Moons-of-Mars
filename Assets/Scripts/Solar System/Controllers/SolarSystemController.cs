@@ -26,7 +26,10 @@ public class SolarSystemController : MonoBehaviour
         Enceladus,
         Tethys,
         Dione,
-        Rhea
+        Rhea,
+        Titan,
+        Hyperion,
+        Iapetus
     }
 
     public enum CelestialBodyType { Planet, Moon, Sun }
