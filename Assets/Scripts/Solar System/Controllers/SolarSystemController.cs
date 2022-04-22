@@ -29,7 +29,8 @@ public class SolarSystemController : MonoBehaviour
         Rhea,
         Titan,
         Hyperion,
-        Iapetus
+        Iapetus,
+        Charon
     }
 
     public enum CelestialBodyType { Planet, Moon, Sun }

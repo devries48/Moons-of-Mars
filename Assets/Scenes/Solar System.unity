@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 24437705}
   - component: {fileID: 24437704}
   m_Layer: 0
-  m_Name: Moon - Calisto
+  m_Name: Calisto - moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1059,13 +1059,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 129718587}
+  - component: {fileID: 129718589}
+  - component: {fileID: 129718588}
   m_Layer: 0
-  m_Name: Planet Neptune
+  m_Name: planet Neptune
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &129718587
 Transform:
   m_ObjectHideFlags: 0
@@ -1079,9 +1081,60 @@ Transform:
   m_Children:
   - {fileID: 1970465742}
   - {fileID: 426958033}
+  - {fileID: 829388257}
   m_Father: {fileID: 976942980}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &129718588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129718586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
+  LineRendererReference: {fileID: 0}
+  ShowOrbitGizmoInEditor: 1
+  ShowOrbitGizmoWhileInPlayMode: 1
+  ShowVelocityGizmoInEditor: 1
+  ShowPeriapsisApoapsisGizmosInEditor: 1
+  ShowAscendingNodeInEditor: 1
+  ShowAxisGizmosInEditor: 0
+  GizmosAlphaMain: 1
+  GizmosAlphaSecondary: 0.3
+--- !u!114 &129718589
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 129718586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttractorSettings:
+    AttractorObject: {fileID: 0}
+    AttractorMass: 1000
+  VelocityHandle: {fileID: 0}
+  VelocityHandleLengthScale: 0
+  TimeScale: 1
+  IsOrbitingPlanet: 0
+  OrbitExtraRange: 0
+  LockOrbitEditing: 0
+  eccentricity: 0
+  semiMajorAxis: 0
+  meanAnomalyDeg: 0
+  inclinationDeg: 0
+  argOfPerifocusDeg: 0
+  ascendingNodeDeg: 0
 --- !u!4 &133408424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
@@ -1605,7 +1658,7 @@ GameObject:
   - component: {fileID: 303489674}
   - component: {fileID: 303489673}
   m_Layer: 0
-  m_Name: Earth & moon barycenter
+  m_Name: 'barycenter Earth & Moon '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2127,7 +2180,7 @@ GameObject:
   - component: {fileID: 410808178}
   - component: {fileID: 410808179}
   m_Layer: 0
-  m_Name: Moon - Deimos
+  m_Name: Deimos - moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2210,7 +2263,7 @@ GameObject:
   - component: {fileID: 426958033}
   - component: {fileID: 426958032}
   m_Layer: 0
-  m_Name: Neptune  VCam
+  m_Name: Neptune  vCam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7824,7 +7877,7 @@ GameObject:
   - component: {fileID: 610533910}
   - component: {fileID: 610533909}
   m_Layer: 0
-  m_Name: Mercury planet
+  m_Name: planet Mercury
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7957,6 +8010,38 @@ Transform:
   m_Father: {fileID: 1680309057}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &660032810
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 660032811}
+  m_Layer: 0
+  m_Name: dwarf planet Pluto
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &660032811
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660032810}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 750187248}
+  - {fileID: 1306857197}
+  m_Father: {fileID: 1514701311}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &663051533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8041,7 +8126,7 @@ GameObject:
   m_Component:
   - component: {fileID: 664188076}
   m_Layer: 0
-  m_Name: Barycenter velocity
+  m_Name: Earth barycenter velocity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8263,7 +8348,7 @@ GameObject:
   - component: {fileID: 716237295}
   - component: {fileID: 716237294}
   m_Layer: 0
-  m_Name: Moon - Io
+  m_Name: Io - moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8802,12 +8887,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750187246}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.6000001, y: 0, z: 0.00000030994414}
+  m_LocalPosition: {x: -2.6000001, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 748630391}
-  m_Father: {fileID: 1514701311}
-  m_RootOrder: 1
+  m_Father: {fileID: 660032811}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &762368266
 GameObject:
@@ -9169,7 +9254,7 @@ GameObject:
   - component: {fileID: 811486804}
   - component: {fileID: 811486805}
   m_Layer: 0
-  m_Name: Moon - Ganymede
+  m_Name: Ganymede - moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9310,6 +9395,66 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f2ee43e741d4a439c38d0192b1478d, type: 3}
+--- !u!1 &818283948
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 818283949}
+  m_Layer: 0
+  m_Name: Pluto barycenter velocity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &818283949
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818283948}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1514701311}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &829388256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 829388257}
+  m_Layer: 0
+  m_Name: Neptune velocity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &829388257
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 829388256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 129718587}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &843167784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10113,7 +10258,7 @@ GameObject:
   - component: {fileID: 1006441350}
   - component: {fileID: 1006441349}
   m_Layer: 0
-  m_Name: Moon - Europa
+  m_Name: Europa - moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21650,12 +21795,12 @@ GameObject:
   m_Component:
   - component: {fileID: 1514701311}
   m_Layer: 0
-  m_Name: Dwarf Planet Pluto
+  m_Name: barycenter Pluto & Charon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1514701311
 Transform:
   m_ObjectHideFlags: 0
@@ -21667,8 +21812,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1306857197}
-  - {fileID: 750187248}
+  - {fileID: 818283949}
+  - {fileID: 660032811}
   m_Father: {fileID: 976942980}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -21956,7 +22101,7 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 1514701311}
+    m_TransformParent: {fileID: 660032811}
     m_Modifications:
     - target: {fileID: 4918243001927119762, guid: 2b9b4591cd53ca447a8c10536d555ce1, type: 3}
       propertyPath: m_Mesh
@@ -21964,7 +22109,7 @@ PrefabInstance:
       objectReference: {fileID: 4711208715938537054, guid: 183630d1632afea459804b6ad4fe002b, type: 3}
     - target: {fileID: 6146822029597009449, guid: 2b9b4591cd53ca447a8c10536d555ce1, type: 3}
       propertyPath: m_RootOrder
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6146822029597009449, guid: 2b9b4591cd53ca447a8c10536d555ce1, type: 3}
       propertyPath: m_LocalScale.x
@@ -22107,7 +22252,7 @@ GameObject:
   - component: {fileID: 1680309058}
   - component: {fileID: 1680309059}
   m_Layer: 0
-  m_Name: Venus planet
+  m_Name: planet Venus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22190,7 +22335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1681661683}
   m_Layer: 0
-  m_Name: Sun star
+  m_Name: star Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22404,7 +22549,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: -7.088594, y: 0.21119873, z: -5.669107}
+  m_LocalPosition: {x: -6.7008886, y: 0.21119873, z: -6.0405693}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 993721158}
@@ -22824,7 +22969,7 @@ GameObject:
   - component: {fileID: 1812590292}
   - component: {fileID: 1812590291}
   m_Layer: 0
-  m_Name: Planet Uranus
+  m_Name: Uranus - planet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22838,7 +22983,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812590289}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 100, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 304526071}
@@ -28489,7 +28634,7 @@ GameObject:
   - component: {fileID: 2035322862}
   - component: {fileID: 2035322863}
   m_Layer: 0
-  m_Name: Earth planet
+  m_Name: Earth - planet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28551,7 +28696,7 @@ GameObject:
   - component: {fileID: 2037492402}
   - component: {fileID: 2037492403}
   m_Layer: 0
-  m_Name: Moon - Phobos
+  m_Name: Phobos - moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28987,7 +29132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
       propertyPath: m_LocalPosition.y
