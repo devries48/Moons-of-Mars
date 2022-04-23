@@ -1121,20 +1121,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AttractorSettings:
-    AttractorObject: {fileID: 0}
-    AttractorMass: 1000
-  VelocityHandle: {fileID: 0}
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  VelocityHandle: {fileID: 829388257}
   VelocityHandleLengthScale: 0
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
-  LockOrbitEditing: 0
-  eccentricity: 0
-  semiMajorAxis: 0
-  meanAnomalyDeg: 0
-  inclinationDeg: 0
-  argOfPerifocusDeg: 0
-  ascendingNodeDeg: 0
+  LockOrbitEditing: 1
+  eccentricity: 0.00881139069464004
+  semiMajorAxis: 30.08264629659431
+  meanAnomalyDeg: 303.8071301409309
+  inclinationDeg: 1.770451555474154
+  argOfPerifocusDeg: 270.6008285876983
+  ascendingNodeDeg: 131.7875937191575
 --- !u!4 &133408424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
@@ -1577,6 +1577,36 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4146707697817101771, guid: 68270d29541d9944fb3b24329dba6ef1, type: 3}
   m_PrefabInstance: {fileID: 1053121253}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &294286413
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 294286414}
+  m_Layer: 0
+  m_Name: Pluto velocity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &294286414
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 294286413}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 660032811}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &295433649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1944,7 +1974,7 @@ GameObject:
   - component: {fileID: 344527606}
   - component: {fileID: 344527605}
   m_Layer: 0
-  m_Name: Moon - Tethys
+  m_Name: Moon -Tethys
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2329,18 +2359,6 @@ PrefabInstance:
     - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.4887
-      objectReference: {fileID: 0}
-    - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.4887
-      objectReference: {fileID: 0}
-    - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.4887
       objectReference: {fileID: 0}
     - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2994,18 +3012,6 @@ PrefabInstance:
     - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.2756
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2756
-      objectReference: {fileID: 0}
-    - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.2756
       objectReference: {fileID: 0}
     - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8019,6 +8025,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 660032811}
+  - component: {fileID: 660032813}
+  - component: {fileID: 660032812}
   m_Layer: 0
   m_Name: dwarf planet Pluto
   m_TagString: Untagged
@@ -8037,11 +8045,62 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 750187248}
   - {fileID: 1306857197}
+  - {fileID: 294286414}
+  - {fileID: 750187248}
   m_Father: {fileID: 1514701311}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &660032812
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660032810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
+  LineRendererReference: {fileID: 0}
+  ShowOrbitGizmoInEditor: 1
+  ShowOrbitGizmoWhileInPlayMode: 1
+  ShowVelocityGizmoInEditor: 1
+  ShowPeriapsisApoapsisGizmosInEditor: 1
+  ShowAscendingNodeInEditor: 1
+  ShowAxisGizmosInEditor: 0
+  GizmosAlphaMain: 1
+  GizmosAlphaSecondary: 0.3
+--- !u!114 &660032813
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660032810}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttractorSettings:
+    AttractorObject: {fileID: 1514701311}
+    AttractorMass: 2.1607165e+19
+  VelocityHandle: {fileID: 294286414}
+  VelocityHandleLengthScale: 0
+  TimeScale: 1
+  IsOrbitingPlanet: 0
+  OrbitExtraRange: 0
+  LockOrbitEditing: 1
+  eccentricity: 0.03603541522806469
+  semiMajorAxis: 0.00001376951648282823
+  meanAnomalyDeg: 180.2963908046281
+  inclinationDeg: 112.8957991754812
+  argOfPerifocusDeg: 108.1578192973915
+  ascendingNodeDeg: 227.4021576541051
 --- !u!1001 &663051533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8126,7 +8185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 664188076}
   m_Layer: 0
-  m_Name: Earth barycenter velocity
+  m_Name: barycenter Earth velocity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8420,6 +8479,90 @@ MonoBehaviour:
   inclinationDeg: 2.258503029212374
   argOfPerifocusDeg: 315.6407528579217
   ascendingNodeDeg: 337.8310399669856
+--- !u!1 &717846275
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 717846276}
+  - component: {fileID: 717846278}
+  - component: {fileID: 717846277}
+  m_Layer: 0
+  m_Name: moon Charon
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &717846276
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717846275}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1482602635}
+  - {fileID: 807885018}
+  m_Father: {fileID: 1514701311}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &717846277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717846275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
+  LineRendererReference: {fileID: 0}
+  ShowOrbitGizmoInEditor: 1
+  ShowOrbitGizmoWhileInPlayMode: 1
+  ShowVelocityGizmoInEditor: 1
+  ShowPeriapsisApoapsisGizmosInEditor: 1
+  ShowAscendingNodeInEditor: 1
+  ShowAxisGizmosInEditor: 0
+  GizmosAlphaMain: 1
+  GizmosAlphaSecondary: 0.3
+--- !u!114 &717846278
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 717846275}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttractorSettings:
+    AttractorObject: {fileID: 1514701311}
+    AttractorMass: 1.307e+22
+  VelocityHandle: {fileID: 807885018}
+  VelocityHandleLengthScale: 0
+  TimeScale: 1
+  IsOrbitingPlanet: 1
+  OrbitExtraRange: 1000
+  LockOrbitEditing: 1
+  eccentricity: 0.0019456678628711
+  semiMajorAxis: 0.0001165021046585592
+  meanAnomalyDeg: 184.1959886583579
+  inclinationDeg: 112.89581094527951
+  argOfPerifocusDeg: 284.2566236926091
+  ascendingNodeDeg: 227.4021539504819
 --- !u!1 &723415017
 GameObject:
   m_ObjectHideFlags: 0
@@ -8461,29 +8604,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: Mars
       objectReference: {fileID: 0}
-    - target: {fileID: 9211199211051751640, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9211199211051751640, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.6792
-      objectReference: {fileID: 0}
-    - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.6792
-      objectReference: {fileID: 0}
-    - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.6792
       objectReference: {fileID: 0}
     - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8887,12 +9010,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750187246}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.6000001, y: 0, z: 0}
+  m_LocalPosition: {x: -2.6000001, y: 0, z: 0.00000030994414}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 748630391}
   m_Father: {fileID: 660032811}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &762368266
 GameObject:
@@ -9242,6 +9365,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &807885017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 807885018}
+  m_Layer: 0
+  m_Name: Charon Velocity
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &807885018
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 807885017}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 717846276}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &811486802
 GameObject:
   m_ObjectHideFlags: 0
@@ -9405,7 +9558,7 @@ GameObject:
   m_Component:
   - component: {fileID: 818283949}
   m_Layer: 0
-  m_Name: Pluto barycenter velocity
+  m_Name: barycenter Pluto velocity
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9842,7 +9995,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 100
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 0}
+  m_LookAt: {fileID: 1692573083}
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 41
@@ -9866,7 +10019,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917288189}
-  m_LocalRotation: {x: 0.24767324, y: 0.5029539, z: -0.15307046, w: 0.8137966}
+  m_LocalRotation: {x: 0.36607417, y: 0.35136035, z: -0.1516329, w: 0.84825885}
   m_LocalPosition: {x: -100, y: 150, z: -100}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
@@ -9896,9 +10049,33 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 50351164}
     m_Modifications:
+    - target: {fileID: 10143393771327867, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2098687230643760375, guid: df427a8f3947d44489205e8873e648c2, type: 3}
       propertyPath: m_Name
       value: Saturn
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926503552136331706, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.469615
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926503552136331706, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.469615
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926503552136331706, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926503552136331706, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926503552136331706, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 5324143264224130373, guid: df427a8f3947d44489205e8873e648c2, type: 3}
       propertyPath: m_RootOrder
@@ -10059,7 +10236,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.24767324, y: 0.5029539, z: -0.15307046, w: 0.8137966}
+  m_LocalRotation: {x: 0.36607417, y: 0.35136035, z: -0.1516329, w: 0.84825885}
   m_LocalPosition: {x: -100, y: 150, z: -100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -15716,18 +15893,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 1.2104
-      objectReference: {fileID: 0}
-    - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1.2104
-      objectReference: {fileID: 0}
-    - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.2104
-      objectReference: {fileID: 0}
-    - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -16092,7 +16257,7 @@ GameObject:
   - component: {fileID: 1320292165}
   - component: {fileID: 1320292166}
   m_Layer: 0
-  m_Name: Moon - moon
+  m_Name: moon -Moon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16474,6 +16639,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1429663503}
   - component: {fileID: 1429663504}
+  - component: {fileID: 1429663506}
   - component: {fileID: 1429663505}
   m_Layer: 0
   m_Name: Solar System Controller
@@ -16530,6 +16696,18 @@ MonoBehaviour:
   _lineTemplate: {fileID: 742057137}
   _camDistance: 0.5
   _isDebugMode: 0
+--- !u!114 &1429663506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1429663502}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25552fdf73298804ba453618c2842b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1434744145
 GameObject:
   m_ObjectHideFlags: 0
@@ -21495,6 +21673,52 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1482602634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+  m_PrefabInstance: {fileID: 2112616275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1482602635 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+  m_PrefabInstance: {fileID: 2112616275}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1482602636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482602634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dc25ac870a3ca84a8231ebcc41e2ced, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyName: 25
+  bodyType: 1
+  distance: 0
+  diameter: 1208
+  gravity: 0
+  period: 6.38723
+  BodyAxialTilt: 0
+  RotationPeriod: 153.29352
+--- !u!54 &1482602637
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1482602634}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1001 &1484317973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21794,6 +22018,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1514701311}
+  - component: {fileID: 1514701313}
+  - component: {fileID: 1514701312}
   m_Layer: 0
   m_Name: barycenter Pluto & Charon
   m_TagString: Untagged
@@ -21814,9 +22040,60 @@ Transform:
   m_Children:
   - {fileID: 818283949}
   - {fileID: 660032811}
+  - {fileID: 717846276}
   m_Father: {fileID: 976942980}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1514701312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514701310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
+  LineRendererReference: {fileID: 0}
+  ShowOrbitGizmoInEditor: 1
+  ShowOrbitGizmoWhileInPlayMode: 1
+  ShowVelocityGizmoInEditor: 1
+  ShowPeriapsisApoapsisGizmosInEditor: 1
+  ShowAscendingNodeInEditor: 1
+  ShowAxisGizmosInEditor: 0
+  GizmosAlphaMain: 1
+  GizmosAlphaSecondary: 0.3
+--- !u!114 &1514701313
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1514701310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  VelocityHandle: {fileID: 818283949}
+  VelocityHandleLengthScale: 0
+  TimeScale: 1
+  IsOrbitingPlanet: 0
+  OrbitExtraRange: 0
+  LockOrbitEditing: 1
+  eccentricity: 0.2490159363818954
+  semiMajorAxis: 39.48850167056454
+  meanAnomalyDeg: 44.48751994128676
+  inclinationDeg: 17.14078221705906
+  argOfPerifocusDeg: 113.7712015379844
+  ascendingNodeDeg: 110.3010204238591
 --- !u!1001 &1549028367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21827,18 +22104,6 @@ PrefabInstance:
     - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
       propertyPath: m_RootOrder
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.3475
-      objectReference: {fileID: 0}
-    - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.3475
-      objectReference: {fileID: 0}
-    - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.3475
       objectReference: {fileID: 0}
     - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22109,7 +22374,7 @@ PrefabInstance:
       objectReference: {fileID: 4711208715938537054, guid: 183630d1632afea459804b6ad4fe002b, type: 3}
     - target: {fileID: 6146822029597009449, guid: 2b9b4591cd53ca447a8c10536d555ce1, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6146822029597009449, guid: 2b9b4591cd53ca447a8c10536d555ce1, type: 3}
       propertyPath: m_LocalScale.x
@@ -22549,7 +22814,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: -6.7008886, y: 0.21119873, z: -6.0405693}
+  m_LocalPosition: {x: -6.514572, y: 0.21119873, z: -6.21908}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 993721158}
@@ -22969,7 +23234,7 @@ GameObject:
   - component: {fileID: 1812590292}
   - component: {fileID: 1812590291}
   m_Layer: 0
-  m_Name: Uranus - planet
+  m_Name: planet Uranus
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28634,7 +28899,7 @@ GameObject:
   - component: {fileID: 2035322862}
   - component: {fileID: 2035322863}
   m_Layer: 0
-  m_Name: Earth - planet
+  m_Name: planet Earth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29015,6 +29280,75 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &2112616275
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 717846276}
+    m_Modifications:
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.120799996
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.120799996
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.120799996
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101775, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
+      propertyPath: m_Name
+      value: Charon
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5e9348737049eac4c8b6d966765fdfb7, type: 3}
 --- !u!1001 &2135273529
 PrefabInstance:
   m_ObjectHideFlags: 0
