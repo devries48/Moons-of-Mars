@@ -29,9 +29,7 @@ public class CelestialBody : MonoBehaviour
 
     public CelestialBodyInfoData Info => _celestialBodyInfo;
 
-#pragma warning disable IDE0051 // Remove unused private members
     float orbitPeriod = 0f;
-#pragma warning restore IDE0051 // Remove unused private members
 
     const float sunDiameter = 1392700;
     const float sunScale = .1f; // Make the sun smaller
@@ -75,7 +73,8 @@ public class CelestialBody : MonoBehaviour
             SetBodyInfo();
 
             var axialTilt = Quaternion.Euler(BodyAxialTilt, 0, 0);
-            trans.SetPositionAndRotation(Vector3.zero, axialTilt);
+            trans.rotation = axialTilt;
+            //trans.SetPositionAndRotation(Vector3.zero, axialTilt);
         }
 
         if (bodyType == CelestialBodyType.Sun)

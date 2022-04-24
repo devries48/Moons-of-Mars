@@ -235,6 +235,8 @@ public class KeplerOrbitMover : MonoBehaviour
             {
                 if (!OrbitData.IsValidOrbit)
                 {
+                    Debug.Log("not valid" + gameObject.name);
+
                     //try to fix orbit if we can.
                     OrbitData.CalculateOrbitStateFromOrbitalVectors();
                 }
