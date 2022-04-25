@@ -56,7 +56,7 @@ public class KeplerOrbitData
     public double SemiMajorAxis;
     private double FocalParameter;
     public double Eccentricity;
-    private double Period;
+    public double Period;
     public double TrueAnomaly;
     public double MeanAnomaly;
     public double EccentricAnomaly;
@@ -185,8 +185,9 @@ public class KeplerOrbitData
     /// <param name="attractorMass">Attractor mass.</param>
     /// <param name="gConst">Gravitational constant.</param>
     public KeplerOrbitData(double eccentricity, double semiMajorAxis, double meanAnomalyDeg, double inclinationDeg, double argOfPerifocusDeg, double ascendingNodeDeg, double attractorMass,
-        double gConst)
+        double gConst, double period)
     {
+        this.Period = period;
         this.Eccentricity = eccentricity;
         this.SemiMajorAxis = semiMajorAxis;
         if (eccentricity < 1.0)
@@ -250,6 +251,8 @@ public class KeplerOrbitData
         this.TrueAnomaly = KeplerOrbitUtils.ConvertEccentricToTrueAnomaly(this.EccentricAnomaly, this.Eccentricity);
         this.AttractorMass = attractorMass;
         this.GravConst = gConst;
+        
+
         CalculateOrbitStateFromOrbitalElements();
     }
 
@@ -367,7 +370,9 @@ public class KeplerOrbitData
         {
             OrbitCompressionRatio = 1 - Eccentricity * Eccentricity;
             CenterPoint = -SemiMajorAxisBasis * SemiMajorAxis * Eccentricity;
-            Period = KeplerOrbitUtils.PI_2 * Math.Sqrt(Math.Pow(SemiMajorAxis, 3) / MG);
+            //Period = KeplerOrbitUtils.PI_2 * Math.Sqrt(Math.Pow(SemiMajorAxis, 3) / MG);
+           // UnityEngine.Debug.Log($"Period b: {Period}, SemiMajorAxis: {SemiMajorAxis}, MG: {MG}");
+
             MeanMotion = KeplerOrbitUtils.PI_2 / Period;
             Apoapsis = CenterPoint - SemiMajorAxisBasis * SemiMajorAxis;
             Periapsis = CenterPoint + SemiMajorAxisBasis * SemiMajorAxis;
@@ -1005,5 +1010,10 @@ public class KeplerOrbitData
     public KeplerOrbitData CloneOrbit()
     {
         return (KeplerOrbitData)MemberwiseClone();
+    }
+
+    public static implicit operator KeplerOrbitData(float v)
+    {
+        throw new NotImplementedException();
     }
 }

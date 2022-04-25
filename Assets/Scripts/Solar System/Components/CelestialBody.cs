@@ -29,8 +29,6 @@ public class CelestialBody : MonoBehaviour
 
     public CelestialBodyInfoData Info => _celestialBodyInfo;
 
-    float orbitPeriod = 0f;
-
     const float sunDiameter = 1392700;
     const float sunScale = .1f; // Make the sun smaller
 

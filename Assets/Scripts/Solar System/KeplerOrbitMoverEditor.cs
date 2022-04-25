@@ -67,6 +67,7 @@ public class KeplerOrbitMoverEditor : Editor
         string argOfPeriDeg = (_target.OrbitData.ArgumentOfPerifocus * KeplerOrbitUtils.Rad2Deg).ToString("0.000");
         EditorGUILayout.LabelField("ArgumentOfPerifocus", string.Format("{0,15} (deg={1})", argOfPeriRad, argOfPeriDeg));
 
+        EditorGUILayout.LabelField("Current Orbit Period", _target.OrbitData.Period.ToString("0.000"));
         EditorGUILayout.LabelField("Current Orbit Time", _target.OrbitData.GetCurrentOrbitTime().ToString("0.000"));
 
         EditorGUILayout.LabelField("Current MeanMotion", _target.OrbitData.MeanMotion.ToString("0.000"));

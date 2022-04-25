@@ -149,7 +149,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24437702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.424957, y: 0.8096218, z: 263.43622}
+  m_LocalPosition: {x: 96.771835, y: -0.14916798, z: 193.85524}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1340416580}
@@ -201,6 +201,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 2500
   LockOrbitEditing: 1
+  OrbitalPeriod: 16.689
   eccentricity: 0.007552158962446152
   semiMajorAxis: 0.01258990690152897
   meanAnomalyDeg: 359.3794775960536
@@ -381,7 +382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43539562}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.4999995, y: 0, z: -0.0000038146973}
+  m_LocalPosition: {x: -1.5000029, y: 0, z: 0.00000071525574}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 800445169}
@@ -501,7 +502,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50351163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 152.58969, y: 2.235844, z: 478.21875}
+  m_LocalPosition: {x: 180.70554, y: -0.98227644, z: 357.24353}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 973560643}
@@ -554,6 +555,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 10747
   eccentricity: 0.05509716255920354
   semiMajorAxis: 9.53379960390136
   meanAnomalyDeg: 206.6504597578883
@@ -720,7 +722,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50944607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 144.83682, y: -4.6181774, z: 463.7148}
+  m_LocalPosition: {x: 178.3046, y: -8.98995, z: 341.53128}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1802441573}
@@ -772,6 +774,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
   LockOrbitEditing: 1
+  OrbitalPeriod: 2.74
   eccentricity: 0.001702930902880962
   semiMajorAxis: 0.002524367590081409
   meanAnomalyDeg: 209.8746829881625
@@ -804,7 +807,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57009492}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 9.494088, y: -1.728852, z: 70.90175}
+  m_LocalPosition: {x: 22.884645, y: -1.64388, z: 51.252296}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1057163031}
@@ -835,6 +838,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 687
   eccentricity: 0.08694174924563587
   semiMajorAxis: 1.499665304235853
   meanAnomalyDeg: 320.6835625948802
@@ -1080,7 +1084,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129718586}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1176.4377, y: -7.8832316, z: 933.621}
+  m_LocalPosition: {x: 1158.3121, y: -20.453945, z: 303.03873}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1970465742}
@@ -1133,6 +1137,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 59800
   eccentricity: 0.00881139069464004
   semiMajorAxis: 30.08264629659431
   meanAnomalyDeg: 303.8071301409309
@@ -1472,7 +1477,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239124895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 171.16962, y: -6.679346, z: 464.37067}
+  m_LocalPosition: {x: 201.69398, y: -8.532131, z: 346.42596}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 76030086}
@@ -1524,12 +1529,88 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
   LockOrbitEditing: 1
+  OrbitalPeriod: 4.52
   eccentricity: 0.001220531583480546
   semiMajorAxis: 0.003524469439106127
   meanAnomalyDeg: 42.09179849752181
   inclinationDeg: 27.93222121689215
   argOfPerifocusDeg: 178.3684003896185
   ascendingNodeDeg: 170.1766277180811
+--- !u!1 &247752204
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 247752205}
+  - component: {fileID: 247752207}
+  - component: {fileID: 247752206}
+  m_Layer: 5
+  m_Name: Window Time
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &247752205
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247752204}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2103142392}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 1}
+  m_AnchorMax: {x: 0.5, y: 1}
+  m_AnchoredPosition: {x: 0, y: -110}
+  m_SizeDelta: {x: 400, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &247752206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247752204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.54901963, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9a32a6cc2cb803443983d45d4a513506, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &247752207
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 247752204}
+  m_CullTransparentMesh: 1
 --- !u!1 &247874977 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: 78a6f8f1be7cd5545825150e78854263, type: 3}
@@ -1605,7 +1686,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 294286413}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0075683594, y: 0.0051727295, z: 0.005004883}
+  m_LocalPosition: {x: -0.0061035156, y: 0.0024337769, z: 0.005126953}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 660032811}
@@ -1706,7 +1787,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303489671}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -18.295988, y: 0.0053356467, z: 47.020947}
+  m_LocalPosition: {x: -22.983458, y: 0.0041251685, z: 33.183006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 664188076}
@@ -1759,6 +1840,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 365.2
   eccentricity: 0.0210412089052348
   semiMajorAxis: 0.9884668414685552
   meanAnomalyDeg: 173.3373020011133
@@ -1863,7 +1945,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 312106109}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -322.0851, y: -147.46599, z: -338.04413}
+  m_LocalPosition: {x: -256.94153, y: -174.17099, z: -377.88242}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 239124896}
@@ -1893,7 +1975,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 331827617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.5448608, y: -0.16157746, z: -1.1888733}
+  m_LocalPosition: {x: 2.6449127, y: -0.12976778, z: -1.4176025}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 50351164}
@@ -1959,7 +2041,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336133197}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -9.000011, y: 0, z: -0.0000009536743}
+  m_LocalPosition: {x: -9.00001, y: 0, z: 0.00000071525574}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 1343969536}
@@ -1992,7 +2074,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344527603}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 154.87172, y: 8.189381, z: 490.55768}
+  m_LocalPosition: {x: 178.29236, y: 5.305595, z: 369.36658}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1104146012}
@@ -2044,6 +2126,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
   LockOrbitEditing: 1
+  OrbitalPeriod: 1.89
   eccentricity: 0.0009388952955039203
   semiMajorAxis: 0.001971775318471227
   meanAnomalyDeg: 2.26063783003125
@@ -2110,7 +2193,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344719714}
   m_LocalRotation: {x: 5.433401e-16, y: 0.7071068, z: 5.433401e-16, w: 0.7071068}
-  m_LocalPosition: {x: -11.000006, y: 0, z: 0.000011444092}
+  m_LocalPosition: {x: -11.00001, y: 0, z: 0.0000076293945}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 44456845}
@@ -2143,7 +2226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379649851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.778248, y: 0.50077844, z: 259.71378}
+  m_LocalPosition: {x: 65.112045, y: -0.64370376, z: 196.00986}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 521022328}
@@ -2196,6 +2279,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 4331
   eccentricity: 0.04888494583643366
   semiMajorAxis: 5.186724453387114
   meanAnomalyDeg: 278.029722695777
@@ -2228,7 +2312,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410808176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.304133, y: -1.5212655, z: 69.51119}
+  m_LocalPosition: {x: 22.906677, y: -1.5311561, z: 49.8398}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1464777824}
@@ -2257,6 +2341,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 9000
   LockOrbitEditing: 1
+  OrbitalPeriod: 1.263
   eccentricity: 0.0002953184552519328
   semiMajorAxis: 0.000156811412267158
   meanAnomalyDeg: 4.892763752005678
@@ -2346,7 +2431,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426958031}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -59.999756, y: 0, z: 0.00024414062}
+  m_LocalPosition: {x: -59.999756, y: 0, z: 0.000091552734}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 1788847055}
@@ -2363,6 +2448,18 @@ PrefabInstance:
     - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.4887
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.4887
+      objectReference: {fileID: 0}
+    - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.4887
       objectReference: {fileID: 0}
     - target: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2434,7 +2531,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 454008239}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -22.88705, y: 2.407167, z: -4.4586325}
+  m_LocalPosition: {x: -0.55175686, y: -1.1759292, z: 15.008562}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 610533908}
@@ -2464,7 +2561,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 485989137}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.190425, y: -0.20540226, z: -2.1477966}
+  m_LocalPosition: {x: 7.529093, y: -0.10267329, z: -3.914383}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 57009493}
@@ -2494,8 +2591,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495802040}
-  m_LocalRotation: {x: -0.030956827, y: -0.7351421, z: -0.033646796, w: 0.6763695}
-  m_LocalPosition: {x: 1.2097435, y: -0.11135568, z: 0.100917816}
+  m_LocalRotation: {x: -0.03366465, y: -0.6726993, z: -0.030664556, w: 0.7385134}
+  m_LocalPosition: {x: 1.1785679, y: -0.108141616, z: -0.11016846}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2057629627}
@@ -2881,7 +2978,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549881617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 205.84517, y: -9.859758, z: 465.0398}
+  m_LocalPosition: {x: 236.2478, y: -7.411374, z: 355.49908}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1354161169}
@@ -2933,6 +3030,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
   LockOrbitEditing: 1
+  OrbitalPeriod: 15.9
   eccentricity: 0.02875559772511478
   semiMajorAxis: 0.008168331024350073
   meanAnomalyDeg: 18.33619485527344
@@ -2963,7 +3061,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 551060697}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.22802353, y: 0.013785951, z: 4.3437614}
+  m_LocalPosition: {x: 0.4983673, y: -0.052828074, z: 4.25333}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1320292164}
@@ -2984,7 +3082,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &552353608
 Transform:
   m_ObjectHideFlags: 0
@@ -3016,6 +3114,18 @@ PrefabInstance:
     - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2756
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2756
+      objectReference: {fileID: 0}
+    - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2756
       objectReference: {fileID: 0}
     - target: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -7901,7 +8011,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610533907}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.159657, y: 0.9979551, z: -15.680367}
+  m_LocalPosition: {x: -15.996074, y: 1.2237892, z: 2.5018177}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1951405334}
@@ -7954,6 +8064,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 88
   eccentricity: 0.18616124122479
   semiMajorAxis: 0.3938530083098737
   meanAnomalyDeg: 88.95039755303172
@@ -7984,7 +8095,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 620896653}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 595.6177, y: 149.2858, z: 394.87668}
+  m_LocalPosition: {x: 697.2377, y: 43.60102, z: 211.93143}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1103340000}
@@ -8014,7 +8125,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 633337981}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.232994, y: -0.8091375, z: 13.86885}
+  m_LocalPosition: {x: -0.8372612, y: -0.66943616, z: 11.365429}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1680309057}
@@ -8046,7 +8157,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660032810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00012207031, y: -0.0005493164, z: 0.00048828125}
+  m_LocalPosition: {x: 0.000061035156, y: -0.000497818, z: 0.00024414062}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1306857197}
@@ -8099,6 +8210,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 6.38723
   eccentricity: 0.03603541522806469
   semiMajorAxis: 0.00001376951648282823
   meanAnomalyDeg: 180.2963908046281
@@ -8203,7 +8315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 664188075}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.197664, y: 0.000030487776, z: 4.323044}
+  m_LocalPosition: {x: 7.880622, y: 0.00026480062, z: 5.486271}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 303489672}
@@ -8393,7 +8505,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 707386656}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.2575226, y: -0.12088472, z: -0.7805481}
+  m_LocalPosition: {x: 4.0084, y: -0.09613603, z: -1.552414}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 379649852}
@@ -8425,7 +8537,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 716237292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 33.88555, y: 0.33010882, z: 267.6901}
+  m_LocalPosition: {x: 69.65409, y: -0.9555361, z: 206.39848}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 77830974}
@@ -8477,6 +8589,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 4000
   LockOrbitEditing: 1
+  OrbitalPeriod: 1.77
   eccentricity: 0.004837402992486747
   semiMajorAxis: 0.002821181024463387
   meanAnomalyDeg: 0.1203789828403121
@@ -8509,7 +8622,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717846275}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.02368164, y: 0.08879089, z: -0.08105469}
+  m_LocalPosition: {x: -0.020446777, y: 0.31011772, z: -0.17126465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1482602635}
@@ -8559,8 +8672,9 @@ MonoBehaviour:
   VelocityHandleLengthScale: 0
   TimeScale: 1
   IsOrbitingPlanet: 1
-  OrbitExtraRange: 1000
+  OrbitExtraRange: 3000
   LockOrbitEditing: 1
+  OrbitalPeriod: 6.38723
   eccentricity: 0.0019456678628711
   semiMajorAxis: 0.0001165021046585592
   meanAnomalyDeg: 184.1959886583579
@@ -8591,7 +8705,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 723415017}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.823433, y: 5.6697955, z: -171.15643}
+  m_LocalPosition: {x: -11.751297, y: 5.247667, z: -171.25932}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 24437703}
@@ -8611,6 +8725,18 @@ PrefabInstance:
     - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.6792
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.6792
+      objectReference: {fileID: 0}
+    - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.6792
       objectReference: {fileID: 0}
     - target: {fileID: 9211199211051751644, guid: 3d9afc1d950ba154d9532ac52a27910d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -8680,7 +8806,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740982483}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 156.7707, y: 7.13743, z: 488.98035}
+  m_LocalPosition: {x: 182.00652, y: 4.459127, z: 368.39072}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 663051534}
@@ -8732,6 +8858,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 10000
   LockOrbitEditing: 1
+  OrbitalPeriod: 0.9395834
   eccentricity: 0.01960482075770176
   semiMajorAxis: 0.001243457983437091
   meanAnomalyDeg: 86.08846637603772
@@ -8762,11 +8889,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 742057135}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1429663503}
+  m_Father: {fileID: 976942980}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!120 &742057137
@@ -9013,7 +9140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750187246}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.5996094, y: 0, z: 0.00036621094}
+  m_LocalPosition: {x: -2.5998535, y: 0, z: 0.00036621094}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 748630391}
@@ -9392,7 +9519,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 807885017}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3604736, y: -1.0926666, z: -0.79785156}
+  m_LocalPosition: {x: 4.069458, y: -1.6187916, z: -3.4157715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 717846276}
@@ -9424,7 +9551,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811486802}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 27.563875, y: -0.29903513, z: 281.41528}
+  m_LocalPosition: {x: 73.6471, y: -1.285191, z: 215.95888}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1069093578}
@@ -9453,6 +9580,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 3000
   LockOrbitEditing: 1
+  OrbitalPeriod: 7.154553
   eccentricity: 0.002560316112763841
   semiMajorAxis: 0.007157065878914017
   meanAnomalyDeg: 333.5044391362055
@@ -9575,7 +9703,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 818283948}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.6824951, y: -0.59606934, z: -1.0222168}
+  m_LocalPosition: {x: 1.6745605, y: -0.5187855, z: -0.3215332}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1514701311}
@@ -9605,7 +9733,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 829388256}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.3670654, y: -0.067638874, z: -1.7542114}
+  m_LocalPosition: {x: 0.4383545, y: -0.04575348, z: -1.7307434}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 129718587}
@@ -9721,7 +9849,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 843781875}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -96.02416, y: -136.73894, z: -283.8153}
+  m_LocalPosition: {x: -23.356934, y: -148.88603, z: -293.34485}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 549881618}
@@ -9787,7 +9915,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 859231291}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -12, y: 0, z: 0.000015258789}
+  m_LocalPosition: {x: -11.999996, y: 0, z: 0.000011444092}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 156978748}
@@ -9891,7 +10019,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 883777100}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.2958374, y: 0.035153866, z: -1.4751587}
+  m_LocalPosition: {x: -1.3487549, y: 0.02366066, z: -1.6813049}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1812590290}
@@ -10005,10 +10133,10 @@ MonoBehaviour:
   m_LookAt: {fileID: 1692573083}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 41
+    FieldOfView: 86
     OrthographicSize: 5
     NearClipPlane: 0.1
-    FarClipPlane: 10000
+    FarClipPlane: 100000
     Dutch: 0
     LensShift: {x: 0, y: 0}
   m_Transitions:
@@ -10089,6 +10217,18 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5324143264224130373, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 12.053599
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324143264224130373, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 12.053599
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324143264224130373, guid: df427a8f3947d44489205e8873e648c2, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 12.053599
+      objectReference: {fileID: 0}
+    - target: {fileID: 5324143264224130373, guid: df427a8f3947d44489205e8873e648c2, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -10159,7 +10299,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945996712}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 405.1633, y: 20.999897, z: -409.88547}
+  m_LocalPosition: {x: 527.2705, y: 16.248371, z: -230.03563}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 716237293}
@@ -10217,8 +10357,8 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.1
-  far clip plane: 10000
-  field of view: 41
+  far clip plane: 100000
+  field of view: 86
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -10311,13 +10451,33 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 976942980}
+  - component: {fileID: 976942982}
+  - component: {fileID: 976942981}
+  - component: {fileID: 976942979}
   m_Layer: 0
-  m_Name: Solar System
+  m_Name: Solar System Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &976942979
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976942978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25552fdf73298804ba453618c2842b71, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _epochYear: 2020
+  _epochMonth: 6
+  _epochDay: 1
+  _epochHour: 0
+  _epochMinute: 0
 --- !u!4 &976942980
 Transform:
   m_ObjectHideFlags: 0
@@ -10329,7 +10489,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 1429663503}
+  - {fileID: 742057136}
   - {fileID: 1681661683}
   - {fileID: 610533908}
   - {fileID: 1680309057}
@@ -10343,6 +10503,39 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &976942981
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976942978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f406168afbb39954b925e8658482d1f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetCamera: {fileID: 963194227}
+  _lineTemplate: {fileID: 742057137}
+  _camDistance: 0.5
+  _isDebugMode: 0
+--- !u!114 &976942982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 976942978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0b472f8d390b364498f3d2abbc875f8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _distanceScale: 1
+  _planetScaleMultiplier: 1
+  _rotationSpeed: 1
+  _orbitScale: 0.1
+  orbitActive: 0
 --- !u!1 &993721157
 GameObject:
   m_ObjectHideFlags: 3
@@ -10456,7 +10649,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006441347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.74476, y: 0.650369, z: 249.4847}
+  m_LocalPosition: {x: 58.852768, y: -0.20176682, z: 181.58257}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259013242}
@@ -10508,6 +10701,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 3500
   LockOrbitEditing: 1
+  OrbitalPeriod: 3.551181
   eccentricity: 0.009378436010949787
   semiMajorAxis: 0.004486345229584894
   meanAnomalyDeg: 1.772963547408908
@@ -15416,7 +15610,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1032434523}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 643.51514, y: -96.667435, z: -72.1163}
+  m_LocalPosition: {x: 641.51086, y: 2.7205586, z: 126.31351}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 344527604}
@@ -15446,7 +15640,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1046148816}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.62875, y: 32.357105, z: 175.46683}
+  m_LocalPosition: {x: 103.749664, y: 13.772984, z: 150.3339}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1944402866}
@@ -15635,7 +15829,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1096059087}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -90.115486, y: 39.5541, z: 18.207397}
+  m_LocalPosition: {x: -90.992134, y: 41.37355, z: 1.8799477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 410808177}
@@ -15667,7 +15861,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103339999}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 146.14, y: 6.9661074, z: 486.05606}
+  m_LocalPosition: {x: 177.49731, y: 4.223522, z: 366.58682}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1475253913}
@@ -15719,6 +15913,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
   LockOrbitEditing: 1
+  OrbitalPeriod: 1.37
   eccentricity: 0.00599105653660171
   semiMajorAxis: 0.001593714789227613
   meanAnomalyDeg: 322.6450627118213
@@ -15882,7 +16077,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1150210682}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.695782, y: 12.027559, z: -158.34976}
+  m_LocalPosition: {x: 75.987495, y: -31.513931, z: -134.29759}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2037492401}
@@ -15898,6 +16093,18 @@ PrefabInstance:
     - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.2104
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.2104
+      objectReference: {fileID: 0}
+    - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.2104
       objectReference: {fileID: 0}
     - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16076,7 +16283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1279582459}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -29.999996, y: 0, z: 0.000061035156}
+  m_LocalPosition: {x: -29.999989, y: 0, z: 0.000045776367}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 1345352705}
@@ -16278,7 +16485,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320292163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2082577, y: 0.11121913, z: -0.10095215}
+  m_LocalPosition: {x: -1.1773853, y: 0.10803314, z: 0.11005783}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1808624689}
@@ -16308,6 +16515,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 450
   LockOrbitEditing: 1
+  OrbitalPeriod: 27.3
   eccentricity: 0.04500924806355468
   semiMajorAxis: 0.002518548296417115
   meanAnomalyDeg: 328.5176372848628
@@ -16636,90 +16844,6 @@ Transform:
   m_Father: {fileID: 976942980}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1429663502
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1429663503}
-  - component: {fileID: 1429663504}
-  - component: {fileID: 1429663505}
-  - component: {fileID: 1429663506}
-  m_Layer: 0
-  m_Name: Solar System Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1429663503
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429663502}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 742057136}
-  m_Father: {fileID: 976942980}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1429663504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429663502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0b472f8d390b364498f3d2abbc875f8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _distanceScale: 1
-  _planetScaleMultiplier: 1
-  _rotationSpeed: 1
-  _orbitScale: 0.1
-  orbitActive: 0
---- !u!114 &1429663505
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429663502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f406168afbb39954b925e8658482d1f7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _targetCamera: {fileID: 963194227}
-  _lineTemplate: {fileID: 742057137}
-  _camDistance: 0.5
-  _isDebugMode: 0
---- !u!114 &1429663506
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429663502}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 25552fdf73298804ba453618c2842b71, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _epochYear: 2022
-  _epochMonth: 4
-  _epochDay: 24
-  _epochHour: 0
-  _epochMinute: 0
 --- !u!1 &1434744145
 GameObject:
   m_ObjectHideFlags: 0
@@ -21834,7 +21958,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486740357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 80.68461, y: 18.692038, z: 497.28015}
+  m_LocalPosition: {x: 115.18002, y: 20.12787, z: 386.81314}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1290764541}
@@ -21886,6 +22010,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
   LockOrbitEditing: 1
+  OrbitalPeriod: 21.276
   eccentricity: 0.1240985578249046
   semiMajorAxis: 0.009862343898886404
   meanAnomalyDeg: 235.8712690632686
@@ -21916,7 +22041,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1489017766}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 104.454796, y: 101.376526, z: 222.28809}
+  m_LocalPosition: {x: 150.82593, y: 88.498665, z: 205.47543}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1486740358}
@@ -22015,7 +22140,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1501816122}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 270.97226, y: 4.543722, z: -22.62265}
+  m_LocalPosition: {x: 249.20016, y: 7.4410796, z: -106.71717}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 811486803}
@@ -22047,7 +22172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514701310}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1277.8195, y: -227.33887, z: 1329.6797}
+  m_LocalPosition: {x: 536.94104, y: -21.432877, z: 1251.1665}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 818283949}
@@ -22100,6 +22225,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 90560
   eccentricity: 0.2490159363818954
   semiMajorAxis: 39.48850167056454
   meanAnomalyDeg: 44.48751994128676
@@ -22113,9 +22239,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1320292164}
     m_Modifications:
+    - target: {fileID: 1808624693, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
+      propertyPath: period
+      value: 27.3
+      objectReference: {fileID: 0}
     - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3475
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3475
+      objectReference: {fileID: 0}
+    - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.3475
       objectReference: {fileID: 0}
     - target: {fileID: 4146707697817101771, guid: 49b995975c1a41241aa28bf7ba09aadc, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22233,7 +22375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1609523811}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -261.83334, y: -17.841887, z: 305.04645}
+  m_LocalPosition: {x: -368.4862, y: -14.313484, z: 159.30083}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1006441348}
@@ -22510,7 +22652,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659243070}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -200, y: 0, z: 0.00012207031}
+  m_LocalPosition: {x: -199.99997, y: 0, z: 0.000091552734}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_Children:
   - {fileID: 1141551455}
@@ -22543,7 +22685,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680309056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.10388, y: 0.60919815, z: -8.21721}
+  m_LocalPosition: {x: -28.748178, y: 0.23159981, z: -2.2111382}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 927641450}
@@ -22573,6 +22715,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 224.7
   eccentricity: 0.012041053961918
   semiMajorAxis: 0.7126826197114173
   meanAnomalyDeg: 198.0741475089487
@@ -22794,7 +22937,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1699474565}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00027275085, y: 0.000033856835, z: -0.0053596497}
+  m_LocalPosition: {x: -0.00049972534, y: 0.000053043943, z: -0.004272461}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2035322862}
@@ -22826,7 +22969,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: -6.646635, y: 0.2111988, z: -6.0925446}
+  m_LocalPosition: {x: -6.58127, y: 0.2111988, z: -6.1551704}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 993721158}
@@ -22907,7 +23050,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1743652880}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -517.2588, y: 156.85875, z: 203.26517}
+  m_LocalPosition: {x: -568.9856, y: 79.82689, z: 46.814484}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 50944608}
@@ -23260,7 +23403,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812590289}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 563.60535, y: -4.3423924, z: -798.9306}
+  m_LocalPosition: {x: 634.67017, y: -6.462843, z: -473.71432}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 304526071}
@@ -23313,6 +23456,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 30667.3
   eccentricity: 0.0473218063860225
   semiMajorAxis: 19.18797530214209
   meanAnomalyDeg: 229.6390399703458
@@ -28491,7 +28635,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944402865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.318436, y: 42.67616, z: 508.80222}
+  m_LocalPosition: {x: 41.892944, y: 47.66695, z: 446.15646}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1593465823}
@@ -28543,6 +28687,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
   LockOrbitEditing: 1
+  OrbitalPeriod: 79.3215
   eccentricity: 0.02877662184681641
   semiMajorAxis: 0.02378760401783633
   meanAnomalyDeg: 204.4191635968796
@@ -28925,7 +29070,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035322861}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0014858246, y: -0.00013654819, z: -0.000034332275}
+  m_LocalPosition: {x: 0.0011825562, y: -0.0001084744, z: -0.00011062622}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 133408424}
@@ -28955,6 +29100,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
   LockOrbitEditing: 1
+  OrbitalPeriod: 27.3
   eccentricity: 0.04500924806351013
   semiMajorAxis: 0.00003097823699264246
   meanAnomalyDeg: 328.5176372848259
@@ -28987,7 +29133,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037492400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.999655, y: -1.9748676, z: 70.8568}
+  m_LocalPosition: {x: 23.311377, y: -1.8661506, z: 51.555637}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 247874978}
@@ -29016,6 +29162,7 @@ MonoBehaviour:
   IsOrbitingPlanet: 1
   OrbitExtraRange: 9000
   LockOrbitEditing: 1
+  OrbitalPeriod: 0.32
   eccentricity: 0.01505600087681793
   semiMajorAxis: 0.00006268702627661408
   meanAnomalyDeg: 256.5987725110938
@@ -29069,7 +29216,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2053263194}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1103.2521, y: -272.37225, z: -278.31052}
+  m_LocalPosition: {x: 1163.2344, y: -156.67337, z: -33.55539}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 740982484}
@@ -29192,6 +29339,7 @@ RectTransform:
   m_Children:
   - {fileID: 2022205612}
   - {fileID: 181938621}
+  - {fileID: 247752205}
   m_Father: {fileID: 552353608}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29475,6 +29623,18 @@ PrefabInstance:
     - target: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5.1117997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 5.1117997
+      objectReference: {fileID: 0}
+    - target: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5.1117997
       objectReference: {fileID: 0}
     - target: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
       propertyPath: m_LocalPosition.x

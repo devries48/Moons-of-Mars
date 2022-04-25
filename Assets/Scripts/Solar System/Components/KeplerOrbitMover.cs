@@ -53,6 +53,9 @@ public class KeplerOrbitMover : MonoBehaviour
     [Tooltip("Disable continious editing orbit in update loop, if you don't need it, or you need to fix Kraken issue on large scale orbits.")]
     public bool LockOrbitEditing = false;
 
+    [Header("Orbital period in days")]
+    public float OrbitalPeriod;
+
     /// <summary>
     /// The orbit data.
     /// Internal state of orbit.
@@ -65,14 +68,6 @@ public class KeplerOrbitMover : MonoBehaviour
     public double inclinationDeg;
     public double argOfPerifocusDeg;
     public double ascendingNodeDeg;
-
-#if UNITY_EDITOR
-    /// <summary>
-    /// The debug error displayed flag.
-    /// Used to avoid errors spamming.
-    /// </summary>
-    private bool _debugErrorDisplayed = false;
-#endif
 
     private Coroutine _updateRoutine;
 
@@ -147,30 +142,6 @@ public class KeplerOrbitMover : MonoBehaviour
                 }
             }
         }
-        else
-        {
-#if UNITY_EDITOR
-            if (AttractorSettings.AttractorObject == null)
-            {
-                if (!_debugErrorDisplayed)
-                {
-                    _debugErrorDisplayed = true;
-                    if (Application.isPlaying)
-                    {
-                        Debug.LogError("KeplerMover: Attractor reference not asigned: " + gameObject.name, context: gameObject);
-                    }
-                    else
-                    {
-                        Debug.Log("KeplerMover: Attractor reference not asigned: " + gameObject.name, context: gameObject);
-                    }
-                }
-            }
-            else
-            {
-                _debugErrorDisplayed = false;
-            }
-#endif
-        }
     }
 
 
@@ -192,14 +163,14 @@ public class KeplerOrbitMover : MonoBehaviour
         /// <summary>
         /// Orbit scale multiplier: world units per 1 au.
         /// </summary>
-        const float UnitsPerAU = 50f;
+        const float UnitsPerAU = 40f;
 
         float units = UnitsPerAU;
 
         if (IsOrbitingPlanet)
         {
             var solarSystem = GameObject.Find(Constants.SolarSystemController).GetComponent<SolarSystemController>();
-            units += (OrbitExtraRange * solarSystem.PlanetScaleMultiplier);
+            units += OrbitExtraRange * solarSystem.PlanetScaleMultiplier;
         }
 
         // G constant is used as free parameter to fixate orbits periods values while SemiMajor axis parameter is adjusted for the scene.
@@ -215,7 +186,12 @@ public class KeplerOrbitMover : MonoBehaviour
                  argOfPerifocusDeg: argOfPerifocusDeg,
                  ascendingNodeDeg: ascendingNodeDeg,
                  attractorMass: AttractorSettings.AttractorMass,
-                 gConst: compensatedGConst);
+                 gConst: compensatedGConst,
+                 period: OrbitalPeriod * 86400
+                 );
+
+        if (AttractorSettings.AttractorObject != null && OrbitData.SemiMajorAxis > 0)
+            ForceUpdateViewFromInternalState();
     }
 
     /// <summary>
@@ -235,8 +211,6 @@ public class KeplerOrbitMover : MonoBehaviour
             {
                 if (!OrbitData.IsValidOrbit)
                 {
-                    Debug.Log("not valid" + gameObject.name);
-
                     //try to fix orbit if we can.
                     OrbitData.CalculateOrbitStateFromOrbitalVectors();
                 }
