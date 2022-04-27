@@ -21,6 +21,10 @@ public class KeplerTimeController : MonoBehaviour
 
     private readonly List<BodyTimeData> _bodies = new List<BodyTimeData>();
 
+    [SerializeField]
+    [Tooltip("Display current solar system time in this field.")]
+    private TMPro.TextMeshProUGUI _displayTimeField;
+
     [Header("Epoch origin timestamp")]
     [SerializeField]
     private int _epochYear;
@@ -50,26 +54,28 @@ public class KeplerTimeController : MonoBehaviour
     private void Awake()
     {
         var instances = FindObjectsOfType<KeplerOrbitMover>();
-        Debug.Log("add " );
 
         foreach (var item in instances)
-        {
-
             AddBody(item);
-        }
 
         _epochDate = new DateTime(_epochYear, _epochMonth, _epochDay, _epochHour, _epochMinute, 0, DateTimeKind.Utc);
     }
 
-    private IEnumerator Start()
+    private void Start()
     {
-        yield return null;
         SetCurrentGlobalTime();
     }
 
     private void Update()
     {
         _currentTime = _currentTime.AddSeconds(_currentTimeScale * Time.deltaTime);
+
+        RefreshTimeDisplay();
+    }
+
+    private void RefreshTimeDisplay()
+    {
+        _displayTimeField.text = _currentTime.ToString("yyyy - MM - dd   HH : mm : ss");
     }
 
     private void AddBody(KeplerOrbitMover b)
