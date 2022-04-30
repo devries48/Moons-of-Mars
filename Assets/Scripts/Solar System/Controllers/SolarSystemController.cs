@@ -93,7 +93,7 @@ public class SolarSystemController : MonoBehaviour
 
     private void OnValidate()
     {
-        name = Constants.SolarSystemController;
+        name = Constants.SolarSystemMain;
 
         DistanceScale = _distanceScale;
         PlanetScaleMultiplier = _planetScaleMultiplier;

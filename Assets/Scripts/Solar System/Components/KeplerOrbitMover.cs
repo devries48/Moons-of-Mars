@@ -169,8 +169,12 @@ public class KeplerOrbitMover : MonoBehaviour
 
         if (IsOrbitingPlanet)
         {
-            var solarSystem = GameObject.Find(Constants.SolarSystemController).GetComponent<SolarSystemController>();
-            units += OrbitExtraRange * solarSystem.PlanetScaleMultiplier;
+            var mltp = 1f;
+            var solarSystem = GameObject.Find(Constants.SolarSystemMain); 
+            if (solarSystem != null)
+                mltp = solarSystem.GetComponent<SolarSystemController>().PlanetScaleMultiplier;
+            
+            units += OrbitExtraRange * mltp;
         }
 
         // G constant is used as free parameter to fixate orbits periods values while SemiMajor axis parameter is adjusted for the scene.

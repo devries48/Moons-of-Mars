@@ -3,7 +3,7 @@ using UnityEngine.Playables;
 
 public class BodySelectReceiver : MonoBehaviour, INotificationReceiver
 {
-    [SerializeField] private IntroManager introManager;
+    [SerializeField] private MenuManager introManager;
 
     public void OnNotify(Playable origin, INotification notification, object context)
     {

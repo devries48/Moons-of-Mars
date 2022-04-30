@@ -83,13 +83,16 @@ public class CelestialBody : MonoBehaviour
             trans.localScale = sunSize * Vector3.one;
         }
         else
-            trans.localScale = diameter * solarSystemController.PlanetScaleMultiplier * scaleMultiplier * Vector3.one;
+        {
+            var mltp = solarSystemController != null ? solarSystemController.PlanetScaleMultiplier : 1;
+            trans.localScale = diameter * mltp * scaleMultiplier * Vector3.one;
+        }
     }
 
     private void InitSolarSystemController()
     {
         if (solarSystemController == null)
-            solarSystemController = GameObject.Find(Constants.SolarSystemController).GetComponent<SolarSystemController>();
+            solarSystemController = GameObject.Find(Constants.SolarSystemMain).GetComponent<SolarSystemController>();
     }
 
     /// <summary>
