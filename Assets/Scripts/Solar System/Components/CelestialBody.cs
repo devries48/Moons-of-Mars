@@ -9,9 +9,10 @@ public class CelestialBody : MonoBehaviour
     #region public fields
     public CelestialBodyName bodyName;
     public CelestialBodyType bodyType;
+
     [Tooltip("")]
     [Header("Mean distance from sun/planet in 10^6 km")]
-    public float distance; 
+    public float distance;
     [Header("Diameter in km")]
     public float diameter;
     [Header("Surface gravity in g")]
@@ -24,7 +25,7 @@ public class CelestialBody : MonoBehaviour
     public float RotationPeriod;
     #endregion
 
-    private SolarSystemController solarSystemController;
+    private SolarSystemController _solarSystemController;
     private CelestialBodyInfoData _celestialBodyInfo;
 
     public CelestialBodyInfoData Info => _celestialBodyInfo;
@@ -43,7 +44,7 @@ public class CelestialBody : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {
-        var rotationSpeed = solarSystemController.isDemo && bodyType != CelestialBodyType.Sun
+        var rotationSpeed = _solarSystemController.isDemo && bodyType != CelestialBodyType.Sun
             ? 30 * Time.fixedDeltaTime
             : (1 / RotationPeriod) * 1000 * Time.fixedDeltaTime;
 
@@ -84,15 +85,19 @@ public class CelestialBody : MonoBehaviour
         }
         else
         {
-            var mltp = solarSystemController != null ? solarSystemController.PlanetScaleMultiplier : 1;
+            var mltp = _solarSystemController != null ? _solarSystemController.PlanetScaleMultiplier : 1;
             trans.localScale = diameter * mltp * scaleMultiplier * Vector3.one;
         }
     }
 
-    private void InitSolarSystemController()
+    private void InitSolarSystemController() //make property
     {
-        if (solarSystemController == null)
-            solarSystemController = GameObject.Find(Constants.SolarSystemMain).GetComponent<SolarSystemController>();
+        if (_solarSystemController == null)
+        {
+            var solarSystem = GameObject.Find(Constants.SolarSystemMain);
+            if (solarSystem != null)
+                _solarSystemController = solarSystem.GetComponent<SolarSystemController>();
+        }
     }
 
     /// <summary>

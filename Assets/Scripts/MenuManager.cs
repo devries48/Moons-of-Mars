@@ -1,31 +1,48 @@
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
+using Cinemachine;
+
 using static SolarSystemController;
+
 
 // see https://easings.net/
 
 public class MenuManager : MonoBehaviour
 {
-    [SerializeField] private GameObject mainMenuWindow;
-    [SerializeField] private GameObject timePanel;
-    [SerializeField] private GameObject infoPanel;
-    [SerializeField] private GameObject exitButton;
-    [SerializeField] private AudioSource slideInSound;
+    [Header("UI Elements")]
+    [SerializeField] GameObject mainMenuWindow;
+    [SerializeField] GameObject timePanel;
+    [SerializeField] GameObject infoPanel;
+    [SerializeField] GameObject exitButton;
+    [SerializeField] ParticleSystem SpaceDebriSystem;
+    [Header("Sound")]
+    [SerializeField] AudioSource slideInSound;
+    [Header("Cameras")]
+    [SerializeField] CinemachineVirtualCamera menuCamera;
+    [SerializeField] CinemachineVirtualCamera solarSystemCamera;
 
-    private CelestialBody[] celestialBodies;
-    private PlayableDirector director;
-    private GameObject spaceDebri_Particles;
+    private CelestialBody[] _celestialBodies;
+    private PlayableDirector _director;
 
-    void Awake()
+    private void OnEnable()
     {
-        celestialBodies = FindObjectsOfType<CelestialBody>();
+        CameraSwitcher.Register(menuCamera);
+        CameraSwitcher.Register(solarSystemCamera);
+    }
+    private void OnDisable()
+    {
+        CameraSwitcher.Unregister(menuCamera);
+        CameraSwitcher.Unregister(solarSystemCamera);
+    }
 
-        director = GetComponent<PlayableDirector>();
-        director.played += Director_played;
-        director.stopped += Director_stopped;
+    private void Awake()
+    {
+        _celestialBodies = FindObjectsOfType<CelestialBody>();
 
-        spaceDebri_Particles = GameObject.Find(Constants.SpaceDebri);
+        _director = GetComponent<PlayableDirector>();
+        _director.played += Director_played;
+        _director.stopped += Director_stopped;
     }
 
     private void Start()
@@ -47,12 +64,13 @@ public class MenuManager : MonoBehaviour
 
     public void MenuStartTour()
     {
-        director.Play();
+        _director.Play();
     }
 
     public void MenuSolarSytem()
     {
-
+        HideMainMenu();
+        CameraSwitcher.SwitchCamera(solarSystemCamera);
     }
 
     public void MenuQuit()
@@ -64,6 +82,14 @@ public class MenuManager : MonoBehaviour
 #endif
     }
 
+    public void ExitToMainMenu()
+    {
+        if (_director.state == PlayState.Playing)
+            _director.Stop();
+        else
+            ShowMainMenu();
+    }
+
     public void ShowTimeWindow()
     {
         TweenPivot(timePanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0));
@@ -71,13 +97,12 @@ public class MenuManager : MonoBehaviour
 
     public void HideTimeWindow()
     {
-        TweenPivot(timePanel, new Vector2(0.5f, 2f),  Vector3.zero);
+        TweenPivot(timePanel, new Vector2(0.5f, 2f), Vector3.zero);
     }
-
 
     private void SetWindowInfo(CelestialBodyName name)
     {
-        var info = celestialBodies.First(b => b.Info.bodyName == name).Info;
+        var info = _celestialBodies.First(b => b.Info.bodyName == name).Info;
         if (info == null)
             return;
 
@@ -96,19 +121,19 @@ public class MenuManager : MonoBehaviour
 
     private void ShowMainMenu()
     {
-        if (spaceDebri_Particles == null)
+        CameraSwitcher.SwitchCamera(menuCamera);
+
+        if (SpaceDebriSystem == null)
             return;
 
-        spaceDebri_Particles.SetActive(true);
-        
         HideExitButton();
         TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, 2f);
+        SpaceDebriSystem.Play();
     }
 
     private void HideMainMenu()
     {
-        spaceDebri_Particles.SetActive(false);
-
+        SpaceDebriSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         ShowExitButton();
         TweenPivot(mainMenuWindow, new Vector2(1.2f, 0.5f), new Vector3(0, -110, 0), LeanTweenType.easeInExpo, 1f, LeanTweenType.easeOutCirc, 1f);
     }

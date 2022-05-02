@@ -1,5 +1,5 @@
 public static class Constants
 {
-    internal static string SpaceDebri = "Space debri";
+    internal static string SpaceDebri = "SPACE DEBRI";
     internal static string SolarSystemMain = "SOLAR SYSTEM";
 }
