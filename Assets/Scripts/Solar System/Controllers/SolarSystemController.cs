@@ -37,31 +37,14 @@ public class SolarSystemController : MonoBehaviour
 
     public enum OrbitActiveType { All, None, MoonsOnly }
 
-    // Distance scale 0.1 = 1:100.000km, scale 1 = 1:1.000.000km
-    [Header("Scale")]
-    [Range(0.1f, 1f)]
-    [SerializeField] float _distanceScale = 1f;
-
     // Planet diameter scale 1 = 1unity:10,000km, scale 10 = 1unity:1,000km
     [Range(1, 10)]
     [SerializeField] private float _planetScaleMultiplier = 1f;
 
-    // Planet rotation scale 0.1 = 1 sec, scale 1 = 1 hour
-    [Range(1, 10)]
-    [SerializeField] int _rotationSpeed = 1;
-
-    // Orbit period scale 0.1 = 1 minute, scale 1 = 1 day
-    [Range(0.1f, 1f)]
-    [SerializeField] float _orbitScale = 1f;
-
     public OrbitActiveType orbitActive;
-    internal bool isDemo = true;
 
-    public float DistanceScale
-    {
-        get { return _distanceScale; }
-        set { _distanceScale = value; ApplyChanges(); }
-    }
+    internal bool IsDemo = true;
+    private KeplerOrbitLinesController _orbitLinesController;
 
     public float PlanetScaleMultiplier
     {
@@ -69,18 +52,21 @@ public class SolarSystemController : MonoBehaviour
         set { _planetScaleMultiplier = value; ApplyChanges(); }
     }
 
-    public int RotationSpeed
+    public void ShowOrbitLines()
     {
-        get { return _rotationSpeed * 100; }
-        set { _rotationSpeed = value; ApplyChanges(); }
+        _orbitLinesController.enabled = true;
     }
 
-    public float OrbitScale
+    public void HideOrbitLines()
     {
-        get { return _orbitScale * 10; }
-        set { _orbitScale = value; ApplyChanges(); }
+        _orbitLinesController.enabled = false;
     }
 
+    private void Awake()
+    {
+        _orbitLinesController = GetComponent<KeplerOrbitLinesController>();
+    }
+ 
     /// <summary>
     /// Apply the changes to all celestial bodies.
     /// </summary>
@@ -95,10 +81,7 @@ public class SolarSystemController : MonoBehaviour
     {
         name = Constants.SolarSystemMain;
 
-        DistanceScale = _distanceScale;
         PlanetScaleMultiplier = _planetScaleMultiplier;
-        RotationSpeed = _rotationSpeed;
-        OrbitScale = _orbitScale;
 
         ApplyChanges();
     }

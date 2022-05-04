@@ -246,6 +246,7 @@ MonoBehaviour:
   slideInSound: {fileID: 762368268}
   menuCamera: {fileID: 1712329844}
   solarSystemCamera: {fileID: 917288190}
+  solarSystem: {fileID: 976942978}
 --- !u!4 &28288001
 Transform:
   m_ObjectHideFlags: 0
@@ -325,7 +326,7 @@ Transform:
   - {fileID: 811486803}
   - {fileID: 24437703}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &43539562
 GameObject:
@@ -361,7 +362,7 @@ MonoBehaviour:
   m_LockStageInInspector: 
   m_StreamingVersion: 20170927
   m_Priority: 0
-  m_StandbyUpdate: 2
+  m_StandbyUpdate: 0
   m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1951405334}
   m_Lens:
@@ -1096,7 +1097,7 @@ Transform:
   - {fileID: 426958033}
   - {fileID: 829388257}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 9
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &129718588
 MonoBehaviour:
@@ -1800,7 +1801,7 @@ Transform:
   - {fileID: 2035322862}
   - {fileID: 1320292164}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &303489673
 MonoBehaviour:
@@ -7995,7 +7996,7 @@ Transform:
   - {fileID: 454008240}
   - {fileID: 43539564}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &610533909
 MonoBehaviour:
@@ -8957,7 +8958,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0059b828f858e8d43a9daa8dcc37441c, type: 2}
+  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -8982,7 +8983,7 @@ LineRenderer:
   - {x: 0, y: 0, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.001
+    widthMultiplier: 0.01
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -9911,6 +9912,22 @@ PrefabInstance:
       value: Moons of Mars
       objectReference: {fileID: 0}
     - target: {fileID: 11400004, guid: a93c012dd9ef6454fa7d140e976926f7, type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: a93c012dd9ef6454fa7d140e976926f7, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: a93c012dd9ef6454fa7d140e976926f7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.54901963
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: a93c012dd9ef6454fa7d140e976926f7, type: 3}
+      propertyPath: m_Color.r
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400004, guid: a93c012dd9ef6454fa7d140e976926f7, type: 3}
       propertyPath: m_Maskable
       value: 0
       objectReference: {fileID: 0}
@@ -10272,7 +10289,6 @@ GameObject:
   m_Component:
   - component: {fileID: 917288191}
   - component: {fileID: 917288190}
-  - component: {fileID: 917288192}
   m_Layer: 0
   m_Name: Solar System vCam
   m_TagString: Untagged
@@ -10298,21 +10314,33 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 0
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 1692573083}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 0}
   m_Lens:
-    FieldOfView: 86
+    FieldOfView: 80
     OrthographicSize: 5
     NearClipPlane: 0.1
-    FarClipPlane: 100000
-    Dutch: 0
+    FarClipPlane: 10000
+    Dutch: -0
     LensShift: {x: 0, y: 0}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
     m_OnCameraLive:
       m_PersistentCalls:
-        m_Calls: []
+        m_Calls:
+        - m_Target: {fileID: 0}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 1186021822}
 --- !u!4 &917288191
@@ -10322,29 +10350,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 917288189}
-  m_LocalRotation: {x: 0.36607417, y: 0.3513603, z: -0.15163286, w: 0.8482589}
-  m_LocalPosition: {x: -100, y: 150, z: -100}
-  m_LocalScale: {x: 0, y: 1, z: 1}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 100, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1186021822}
   m_Father: {fileID: 0}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 30, y: 0, z: 0}
---- !u!114 &917288192
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 917288189}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Offset: {x: 0, y: 0, z: 0}
-  m_ApplyAfter: 1
-  m_PreserveComposition: 0
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
 --- !u!1001 &922969260
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10552,7 +10565,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: 16.401176, y: -1.3730013, z: 45.005363}
+  m_LocalPosition: {x: 16.382124, y: -1.3730013, z: 45.023617}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1921888451}
@@ -10659,6 +10672,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 742057136}
+  - {fileID: 999297413}
   - {fileID: 1681661683}
   - {fileID: 610533908}
   - {fileID: 1680309057}
@@ -10686,8 +10700,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _targetCamera: {fileID: 963194227}
   _lineTemplate: {fileID: 742057137}
-  _camDistance: 0.5
-  _isDebugMode: 0
+  _camDistance: 2.5
 --- !u!114 &976942982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10700,10 +10713,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0b472f8d390b364498f3d2abbc875f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _distanceScale: 1
   _planetScaleMultiplier: 1
-  _rotationSpeed: 1
-  _orbitScale: 0.1
   orbitActive: 0
 --- !u!1 &993721157
 GameObject:
@@ -10792,6 +10802,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &999297412
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 999297413}
+  m_Layer: 0
+  m_Name: Solar System Controller
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &999297413
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 999297412}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 976942980}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006441347
 GameObject:
   m_ObjectHideFlags: 0
@@ -15972,7 +16012,7 @@ Transform:
   - {fileID: 1486740358}
   - {fileID: 1944402866}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1096059087
 GameObject:
@@ -16331,7 +16371,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1186021822}
   - component: {fileID: 1186021824}
-  - component: {fileID: 1186021823}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -16353,33 +16392,6 @@ Transform:
   m_Father: {fileID: 917288191}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1186021823
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1186021821}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0
-  m_VerticalDamping: 0
-  m_ScreenX: 0.5
-  m_ScreenY: 0.5
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
-  m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 0.8
-  m_BiasX: 0
-  m_BiasY: 0
-  m_CenterOnActivate: 1
 --- !u!114 &1186021824
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -17011,7 +17023,7 @@ Transform:
   - {fileID: 410808177}
   - {fileID: 2037492401}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1434744145
 GameObject:
@@ -22348,7 +22360,7 @@ Transform:
   - {fileID: 660032811}
   - {fileID: 717846276}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1514701312
 MonoBehaviour:
@@ -22861,7 +22873,7 @@ Transform:
   - {fileID: 633337982}
   - {fileID: 336133199}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1680309058
 MonoBehaviour:
@@ -22945,7 +22957,7 @@ Transform:
   - {fileID: 705507995}
   - {fileID: 1923207810}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1692573082
 GameObject:
@@ -23138,7 +23150,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: -6.483469, y: 0.27087867, z: -6.246933}
+  m_LocalPosition: {x: -6.5025215, y: 0.27087867, z: -6.2286797}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 993721158}
@@ -23579,7 +23591,7 @@ Transform:
   - {fileID: 704681718}
   - {fileID: 883777101}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 8
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1812590291
 MonoBehaviour:

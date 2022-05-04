@@ -4,11 +4,13 @@ using UnityEngine.Playables;
 using Cinemachine;
 
 using static SolarSystemController;
+using System.Collections;
+using UnityEngine.Events;
 
 
 // see https://easings.net/
 
-public class MenuManager : MonoBehaviour
+public class MenuController : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] GameObject mainMenuWindow;
@@ -22,8 +24,12 @@ public class MenuManager : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera menuCamera;
     [SerializeField] CinemachineVirtualCamera solarSystemCamera;
 
+    [Header("Solar System")]
+    [SerializeField] GameObject solarSystem;
+
     private CelestialBody[] _celestialBodies;
     private PlayableDirector _director;
+    private SolarSystemController _solarSystemController;
 
     private void OnEnable()
     {
@@ -43,6 +49,8 @@ public class MenuManager : MonoBehaviour
         _director = GetComponent<PlayableDirector>();
         _director.played += Director_played;
         _director.stopped += Director_stopped;
+
+        _solarSystemController = solarSystem.GetComponent<SolarSystemController>();
     }
 
     private void Start()
@@ -70,6 +78,7 @@ public class MenuManager : MonoBehaviour
     public void MenuSolarSytem()
     {
         HideMainMenu();
+        StartCoroutine(DelayExecute(1.2f, _solarSystemController.ShowOrbitLines));
         CameraSwitcher.SwitchCamera(solarSystemCamera);
     }
 
@@ -84,6 +93,8 @@ public class MenuManager : MonoBehaviour
 
     public void ExitToMainMenu()
     {
+        StartCoroutine(DelayExecute(.7f, _solarSystemController.HideOrbitLines));
+
         if (_director.state == PlayState.Playing)
             _director.Stop();
         else
@@ -167,6 +178,13 @@ public class MenuManager : MonoBehaviour
         {
             rect.pivot = pos;
         });
+    }
+
+    private IEnumerator DelayExecute(float sec, UnityAction method)
+    {
+        yield return new WaitForSeconds(sec);
+
+        method();
     }
 
 }
