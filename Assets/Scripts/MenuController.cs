@@ -14,10 +14,10 @@ public class MenuController : MonoBehaviour
 {
     [Header("UI Elements")]
     [SerializeField] GameObject mainMenuWindow;
-    [SerializeField] GameObject timePanel;
+    [SerializeField] GameObject controlPanel;
     [SerializeField] GameObject infoPanel;
     [SerializeField] GameObject exitButton;
-    [SerializeField] ParticleSystem SpaceDebriSystem;
+    [SerializeField] ParticleSystem spaceDebriSystem;
     [Header("Sound")]
     [SerializeField] AudioSource slideInSound;
     [Header("Cameras")]
@@ -30,6 +30,9 @@ public class MenuController : MonoBehaviour
     private CelestialBody[] _celestialBodies;
     private PlayableDirector _director;
     private SolarSystemController _solarSystemController;
+    private bool _controlPanelVisible = false;
+
+    private const float _cameraSwitchTime = 2.0f;
 
     private void OnEnable()
     {
@@ -78,7 +81,8 @@ public class MenuController : MonoBehaviour
     public void MenuSolarSytem()
     {
         HideMainMenu();
-        StartCoroutine(DelayExecute(1.2f, _solarSystemController.ShowOrbitLines));
+        ControlPanelDisplay();
+        StartCoroutine(DelayExecute(_cameraSwitchTime, _solarSystemController.ShowOrbitLines));
         CameraSwitcher.SwitchCamera(solarSystemCamera);
     }
 
@@ -93,7 +97,8 @@ public class MenuController : MonoBehaviour
 
     public void ExitToMainMenu()
     {
-        StartCoroutine(DelayExecute(.7f, _solarSystemController.HideOrbitLines));
+        StartCoroutine(DelayExecute(.5f, _solarSystemController.HideOrbitLines));
+        ControlPanelDisplay(true);
 
         if (_director.state == PlayState.Playing)
             _director.Stop();
@@ -101,14 +106,37 @@ public class MenuController : MonoBehaviour
             ShowMainMenu();
     }
 
-    public void ShowTimeWindow()
+    public void SolarSystemZoom(System.Single zoom)
     {
-        TweenPivot(timePanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0));
+        var zPos = zoom switch
+        {
+            0 => -40f,
+            1 => -100f,
+            2 => -200f,
+            3 => -400f,
+            4 => -600f,
+            5 => -800f,
+            6 => -1000f,
+            7 => -1200f,
+            _ => -600f,
+        };
+
+        LeanTween.moveLocalZ(solarSystemCamera.gameObject, zPos, 0f);
     }
 
-    public void HideTimeWindow()
+    private void ControlPanelDisplay(bool hide = false)
     {
-        TweenPivot(timePanel, new Vector2(0.5f, 2f), Vector3.zero);
+        if (hide && _controlPanelVisible)
+        {
+            TweenPivot(controlPanel, new Vector2(0.5f, 2f), Vector3.zero);
+        }
+        else if (!hide && !_controlPanelVisible)
+        {
+            TweenPivot(controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0));
+        }
+
+        _controlPanelVisible = !hide;
+
     }
 
     private void SetWindowInfo(CelestialBodyName name)
@@ -134,24 +162,24 @@ public class MenuController : MonoBehaviour
     {
         CameraSwitcher.SwitchCamera(menuCamera);
 
-        if (SpaceDebriSystem == null)
+        if (spaceDebriSystem == null)
             return;
 
         HideExitButton();
         TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, 2f);
-        SpaceDebriSystem.Play();
+        spaceDebriSystem.Play();
     }
 
     private void HideMainMenu()
     {
-        SpaceDebriSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        spaceDebriSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         ShowExitButton();
         TweenPivot(mainMenuWindow, new Vector2(1.2f, 0.5f), new Vector3(0, -110, 0), LeanTweenType.easeInExpo, 1f, LeanTweenType.easeOutCirc, 1f);
     }
 
     private void ShowExitButton()
     {
-        TweenPivot(exitButton, new Vector2(-.2f, -.2f), null);
+        TweenPivot(exitButton, new Vector2(-.2f, -.2f), _cameraSwitchTime);
     }
 
     private void HideExitButton()

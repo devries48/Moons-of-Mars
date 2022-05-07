@@ -41,7 +41,8 @@ public class KeplerOrbitLinesController : MonoBehaviour
     {
         foreach (var instance in _instances)
         {
-            instance.positionCount = 0;
+            if (instance != null)
+                instance.positionCount = 0;
 
         }
     }
@@ -147,7 +148,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
         }
     }
 
-    private void RefreshLineRenderersForCurrentSegments(Dictionary<string, List<List<Vector3>>> allSegments,List<LineRenderer> instances)
+    private void RefreshLineRenderersForCurrentSegments(Dictionary<string, List<List<Vector3>>> allSegments, List<LineRenderer> instances)
     {
         var i = 0;
         foreach (var kv in allSegments)
