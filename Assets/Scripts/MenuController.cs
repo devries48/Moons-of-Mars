@@ -54,6 +54,8 @@ public class MenuController : MonoBehaviour
         _director.stopped += Director_stopped;
 
         _solarSystemController = solarSystem.GetComponent<SolarSystemController>();
+
+        hideControlPanel();
     }
 
     private void Start()
@@ -124,19 +126,40 @@ public class MenuController : MonoBehaviour
         LeanTween.moveLocalZ(solarSystemCamera.gameObject, zPos, 0f);
     }
 
+    /// <summary>
+    /// Rotate Solar-System around the x-axis between -15° and 90°.
+    /// </summary>
+    /// <param name="rotate"></param>
+    public void SolarSystemRotate(System.Single rotate)
+    {
+        // Get the parent of the camera for the rotation.
+        var camPivot = solarSystemCamera.gameObject.transform.parent.gameObject;
+
+        LeanTween.rotateX(camPivot, rotate * 15, 0f);
+    }
+
     private void ControlPanelDisplay(bool hide = false)
     {
         if (hide && _controlPanelVisible)
         {
-            TweenPivot(controlPanel, new Vector2(0.5f, 2f), Vector3.zero);
+            hideControlPanel(true);
+            TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
         }
         else if (!hide && !_controlPanelVisible)
         {
-            TweenPivot(controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0));
+            // Pivot y from 0 to -0.1 rotate x from -90 to 15 
+            TweenPivot(controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0), LeanTweenType.easeOutQuint, 1f, LeanTweenType.easeInQuad, 2f);
         }
 
         _controlPanelVisible = !hide;
+    }
 
+    private void hideControlPanel(bool animate = false)
+    {
+        if (animate)
+            TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
+        else
+            TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0));
     }
 
     private void SetWindowInfo(CelestialBodyName name)
