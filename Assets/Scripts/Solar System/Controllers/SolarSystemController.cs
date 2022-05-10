@@ -44,6 +44,8 @@ public class SolarSystemController : MonoBehaviour
     public OrbitActiveType orbitActive;
 
     internal bool IsDemo = true;
+    internal bool OrbitLinesVisible = false;
+
     private KeplerOrbitLinesController _orbitLinesController;
 
     public float PlanetScaleMultiplier
@@ -54,19 +56,21 @@ public class SolarSystemController : MonoBehaviour
 
     public void ShowOrbitLines()
     {
-        _orbitLinesController.enabled = true;
+        StartCoroutine(_orbitLinesController.EaseLines(.5f));
+        OrbitLinesVisible = true;
     }
 
     public void HideOrbitLines()
     {
-        _orbitLinesController.enabled = false;
+        StartCoroutine(_orbitLinesController.EaseLines(.5f, true));
+        OrbitLinesVisible = false;
     }
 
     private void Awake()
     {
         _orbitLinesController = GetComponent<KeplerOrbitLinesController>();
     }
- 
+
     /// <summary>
     /// Apply the changes to all celestial bodies.
     /// </summary>

@@ -24,7 +24,7 @@ public class MenuController : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera menuCamera;
     [SerializeField] CinemachineVirtualCamera solarSystemCamera;
 
-    [Header("Solar System")]
+    [Header("Solar System Controller")]
     [SerializeField] GameObject solarSystem;
 
     private CelestialBody[] _celestialBodies;
@@ -55,7 +55,7 @@ public class MenuController : MonoBehaviour
 
         _solarSystemController = solarSystem.GetComponent<SolarSystemController>();
 
-        hideControlPanel();
+        HideControlPanel();
     }
 
     private void Start()
@@ -99,11 +99,19 @@ public class MenuController : MonoBehaviour
 
     public void ExitToMainMenu()
     {
-        StartCoroutine(DelayExecute(.5f, _solarSystemController.HideOrbitLines));
-        ControlPanelDisplay(true);
+        var wait = 0f;
+
+        if (_solarSystemController.OrbitLinesVisible)
+        {
+            wait = .5f; // Wait for orbit lines to fade away
+            _solarSystemController.HideOrbitLines();
+            ControlPanelDisplay(true);
+        }
 
         if (_director.state == PlayState.Playing)
             _director.Stop();
+        else if (wait > 0)
+            StartCoroutine(DelayExecute(wait, ShowMainMenu));
         else
             ShowMainMenu();
     }
@@ -142,7 +150,7 @@ public class MenuController : MonoBehaviour
     {
         if (hide && _controlPanelVisible)
         {
-            hideControlPanel(true);
+            HideControlPanel(true);
             TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
         }
         else if (!hide && !_controlPanelVisible)
@@ -154,7 +162,7 @@ public class MenuController : MonoBehaviour
         _controlPanelVisible = !hide;
     }
 
-    private void hideControlPanel(bool animate = false)
+    private void HideControlPanel(bool animate = false)
     {
         if (animate)
             TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);

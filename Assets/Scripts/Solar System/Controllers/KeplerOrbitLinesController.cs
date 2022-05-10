@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,10 +23,11 @@ public class KeplerOrbitLinesController : MonoBehaviour
     [SerializeField] private LineRenderer _lineTemplate;
     [SerializeField] private float _camDistance;
 
-    private List<LineRenderer> _instances = new List<LineRenderer>();
-    private List<TargetItem> _targets = new List<TargetItem>();
-    private Dictionary<string, List<List<Vector3>>> _paths = new Dictionary<string, List<List<Vector3>>>();
-    private List<List<Vector3>> _pool = new List<List<Vector3>>();
+    private readonly List<LineRenderer> _linesRend = new List<LineRenderer>();
+    private readonly List<TargetItem> _targets = new List<TargetItem>();
+    private readonly Dictionary<string, List<List<Vector3>>> _paths = new Dictionary<string, List<List<Vector3>>>();
+    private readonly List<List<Vector3>> _pool = new List<List<Vector3>>();
+    private float lineAlpha = 1f;
 
     const float minOrbitLinearSize = 0.001f;
 
@@ -35,17 +37,21 @@ public class KeplerOrbitLinesController : MonoBehaviour
 
         foreach (var item in bodies)
             AddTargetBody(item);
+
+        var keys = _lineTemplate.colorGradient.alphaKeys;
+
+        if (keys.Length > 0)
+            lineAlpha = keys[0].alpha;
     }
 
-    private void OnDisable()
-    {
-        foreach (var instance in _instances)
-        {
-            if (instance != null)
-                instance.positionCount = 0;
-
-        }
-    }
+    //private void OnDisable()
+    //{
+    //    foreach (var instance in _linesRend)
+    //    {
+    //        if (instance != null)
+    //            instance.positionCount = 0;
+    //    }
+    //}
 
     private void AddTargetBody(KeplerOrbitMover obj)
     {
@@ -107,7 +113,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
             segments.Add(projectedPoints);
         }
 
-        RefreshLineRenderersForCurrentSegments(allVisibleSegments, _instances);
+        RefreshLineRenderersForCurrentSegments(allVisibleSegments);
     }
 
     private static void ConvertOrbitPointsToProjectedPoints(KeplerVector3d[] orbitPoints, Vector3 attractorPos, Camera targetCamera, float camDistance, List<Vector3> projectedPoints)
@@ -124,6 +130,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
             var halfP = new Vector3((float)p.x, (float)p.y, (float)p.z);
             var worldPoint = attractorPos + halfP;
             var screenPoint = targetCamera.WorldToScreenPoint(worldPoint);
+
             if (screenPoint.z > 0)
             {
                 screenPoint.z = camDistance;
@@ -148,23 +155,26 @@ public class KeplerOrbitLinesController : MonoBehaviour
         }
     }
 
-    private void RefreshLineRenderersForCurrentSegments(Dictionary<string, List<List<Vector3>>> allSegments, List<LineRenderer> instances)
+    private void RefreshLineRenderersForCurrentSegments(Dictionary<string, List<List<Vector3>>> allSegments)
     {
         var i = 0;
         foreach (var kv in allSegments)
         {
             var bodyName = kv.Key;
+
             foreach (var segment in kv.Value)
             {
                 LineRenderer instance;
-                if (i >= instances.Count)
+
+                if (i >= _linesRend.Count)
                 {
                     instance = CreateLineRendererInstance();
-                    instances.Add(instance);
+
+                    _linesRend.Add(instance);
                 }
                 else
                 {
-                    instance = instances[i];
+                    instance = _linesRend[i];
                 }
 
                 instance.positionCount = segment.Count;
@@ -179,30 +189,80 @@ public class KeplerOrbitLinesController : MonoBehaviour
             }
         }
 
-        for (int j = i; j < instances.Count; j++)
+        for (int j = i; j < _linesRend.Count; j++)
         {
-            instances[j].enabled = false;
+            _linesRend[j].enabled = false;
         }
     }
 
     private LineRenderer CreateLineRendererInstance()
     {
         var result = Instantiate(_lineTemplate, _targetCamera.transform);
+        SetAlphaLine(result, 0f);
         result.gameObject.SetActive(true);
         return result;
+    }
+
+    public IEnumerator EaseLines(float easeTime, bool easeOut = false)
+    {
+        var timeElapsed = 0f;
+        var alpha1 = easeOut ? lineAlpha : 0f;
+        var alpha2 = easeOut ? 0f : lineAlpha;
+
+        if (!easeOut) enabled = true;
+
+        while (timeElapsed < easeTime)
+        {
+            var alpha = Mathf.Lerp(alpha1, alpha2, timeElapsed / easeTime);
+
+            SetAlphaLines(alpha);
+            timeElapsed += Time.deltaTime;
+
+            yield return null;
+        }
+
+        if (easeOut)
+        {
+            SetAlphaLines(0f);
+            enabled = false;
+        }
+    }
+
+    private void SetAlphaLines(float alpha)
+    {
+
+        for (int i = 0; i < _linesRend.Count; i++)
+        {
+            var lineRend = _linesRend[i];
+            SetAlphaLine(lineRend,alpha);
+        }
+    }
+
+    private void SetAlphaLine(LineRenderer lineRend, float alpha)
+    {
+        var gradient = new Gradient();
+
+        if (lineRend != null)
+        {
+            gradient.SetKeys
+            (
+                lineRend.colorGradient.colorKeys, new GradientAlphaKey[] { new GradientAlphaKey(alpha, 1f) }
+            );
+            lineRend.colorGradient = gradient;
+        }
     }
 
     private List<Vector3> GetListFromPool()
     {
         if (_pool.Count == 0)
-        {
             return new List<Vector3>();
-        }
 
         int last = _pool.Count - 1;
         var result = _pool[last];
+
         _pool.RemoveAt(last);
         result.Clear();
+
         return result;
     }
 
