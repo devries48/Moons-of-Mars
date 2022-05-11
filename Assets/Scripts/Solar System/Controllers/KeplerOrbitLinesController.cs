@@ -15,7 +15,6 @@ public class KeplerOrbitLinesController : MonoBehaviour
     public class TargetItem
     {
         public KeplerOrbitMover Body;
-        public KeplerOrbitLine OrbitLine;
         public KeplerVector3d[] OrbitPoints;
     }
 
@@ -56,24 +55,16 @@ public class KeplerOrbitLinesController : MonoBehaviour
     private void AddTargetBody(KeplerOrbitMover obj)
     {
         if (obj.AttractorSettings.AttractorObject == null || obj.OrbitData.MeanMotion <= 0) return;
-
-        var orbitLine = obj.GetComponent<KeplerOrbitLine>();
-
-        if (orbitLine != null)
-            AddTargetBody(obj, orbitLine);
-    }
-
-    private void AddTargetBody(KeplerOrbitMover body, KeplerOrbitLine orbitLine)
-    {
-        _targets.Add(new TargetItem()
         {
-            Body = body,
-            OrbitLine = orbitLine,
-            OrbitPoints = new KeplerVector3d[0]
-        });
+            _targets.Add(new TargetItem()
+            {
+                Body = obj,
+                OrbitPoints = new KeplerVector3d[0]
+            });
 
-        orbitLine.enabled = false;
+        }
     }
+
 
     private void LateUpdate()
     {
@@ -92,7 +83,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
             if (!item.Body.enabled || !item.Body.gameObject.activeInHierarchy) continue;
 
             var orbitPoints = item.OrbitPoints;
-            item.Body.OrbitData.GetOrbitPointsNoAlloc(ref orbitPoints, item.OrbitLine.OrbitPointsCount, new KeplerVector3d(), item.OrbitLine.MaxOrbitWorldUnitsDistance);
+            item.Body.OrbitData.GetOrbitPointsNoAlloc(ref orbitPoints, item.Body.OrbitPointsCount, new KeplerVector3d(), item.Body.MaxOrbitWorldUnitsDistance);
             item.OrbitPoints = orbitPoints;
             var attrPos = item.Body.AttractorSettings.AttractorObject.position;
             var projectedPoints = GetListFromPool();

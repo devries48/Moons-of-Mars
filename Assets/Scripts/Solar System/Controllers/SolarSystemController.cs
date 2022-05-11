@@ -79,6 +79,11 @@ public class SolarSystemController : MonoBehaviour
         var bodies = (CelestialBody[])FindObjectsOfType(typeof(CelestialBody));
         foreach (var body in bodies)
             body.ApplyChanges();
+
+        var movers = (KeplerOrbitMover[])FindObjectsOfType(typeof(KeplerOrbitMover));
+        foreach (var mover in movers)
+            mover.ApplyChanges();
+
     }
 
     private void OnValidate()

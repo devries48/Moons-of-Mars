@@ -41,6 +41,71 @@ public class KeplerOrbitMover : MonoBehaviour
     public bool IsOrbitingPlanet = false;
 
     public int OrbitExtraRange = 0;
+
+    /// <summary>
+    /// The orbit curve precision.
+    /// </summary>
+    [Header("Orbit line")]
+    public int OrbitPointsCount = 50;
+
+    /// <summary>
+    /// The maximum orbit distance of orbit display in world units.
+    /// </summary>
+    public float MaxOrbitWorldUnitsDistance = 1000f;
+
+    internal void ApplyChanges()
+    {
+        /// <summary>
+        /// Astronomical unit in SI units.
+        /// </summary>
+        /// <remarks>
+        /// Used to calculate real scale orbit periods.
+        /// </remarks>
+        const double AU = 1.495978707e11;
+
+        /// <summary>
+        /// Gravitational constant. In this context plays role of speed muliplier.
+        /// </summary>
+        const double GConstant = 100;
+
+        /// <summary>
+        /// Orbit scale multiplier: world units per 1 au.
+        /// </summary>
+        const float UnitsPerAU = 40f;
+
+        float units = UnitsPerAU;
+
+        if (IsOrbitingPlanet)
+        {
+            var mltp = 1f;
+            var solarSystem = GameObject.Find(Constants.SolarSystemMain);
+            if (solarSystem != null)
+                mltp = solarSystem.GetComponent<SolarSystemController>().PlanetScaleMultiplier;
+
+            units += OrbitExtraRange * mltp;
+        }
+
+        // G constant is used as free parameter to fixate orbits periods values while SemiMajor axis parameter is adjusted for the scene.
+        double compensatedGConst = GConstant / Math.Pow(AU / units, 3d);
+
+        AttractorSettings.GravityConstant = (float)compensatedGConst;
+
+        OrbitData = new KeplerOrbitData(
+                 eccentricity: eccentricity,
+                 semiMajorAxis: semiMajorAxis * units,
+                 meanAnomalyDeg: meanAnomalyDeg,
+                 inclinationDeg: inclinationDeg,
+                 argOfPerifocusDeg: argOfPerifocusDeg,
+                 ascendingNodeDeg: ascendingNodeDeg,
+                 attractorMass: AttractorSettings.AttractorMass,
+                 gConst: compensatedGConst,
+                 period: OrbitalPeriod * 86400
+                 );
+
+        if (AttractorSettings.AttractorObject != null && OrbitData.SemiMajorAxis > 0)
+            ForceUpdateViewFromInternalState();
+    }
+
     /// <summary>
     /// Disable continious editing orbit in update loop, if you don't need it.
     /// It is also very useful in cases, when orbit is not stable due to float precision limits.
@@ -147,56 +212,9 @@ public class KeplerOrbitMover : MonoBehaviour
 
     private void OnValidate()
     {
-        /// <summary>
-        /// Astronomical unit in SI units.
-        /// </summary>
-        /// <remarks>
-        /// Used to calculate real scale orbit periods.
-        /// </remarks>
-        const double AU = 1.495978707e11;
+        ApplyChanges();
+     }
 
-        /// <summary>
-        /// Gravitational constant. In this context plays role of speed muliplier.
-        /// </summary>
-        const double GConstant = 100;
-
-        /// <summary>
-        /// Orbit scale multiplier: world units per 1 au.
-        /// </summary>
-        const float UnitsPerAU = 40f;
-
-        float units = UnitsPerAU;
-
-        if (IsOrbitingPlanet)
-        {
-            var mltp = 1f;
-            var solarSystem = GameObject.Find(Constants.SolarSystemMain); 
-            if (solarSystem != null)
-                mltp = solarSystem.GetComponent<SolarSystemController>().PlanetScaleMultiplier;
-            
-            units += OrbitExtraRange * mltp;
-        }
-
-        // G constant is used as free parameter to fixate orbits periods values while SemiMajor axis parameter is adjusted for the scene.
-        double compensatedGConst = GConstant / Math.Pow(AU / units, 3d);
-
-        AttractorSettings.GravityConstant = (float)compensatedGConst;
-
-        OrbitData = new KeplerOrbitData(
-                 eccentricity: eccentricity,
-                 semiMajorAxis: semiMajorAxis * units,
-                 meanAnomalyDeg: meanAnomalyDeg,
-                 inclinationDeg: inclinationDeg,
-                 argOfPerifocusDeg: argOfPerifocusDeg,
-                 ascendingNodeDeg: ascendingNodeDeg,
-                 attractorMass: AttractorSettings.AttractorMass,
-                 gConst: compensatedGConst,
-                 period: OrbitalPeriod * 86400
-                 );
-
-        if (AttractorSettings.AttractorObject != null && OrbitData.SemiMajorAxis > 0)
-            ForceUpdateViewFromInternalState();
-    }
 
     /// <summary>
     /// Progress orbit path motion.

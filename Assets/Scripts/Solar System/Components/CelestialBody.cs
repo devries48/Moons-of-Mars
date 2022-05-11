@@ -59,7 +59,7 @@ public class CelestialBody : MonoBehaviour
     /// <summary>
     /// Sets Celestialbody scale, rotation & orbit
     /// </summary>
-    public void ApplyChanges()
+    internal void ApplyChanges()
     {
         InitSolarSystemController();
 

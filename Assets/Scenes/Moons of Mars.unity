@@ -133,7 +133,6 @@ GameObject:
   m_Component:
   - component: {fileID: 24437703}
   - component: {fileID: 24437705}
-  - component: {fileID: 24437704}
   m_Layer: 0
   m_Name: Calisto - moon
   m_TagString: Untagged
@@ -157,29 +156,6 @@ Transform:
   m_Father: {fileID: 38956052}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &24437704
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 24437702}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &24437705
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +176,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 2500
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 16.689
   eccentricity: 0.007552158962446152
@@ -326,7 +304,7 @@ Transform:
   - {fileID: 811486803}
   - {fileID: 24437703}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &43539562
 GameObject:
@@ -492,7 +470,6 @@ GameObject:
   m_Component:
   - component: {fileID: 50351164}
   - component: {fileID: 50351166}
-  - component: {fileID: 50351165}
   m_Layer: 0
   m_Name: Saturn barycenter
   m_TagString: Untagged
@@ -517,29 +494,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &50351165
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50351163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &50351166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -560,6 +514,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 10747
   eccentricity: 0.05509716255920354
@@ -712,7 +668,6 @@ GameObject:
   m_Component:
   - component: {fileID: 50944608}
   - component: {fileID: 50944610}
-  - component: {fileID: 50944609}
   m_Layer: 0
   m_Name: Moon - Dione
   m_TagString: Untagged
@@ -736,29 +691,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &50944609
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 50944607}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &50944610
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -779,6 +711,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 2.74
   eccentricity: 0.001702930902880962
@@ -797,7 +731,6 @@ GameObject:
   m_Component:
   - component: {fileID: 57009493}
   - component: {fileID: 57009494}
-  - component: {fileID: 57009495}
   m_Layer: 0
   m_Name: Mars barycenter
   m_TagString: Untagged
@@ -843,6 +776,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 687
   eccentricity: 0.08694174924563587
@@ -851,29 +786,6 @@ MonoBehaviour:
   inclinationDeg: 1.855941342737693
   argOfPerifocusDeg: 290.8670181487074
   ascendingNodeDeg: 49.39513332076693
---- !u!114 &57009495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 57009492}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!1 &63260114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1074,7 +986,6 @@ GameObject:
   m_Component:
   - component: {fileID: 129718587}
   - component: {fileID: 129718589}
-  - component: {fileID: 129718588}
   m_Layer: 0
   m_Name: planet Neptune
   m_TagString: Untagged
@@ -1097,31 +1008,8 @@ Transform:
   - {fileID: 426958033}
   - {fileID: 829388257}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 10
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &129718588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 129718586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &129718589
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1142,6 +1030,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 59800
   eccentricity: 0.00881139069464004
@@ -1503,7 +1393,6 @@ GameObject:
   m_Component:
   - component: {fileID: 239124896}
   - component: {fileID: 239124898}
-  - component: {fileID: 239124897}
   m_Layer: 0
   m_Name: Moon - Rhea
   m_TagString: Untagged
@@ -1527,29 +1416,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &239124897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 239124895}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &239124898
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1570,6 +1436,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 4.52
   eccentricity: 0.001220531583480546
@@ -1816,7 +1684,6 @@ GameObject:
   m_Component:
   - component: {fileID: 303489672}
   - component: {fileID: 303489674}
-  - component: {fileID: 303489673}
   m_Layer: 0
   m_Name: Earth & Moon barycenter
   m_TagString: Untagged
@@ -1839,31 +1706,8 @@ Transform:
   - {fileID: 2035322862}
   - {fileID: 1320292164}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &303489673
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 303489671}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &303489674
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1884,6 +1728,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 365.2
   eccentricity: 0.0210412089052348
@@ -2103,7 +1949,6 @@ GameObject:
   m_Component:
   - component: {fileID: 344527604}
   - component: {fileID: 344527606}
-  - component: {fileID: 344527605}
   m_Layer: 0
   m_Name: Moon -Tethys
   m_TagString: Untagged
@@ -2127,29 +1972,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &344527605
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 344527603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &344527606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2170,6 +1992,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 1.89
   eccentricity: 0.0009388952955039203
@@ -2255,7 +2079,6 @@ GameObject:
   m_Component:
   - component: {fileID: 379649852}
   - component: {fileID: 379649854}
-  - component: {fileID: 379649853}
   m_Layer: 0
   m_Name: Jupiter barycenter
   m_TagString: Untagged
@@ -2280,29 +2103,6 @@ Transform:
   m_Father: {fileID: 38956052}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &379649853
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 379649851}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &379649854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2323,6 +2123,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 4331
   eccentricity: 0.04888494583643366
@@ -2341,7 +2143,6 @@ GameObject:
   m_Component:
   - component: {fileID: 410808177}
   - component: {fileID: 410808178}
-  - component: {fileID: 410808179}
   m_Layer: 0
   m_Name: Deimos - moon
   m_TagString: Untagged
@@ -2385,6 +2186,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 9000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 1.263
   eccentricity: 0.0002953184552519328
@@ -2393,29 +2196,6 @@ MonoBehaviour:
   inclinationDeg: 24.9239226962418
   argOfPerifocusDeg: 5.98422528495191
   ascendingNodeDeg: 79.21874802279949
---- !u!114 &410808179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 410808176}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 30
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!1 &426958031
 GameObject:
   m_ObjectHideFlags: 0
@@ -2979,7 +2759,6 @@ GameObject:
   m_Component:
   - component: {fileID: 549881618}
   - component: {fileID: 549881620}
-  - component: {fileID: 549881619}
   m_Layer: 0
   m_Name: Moon - Titan
   m_TagString: Untagged
@@ -3003,29 +2782,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &549881619
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 549881617}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &549881620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3046,6 +2802,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 15.9
   eccentricity: 0.02875559772511478
@@ -8011,7 +7769,6 @@ GameObject:
   m_Component:
   - component: {fileID: 610533908}
   - component: {fileID: 610533910}
-  - component: {fileID: 610533909}
   m_Layer: 0
   m_Name: MERCURY
   m_TagString: Untagged
@@ -8034,31 +7791,8 @@ Transform:
   - {fileID: 454008240}
   - {fileID: 43539564}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &610533909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 610533907}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 100
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &610533910
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8079,6 +7813,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 88
   eccentricity: 0.18616124122479
@@ -8157,7 +7893,6 @@ GameObject:
   m_Component:
   - component: {fileID: 660032811}
   - component: {fileID: 660032813}
-  - component: {fileID: 660032812}
   m_Layer: 0
   m_Name: dwarf planet Pluto
   m_TagString: Untagged
@@ -8182,29 +7917,6 @@ Transform:
   m_Father: {fileID: 1514701311}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &660032812
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 660032810}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &660032813
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8225,6 +7937,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 6.38723
   eccentricity: 0.03603541522806469
@@ -8542,7 +8256,6 @@ GameObject:
   m_Component:
   - component: {fileID: 716237293}
   - component: {fileID: 716237295}
-  - component: {fileID: 716237294}
   m_Layer: 0
   m_Name: Io - moon
   m_TagString: Untagged
@@ -8566,29 +8279,6 @@ Transform:
   m_Father: {fileID: 38956052}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &716237294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 716237292}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &716237295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8609,6 +8299,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 4000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 1.77
   eccentricity: 0.004837402992486747
@@ -8627,7 +8319,6 @@ GameObject:
   m_Component:
   - component: {fileID: 717846276}
   - component: {fileID: 717846278}
-  - component: {fileID: 717846277}
   m_Layer: 0
   m_Name: moon Charon
   m_TagString: Untagged
@@ -8651,29 +8342,6 @@ Transform:
   m_Father: {fileID: 1514701311}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &717846277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 717846275}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &717846278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8694,6 +8362,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 3000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 6.38723
   eccentricity: 0.0019456678628711
@@ -8876,7 +8546,6 @@ GameObject:
   m_Component:
   - component: {fileID: 740982484}
   - component: {fileID: 740982486}
-  - component: {fileID: 740982485}
   m_Layer: 0
   m_Name: Moon - Mimas
   m_TagString: Untagged
@@ -8900,29 +8569,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &740982485
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 740982483}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &740982486
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8943,6 +8589,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 10000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 0.9395834
   eccentricity: 0.01960482075770176
@@ -9731,7 +9379,6 @@ GameObject:
   m_Component:
   - component: {fileID: 811486803}
   - component: {fileID: 811486804}
-  - component: {fileID: 811486805}
   m_Layer: 0
   m_Name: Ganymede - moon
   m_TagString: Untagged
@@ -9775,6 +9422,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 3000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 7.154553
   eccentricity: 0.002560316112763841
@@ -9783,29 +9432,6 @@ MonoBehaviour:
   inclinationDeg: 2.309788103027197
   argOfPerifocusDeg: 339.4685278117234
   ascendingNodeDeg: 340.2984132660201
---- !u!114 &811486805
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 811486802}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!1001 &815554954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10715,7 +10341,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 742057136}
-  - {fileID: 999297413}
   - {fileID: 1681661683}
   - {fileID: 610533908}
   - {fileID: 1680309057}
@@ -10845,36 +10470,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &999297412
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 999297413}
-  m_Layer: 0
-  m_Name: Solar System Controller
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &999297413
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 999297412}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 976942980}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1006441347
 GameObject:
   m_ObjectHideFlags: 0
@@ -10885,7 +10480,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1006441348}
   - component: {fileID: 1006441350}
-  - component: {fileID: 1006441349}
   m_Layer: 0
   m_Name: Europa - moon
   m_TagString: Untagged
@@ -10909,29 +10503,6 @@ Transform:
   m_Father: {fileID: 38956052}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1006441349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1006441347}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &1006441350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10952,6 +10523,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 3500
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 3.551181
   eccentricity: 0.009378436010949787
@@ -16055,7 +15628,7 @@ Transform:
   - {fileID: 1486740358}
   - {fileID: 1944402866}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 8
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1072829792
 GameObject:
@@ -16384,7 +15957,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1103340000}
   - component: {fileID: 1103340002}
-  - component: {fileID: 1103340001}
   m_Layer: 0
   m_Name: Moon - Enceladus
   m_TagString: Untagged
@@ -16408,29 +15980,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1103340001
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1103339999}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &1103340002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16451,6 +16000,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 1.37
   eccentricity: 0.00599105653660171
@@ -17145,7 +16696,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1320292164}
   - component: {fileID: 1320292165}
-  - component: {fileID: 1320292166}
   m_Layer: 0
   m_Name: MOON
   m_TagString: Untagged
@@ -17190,6 +16740,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 450
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 27.3
   eccentricity: 0.04500924806355468
@@ -17198,29 +16750,6 @@ MonoBehaviour:
   inclinationDeg: 5.252211816843275
   argOfPerifocusDeg: 130.6531500023838
   ascendingNodeDeg: 88.9708536356446
---- !u!114 &1320292166
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1320292163}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 30
-  MaxOrbitWorldUnitsDistance: 100
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!1 &1340416579 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: c7a0e7600fb219f478570128f8d7baf8, type: 3}
@@ -17518,7 +17047,7 @@ Transform:
   - {fileID: 410808177}
   - {fileID: 2037492401}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1400708691
 GameObject:
@@ -22655,7 +22184,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1486740358}
   - component: {fileID: 1486740360}
-  - component: {fileID: 1486740359}
   m_Layer: 0
   m_Name: Moon - Hyperion
   m_TagString: Untagged
@@ -22679,29 +22207,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1486740359
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1486740357}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &1486740360
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22722,6 +22227,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 21.276
   eccentricity: 0.1240985578249046
@@ -22869,7 +22376,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1514701311}
   - component: {fileID: 1514701313}
-  - component: {fileID: 1514701312}
   m_Layer: 0
   m_Name: barycenter Pluto & Charon
   m_TagString: Untagged
@@ -22892,31 +22398,8 @@ Transform:
   - {fileID: 660032811}
   - {fileID: 717846276}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1514701312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1514701310}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &1514701313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22937,6 +22420,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 90560
   eccentricity: 0.2490159363818954
@@ -23382,7 +22867,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1680309057}
   - component: {fileID: 1680309058}
-  - component: {fileID: 1680309059}
   m_Layer: 0
   m_Name: VENUS
   m_TagString: Untagged
@@ -23405,7 +22889,7 @@ Transform:
   - {fileID: 633337982}
   - {fileID: 336133199}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1680309058
 MonoBehaviour:
@@ -23427,6 +22911,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 224.7
   eccentricity: 0.012041053961918
@@ -23435,29 +22921,6 @@ MonoBehaviour:
   inclinationDeg: 3.391562215612894
   argOfPerifocusDeg: 334.5446357918177
   ascendingNodeDeg: 3.391562215612894
---- !u!114 &1680309059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1680309056}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 150
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!1 &1681661682
 GameObject:
   m_ObjectHideFlags: 0
@@ -23489,7 +22952,7 @@ Transform:
   - {fileID: 705507995}
   - {fileID: 1923207810}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1692573082
 GameObject:
@@ -23682,7 +23145,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: -6.523651, y: 0.27087867, z: -6.208435}
+  m_LocalPosition: {x: -6.55389, y: 0.27087867, z: -6.1794624}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 993721158}
@@ -24105,7 +23568,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1812590290}
   - component: {fileID: 1812590292}
-  - component: {fileID: 1812590291}
   m_Layer: 0
   m_Name: planet Uranus
   m_TagString: Untagged
@@ -24128,31 +23590,8 @@ Transform:
   - {fileID: 704681718}
   - {fileID: 883777101}
   m_Father: {fileID: 976942980}
-  m_RootOrder: 9
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1812590291
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1812590289}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &1812590292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -24173,6 +23612,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 30667.3
   eccentricity: 0.0473218063860225
@@ -29524,7 +28965,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1944402866}
   - component: {fileID: 1944402868}
-  - component: {fileID: 1944402867}
   m_Layer: 0
   m_Name: Moon - Iapetus
   m_TagString: Untagged
@@ -29548,29 +28988,6 @@ Transform:
   m_Father: {fileID: 1072372892}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1944402867
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944402865}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 50
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 1
-  ShowOrbitGizmoWhileInPlayMode: 1
-  ShowVelocityGizmoInEditor: 1
-  ShowPeriapsisApoapsisGizmosInEditor: 1
-  ShowAscendingNodeInEditor: 1
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!114 &1944402868
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -29591,6 +29008,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 7000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 79.3215
   eccentricity: 0.02877662184681641
@@ -30040,6 +29459,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 0
   OrbitExtraRange: 0
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 27.3
   eccentricity: 0.04500924806351013
@@ -30058,7 +29479,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2037492401}
   - component: {fileID: 2037492402}
-  - component: {fileID: 2037492403}
   m_Layer: 0
   m_Name: Phobos - moon
   m_TagString: Untagged
@@ -30102,6 +29522,8 @@ MonoBehaviour:
   TimeScale: 1
   IsOrbitingPlanet: 1
   OrbitExtraRange: 9000
+  OrbitPointsCount: 50
+  MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
   OrbitalPeriod: 0.32
   eccentricity: 0.01505600087681793
@@ -30110,29 +29532,6 @@ MonoBehaviour:
   inclinationDeg: 26.2104759223898
   argOfPerifocusDeg: 347.2958936828754
   ascendingNodeDeg: 85.00884980078752
---- !u!114 &2037492403
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2037492400}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab763f1ec70cd3747b32b3b6ba1732a7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  OrbitPointsCount: 30
-  MaxOrbitWorldUnitsDistance: 1000
-  LineRendererReference: {fileID: 0}
-  ShowOrbitGizmoInEditor: 0
-  ShowOrbitGizmoWhileInPlayMode: 0
-  ShowVelocityGizmoInEditor: 0
-  ShowPeriapsisApoapsisGizmosInEditor: 0
-  ShowAscendingNodeInEditor: 0
-  ShowAxisGizmosInEditor: 0
-  GizmosAlphaMain: 1
-  GizmosAlphaSecondary: 0.3
 --- !u!1 &2053263194
 GameObject:
   m_ObjectHideFlags: 0
