@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using UnityEngine;
 using static SolarSystemController;
@@ -85,9 +86,15 @@ public class CelestialBody : MonoBehaviour
         }
         else
         {
-            var mltp = _solarSystemController != null ? _solarSystemController.PlanetScaleMultiplier : 1;
+            var mltp = _solarSystemController != null ? _solarSystemController.GetPlanetScaleMultiplier(IsGiantPlanet()) : 1f;
             trans.localScale = diameter * mltp * scaleMultiplier * Vector3.one;
         }
+    }
+
+    private bool IsGiantPlanet()
+    {
+        CelestialBodyName[] array = { CelestialBodyName.Jupiter, CelestialBodyName.Saturn, CelestialBodyName.Uranus, CelestialBodyName.Neptune };
+        return Array.Exists(array, e => e == bodyName);
     }
 
     private void InitSolarSystemController() //make property

@@ -40,6 +40,10 @@ public class KeplerOrbitMover : MonoBehaviour
     [Tooltip("The range scale multiplier.")]
     public bool IsOrbitingPlanet = false;
 
+
+    [Tooltip("Giant planets scale 1/10 in PlanetScaler.")]
+    public bool IsGiantPlanet = false;
+
     public int OrbitExtraRange = 0;
 
     /// <summary>
@@ -52,6 +56,20 @@ public class KeplerOrbitMover : MonoBehaviour
     /// The maximum orbit distance of orbit display in world units.
     /// </summary>
     public float MaxOrbitWorldUnitsDistance = 1000f;
+
+    private SolarSystemController _controller;
+    private SolarSystemController Controller
+    {
+        get
+        {
+            if (_controller == null)
+            {
+                var solarSystem = GameObject.Find(Constants.SolarSystemMain);
+                _controller = solarSystem.GetComponent<SolarSystemController>();
+            }
+            return _controller;
+        }
+    }
 
     internal void ApplyChanges()
     {
@@ -71,16 +89,25 @@ public class KeplerOrbitMover : MonoBehaviour
         /// <summary>
         /// Orbit scale multiplier: world units per 1 au.
         /// </summary>
-        const float UnitsPerAU = 40f;
+        const float UnitsPerAU = 50f;
 
         float units = UnitsPerAU;
 
         if (IsOrbitingPlanet)
         {
             var mltp = 1f;
-            var solarSystem = GameObject.Find(Constants.SolarSystemMain);
-            if (solarSystem != null)
-                mltp = solarSystem.GetComponent<SolarSystemController>().PlanetScaleMultiplier;
+
+            if (Controller != null)
+            {
+                var parent = AttractorSettings.AttractorObject.GetComponent<KeplerOrbitMover>();
+
+                if (parent != null)
+                {
+                    Debug.Log(parent.name + " = giant: " + parent.IsGiantPlanet);
+                    mltp = Controller.GetPlanetScaleMultiplier(parent.IsGiantPlanet);
+                }
+
+            }
 
             units += OrbitExtraRange * mltp;
         }
@@ -213,7 +240,7 @@ public class KeplerOrbitMover : MonoBehaviour
     private void OnValidate()
     {
         ApplyChanges();
-     }
+    }
 
 
     /// <summary>
