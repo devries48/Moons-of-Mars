@@ -102,10 +102,7 @@ public class KeplerOrbitMover : MonoBehaviour
                 var parent = AttractorSettings.AttractorObject.GetComponent<KeplerOrbitMover>();
 
                 if (parent != null)
-                {
-                    Debug.Log(parent.name + " = giant: " + parent.IsGiantPlanet);
                     mltp = Controller.GetPlanetScaleMultiplier(parent.IsGiantPlanet);
-                }
 
             }
 
@@ -235,7 +232,6 @@ public class KeplerOrbitMover : MonoBehaviour
             }
         }
     }
-
 
     private void OnValidate()
     {

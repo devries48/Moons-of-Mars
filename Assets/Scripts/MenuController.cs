@@ -21,6 +21,7 @@ public class MenuController : MonoBehaviour
     [Header("Sound")]
     [SerializeField] AudioSource slideInSound;
     [Header("Cameras")]
+    [SerializeField] Camera mainCamera;
     [SerializeField] CinemachineVirtualCamera menuCamera;
     [SerializeField] CinemachineVirtualCamera solarSystemCamera;
 
@@ -83,9 +84,11 @@ public class MenuController : MonoBehaviour
     public void MenuSolarSytem()
     {
         HideMainMenu();
+
         ControlPanelDisplay();
         StartCoroutine(DelayExecute(_cameraSwitchTime, _solarSystemController.ShowOrbitLines));
         CameraSwitcher.SwitchCamera(solarSystemCamera);
+        //CameraSwitcher.ShowLinesLayer(mainCamera);
     }
 
     public void MenuQuit()
@@ -192,6 +195,7 @@ public class MenuController : MonoBehaviour
     private void ShowMainMenu()
     {
         CameraSwitcher.SwitchCamera(menuCamera);
+        //CameraSwitcher.HideLinesLayer(mainCamera);
 
         if (spaceDebriSystem == null)
             return;
