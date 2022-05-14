@@ -22,6 +22,10 @@ public class KeplerTimeController : MonoBehaviour
     private readonly List<BodyTimeData> _bodies = new List<BodyTimeData>();
 
     [SerializeField]
+    [Tooltip("Display current solar system date in this field.")]
+    private TMPro.TextMeshProUGUI _displayDateField;
+
+    [SerializeField]
     [Tooltip("Display current solar system time in this field.")]
     private TMPro.TextMeshProUGUI _displayTimeField;
 
@@ -75,7 +79,8 @@ public class KeplerTimeController : MonoBehaviour
 
     private void RefreshTimeDisplay()
     {
-        _displayTimeField.text = _currentTime.ToString("yyyy - MM - dd   HH : mm : ss");
+        _displayDateField.text = _currentTime.ToString("yyyy - MM - dd");
+        _displayTimeField.text = _currentTime.ToString("HH : mm : ss");
     }
 
     private void AddBody(KeplerOrbitMover b)
@@ -121,7 +126,7 @@ public class KeplerTimeController : MonoBehaviour
 
         if (isAnyNull)
         {
-            bool Predicate(BodyTimeData b)
+            static bool Predicate(BodyTimeData b)
             {
                 return b.body == null;
             }

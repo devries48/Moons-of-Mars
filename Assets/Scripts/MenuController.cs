@@ -81,14 +81,17 @@ public class MenuController : MonoBehaviour
         _director.Play();
     }
 
+    // Setup environment for the Solar System viewer
     public void MenuSolarSytem()
     {
         HideMainMenu();
 
         ControlPanelDisplay();
         StartCoroutine(DelayExecute(_cameraSwitchTime, _solarSystemController.ShowOrbitLines));
+        if (_solarSystemController.GetPlanetScaleMultiplier() == 1)
+            TweenPlanetScale(_cameraSwitchTime);
+
         CameraSwitcher.SwitchCamera(solarSystemCamera);
-        //CameraSwitcher.ShowLinesLayer(mainCamera);
     }
 
     public void MenuQuit()
@@ -121,32 +124,32 @@ public class MenuController : MonoBehaviour
 
     public void SolarSystemZoom(System.Single zoom)
     {
-        var zPos = zoom switch
-        {
-            0 => -40f,
-            1 => -100f,
-            2 => -200f,
-            3 => -400f,
-            4 => -600f,
-            5 => -800f,
-            6 => -1000f,
-            7 => -1200f,
-            _ => -600f,
-        };
-
-        LeanTween.moveLocalZ(solarSystemCamera.gameObject, zPos, 0f);
+        var mltp = -4000 / 9f;
+        LeanTween.moveLocalZ(solarSystemCamera.gameObject, -100 + (zoom * mltp), 0f);
     }
 
     /// <summary>
-    /// Rotate Solar-System around the x-axis between -15° and 90°.
+    /// Rotate Solar-System around the x-axis between 15° and 90°.
     /// </summary>
     /// <param name="rotate"></param>
-    public void SolarSystemRotate(System.Single rotate)
+    public void SolarSystemRotateVertical(System.Single rotate)
     {
         // Get the parent of the camera for the rotation.
         var camPivot = solarSystemCamera.gameObject.transform.parent.gameObject;
 
         LeanTween.rotateX(camPivot, rotate * 15, 0f);
+    }
+
+    /// <summary>
+    /// Rotate Solar-System around the y-axis between 0° and 360°.
+    /// </summary>
+    /// <param name="rotate"></param>
+    public void SolarSystemRotateHorizobtal(System.Single rotate)
+    {
+        // Get the parent of the camera for the rotation.
+        var camPivot = solarSystemCamera.gameObject.transform.parent.gameObject;
+
+        LeanTween.rotateY(camPivot, rotate * 30, 0f);
     }
 
     private void ControlPanelDisplay(bool hide = false)
@@ -192,16 +195,21 @@ public class MenuController : MonoBehaviour
         HideMainMenu();
     }
 
+    // Restore MainMenu environment
     private void ShowMainMenu()
     {
-        CameraSwitcher.SwitchCamera(menuCamera);
-        //CameraSwitcher.HideLinesLayer(mainCamera);
 
         if (spaceDebriSystem == null)
             return;
 
+        CameraSwitcher.SwitchCamera(menuCamera);
+
+        if (_solarSystemController.GetPlanetScaleMultiplier() > 1)
+            TweenPlanetScale(1f, true);
+
         HideExitButton();
         TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, 2f);
+
         spaceDebriSystem.Play();
     }
 
@@ -240,6 +248,18 @@ public class MenuController : MonoBehaviour
         LeanTween.value(gameObject, rect.pivot, newPivot, pivotTime).setEase(pivotEase).setOnUpdateVector2((Vector2 pos) =>
         {
             rect.pivot = pos;
+        });
+    }
+
+    private void TweenPlanetScale(float scaleTime, bool scaleOut = false)
+    {
+        var start = scaleOut ? 10 : 1;
+        var end = scaleOut ? 1 : 10;
+        var type = scaleOut ? LeanTweenType.easeOutQuint : LeanTweenType.easeInSine;
+
+        LeanTween.value(start, end, scaleTime).setEase(type).setOnUpdate((float val) =>
+        {
+            _solarSystemController.SetPlanetScaleMultiplier(val);
         });
     }
 

@@ -32,18 +32,4 @@ public static class CameraSwitcher
     {
         _cameras.Remove(camera);
     }
-
-    // Turn on the bit using an OR operation:
-    public static void ShowLinesLayer(Camera camera)
-
-    {
-        camera.cullingMask |= 1 << LayerMask.NameToLayer(Constants.OrbitLineLayer);
-    }
-
-    // Turn off the bit using an AND operation with the complement of the shifted int:
-    public static void HideLinesLayer(Camera camera)
-    {
-        camera.cullingMask &= ~(1 << LayerMask.NameToLayer(Constants.OrbitLineLayer));
-    }
-
 }

@@ -49,12 +49,18 @@ public class SolarSystemController : MonoBehaviour
     private KeplerOrbitLinesController _orbitLinesController;
 
     // Giant planets scale only 1/10 of the planets and moons.
-    public float GetPlanetScaleMultiplier(bool isGiantPlanet)
+    public float GetPlanetScaleMultiplier(bool isGiantPlanet = false)
     {
         if (isGiantPlanet)
             return 1f - 0.1f + (_planetScaleMultiplier / 10f);
 
         return _planetScaleMultiplier;
+    }
+
+    public void SetPlanetScaleMultiplier(float value)
+    {
+        _planetScaleMultiplier = value;
+        ApplyChanges();
     }
 
     public void ShowOrbitLines()
