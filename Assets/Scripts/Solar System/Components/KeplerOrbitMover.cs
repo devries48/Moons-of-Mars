@@ -17,29 +17,7 @@ public class KeplerOrbitMover : MonoBehaviour
     /// </summary>
     public KeplerAttractorData AttractorSettings = new KeplerAttractorData();
 
-    /// <summary>
-    /// The velocity handle object.
-    /// Assign object and use it as velocity control handle in scene view.
-    /// </summary>
-    [Tooltip("The velocity handle object. Assign object and use it as velocity control handle in scene view.")]
-    public Transform VelocityHandle;
-
-    /// <summary>
-    /// The velocity handle length scale parameter.
-    /// </summary>
-    [Range(0f, 10f)]
-    [Tooltip("Velocity handle scale parameter.")]
-    public float VelocityHandleLengthScale = 0f;
-
-    /// <summary>
-    /// The time scale multiplier.
-    /// </summary>
-    [Tooltip("The time scale multiplier.")]
-    public float TimeScale = 1f;
-
-    [Tooltip("The range scale multiplier.")]
     public bool IsOrbitingPlanet = false;
-
 
     [Tooltip("Giant planets scale 1/10 in PlanetScaler.")]
     public bool IsGiantPlanet = false;
@@ -57,54 +35,54 @@ public class KeplerOrbitMover : MonoBehaviour
     /// </summary>
     public float MaxOrbitWorldUnitsDistance = 1000f;
 
-    private SolarSystemController _controller;
+    internal float TimeScale = 1f;
+
+    private SolarSystemController _solarSystem;
+
     private SolarSystemController Controller
     {
         get
         {
-            if (_controller == null)
+            if (_solarSystem == null)
             {
                 var solarSystem = GameObject.Find(Constants.SolarSystemMain);
-                _controller = solarSystem.GetComponent<SolarSystemController>();
+                _solarSystem = solarSystem.GetComponent<SolarSystemController>();
             }
-            return _controller;
+            return _solarSystem;
         }
     }
 
+    /// <summary>
+    /// Astronomical unit in SI units.
+    /// </summary>
+    /// <remarks>
+    /// Used to calculate real scale orbit periods.
+    /// </remarks>
+    const double AU = 1.495978707e11;
+
+    // Gravitational constant. In this context plays role of speed muliplier.
+    const double GConstant = 100;
+
     internal void ApplyChanges()
     {
-        /// <summary>
-        /// Astronomical unit in SI units.
-        /// </summary>
-        /// <remarks>
-        /// Used to calculate real scale orbit periods.
-        /// </remarks>
-        const double AU = 1.495978707e11;
+   
+        float units = 50f;
 
-        /// <summary>
-        /// Gravitational constant. In this context plays role of speed muliplier.
-        /// </summary>
-        const double GConstant = 100;
+        if (Controller != null)
+            units = Controller.UnitsPerAU;
+        {
+        }
 
-        /// <summary>
-        /// Orbit scale multiplier: world units per 1 au.
-        /// </summary>
-        const float UnitsPerAU = 50f;
-
-        float units = UnitsPerAU;
-
-        if (IsOrbitingPlanet)
+            if (IsOrbitingPlanet)
         {
             var mltp = 1f;
 
-            if (Controller != null)
-            {
                 var parent = AttractorSettings.AttractorObject.GetComponent<KeplerOrbitMover>();
 
                 if (parent != null)
                     mltp = Controller.GetPlanetScaleMultiplier(parent.IsGiantPlanet);
 
-            }
+            
 
             units += OrbitExtraRange * mltp;
         }
@@ -212,18 +190,7 @@ public class KeplerOrbitMover : MonoBehaviour
                 var pos = transform.position - AttractorSettings.AttractorObject.position;
                 KeplerVector3d position = new KeplerVector3d(pos.x, pos.y, pos.z);
 
-                bool velocityHandleChanged = false;
-                if (VelocityHandle != null)
-                {
-                    Vector3 velocity = GetVelocityHandleDisplayedVelocity();
-                    if (velocity != new Vector3((float)OrbitData.Velocity.x, (float)OrbitData.Velocity.y, (float)OrbitData.Velocity.z))
-                    {
-                        velocityHandleChanged = true;
-                    }
-                }
-
                 if (position != OrbitData.Position ||
-                    velocityHandleChanged ||
                     OrbitData.GravConst != AttractorSettings.GravityConstant ||
                     OrbitData.AttractorMass != AttractorSettings.AttractorMass)
                 {
@@ -272,26 +239,6 @@ public class KeplerOrbitMover : MonoBehaviour
     }
 
     /// <summary>
-    /// Updates OrbitData from new body position and velocity vectors.
-    /// </summary>
-    /// <param name="relativePosition">The relative position.</param>
-    /// <param name="velocity">The relative velocity.</param>
-    /// <remarks>
-    /// This method can be useful to assign new position of body by script.
-    /// Or you can directly change OrbitData state and then manually update view.
-    /// </remarks>
-    public void CreateNewOrbitFromPositionAndVelocity(Vector3 relativePosition, Vector3 velocity)
-    {
-        if (IsReferencesAsigned)
-        {
-            OrbitData.Position = new KeplerVector3d((float)relativePosition.x, (float)relativePosition.y, (float)relativePosition.z);
-            OrbitData.Velocity = new KeplerVector3d((float)velocity.x, (float)velocity.y, (float)velocity.z);
-            OrbitData.CalculateOrbitStateFromOrbitalVectors();
-            ForceUpdateViewFromInternalState();
-        }
-    }
-
-    /// <summary>
     /// Forces the update of body position, and velocity handler from OrbitData.
     /// Call this method after any direct changing of OrbitData.
     /// </summary>
@@ -300,45 +247,7 @@ public class KeplerOrbitMover : MonoBehaviour
     {
         var pos = new Vector3((float)OrbitData.Position.x, (float)OrbitData.Position.y, (float)OrbitData.Position.z);
         transform.position = AttractorSettings.AttractorObject.position + pos;
-        ForceUpdateVelocityHandleFromInternalState();
-    }
-
-    /// <summary>
-    /// Forces the refresh of position of velocity handle object from actual orbit state.
-    /// </summary>
-    public void ForceUpdateVelocityHandleFromInternalState()
-    {
-        if (VelocityHandle != null)
-        {
-            Vector3 velocityRelativePosition = new Vector3((float)OrbitData.Velocity.x, (float)OrbitData.Velocity.y, (float)OrbitData.Velocity.z);
-            if (VelocityHandleLengthScale > 0 && !float.IsNaN(VelocityHandleLengthScale) && !float.IsInfinity(VelocityHandleLengthScale))
-            {
-                velocityRelativePosition *= VelocityHandleLengthScale;
-            }
-
-            VelocityHandle.position = transform.position + velocityRelativePosition;
-        }
-    }
-
-    /// <summary>
-    /// Gets the displayed velocity vector from Velocity Handle object position if Handle reference is not null.
-    /// NOTE: Displayed velocity may not be equal to actual orbit velocity.
-    /// </summary>
-    /// <returns>Displayed velocity vector if Handle is not null, otherwise zero vector.</returns>
-    public Vector3 GetVelocityHandleDisplayedVelocity()
-    {
-        if (VelocityHandle != null)
-        {
-            Vector3 velocity = VelocityHandle.position - transform.position;
-            if (VelocityHandleLengthScale > 0 && !float.IsNaN(VelocityHandleLengthScale) && !float.IsInfinity(VelocityHandleLengthScale))
-            {
-                velocity /= VelocityHandleLengthScale;
-            }
-
-            return velocity;
-        }
-
-        return new Vector3();
+        //ForceUpdateVelocityHandleFromInternalState();
     }
 
     /// <summary>
@@ -359,12 +268,6 @@ public class KeplerOrbitMover : MonoBehaviour
             // Possible loss of precision, may be a problem in some situations.
             var pos = transform.position - AttractorSettings.AttractorObject.position;
             OrbitData.Position = new KeplerVector3d(pos.x, pos.y, pos.z);
-            if (VelocityHandle != null)
-            {
-                Vector3 velocity = GetVelocityHandleDisplayedVelocity();
-                OrbitData.Velocity = new KeplerVector3d(velocity.x, velocity.y, velocity.z);
-            }
-
             OrbitData.CalculateOrbitStateFromOrbitalVectors();
         }
     }
@@ -379,7 +282,6 @@ public class KeplerOrbitMover : MonoBehaviour
         {
             OrbitData.Velocity = KeplerOrbitUtils.CalcCircleOrbitVelocity(KeplerVector3d.zero, OrbitData.Position, OrbitData.AttractorMass, OrbitData.OrbitNormal, OrbitData.GravConst);
             OrbitData.CalculateOrbitStateFromOrbitalVectors();
-            ForceUpdateVelocityHandleFromInternalState();
         }
     }
 
@@ -390,7 +292,6 @@ public class KeplerOrbitMover : MonoBehaviour
         {
             OrbitData.Velocity = -OrbitData.Velocity;
             OrbitData.CalculateOrbitStateFromOrbitalVectors();
-            ForceUpdateVelocityHandleFromInternalState();
         }
     }
 
@@ -401,7 +302,6 @@ public class KeplerOrbitMover : MonoBehaviour
         {
             OrbitData.Position = -OrbitData.Position;
             OrbitData.CalculateOrbitStateFromOrbitalVectors();
-            ForceUpdateVelocityHandleFromInternalState();
         }
     }
 
@@ -413,7 +313,6 @@ public class KeplerOrbitMover : MonoBehaviour
             OrbitData.Velocity = -OrbitData.Velocity;
             OrbitData.Position = -OrbitData.Position;
             OrbitData.CalculateOrbitStateFromOrbitalVectors();
-            ForceUpdateVelocityHandleFromInternalState();
         }
     }
 

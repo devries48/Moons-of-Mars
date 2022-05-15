@@ -43,15 +43,6 @@ public class KeplerOrbitLinesController : MonoBehaviour
             lineAlpha = keys[0].alpha;
     }
 
-    //private void OnDisable()
-    //{
-    //    foreach (var instance in _linesRend)
-    //    {
-    //        if (instance != null)
-    //            instance.positionCount = 0;
-    //    }
-    //}
-
     private void AddTargetBody(KeplerOrbitMover obj)
     {
         if (obj.AttractorSettings.AttractorObject == null || obj.OrbitData.MeanMotion <= 0) return;
@@ -61,10 +52,8 @@ public class KeplerOrbitLinesController : MonoBehaviour
                 Body = obj,
                 OrbitPoints = new KeplerVector3d[0]
             });
-
         }
     }
-
 
     private void LateUpdate()
     {

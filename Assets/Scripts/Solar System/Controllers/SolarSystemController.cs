@@ -41,10 +41,15 @@ public class SolarSystemController : MonoBehaviour
     [Range(1, 10)]
     [SerializeField] private float _planetScaleMultiplier = 1f;
 
+    [Range(50f, 100f)]
+    [Tooltip("Orbit scale multiplier: world units per 1 au.")]
+    [SerializeField] internal float UnitsPerAU = 50f;
+
     public OrbitActiveType orbitActive;
 
     internal bool IsDemo = true;
     internal bool OrbitLinesVisible = false;
+
 
     private KeplerOrbitLinesController _orbitLinesController;
 

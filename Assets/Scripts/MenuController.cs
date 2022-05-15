@@ -33,7 +33,7 @@ public class MenuController : MonoBehaviour
     private SolarSystemController _solarSystemController;
     private bool _controlPanelVisible = false;
 
-    private const float _cameraSwitchTime = 2.0f;
+    private float _cameraSwitchTime = 2.0f;
 
     private void OnEnable()
     {
@@ -55,6 +55,11 @@ public class MenuController : MonoBehaviour
         _director.stopped += Director_stopped;
 
         _solarSystemController = solarSystem.GetComponent<SolarSystemController>();
+
+        var brain = mainCamera.GetComponent<CinemachineBrain>();
+
+        if (brain != null)
+            _cameraSwitchTime = brain.m_DefaultBlend.BlendTime;
 
         HideControlPanel();
     }
@@ -88,6 +93,7 @@ public class MenuController : MonoBehaviour
 
         ControlPanelDisplay();
         StartCoroutine(DelayExecute(_cameraSwitchTime, _solarSystemController.ShowOrbitLines));
+
         if (_solarSystemController.GetPlanetScaleMultiplier() == 1)
             TweenPlanetScale(_cameraSwitchTime);
 
@@ -162,7 +168,7 @@ public class MenuController : MonoBehaviour
         else if (!hide && !_controlPanelVisible)
         {
             // Pivot y from 0 to -0.1 rotate x from -90 to 15 
-            TweenPivot(controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0), LeanTweenType.easeOutQuint, 1f, LeanTweenType.easeInQuad, 2f);
+            TweenPivot(controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0), LeanTweenType.easeOutQuint, 1f, LeanTweenType.easeInQuad, _cameraSwitchTime);
         }
 
         _controlPanelVisible = !hide;
@@ -208,7 +214,7 @@ public class MenuController : MonoBehaviour
             TweenPlanetScale(1f, true);
 
         HideExitButton();
-        TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, 2f);
+        TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, _cameraSwitchTime);
 
         spaceDebriSystem.Play();
     }

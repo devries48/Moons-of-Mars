@@ -152,7 +152,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1340416580}
-  - {fileID: 723415018}
   m_Father: {fileID: 38956052}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -171,9 +170,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 379649852}
     AttractorMass: 1.89813e+27
-  VelocityHandle: {fileID: 723415018}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 2500
@@ -373,7 +369,7 @@ Transform:
   m_Children:
   - {fileID: 800445169}
   m_Father: {fileID: 610533908}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &44456844
 GameObject:
@@ -491,7 +487,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 973560643}
-  - {fileID: 331827618}
   - {fileID: 1659243072}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 0
@@ -511,9 +506,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 331827618}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 1
   OrbitExtraRange: 0
@@ -690,7 +682,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1802441573}
-  - {fileID: 1743652881}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -709,9 +700,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 1743652881}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 7000
@@ -756,7 +744,6 @@ Transform:
   - {fileID: 1057163031}
   - {fileID: 859231293}
   - {fileID: 1712329843}
-  - {fileID: 485989138}
   m_Father: {fileID: 1376908350}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -775,9 +762,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 485989138}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 0
   OrbitExtraRange: 0
@@ -1011,7 +995,6 @@ Transform:
   m_Children:
   - {fileID: 1970465742}
   - {fileID: 426958033}
-  - {fileID: 829388257}
   m_Father: {fileID: 976942980}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1030,9 +1013,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 829388257}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 1
   OrbitExtraRange: 0
@@ -1415,11 +1395,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239124895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 246.90018, y: -8.788424, z: 435.7215}
+  m_LocalPosition: {x: 243.91885, y: -7.7160015, z: 437.2581}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 76030086}
-  - {fileID: 312106110}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1438,12 +1417,9 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 312106110}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
-  OrbitExtraRange: 7000
+  OrbitExtraRange: 6000
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
@@ -1737,36 +1713,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d2b70e080494bb448cd23d9ae65c3b1, type: 3}
---- !u!1 &294286413
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 294286414}
-  m_Layer: 0
-  m_Name: Pluto velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &294286414
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 294286413}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.0076293945, y: 0.0030441284, z: 0.0064697266}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 660032811}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &295433649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1864,7 +1810,6 @@ Transform:
   m_LocalPosition: {x: -28.729322, y: 0.0051564607, z: 41.47876}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 664188076}
   - {fileID: 2035322862}
   - {fileID: 1320292164}
   m_Father: {fileID: 976942980}
@@ -1885,9 +1830,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 664188076}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 0
   OrbitExtraRange: 0
@@ -1975,66 +1917,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 84581cfd6a48fa14ab97c522c7595750, type: 3}
---- !u!1 &312106109
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 312106110}
-  m_Layer: 0
-  m_Name: Rhea velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &312106110
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 312106109}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -257.30652, y: -174.4184, z: -378.4192}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 239124896}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &331827617
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 331827618}
-  m_Layer: 0
-  m_Name: Saturn velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &331827618
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 331827617}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.306137, y: -0.16220975, z: -1.7720032}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 50351164}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &336133197
 GameObject:
   m_ObjectHideFlags: 0
@@ -2100,7 +1982,7 @@ Transform:
   m_Children:
   - {fileID: 1343969536}
   m_Father: {fileID: 1680309057}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &344527603
 GameObject:
@@ -2131,7 +2013,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1104146012}
-  - {fileID: 1032434524}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2150,9 +2031,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 1032434524}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 7000
@@ -2231,7 +2109,7 @@ Transform:
   m_Children:
   - {fileID: 44456845}
   m_Father: {fileID: 2035322862}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &379649851
 GameObject:
@@ -2262,7 +2140,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 521022328}
-  - {fileID: 707386657}
   - {fileID: 1279582461}
   m_Father: {fileID: 38956052}
   m_RootOrder: 0
@@ -2282,9 +2159,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 707386657}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 1
   OrbitExtraRange: 0
@@ -2327,7 +2201,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1464777824}
-  - {fileID: 1096059088}
   m_Father: {fileID: 1376908350}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2346,9 +2219,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 57009493}
     AttractorMass: 6.4171e+23
-  VelocityHandle: {fileID: 1096059088}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 9000
@@ -2650,66 +2520,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
---- !u!1 &454008239
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 454008240}
-  m_Layer: 0
-  m_Name: Mercury velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &454008240
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 454008239}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.68969727, y: -1.4699115, z: 18.760702}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 610533908}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &485989137
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 485989138}
-  m_Layer: 0
-  m_Name: Mars velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &485989138
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 485989137}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.411367, y: -0.12834167, z: -4.8929787}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 57009493}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &495802040
 GameObject:
   m_ObjectHideFlags: 0
@@ -2740,7 +2550,7 @@ Transform:
   m_Children:
   - {fileID: 2057629627}
   m_Father: {fileID: 1320292164}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &495802042
 MonoBehaviour:
@@ -3092,11 +2902,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549881617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 281.50308, y: -7.6660757, z: 444.8075}
+  m_LocalPosition: {x: 257.8345, y: -4.926403, z: 445.55084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1354161169}
-  - {fileID: 843781876}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3115,12 +2924,9 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 843781876}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
-  OrbitExtraRange: 7000
+  OrbitExtraRange: 4000
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
@@ -3131,36 +2937,6 @@ MonoBehaviour:
   inclinationDeg: 27.69949014609112
   argOfPerifocusDeg: 174.9052041541396
   ascendingNodeDeg: 169.0681624841392
---- !u!1 &551060697
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 551060698}
-  m_Layer: 0
-  m_Name: Moon velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &551060698
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 551060697}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5085373, y: -0.053906206, z: 4.3401337}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1320292164}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &552353607
 GameObject:
   m_ObjectHideFlags: 0
@@ -8107,7 +7883,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1951405334}
-  - {fileID: 454008240}
   - {fileID: 43539564}
   m_Father: {fileID: 976942980}
   m_RootOrder: 2
@@ -8127,9 +7902,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 454008240}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 0
   OrbitExtraRange: 0
@@ -8143,66 +7915,6 @@ MonoBehaviour:
   inclinationDeg: 6.897509795833419
   argOfPerifocusDeg: 31.23164780152099
   ascendingNodeDeg: 47.55979100683341
---- !u!1 &620896653
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 620896654}
-  m_Layer: 0
-  m_Name: Enceladus velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &620896654
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 620896653}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 698.228, y: 43.662956, z: 212.23245}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1103340000}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &633337981
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 633337982}
-  m_Layer: 0
-  m_Name: Venus velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &633337982
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 633337981}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.0465775, y: -0.8367952, z: 14.206786}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1680309057}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &660032810
 GameObject:
   m_ObjectHideFlags: 0
@@ -8232,10 +7944,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1306857197}
-  - {fileID: 294286414}
   - {fileID: 750187248}
   m_Father: {fileID: 1514701311}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &660032813
 MonoBehaviour:
@@ -8252,9 +7963,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1514701311}
     AttractorMass: 2.1607165e+19
-  VelocityHandle: {fileID: 294286414}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 0
   OrbitExtraRange: 0
@@ -8342,36 +8050,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4146707697817101771, guid: 5a27d47534c90474d807350f30bf008b, type: 3}
   m_PrefabInstance: {fileID: 663051533}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &664188075
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 664188076}
-  m_Layer: 0
-  m_Name: Barycenter velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &664188076
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 664188075}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 9.850777, y: 0.0003310009, z: 6.8578415}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 303489672}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &691695427 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 22400008, guid: 7d2b70e080494bb448cd23d9ae65c3b1, type: 3}
@@ -8537,36 +8215,6 @@ Transform:
   m_Father: {fileID: 1681661683}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &707386656
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 707386657}
-  m_Layer: 0
-  m_Name: Jupiter velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &707386657
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 707386656}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5.010498, y: -0.12017006, z: -1.9405212}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 379649852}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &716237292
 GameObject:
   m_ObjectHideFlags: 0
@@ -8596,7 +8244,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 77830974}
-  - {fileID: 945996713}
   m_Father: {fileID: 38956052}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8615,9 +8262,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 379649852}
     AttractorMass: 1.89813e+27
-  VelocityHandle: {fileID: 945996713}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 4000
@@ -8660,9 +8304,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1482602635}
-  - {fileID: 807885018}
   m_Father: {fileID: 1514701311}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &717846278
 MonoBehaviour:
@@ -8679,9 +8322,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1514701311}
     AttractorMass: 1.307e+22
-  VelocityHandle: {fileID: 807885018}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 3000
@@ -8760,36 +8400,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 1
   m_ChildScaleHeight: 1
   m_ReverseArrangement: 0
---- !u!1 &723415017
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 723415018}
-  m_Layer: 0
-  m_Name: Calisto velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &723415018
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 723415017}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.797562, y: 5.2683268, z: -171.93356}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 24437703}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &732322544
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8888,7 +8498,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 663051534}
-  - {fileID: 2053263195}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -8907,9 +8516,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 2053263195}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 10000
@@ -9203,7 +8809,7 @@ Transform:
   m_Children:
   - {fileID: 748630391}
   m_Father: {fileID: 660032811}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &762368266
 GameObject:
@@ -9553,36 +9159,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &807885017
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 807885018}
-  m_Layer: 0
-  m_Name: Charon Velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &807885018
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 807885017}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.0828247, y: -1.624115, z: -3.427002}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 717846276}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &810336956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9722,7 +9298,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1069093578}
-  - {fileID: 1501816123}
   m_Father: {fileID: 38956052}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -9741,9 +9316,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 379649852}
     AttractorMass: 1.89813e+27
-  VelocityHandle: {fileID: 1501816123}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 3000
@@ -9826,66 +9398,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e4f2ee43e741d4a439c38d0192b1478d, type: 3}
---- !u!1 &818283948
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 818283949}
-  m_Layer: 0
-  m_Name: barycenter Pluto velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &818283949
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818283948}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 2.0932007, y: -0.64848137, z: -0.40185547}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1514701311}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &829388256
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 829388257}
-  m_Layer: 0
-  m_Name: Neptune velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &829388257
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 829388256}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.54797363, y: -0.05719185, z: -2.1634521}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 129718587}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &843167784
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10004,36 +9516,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 22400002, guid: a93c012dd9ef6454fa7d140e976926f7, type: 3}
   m_PrefabInstance: {fileID: 843167784}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &843781875
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 843781876}
-  m_Layer: 0
-  m_Name: Titan velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &843781876
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 843781875}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.390106, y: -149.09752, z: -293.76154}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 549881618}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &859231291
 GameObject:
   m_ObjectHideFlags: 0
@@ -10174,36 +9656,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78a6f8f1be7cd5545825150e78854263, type: 3}
---- !u!1 &883777100
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 883777101}
-  m_Layer: 0
-  m_Name: Uranus velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &883777101
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 883777100}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6859741, y: 0.029576302, z: -2.1016235}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1812590290}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &910670573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10450,36 +9902,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
   m_PrefabInstance: {fileID: 1185983046}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &945996712
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 945996713}
-  m_Layer: 0
-  m_Name: Io velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &945996713
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 945996712}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 528.5756, y: 16.28859, z: -230.60503}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 716237293}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -10708,6 +10130,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _planetScaleMultiplier: 1
+  UnitsPerAU: 50
   orbitActive: 0
 --- !u!1 &993721157
 GameObject:
@@ -10825,7 +10248,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 259013242}
-  - {fileID: 1609523812}
   m_Father: {fileID: 38956052}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10844,9 +10266,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 379649852}
     AttractorMass: 1.89813e+27
-  VelocityHandle: {fileID: 1609523812}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 3500
@@ -15738,66 +15157,6 @@ Transform:
   m_Father: {fileID: 1921888451}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1032434523
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1032434524}
-  m_Layer: 0
-  m_Name: Tethys velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1032434524
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1032434523}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 642.42206, y: 2.7244234, z: 126.49295}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 344527604}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1046148816
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1046148817}
-  m_Layer: 0
-  m_Name: Iapetus velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1046148817
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046148816}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 103.89703, y: 13.792549, z: 150.54749}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1944402866}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1053121253
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -16244,36 +15603,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d2b70e080494bb448cd23d9ae65c3b1, type: 3}
---- !u!1 &1096059087
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1096059088}
-  m_Layer: 0
-  m_Name: Deimos velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1096059088
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096059087}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -91.0928, y: 41.41932, z: 1.8820305}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 410808177}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1103339999
 GameObject:
   m_ObjectHideFlags: 0
@@ -16303,7 +15632,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1475253913}
-  - {fileID: 620896654}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16322,9 +15650,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 620896654}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 7000
@@ -16471,36 +15796,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &1150210682
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1150210683}
-  m_Layer: 0
-  m_Name: Phobos velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1150210683
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1150210682}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 76.07155, y: -31.54879, z: -134.44615}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2037492401}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1155153115
 GameObject:
   m_ObjectHideFlags: 0
@@ -16675,7 +15970,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8622257725213488576, guid: a29ebf3c5bd3876439163a11a94dd5c3, type: 3}
       propertyPath: m_LocalScale.x
@@ -16977,7 +16272,7 @@ Transform:
   m_Children:
   - {fileID: 1345352705}
   m_Father: {fileID: 379649852}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1290764540 stripped
 GameObject:
@@ -17177,10 +16472,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1808624689}
-  - {fileID: 551060698}
   - {fileID: 495802041}
   m_Father: {fileID: 303489672}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1320292165
 MonoBehaviour:
@@ -17197,9 +16491,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 303489672}
     AttractorMass: 5.97219e+24
-  VelocityHandle: {fileID: 551060698}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 450
@@ -22662,11 +21953,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486740357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 160.26334, y: 19.912287, z: 476.16602}
+  m_LocalPosition: {x: 188.18613, y: 10.916487, z: 463.56534}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1290764541}
-  - {fileID: 1489017767}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22685,12 +21975,9 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 1489017767}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
-  OrbitExtraRange: 7000
+  OrbitExtraRange: 4000
   OrbitPointsCount: 100
   MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
@@ -22701,36 +21988,6 @@ MonoBehaviour:
   inclinationDeg: 27.03450744385413
   argOfPerifocusDeg: 173.2000509332299
   ascendingNodeDeg: 169.1558773528826
---- !u!1 &1489017766
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1489017767}
-  m_Layer: 0
-  m_Name: Hyperion velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1489017767
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1489017766}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 151.04019, y: 88.624374, z: 205.76727}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1486740358}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1489278599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22800,36 +22057,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f35765d5e967dd74191870bc0ff18516, type: 3}
---- !u!1 &1501816122
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1501816123}
-  m_Layer: 0
-  m_Name: Ganymede velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1501816123
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501816122}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 250.0199, y: 7.465556, z: -107.06821}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 811486803}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1514701310
 GameObject:
   m_ObjectHideFlags: 0
@@ -22858,7 +22085,6 @@ Transform:
   m_LocalPosition: {x: 671.17633, y: -26.791096, z: 1563.9581}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 818283949}
   - {fileID: 660032811}
   - {fileID: 717846276}
   m_Father: {fileID: 976942980}
@@ -22879,9 +22105,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 818283949}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 0
   OrbitExtraRange: 0
@@ -23014,36 +22237,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!1 &1609523811
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1609523812}
-  m_Layer: 0
-  m_Name: Europa velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1609523812
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1609523811}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -369.5271, y: -14.353917, z: 159.75084}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1006441348}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1622682209
 GameObject:
   m_ObjectHideFlags: 0
@@ -23320,7 +22513,7 @@ Transform:
   m_Children:
   - {fileID: 1141551455}
   m_Father: {fileID: 50351164}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1680309056
 GameObject:
@@ -23350,7 +22543,6 @@ Transform:
   m_LocalPosition: {x: -35.935223, y: 0.28949976, z: -2.7639227}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 633337982}
   - {fileID: 927641450}
   - {fileID: 336133199}
   m_Father: {fileID: 976942980}
@@ -23371,9 +22563,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 633337982}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 0
   OrbitExtraRange: 0
@@ -23555,36 +22744,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1692573082}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1699474565
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1699474566}
-  m_Layer: 0
-  m_Name: Earth velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1699474566
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1699474565}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.00062561035, y: 0.000066305045, z: -0.0053367615}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 2035322862}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1712329842
 GameObject:
   m_ObjectHideFlags: 0
@@ -23673,36 +22832,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 22400008, guid: 7d2b70e080494bb448cd23d9ae65c3b1, type: 3}
   m_PrefabInstance: {fileID: 1073506902}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1743652880
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1743652881}
-  m_Layer: 0
-  m_Name: Dione velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1743652881
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743652880}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -569.7938, y: 79.94028, z: 46.88098}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 50944608}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1780605300 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: 5a27d47534c90474d807350f30bf008b, type: 3}
@@ -24054,7 +23183,6 @@ Transform:
   m_Children:
   - {fileID: 304526071}
   - {fileID: 704681718}
-  - {fileID: 883777101}
   m_Father: {fileID: 976942980}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24073,9 +23201,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 1692573083}
     AttractorMass: 1.9885e+30
-  VelocityHandle: {fileID: 883777101}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 1
   OrbitExtraRange: 0
@@ -29581,11 +28706,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944402865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 86.87215, y: 47.490486, z: 535.5936}
+  m_LocalPosition: {x: 165.74294, y: 19.848879, z: 485.07492}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1593465823}
-  - {fileID: 1046148817}
   m_Father: {fileID: 1072372892}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29604,12 +28728,9 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 50351164}
     AttractorMass: 5.6834e+26
-  VelocityHandle: {fileID: 1046148817}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
-  OrbitExtraRange: 7000
+  OrbitExtraRange: 3000
   OrbitPointsCount: 100
   MaxOrbitWorldUnitsDistance: 1000
   LockOrbitEditing: 1
@@ -30036,10 +29157,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 133408424}
-  - {fileID: 1699474566}
   - {fileID: 344719716}
   m_Father: {fileID: 303489672}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2035322863
 MonoBehaviour:
@@ -30056,9 +29176,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 303489672}
     AttractorMass: 1.1113551e+19
-  VelocityHandle: {fileID: 1699474566}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 0
   IsGiantPlanet: 0
   OrbitExtraRange: 0
@@ -30101,7 +29218,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 247874978}
-  - {fileID: 1150210683}
   m_Father: {fileID: 1376908350}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30120,9 +29236,6 @@ MonoBehaviour:
   AttractorSettings:
     AttractorObject: {fileID: 57009493}
     AttractorMass: 6.4171e+23
-  VelocityHandle: {fileID: 1150210683}
-  VelocityHandleLengthScale: 0
-  TimeScale: 1
   IsOrbitingPlanet: 1
   IsGiantPlanet: 0
   OrbitExtraRange: 9000
@@ -30136,36 +29249,6 @@ MonoBehaviour:
   inclinationDeg: 26.2104759223898
   argOfPerifocusDeg: 347.2958936828754
   ascendingNodeDeg: 85.00884980078752
---- !u!1 &2053263194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2053263195}
-  m_Layer: 0
-  m_Name: Mimas velocity
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2053263195
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2053263194}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1164.393, y: -156.82942, z: -33.588806}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 740982484}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2057629626
 GameObject:
   m_ObjectHideFlags: 3
