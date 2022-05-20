@@ -60,7 +60,7 @@ GameObject:
   - 222: {fileID: 22200004}
   - 114: {fileID: 11400000}
   m_Layer: 5
-  m_Name: SF Slider Horizontal
+  m_Name: SF Slider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

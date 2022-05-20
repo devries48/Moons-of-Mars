@@ -15,7 +15,7 @@ public class KeplerOrbitMover : MonoBehaviour
     /// The attractor settings data.
     /// Attractor object reference must be assigned or orbit moving will not work.
     /// </summary>
-    public KeplerAttractorData AttractorSettings = new KeplerAttractorData();
+    public KeplerAttractorData AttractorSettings = new();
 
     public bool IsOrbitingPlanet = false;
 
@@ -127,7 +127,7 @@ public class KeplerOrbitMover : MonoBehaviour
     /// The orbit data.
     /// Internal state of orbit.
     /// </summary>
-    internal KeplerOrbitData OrbitData = new KeplerOrbitData();
+    internal KeplerOrbitData OrbitData = new();
     [Header("JPL data")]
     public double eccentricity;
     public double semiMajorAxis;
@@ -188,7 +188,7 @@ public class KeplerOrbitMover : MonoBehaviour
             if (!LockOrbitEditing)
             {
                 var pos = transform.position - AttractorSettings.AttractorObject.position;
-                KeplerVector3d position = new KeplerVector3d(pos.x, pos.y, pos.z);
+                KeplerVector3d position = new(pos.x, pos.y, pos.z);
 
                 if (position != OrbitData.Position ||
                     OrbitData.GravConst != AttractorSettings.GravityConstant ||
@@ -268,19 +268,6 @@ public class KeplerOrbitMover : MonoBehaviour
             // Possible loss of precision, may be a problem in some situations.
             var pos = transform.position - AttractorSettings.AttractorObject.position;
             OrbitData.Position = new KeplerVector3d(pos.x, pos.y, pos.z);
-            OrbitData.CalculateOrbitStateFromOrbitalVectors();
-        }
-    }
-
-    /// <summary>
-    /// Change orbit velocity vector to match circular orbit.
-    /// </summary>
-    [ContextMenu("Circularize orbit")]
-    public void SetAutoCircleOrbit()
-    {
-        if (IsReferencesAsigned)
-        {
-            OrbitData.Velocity = KeplerOrbitUtils.CalcCircleOrbitVelocity(KeplerVector3d.zero, OrbitData.Position, OrbitData.AttractorMass, OrbitData.OrbitNormal, OrbitData.GravConst);
             OrbitData.CalculateOrbitStateFromOrbitalVectors();
         }
     }
