@@ -34,6 +34,8 @@ public class MenuController : MonoBehaviour
     private bool _controlPanelVisible = false;
 
     private float _cameraSwitchTime = 2.0f;
+    private float _maxZoomSolarCamDist = 4000f;
+    private float _maxZoomStepValue = 9f;
 
     private void OnEnable()
     {
@@ -54,11 +56,9 @@ public class MenuController : MonoBehaviour
         _director.played += Director_played;
         _director.stopped += Director_stopped;
 
-        _solarSystemController = solarSystem.GetComponent<SolarSystemController>();
+        solarSystem.TryGetComponent(out _solarSystemController);
 
-        var brain = mainCamera.GetComponent<CinemachineBrain>();
-
-        if (brain != null)
+        if (mainCamera.TryGetComponent<CinemachineBrain>(out var brain))
             _cameraSwitchTime = brain.m_DefaultBlend.BlendTime;
 
         HideControlPanel();
@@ -128,34 +128,53 @@ public class MenuController : MonoBehaviour
             ShowMainMenu();
     }
 
-    public void SolarSystemZoom(System.Single zoom)
+    public void SolarSystemZoom(System.Single value)
     {
-        var mltp = -4000 / 9f;
-        LeanTween.moveLocalZ(solarSystemCamera.gameObject, -100 + (zoom * mltp), 0f);
+        CinemachineComponentBase componentBase = solarSystemCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+        if (componentBase is CinemachineFramingTransposer)
+        {
+            var distance = 100f + ZoomEaseInCubic(value);
+            (componentBase as CinemachineFramingTransposer).m_CameraDistance = distance;
+        }
+    }
+
+    private float ZoomEaseInCubic(float value)
+    {
+        if (value == 0f) return 0f;
+
+        // p = percentage/100 from value of _maxZoomStepValue
+        var p = value / _maxZoomStepValue;
+
+        return (p * p * p) * _maxZoomSolarCamDist;
     }
 
     /// <summary>
     /// Rotate Solar-System around the x-axis between 15° and 90°.
     /// </summary>
     /// <param name="rotate"></param>
-    public void SolarSystemRotateVertical(System.Single rotate)
+    public void SolarSystemRotateVertical(System.Single value)
     {
         // Get the parent of the camera for the rotation.
         var camPivot = solarSystemCamera.gameObject.transform.parent.gameObject;
 
-        LeanTween.rotateX(camPivot, rotate * 15, 0f);
+        LeanTween.rotateX(camPivot, value * 15, 0f);
     }
 
     /// <summary>
     /// Rotate Solar-System around the y-axis between 0° and 360°.
     /// </summary>
     /// <param name="rotate"></param>
-    public void SolarSystemRotateHorizobtal(System.Single rotate)
+    public void SolarSystemRotateHorizontal(System.Single value)
     {
         // Get the parent of the camera for the rotation.
         var camPivot = solarSystemCamera.gameObject.transform.parent.gameObject;
 
-        LeanTween.rotateY(camPivot, rotate * 30, 0f);
+        LeanTween.rotateY(camPivot, value * 30, 0f);
+    }
+
+    public void SolarSystemCenter(System.Single value)
+    {
+
     }
 
     private void ControlPanelDisplay(bool hide = false)
