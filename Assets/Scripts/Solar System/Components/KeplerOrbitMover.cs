@@ -5,7 +5,6 @@ using UnityEngine;
 /// <summary>
 /// Component for moving game object in eliptic or hyperbolic path around attractor body.
 /// </summary>
-/// <seealso cref="MonoBehaviour" />
 [ExecuteAlways]
 [SelectionBase]
 [DisallowMultipleComponent]
@@ -13,7 +12,6 @@ public class KeplerOrbitMover : MonoBehaviour
 {
     /// <summary>
     /// The attractor settings data.
-    /// Attractor object reference must be assigned or orbit moving will not work.
     /// </summary>
     public KeplerAttractorData AttractorSettings = new();
 
@@ -65,24 +63,18 @@ public class KeplerOrbitMover : MonoBehaviour
 
     internal void ApplyChanges()
     {
-   
         float units = 50f;
 
         if (Controller != null)
             units = Controller.UnitsPerAU;
-        {
-        }
 
-            if (IsOrbitingPlanet)
+        if (IsOrbitingPlanet)
         {
             var mltp = 1f;
+            AttractorSettings.AttractorObject.TryGetComponent<KeplerOrbitMover>(out var parent);
 
-                var parent = AttractorSettings.AttractorObject.GetComponent<KeplerOrbitMover>();
-
-                if (parent != null)
-                    mltp = Controller.GetPlanetScaleMultiplier(parent.IsGiantPlanet);
-
-            
+            if (parent != null)
+                mltp = Controller.GetPlanetScaleMultiplier(parent.IsGiantPlanet);
 
             units += OrbitExtraRange * mltp;
         }

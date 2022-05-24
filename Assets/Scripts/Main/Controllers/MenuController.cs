@@ -1,51 +1,57 @@
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.Events;
 using Cinemachine;
 
 using static SolarSystemController;
-using System.Collections;
-using UnityEngine.Events;
 
 
 // see https://easings.net/
 
+[SelectionBase]
+[DisallowMultipleComponent]
 public class MenuController : MonoBehaviour
 {
+    #region editor fields
     [Header("UI Elements")]
     [SerializeField] GameObject mainMenuWindow;
     [SerializeField] GameObject controlPanel;
     [SerializeField] GameObject infoPanel;
     [SerializeField] GameObject exitButton;
     [SerializeField] ParticleSystem spaceDebriSystem;
+
     [Header("Sound")]
     [SerializeField] AudioSource slideInSound;
-    [Header("Cameras")]
-    [SerializeField] Camera mainCamera;
-    [SerializeField] CinemachineVirtualCamera menuCamera;
-    [SerializeField] CinemachineVirtualCamera solarSystemCamera;
 
     [Header("Solar System Controller")]
     [SerializeField] GameObject solarSystem;
+    #endregion
 
-    private CelestialBody[] _celestialBodies;
-    private PlayableDirector _director;
-    private SolarSystemController _solarSystemController;
-    private bool _controlPanelVisible = false;
+    #region fields
+    CelestialBody[] _celestialBodies;
+    PlayableDirector _director;
+    bool _controlPanelVisible = false;
 
-    private float _cameraSwitchTime = 2.0f;
-    private float _maxZoomSolarCamDist = 4000f;
-    private float _maxZoomStepValue = 9f;
+    float _cameraSwitchTime = 2.0f;
+    #endregion
+
+    #region properties
+    
+    GameManager GameManager => GameManager.Instance;
+    
+    #endregion
 
     private void OnEnable()
     {
-        CameraSwitcher.Register(menuCamera);
-        CameraSwitcher.Register(solarSystemCamera);
+        CameraSwitcher.Register(GameManager.MenuCamera);
+        CameraSwitcher.Register(GameManager.SolarSystemCamera);
     }
     private void OnDisable()
     {
-        CameraSwitcher.Unregister(menuCamera);
-        CameraSwitcher.Unregister(solarSystemCamera);
+        CameraSwitcher.Unregister(GameManager.MenuCamera);
+        CameraSwitcher.Unregister(GameManager.SolarSystemCamera);
     }
 
     private void Awake()
@@ -56,9 +62,7 @@ public class MenuController : MonoBehaviour
         _director.played += Director_played;
         _director.stopped += Director_stopped;
 
-        solarSystem.TryGetComponent(out _solarSystemController);
-
-        if (mainCamera.TryGetComponent<CinemachineBrain>(out var brain))
+        if (GameManager.MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
             _cameraSwitchTime = brain.m_DefaultBlend.BlendTime;
 
         HideControlPanel();
@@ -92,12 +96,12 @@ public class MenuController : MonoBehaviour
         HideMainMenu();
 
         ControlPanelDisplay();
-        StartCoroutine(DelayExecute(_cameraSwitchTime, _solarSystemController.ShowOrbitLines));
+        StartCoroutine(DelayExecute(_cameraSwitchTime, GameManager.SolarSystemCtrl.ShowOrbitLines));
 
-        if (_solarSystemController.GetPlanetScaleMultiplier() == 1)
+        if (GameManager.SolarSystemCtrl.GetPlanetScaleMultiplier() == 1)
             TweenPlanetScale(_cameraSwitchTime);
 
-        CameraSwitcher.SwitchCamera(solarSystemCamera);
+        CameraSwitcher.SwitchCamera(GameManager.SolarSystemCamera);
     }
 
     public void MenuQuit()
@@ -113,10 +117,10 @@ public class MenuController : MonoBehaviour
     {
         var wait = 0f;
 
-        if (_solarSystemController.OrbitLinesVisible)
+        if (GameManager.SolarSystemCtrl.OrbitLinesVisible)
         {
             wait = .5f; // Wait for orbit lines to fade away
-            _solarSystemController.HideOrbitLines();
+            GameManager.SolarSystemCtrl.HideOrbitLines();
             ControlPanelDisplay(true);
         }
 
@@ -128,54 +132,6 @@ public class MenuController : MonoBehaviour
             ShowMainMenu();
     }
 
-    public void SolarSystemZoom(System.Single value)
-    {
-        CinemachineComponentBase componentBase = solarSystemCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
-        if (componentBase is CinemachineFramingTransposer)
-        {
-            var distance = 100f + ZoomEaseInCubic(value);
-            (componentBase as CinemachineFramingTransposer).m_CameraDistance = distance;
-        }
-    }
-
-    private float ZoomEaseInCubic(float value)
-    {
-        if (value == 0f) return 0f;
-
-        // p = percentage/100 from value of _maxZoomStepValue
-        var p = value / _maxZoomStepValue;
-
-        return (p * p * p) * _maxZoomSolarCamDist;
-    }
-
-    /// <summary>
-    /// Rotate Solar-System around the x-axis between 15° and 90°.
-    /// </summary>
-    /// <param name="rotate"></param>
-    public void SolarSystemRotateVertical(System.Single value)
-    {
-        // Get the parent of the camera for the rotation.
-        var camPivot = solarSystemCamera.gameObject.transform.parent.gameObject;
-
-        LeanTween.rotateX(camPivot, value * 15, 0f);
-    }
-
-    /// <summary>
-    /// Rotate Solar-System around the y-axis between 0° and 360°.
-    /// </summary>
-    /// <param name="rotate"></param>
-    public void SolarSystemRotateHorizontal(System.Single value)
-    {
-        // Get the parent of the camera for the rotation.
-        var camPivot = solarSystemCamera.gameObject.transform.parent.gameObject;
-
-        LeanTween.rotateY(camPivot, value * 30, 0f);
-    }
-
-    public void SolarSystemCenter(System.Single value)
-    {
-
-    }
 
     private void ControlPanelDisplay(bool hide = false)
     {
@@ -227,9 +183,9 @@ public class MenuController : MonoBehaviour
         if (spaceDebriSystem == null)
             return;
 
-        CameraSwitcher.SwitchCamera(menuCamera);
+        CameraSwitcher.SwitchCamera(GameManager.MenuCamera);
 
-        if (_solarSystemController.GetPlanetScaleMultiplier() > 1)
+        if (GameManager.SolarSystemCtrl.GetPlanetScaleMultiplier() > 1)
             TweenPlanetScale(1f, true);
 
         HideExitButton();
@@ -256,7 +212,7 @@ public class MenuController : MonoBehaviour
     }
 
 
-    private void TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
+    private static void TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
                 LeanTweenType pivotEase = LeanTweenType.easeInOutSine, float pivotTime = 1f,
                 LeanTweenType rotateEase = LeanTweenType.notUsed, float rotateTime = 0f)
     {
@@ -270,7 +226,7 @@ public class MenuController : MonoBehaviour
                 LeanTween.rotate(gameObj, rotate, rotateTime).setEase(rotateEase);
         }
 
-        LeanTween.value(gameObject, rect.pivot, newPivot, pivotTime).setEase(pivotEase).setOnUpdateVector2((Vector2 pos) =>
+        LeanTween.value(gameObj, rect.pivot, newPivot, pivotTime).setEase(pivotEase).setOnUpdateVector2((Vector2 pos) =>
         {
             rect.pivot = pos;
         });
@@ -284,7 +240,7 @@ public class MenuController : MonoBehaviour
 
         LeanTween.value(start, end, scaleTime).setEase(type).setOnUpdate((float val) =>
         {
-            _solarSystemController.SetPlanetScaleMultiplier(val);
+            GameManager.SolarSystemCtrl.SetPlanetScaleMultiplier(val);
         });
     }
 

@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 9923351}
   - component: {fileID: 9923350}
   m_Layer: 5
-  m_Name: field Body
+  m_Name: text Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -406,8 +406,9 @@ GameObject:
   - component: {fileID: 28288001}
   - component: {fileID: 28288002}
   - component: {fileID: 28288000}
+  - component: {fileID: 28288003}
   m_Layer: 0
-  m_Name: Menu Manager
+  m_Name: Menu Controller
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -431,9 +432,6 @@ MonoBehaviour:
   exitButton: {fileID: 7802111268228156118}
   spaceDebriSystem: {fileID: 560152241}
   slideInSound: {fileID: 762368268}
-  mainCamera: {fileID: 963194227}
-  menuCamera: {fileID: 1712329844}
-  solarSystemCamera: {fileID: 917288190}
   solarSystem: {fileID: 976942978}
 --- !u!4 &28288001
 Transform:
@@ -482,6 +480,24 @@ PlayableDirector:
     - fd1a454c746dc1c41972320af3358295: {fileID: 426958032}
     - ac66d0169f6d6cf4db1c240fcfc9933f: {fileID: 43539563}
     - 3cd417e67bada114e93aa6d482895d0c: {fileID: 495802042}
+--- !u!114 &28288003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 28287999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb66c08601eb24847966e95618117b47, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  centerIcons:
+  - {fileID: 21300000, guid: 5726c742ab5157f49a9867f16482e390, type: 3}
+  - {fileID: 21300000, guid: 8e20d1fa431332d45b54ac8754d8bbf1, type: 3}
+  - {fileID: 21300000, guid: ad5aa5ffc9d97a64985b3c239334dd08, type: 3}
+  centerImage: {fileID: 1384152578}
+  centerText: {fileID: 9923350}
 --- !u!1 &38956051
 GameObject:
   m_ObjectHideFlags: 0
@@ -15881,8 +15897,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 28288000}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+      - m_Target: {fileID: 28288003}
+        m_TargetAssemblyTypeName: PanelControlSystem, Assembly-CSharp
         m_MethodName: SolarSystemRotateVertical
         m_Mode: 0
         m_Arguments:
@@ -16794,8 +16810,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 28288000}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+      - m_Target: {fileID: 28288003}
+        m_TargetAssemblyTypeName: PanelControlSystem, Assembly-CSharp
         m_MethodName: SolarSystemCenter
         m_Mode: 0
         m_Arguments:
@@ -17641,7 +17657,7 @@ GameObject:
   - component: {fileID: 1384152579}
   - component: {fileID: 1384152578}
   m_Layer: 5
-  m_Name: image Body
+  m_Name: image Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30549,6 +30565,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2107221187}
+  - component: {fileID: 2107221188}
   m_Layer: 0
   m_Name: Managers
   m_TagString: Untagged
@@ -30573,6 +30590,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2107221188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2107221186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0bf58040f6846564e8d3b307fb10b324, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MainCamera: {fileID: 963194227}
+  MenuCamera: {fileID: 1712329844}
+  SolarSystemCamera: {fileID: 917288190}
+  SolarSystem: {fileID: 976942978}
 --- !u!1001 &2112616275
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -30832,8 +30865,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 28288000}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+      - m_Target: {fileID: 28288003}
+        m_TargetAssemblyTypeName: PanelControlSystem, Assembly-CSharp
         m_MethodName: SolarSystemZoom
         m_Mode: 0
         m_Arguments:
@@ -31274,8 +31307,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 28288000}
-        m_TargetAssemblyTypeName: MenuController, Assembly-CSharp
+      - m_Target: {fileID: 28288003}
+        m_TargetAssemblyTypeName: PanelControlSystem, Assembly-CSharp
         m_MethodName: SolarSystemRotateHorizontal
         m_Mode: 0
         m_Arguments:
