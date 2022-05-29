@@ -40,9 +40,7 @@ public class CelestialBody : MonoBehaviour
         SetBodyInfo();
     }
 
-    /// <summary>
-    /// Handle planet rotation
-    /// </summary>
+    // Handle planet rotation
     void FixedUpdate()
     {
         var rotationSpeed = _solarSystemController.IsDemo && bodyType != CelestialBodyType.Sun
@@ -74,7 +72,6 @@ public class CelestialBody : MonoBehaviour
 
             var axialTilt = Quaternion.Euler(BodyAxialTilt, 0, 0);
             trans.rotation = axialTilt;
-            //trans.SetPositionAndRotation(Vector3.zero, axialTilt);
         }
 
         if (bodyType == CelestialBodyType.Sun)
@@ -91,7 +88,7 @@ public class CelestialBody : MonoBehaviour
         }
     }
 
-    private bool IsGiantPlanet()
+    public bool IsGiantPlanet()
     {
         CelestialBodyName[] array = { CelestialBodyName.Jupiter, CelestialBodyName.Saturn, CelestialBodyName.Uranus, CelestialBodyName.Neptune };
         return Array.Exists(array, e => e == bodyName);

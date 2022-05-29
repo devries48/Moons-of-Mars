@@ -1,12 +1,9 @@
 using System.Collections;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Events;
-using Cinemachine;
 
 using static SolarSystemController;
-
 
 // see https://easings.net/
 
@@ -17,7 +14,6 @@ public class MenuController : MonoBehaviour
     #region editor fields
     [Header("UI Elements")]
     [SerializeField] GameObject mainMenuWindow;
-    [SerializeField] GameObject controlPanel;
     [SerializeField] GameObject infoPanel;
     [SerializeField] GameObject exitButton;
     [SerializeField] ParticleSystem spaceDebriSystem;
@@ -25,50 +21,51 @@ public class MenuController : MonoBehaviour
     [Header("Sound")]
     [SerializeField] AudioSource slideInSound;
 
-    [Header("Solar System Controller")]
+    [Header("Controllers")]
     [SerializeField] GameObject solarSystem;
     #endregion
 
     #region fields
-    CelestialBody[] _celestialBodies;
     PlayableDirector _director;
-    bool _controlPanelVisible = false;
-
-    float _cameraSwitchTime = 2.0f;
     #endregion
 
     #region properties
-    
     GameManager GameManager => GameManager.Instance;
-    
+
+    SolarSystemPanelController SystemPanelController
+    {
+        get
+        {
+            if (_solarSystemControlPanel == null)
+                TryGetComponent(out _solarSystemControlPanel);
+
+            return _solarSystemControlPanel;
+        }
+    }
+    SolarSystemPanelController _solarSystemControlPanel;
     #endregion
 
-    private void OnEnable()
+     void OnEnable()
     {
         CameraSwitcher.Register(GameManager.MenuCamera);
         CameraSwitcher.Register(GameManager.SolarSystemCamera);
+        SystemPanelController.HideControlPanel();
     }
-    private void OnDisable()
+
+     void OnDisable()
     {
         CameraSwitcher.Unregister(GameManager.MenuCamera);
         CameraSwitcher.Unregister(GameManager.SolarSystemCamera);
     }
 
-    private void Awake()
+     void Awake()
     {
-        _celestialBodies = FindObjectsOfType<CelestialBody>();
-
         _director = GetComponent<PlayableDirector>();
         _director.played += Director_played;
         _director.stopped += Director_stopped;
-
-        if (GameManager.MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
-            _cameraSwitchTime = brain.m_DefaultBlend.BlendTime;
-
-        HideControlPanel();
     }
 
-    private void Start()
+     void Start()
     {
         ShowMainMenu();
     }
@@ -95,11 +92,12 @@ public class MenuController : MonoBehaviour
     {
         HideMainMenu();
 
-        ControlPanelDisplay();
-        StartCoroutine(DelayExecute(_cameraSwitchTime, GameManager.SolarSystemCtrl.ShowOrbitLines));
+        SystemPanelController.ShowControlPanel();
+
+        StartCoroutine(DelayExecute(GameManager.CameraSwitchTime, GameManager.SolarSystemCtrl.ShowOrbitLines));
 
         if (GameManager.SolarSystemCtrl.GetPlanetScaleMultiplier() == 1)
-            TweenPlanetScale(_cameraSwitchTime);
+            TweenPlanetScale(GameManager.CameraSwitchTime);
 
         CameraSwitcher.SwitchCamera(GameManager.SolarSystemCamera);
     }
@@ -121,7 +119,7 @@ public class MenuController : MonoBehaviour
         {
             wait = .5f; // Wait for orbit lines to fade away
             GameManager.SolarSystemCtrl.HideOrbitLines();
-            ControlPanelDisplay(true);
+            SystemPanelController.HideControlPanel(true);
         }
 
         if (_director.state == PlayState.Playing)
@@ -133,33 +131,9 @@ public class MenuController : MonoBehaviour
     }
 
 
-    private void ControlPanelDisplay(bool hide = false)
-    {
-        if (hide && _controlPanelVisible)
-        {
-            HideControlPanel(true);
-            TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
-        }
-        else if (!hide && !_controlPanelVisible)
-        {
-            // Pivot y from 0 to -0.1 rotate x from -90 to 15 
-            TweenPivot(controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0), LeanTweenType.easeOutQuint, 1f, LeanTweenType.easeInQuad, _cameraSwitchTime);
-        }
-
-        _controlPanelVisible = !hide;
-    }
-
-    private void HideControlPanel(bool animate = false)
-    {
-        if (animate)
-            TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
-        else
-            TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0));
-    }
-
     private void SetWindowInfo(CelestialBodyName name)
     {
-        var info = _celestialBodies.First(b => b.Info.bodyName == name).Info;
+        var info = GameManager.CelestialBody(name).Info;
         if (info == null)
             return;
 
@@ -189,7 +163,7 @@ public class MenuController : MonoBehaviour
             TweenPlanetScale(1f, true);
 
         HideExitButton();
-        TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, _cameraSwitchTime);
+        TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, GameManager.CameraSwitchTime);
 
         spaceDebriSystem.Play();
     }
@@ -203,7 +177,7 @@ public class MenuController : MonoBehaviour
 
     private void ShowExitButton()
     {
-        TweenPivot(exitButton, new Vector2(-.2f, -.2f), _cameraSwitchTime);
+        TweenPivot(exitButton, new Vector2(-.2f, -.2f), GameManager.CameraSwitchTime);
     }
 
     private void HideExitButton()
@@ -211,8 +185,7 @@ public class MenuController : MonoBehaviour
         TweenPivot(exitButton, new Vector2(-.2f, 2f), null);
     }
 
-
-    private static void TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
+    public static void TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
                 LeanTweenType pivotEase = LeanTweenType.easeInOutSine, float pivotTime = 1f,
                 LeanTweenType rotateEase = LeanTweenType.notUsed, float rotateTime = 0f)
     {

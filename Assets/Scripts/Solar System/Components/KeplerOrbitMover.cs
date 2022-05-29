@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using UnityEngine;
+using static SolarSystemController;
 
 /// <summary>
 /// Component for moving game object in eliptic or hyperbolic path around attractor body.
@@ -10,95 +11,83 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class KeplerOrbitMover : MonoBehaviour
 {
-    /// <summary>
-    /// The attractor settings data.
-    /// </summary>
-    public KeplerAttractorData AttractorSettings = new();
 
-    public bool IsOrbitingPlanet = false;
+    #region editor fields
 
-    [Tooltip("Giant planets scale 1/10 in PlanetScaler.")]
-    public bool IsGiantPlanet = false;
+    [Header("Orbital period in days")]
+    public float OrbitalPeriod;
+
+    [Header("Orbit line")]
+    [Tooltip("The orbit curve precision.")]
+    public int OrbitPointsCount = 50;
+
+    [Tooltip("The maximum orbit distance of orbit display in world units.")]
+    public float MaxOrbitWorldUnitsDistance = 1000f;
 
     public int OrbitExtraRange = 0;
 
-    /// <summary>
-    /// The orbit curve precision.
-    /// </summary>
-    [Header("Orbit line")]
-    public int OrbitPointsCount = 50;
+    [Header("JPL data")]
+    public double eccentricity;
+    public double semiMajorAxis;
+    public double meanAnomalyDeg;
+    public double inclinationDeg;
+    public double argOfPerifocusDeg;
+    public double ascendingNodeDeg;
 
-    /// <summary>
-    /// The maximum orbit distance of orbit display in world units.
-    /// </summary>
-    public float MaxOrbitWorldUnitsDistance = 1000f;
+    #endregion
 
-    internal float TimeScale = 1f;
+    #region properties
 
-    private SolarSystemController _solarSystem;
+    bool IsReferencesAsigned
+    {
+        get { return AttractorSettings != null && AttractorSettings.AttractorObject != null; }
+    }
 
-    private SolarSystemController Controller
+    SolarSystemController Controller
     {
         get
         {
-            if (_solarSystem == null)
+            if (__solarSystem == null)
             {
                 var solarSystem = GameObject.Find(Constants.SolarSystemMain);
-                _solarSystem = solarSystem.GetComponent<SolarSystemController>();
+                __solarSystem = solarSystem.GetComponent<SolarSystemController>();
             }
-            return _solarSystem;
+            return __solarSystem;
         }
     }
+    SolarSystemController __solarSystem;
 
-    /// <summary>
-    /// Astronomical unit in SI units.
-    /// </summary>
-    /// <remarks>
-    /// Used to calculate real scale orbit periods.
-    /// </remarks>
+
+    public CelestialBody CelestialBody
+    {
+        get
+        {
+            if (__celestialBody == null)
+                __celestialBody = GetComponentInChildren<CelestialBody>();
+
+            return __celestialBody;
+        }
+    }
+    CelestialBody __celestialBody;
+
+    #endregion
+
+    #region fields 
+
+    public KeplerAttractorData AttractorSettings = new();
+    internal float TimeScale = 1f;
+
+    // Astronomical unit in SI units, used to calculate real scale orbit periods.
     const double AU = 1.495978707e11;
 
     // Gravitational constant. In this context plays role of speed muliplier.
     const double GConstant = 100;
+    #endregion
 
-    internal void ApplyChanges()
-    {
-        float units = 50f;
+    public Color LineColor = Color.white;
 
-        if (Controller != null)
-            units = Controller.UnitsPerAU;
+ 
 
-        if (IsOrbitingPlanet)
-        {
-            var mltp = 1f;
-            AttractorSettings.AttractorObject.TryGetComponent<KeplerOrbitMover>(out var parent);
-
-            if (parent != null)
-                mltp = Controller.GetPlanetScaleMultiplier(parent.IsGiantPlanet);
-
-            units += OrbitExtraRange * mltp;
-        }
-
-        // G constant is used as free parameter to fixate orbits periods values while SemiMajor axis parameter is adjusted for the scene.
-        double compensatedGConst = GConstant / Math.Pow(AU / units, 3d);
-
-        AttractorSettings.GravityConstant = (float)compensatedGConst;
-
-        OrbitData = new KeplerOrbitData(
-                 eccentricity: eccentricity,
-                 semiMajorAxis: semiMajorAxis * units,
-                 meanAnomalyDeg: meanAnomalyDeg,
-                 inclinationDeg: inclinationDeg,
-                 argOfPerifocusDeg: argOfPerifocusDeg,
-                 ascendingNodeDeg: ascendingNodeDeg,
-                 attractorMass: AttractorSettings.AttractorMass,
-                 gConst: compensatedGConst,
-                 period: OrbitalPeriod * 86400
-                 );
-
-        if (AttractorSettings.AttractorObject != null && OrbitData.SemiMajorAxis > 0)
-            ForceUpdateViewFromInternalState();
-    }
 
     /// <summary>
     /// Disable continious editing orbit in update loop, if you don't need it.
@@ -112,28 +101,15 @@ public class KeplerOrbitMover : MonoBehaviour
     [Tooltip("Disable continious editing orbit in update loop, if you don't need it, or you need to fix Kraken issue on large scale orbits.")]
     public bool LockOrbitEditing = false;
 
-    [Header("Orbital period in days")]
-    public float OrbitalPeriod;
 
     /// <summary>
     /// The orbit data.
     /// Internal state of orbit.
     /// </summary>
     internal KeplerOrbitData OrbitData = new();
-    [Header("JPL data")]
-    public double eccentricity;
-    public double semiMajorAxis;
-    public double meanAnomalyDeg;
-    public double inclinationDeg;
-    public double argOfPerifocusDeg;
-    public double ascendingNodeDeg;
 
     private Coroutine _updateRoutine;
 
-    private bool IsReferencesAsigned
-    {
-        get { return AttractorSettings != null && AttractorSettings.AttractorObject != null; }
-    }
 
     private void OnEnable()
     {
@@ -300,4 +276,51 @@ public class KeplerOrbitMover : MonoBehaviour
     {
         OrbitData = new KeplerOrbitData();
     }
+
+    internal void ApplyChanges()
+    {
+        // Distance scale
+        float units = 50f;
+
+        if (Controller != null)
+            units = Controller.UnitsPerAU;
+
+        if (CelestialBody != null && CelestialBody.bodyType == CelestialBodyType.Moon)
+        {
+            var mltp = 1f;
+            AttractorSettings.AttractorObject.TryGetComponent<KeplerOrbitMover>(out var parent);
+
+            if (parent != null)
+                mltp = Controller.GetPlanetScaleMultiplier(parent.IsGiantPlanett());
+
+            units += OrbitExtraRange * mltp;
+        }
+
+        // G constant is used as free parameter to fixate orbits periods values while SemiMajor axis parameter is adjusted for the scene.
+        double compensatedGConst = GConstant / Math.Pow(AU / units, 3d);
+
+        AttractorSettings.GravityConstant = (float)compensatedGConst;
+
+        OrbitData = new KeplerOrbitData(
+                 eccentricity: eccentricity,
+                 semiMajorAxis: semiMajorAxis * units,
+                 meanAnomalyDeg: meanAnomalyDeg,
+                 inclinationDeg: inclinationDeg,
+                 argOfPerifocusDeg: argOfPerifocusDeg,
+                 ascendingNodeDeg: ascendingNodeDeg,
+                 attractorMass: AttractorSettings.AttractorMass,
+                 gConst: compensatedGConst,
+                 period: OrbitalPeriod * 86400
+                 );
+
+        if (AttractorSettings.AttractorObject != null && OrbitData.SemiMajorAxis > 0)
+            ForceUpdateViewFromInternalState();
+    }
+
+    // Giant planets scale 1/10 in PlanetScaler.
+    internal bool IsGiantPlanett()
+    {
+        return CelestialBody.IsGiantPlanet();
+    }
+
 }

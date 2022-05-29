@@ -303,22 +303,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 379649852}
-    AttractorMass: 1.89813e+27
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 2500
+  OrbitalPeriod: 16.689
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 16.689
+  OrbitExtraRange: 2500
   eccentricity: 0.007552158962446152
   semiMajorAxis: 0.01258990690152897
   meanAnomalyDeg: 359.3794775960536
   inclinationDeg: 1.965661341003808
   argOfPerifocusDeg: 27.6492136308114
   ascendingNodeDeg: 336.8877066582978
+  AttractorSettings:
+    AttractorObject: {fileID: 379649852}
+    AttractorMass: 1.89813e+27
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &26929491
 GameObject:
   m_ObjectHideFlags: 0
@@ -427,7 +426,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainMenuWindow: {fileID: 2022205611}
-  controlPanel: {fileID: 247752204}
   infoPanel: {fileID: 181938620}
   exitButton: {fileID: 7802111268228156118}
   spaceDebriSystem: {fileID: 560152241}
@@ -492,12 +490,55 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb66c08601eb24847966e95618117b47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controlPanel: {fileID: 247752204}
+  centerText: {fileID: 9923350}
+  speedIcon: {fileID: 283380835}
   centerIcons:
   - {fileID: 21300000, guid: 5726c742ab5157f49a9867f16482e390, type: 3}
   - {fileID: 21300000, guid: 8e20d1fa431332d45b54ac8754d8bbf1, type: 3}
   - {fileID: 21300000, guid: ad5aa5ffc9d97a64985b3c239334dd08, type: 3}
   centerImage: {fileID: 1384152578}
-  centerText: {fileID: 9923350}
+  RotateSpeed: 5
+--- !u!1 &38303139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 38303140}
+  m_Layer: 5
+  m_Name: Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &38303140
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 38303139}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2122962404}
+  - {fileID: 1618239947}
+  - {fileID: 283380836}
+  - {fileID: 291414530}
+  m_Father: {fileID: 247752205}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -469, y: -2.5}
+  m_SizeDelta: {x: 110, y: -35}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &38956051
 GameObject:
   m_ObjectHideFlags: 0
@@ -739,22 +780,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 1
-  OrbitExtraRange: 0
+  OrbitalPeriod: 10747
   OrbitPointsCount: 200
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 10747
+  OrbitExtraRange: 0
   eccentricity: 0.05509716255920354
   semiMajorAxis: 9.53379960390136
   meanAnomalyDeg: 206.6504597578883
   inclinationDeg: 2.484126516651583
   argOfPerifocusDeg: 339.2611583415289
   ascendingNodeDeg: 113.5896710000065
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &50576109
 GameObject:
   m_ObjectHideFlags: 0
@@ -935,22 +975,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 7000
+  OrbitalPeriod: 2.74
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 2.74
+  OrbitExtraRange: 7000
   eccentricity: 0.001702930902880962
   semiMajorAxis: 0.002524367590081409
   meanAnomalyDeg: 209.8746829881625
   inclinationDeg: 28.0759137487008
   argOfPerifocusDeg: 77.28525027419062
   ascendingNodeDeg: 169.5068743155188
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &57009492
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,22 +1037,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 0
-  OrbitExtraRange: 0
+  OrbitalPeriod: 687
   OrbitPointsCount: 100
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 687
+  OrbitExtraRange: 0
   eccentricity: 0.08694174924563587
   semiMajorAxis: 1.499665304235853
   meanAnomalyDeg: 320.6835625948802
   inclinationDeg: 1.855941342737693
   argOfPerifocusDeg: 290.8670181487074
   ascendingNodeDeg: 49.39513332076693
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &63260114
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,22 +1289,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 1
-  OrbitExtraRange: 0
+  OrbitalPeriod: 59800
   OrbitPointsCount: 300
   MaxOrbitWorldUnitsDistance: 2000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 59800
+  OrbitExtraRange: 0
   eccentricity: 0.00881139069464004
   semiMajorAxis: 30.08264629659431
   meanAnomalyDeg: 303.8071301409309
   inclinationDeg: 1.770451555474154
   argOfPerifocusDeg: 270.6008285876983
   ascendingNodeDeg: 131.7875937191575
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!4 &133408424 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}
@@ -1649,8 +1686,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 160, y: 35}
-  m_SizeDelta: {x: 250, y: -110}
+  m_AnchoredPosition: {x: 135, y: 35}
+  m_SizeDelta: {x: 230, y: -110}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &239124895
 GameObject:
@@ -1697,22 +1734,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 6000
+  OrbitalPeriod: 4.52
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 4.52
+  OrbitExtraRange: 6000
   eccentricity: 0.001220531583480546
   semiMajorAxis: 0.003524469439106127
   meanAnomalyDeg: 42.09179849752181
   inclinationDeg: 27.93222121689215
   argOfPerifocusDeg: 178.3684003896185
   ascendingNodeDeg: 170.1766277180811
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &247752204
 GameObject:
   m_ObjectHideFlags: 0
@@ -1748,6 +1784,7 @@ RectTransform:
   - {fileID: 1400708692}
   - {fileID: 2119616690}
   - {fileID: 465516869}
+  - {fileID: 38303140}
   m_Father: {fileID: 2103142392}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1845,6 +1882,217 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4146707697817101771, guid: 68270d29541d9944fb3b24329dba6ef1, type: 3}
   m_PrefabInstance: {fileID: 1053121253}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &283380835
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 283380836}
+  - component: {fileID: 283380838}
+  - component: {fileID: 283380837}
+  m_Layer: 5
+  m_Name: image Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &283380836
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283380835}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 38303140}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: 0, y: 39.9}
+  m_SizeDelta: {x: 80, y: 80}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &283380837
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283380835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 2100000, guid: 2ae2102588f9d964faf3b1ca55e22dda, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 1e26c85d7267bda4aa7b272af10db1b8, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &283380838
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 283380835}
+  m_CullTransparentMesh: 1
+--- !u!1 &291414529
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 291414530}
+  - component: {fileID: 291414532}
+  - component: {fileID: 291414531}
+  m_Layer: 5
+  m_Name: text Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &291414530
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291414529}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 38303140}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 32}
+  m_Pivot: {x: 0.5, y: 2.2}
+--- !u!114 &291414531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291414529}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
+  m_sharedMaterial: {fileID: 5774329478888551352, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 1694469120
+  m_fontColor: {r: 0, g: 0.54901963, b: 1, a: 0.39215687}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 28
+  m_fontSizeBase: 28
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 1024
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: -60
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &291414532
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 291414529}
+  m_CullTransparentMesh: 1
 --- !u!1001 &295433649
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1960,22 +2208,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 0
-  OrbitExtraRange: 0
+  OrbitalPeriod: 365.2
   OrbitPointsCount: 60
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 365.2
+  OrbitExtraRange: 0
   eccentricity: 0.0210412089052348
   semiMajorAxis: 0.9884668414685552
   meanAnomalyDeg: 173.3373020011133
   inclinationDeg: 0.0060612090369447
   argOfPerifocusDeg: 261.4166510538413
   ascendingNodeDeg: 160.2658938755406
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!4 &304526071 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6784605212753504858, guid: a2b2827bcf80efa4eb8871947f4a5d47, type: 3}
@@ -2166,22 +2413,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 7000
+  OrbitalPeriod: 1.89
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 1.89
+  OrbitExtraRange: 7000
   eccentricity: 0.0009388952955039203
   semiMajorAxis: 0.001971775318471227
   meanAnomalyDeg: 2.26063783003125
   inclinationDeg: 26.96322935283507
   argOfPerifocusDeg: 87.21143769181484
   ascendingNodeDeg: 169.3295997071176
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &344719714
 GameObject:
   m_ObjectHideFlags: 0
@@ -2299,22 +2545,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 1
-  OrbitExtraRange: 0
+  OrbitalPeriod: 4331
   OrbitPointsCount: 200
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 4331
+  OrbitExtraRange: 0
   eccentricity: 0.04888494583643366
   semiMajorAxis: 5.186724453387114
   meanAnomalyDeg: 278.029722695777
   inclinationDeg: 1.303719890065921
   argOfPerifocusDeg: 275.4290638384232
   ascendingNodeDeg: 100.5048225627479
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &408337278
 GameObject:
   m_ObjectHideFlags: 0
@@ -2436,22 +2681,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 57009493}
-    AttractorMass: 6.4171e+23
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 9000
+  OrbitalPeriod: 1.263
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 100
-  LockOrbitEditing: 1
-  OrbitalPeriod: 1.263
+  OrbitExtraRange: 9000
   eccentricity: 0.0002953184552519328
   semiMajorAxis: 0.000156811412267158
   meanAnomalyDeg: 4.892763752005678
   inclinationDeg: 24.9239226962418
   argOfPerifocusDeg: 5.98422528495191
   ascendingNodeDeg: 79.21874802279949
+  AttractorSettings:
+    AttractorObject: {fileID: 57009493}
+    AttractorMass: 6.4171e+23
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &420060235
 GameObject:
   m_ObjectHideFlags: 0
@@ -2777,7 +3021,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -360, y: -2.5}
+  m_AnchoredPosition: {x: -339, y: -2.5}
   m_SizeDelta: {x: 110, y: -35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &495802040
@@ -3187,22 +3431,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 4000
+  OrbitalPeriod: 15.9
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 15.9
+  OrbitExtraRange: 4000
   eccentricity: 0.02875559772511478
   semiMajorAxis: 0.008168331024350073
   meanAnomalyDeg: 18.33619485527344
   inclinationDeg: 27.69949014609112
   argOfPerifocusDeg: 174.9052041541396
   ascendingNodeDeg: 169.0681624841392
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &552353607
 GameObject:
   m_ObjectHideFlags: 0
@@ -8175,22 +8418,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 0
-  OrbitExtraRange: 0
+  OrbitalPeriod: 88
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 100
-  LockOrbitEditing: 1
-  OrbitalPeriod: 88
+  OrbitExtraRange: 0
   eccentricity: 0.18616124122479
   semiMajorAxis: 0.3938530083098737
   meanAnomalyDeg: 88.95039755303172
   inclinationDeg: 6.897509795833419
   argOfPerifocusDeg: 31.23164780152099
   ascendingNodeDeg: 47.55979100683341
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &660032810
 GameObject:
   m_ObjectHideFlags: 0
@@ -8237,22 +8479,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1514701311}
-    AttractorMass: 2.1607165e+19
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 0
-  OrbitExtraRange: 0
+  OrbitalPeriod: 6.38723
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 6.38723
+  OrbitExtraRange: 0
   eccentricity: 0.03603541522806469
   semiMajorAxis: 0.00001376951648282823
   meanAnomalyDeg: 180.2963908046281
   inclinationDeg: 112.8957991754812
   argOfPerifocusDeg: 108.1578192973915
   ascendingNodeDeg: 227.4021576541051
+  AttractorSettings:
+    AttractorObject: {fileID: 1514701311}
+    AttractorMass: 2.1607165e+19
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1001 &663051533
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8537,22 +8778,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 379649852}
-    AttractorMass: 1.89813e+27
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 4000
+  OrbitalPeriod: 1.77
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 1.77
+  OrbitExtraRange: 4000
   eccentricity: 0.004837402992486747
   semiMajorAxis: 0.002821181024463387
   meanAnomalyDeg: 0.1203789828403121
   inclinationDeg: 2.258503029212374
   argOfPerifocusDeg: 315.6407528579217
   ascendingNodeDeg: 337.8310399669856
+  AttractorSettings:
+    AttractorObject: {fileID: 379649852}
+    AttractorMass: 1.89813e+27
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &717846275
 GameObject:
   m_ObjectHideFlags: 0
@@ -8598,22 +8838,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1514701311}
-    AttractorMass: 1.307e+22
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 3000
+  OrbitalPeriod: 6.38723
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 6.38723
+  OrbitExtraRange: 3000
   eccentricity: 0.0019456678628711
   semiMajorAxis: 0.0001165021046585592
   meanAnomalyDeg: 184.1959886583579
   inclinationDeg: 112.89581094527951
   argOfPerifocusDeg: 284.2566236926091
   ascendingNodeDeg: 227.4021539504819
+  AttractorSettings:
+    AttractorObject: {fileID: 1514701311}
+    AttractorMass: 1.307e+22
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &718106096
 GameObject:
   m_ObjectHideFlags: 0
@@ -8794,22 +9033,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 10000
+  OrbitalPeriod: 0.9395834
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 0.9395834
+  OrbitExtraRange: 10000
   eccentricity: 0.01960482075770176
   semiMajorAxis: 0.001243457983437091
   meanAnomalyDeg: 86.08846637603772
   inclinationDeg: 27.30985422459898
   argOfPerifocusDeg: 19.69597860236948
   ascendingNodeDeg: 166.5387053340425
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &742057135
 GameObject:
   m_ObjectHideFlags: 0
@@ -8905,7 +9143,7 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0.59133935, b: 1, a: 0.34509805}
+      key0: {r: 0, g: 0.14966917, b: 1, a: 0.34509805}
       key1: {r: 0, g: 0.59133935, b: 1, a: 0.34509805}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
@@ -9572,7 +9810,7 @@ GameObject:
   - component: {fileID: 811404558}
   - component: {fileID: 811404557}
   m_Layer: 5
-  m_Name: field center
+  m_Name: field Center
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9740,22 +9978,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 379649852}
-    AttractorMass: 1.89813e+27
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 3000
+  OrbitalPeriod: 7.154553
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 7.154553
+  OrbitExtraRange: 3000
   eccentricity: 0.002560316112763841
   semiMajorAxis: 0.007157065878914017
   meanAnomalyDeg: 333.5044391362055
   inclinationDeg: 2.309788103027197
   argOfPerifocusDeg: 339.4685278117234
   ascendingNodeDeg: 340.2984132660201
+  AttractorSettings:
+    AttractorObject: {fileID: 379649852}
+    AttractorMass: 1.89813e+27
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1001 &815554954
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10087,6 +10324,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78a6f8f1be7cd5545825150e78854263, type: 3}
+--- !u!1 &887687811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 887687812}
+  m_Layer: 5
+  m_Name: Handle Slide Area
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &887687812
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 887687811}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1530444669}
+  m_Father: {fileID: 1618239947}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -20, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &910670573
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10192,7 +10466,7 @@ MonoBehaviour:
   m_Priority: 100
   m_StandbyUpdate: 2
   m_LookAt: {fileID: 0}
-  m_Follow: {fileID: 1692573083}
+  m_Follow: {fileID: 1681661683}
   m_Lens:
     FieldOfView: 80
     OrthographicSize: 5
@@ -10702,22 +10976,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 379649852}
-    AttractorMass: 1.89813e+27
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 3500
+  OrbitalPeriod: 3.551181
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 3.551181
+  OrbitExtraRange: 3500
   eccentricity: 0.009378436010949787
   semiMajorAxis: 0.004486345229584894
   meanAnomalyDeg: 1.772963547408908
   inclinationDeg: 2.600946061603746
   argOfPerifocusDeg: 139.9497915193829
   ascendingNodeDeg: 331.6684874668957
+  AttractorSettings:
+    AttractorObject: {fileID: 379649852}
+    AttractorMass: 1.89813e+27
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &1019723779
 GameObject:
   m_ObjectHideFlags: 0
@@ -16245,22 +16518,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 7000
+  OrbitalPeriod: 1.37
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 1.37
+  OrbitExtraRange: 7000
   eccentricity: 0.00599105653660171
   semiMajorAxis: 0.001593714789227613
   meanAnomalyDeg: 322.6450627118213
   inclinationDeg: 28.04913737394318
   argOfPerifocusDeg: 120.2677927090776
   ascendingNodeDeg: 169.5404368572059
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &1104146011 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: e4f2ee43e741d4a439c38d0192b1478d, type: 3}
@@ -17251,22 +17523,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 303489672}
-    AttractorMass: 5.97219e+24
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 450
+  OrbitalPeriod: 27.3
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 100
-  LockOrbitEditing: 1
-  OrbitalPeriod: 27.3
+  OrbitExtraRange: 450
   eccentricity: 0.04500924806355468
   semiMajorAxis: 0.002518548296417115
   meanAnomalyDeg: 328.5176372848628
   inclinationDeg: 5.252211816843275
   argOfPerifocusDeg: 130.6531500023838
   ascendingNodeDeg: 88.9708536356446
+  AttractorSettings:
+    AttractorObject: {fileID: 303489672}
+    AttractorMass: 5.97219e+24
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &1340416579 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: c7a0e7600fb219f478570128f8d7baf8, type: 3}
@@ -17489,6 +17760,82 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1346627765
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1346627766}
+  - component: {fileID: 1346627768}
+  - component: {fileID: 1346627767}
+  m_Layer: 5
+  m_Name: Background
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1346627766
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346627765}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1618239947}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: -10}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1346627767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346627765}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0.54901963, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 1f1d5baae1d26404a8a639a07e5c7766, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1346627768
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1346627765}
+  m_CullTransparentMesh: 1
 --- !u!1 &1354161168 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: e84afc960c39b53448b51d712076a2eb, type: 3}
@@ -17757,7 +18104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -160, y: -2.5}
+  m_AnchoredPosition: {x: -145, y: -2.5}
   m_SizeDelta: {x: 80, y: -35}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1434744145
@@ -22901,22 +23248,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 4000
+  OrbitalPeriod: 21.276
   OrbitPointsCount: 100
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 21.276
+  OrbitExtraRange: 4000
   eccentricity: 0.1240985578249046
   semiMajorAxis: 0.009862343898886404
   meanAnomalyDeg: 235.8712690632686
   inclinationDeg: 27.03450744385413
   argOfPerifocusDeg: 173.2000509332299
   ascendingNodeDeg: 169.1558773528826
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1001 &1489278599
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23032,22 +23378,97 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 0
-  OrbitExtraRange: 0
+  OrbitalPeriod: 90560
   OrbitPointsCount: 300
   MaxOrbitWorldUnitsDistance: 3000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 90560
+  OrbitExtraRange: 0
   eccentricity: 0.2490159363818954
   semiMajorAxis: 39.48850167056454
   meanAnomalyDeg: 44.48751994128676
   inclinationDeg: 17.14078221705906
   argOfPerifocusDeg: 113.7712015379844
   ascendingNodeDeg: 110.3010204238591
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
+--- !u!1 &1530444668
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1530444669}
+  - component: {fileID: 1530444671}
+  - component: {fileID: 1530444670}
+  m_Layer: 5
+  m_Name: Handle
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1530444669
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530444668}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 887687812}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 30, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1530444670
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530444668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 1f1d5baae1d26404a8a639a07e5c7766, type: 3}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1530444671
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530444668}
+  m_CullTransparentMesh: 1
 --- !u!1001 &1549028367
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -23167,6 +23588,117 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!1 &1618239946
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1618239947}
+  - component: {fileID: 1618239949}
+  - component: {fileID: 1618239948}
+  m_Layer: 5
+  m_Name: slider Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1618239947
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618239946}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1346627766}
+  - {fileID: 887687812}
+  m_Father: {fileID: 38303140}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 70}
+  m_SizeDelta: {x: 0, y: 40}
+  m_Pivot: {x: 0.5, y: 1.2}
+--- !u!114 &1618239948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618239946}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 0, g: 0.54901963, b: 1, a: 1}
+    m_HighlightedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_PressedColor: {r: 0.47843137, g: 0.78431374, b: 1, a: 1}
+    m_SelectedColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0, g: 0.23414059, b: 0.42647058, a: 1}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Highlighted
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1530444670}
+  m_FillRect: {fileID: 0}
+  m_HandleRect: {fileID: 1530444669}
+  m_Direction: 0
+  m_MinValue: 0
+  m_MaxValue: 2
+  m_WholeNumbers: 1
+  m_Value: 0
+  m_OnValueChanged:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 28288003}
+        m_TargetAssemblyTypeName: PanelControlSystem, Assembly-CSharp
+        m_MethodName: SolarSystemCenter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!222 &1618239949
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1618239946}
+  m_CullTransparentMesh: 1
 --- !u!1 &1622682209
 GameObject:
   m_ObjectHideFlags: 0
@@ -23572,22 +24104,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 0
-  OrbitExtraRange: 0
+  OrbitalPeriod: 224.7
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 224.7
+  OrbitExtraRange: 0
   eccentricity: 0.012041053961918
   semiMajorAxis: 0.7126826197114173
   meanAnomalyDeg: 198.0741475089487
   inclinationDeg: 3.391562215612894
   argOfPerifocusDeg: 334.5446357918177
   ascendingNodeDeg: 3.391562215612894
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &1681661682
 GameObject:
   m_ObjectHideFlags: 0
@@ -24214,22 +24745,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 1692573083}
-    AttractorMass: 1.9885e+30
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 1
-  OrbitExtraRange: 0
+  OrbitalPeriod: 30667.3
   OrbitPointsCount: 300
   MaxOrbitWorldUnitsDistance: 2000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 30667.3
+  OrbitExtraRange: 0
   eccentricity: 0.0473218063860225
   semiMajorAxis: 19.18797530214209
   meanAnomalyDeg: 229.6390399703458
   inclinationDeg: 0.7709154232462333
   argOfPerifocusDeg: 97.00020408794204
   ascendingNodeDeg: 74.07184991067385
+  AttractorSettings:
+    AttractorObject: {fileID: 1692573083}
+    AttractorMass: 1.9885e+30
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1001 &1814218354
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29834,22 +30364,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 50351164}
-    AttractorMass: 5.6834e+26
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 3000
+  OrbitalPeriod: 79.3215
   OrbitPointsCount: 100
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 79.3215
+  OrbitExtraRange: 3000
   eccentricity: 0.02877662184681641
   semiMajorAxis: 0.02378760401783633
   meanAnomalyDeg: 204.4191635968796
   inclinationDeg: 17.0812090124911
   argOfPerifocusDeg: 231.4043702186881
   ascendingNodeDeg: 138.8153430311833
+  AttractorSettings:
+    AttractorObject: {fileID: 50351164}
+    AttractorMass: 5.6834e+26
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!4 &1951405334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5059865063837977216, guid: 2b281755beedf7149a4902eae4ea5439, type: 3}
@@ -30288,22 +30817,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 303489672}
-    AttractorMass: 1.1113551e+19
-  IsOrbitingPlanet: 0
-  IsGiantPlanet: 0
-  OrbitExtraRange: 0
+  OrbitalPeriod: 27.3
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  LockOrbitEditing: 1
-  OrbitalPeriod: 27.3
+  OrbitExtraRange: 0
   eccentricity: 0.04500924806351013
   semiMajorAxis: 0.00003097823699264246
   meanAnomalyDeg: 328.5176372848259
   inclinationDeg: 5.252211816843274
   argOfPerifocusDeg: 310.6531500024206
   ascendingNodeDeg: 88.97085363564469
+  AttractorSettings:
+    AttractorObject: {fileID: 303489672}
+    AttractorMass: 1.1113551e+19
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &2037492400
 GameObject:
   m_ObjectHideFlags: 0
@@ -30349,22 +30877,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b28d2891d7d28f24685857365418e6c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AttractorSettings:
-    AttractorObject: {fileID: 57009493}
-    AttractorMass: 6.4171e+23
-  IsOrbitingPlanet: 1
-  IsGiantPlanet: 0
-  OrbitExtraRange: 9000
+  OrbitalPeriod: 0.32
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 100
-  LockOrbitEditing: 1
-  OrbitalPeriod: 0.32
+  OrbitExtraRange: 9000
   eccentricity: 0.01505600087681793
   semiMajorAxis: 0.00006268702627661408
   meanAnomalyDeg: 256.5987725110938
   inclinationDeg: 26.2104759223898
   argOfPerifocusDeg: 347.2958936828754
   ascendingNodeDeg: 85.00884980078752
+  AttractorSettings:
+    AttractorObject: {fileID: 57009493}
+    AttractorMass: 6.4171e+23
+  LineColor: {r: 1, g: 1, b: 1, a: 1}
+  LockOrbitEditing: 1
 --- !u!1 &2057629626
 GameObject:
   m_ObjectHideFlags: 3
@@ -30781,9 +31308,144 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -260, y: -2.5}
+  m_AnchoredPosition: {x: -229, y: -2.5}
   m_SizeDelta: {x: 80, y: -35}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2122962403
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2122962404}
+  - component: {fileID: 2122962406}
+  - component: {fileID: 2122962405}
+  m_Layer: 5
+  m_Name: field Speed
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2122962404
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122962403}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 38303140}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 32}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2122962405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122962403}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: speed
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
+  m_sharedMaterial: {fileID: 5774329478888551352, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 2533329920
+  m_fontColor: {r: 0, g: 0.54901963, b: 1, a: 0.5882353}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_StyleSheet: {fileID: 0}
+  m_TextStyleHashCode: -1183493901
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_fontSize: 32
+  m_fontSizeBase: 32
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 0
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 256
+  m_textAlignment: 65535
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 0
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_linkedTextComponent: {fileID: 0}
+  parentLinkedComponent: {fileID: 0}
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_IsTextObjectScaleStatic: 0
+  m_VertexBufferAutoSizeReduction: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_hasFontAssetChanged: 0
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &2122962406
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2122962403}
+  m_CullTransparentMesh: 1
 --- !u!114 &2129204888
 MonoBehaviour:
   m_ObjectHideFlags: 0

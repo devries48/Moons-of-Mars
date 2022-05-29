@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static SolarSystemController;
 
 /// <summary>
 /// Scene orbits lines display on camera projection for the demo scene.
@@ -22,11 +24,11 @@ public class KeplerOrbitLinesController : MonoBehaviour
     [SerializeField] private LineRenderer _lineTemplate;
     [SerializeField] private float _camDistance;
 
-    private readonly List<LineRenderer> _linesRend = new List<LineRenderer>();
-    private readonly List<TargetItem> _targets = new List<TargetItem>();
-    private readonly Dictionary<string, List<List<Vector3>>> _paths = new Dictionary<string, List<List<Vector3>>>();
-    private readonly List<List<Vector3>> _pool = new List<List<Vector3>>();
-    private float lineAlpha = 1f;
+    readonly List<LineRenderer> _linesRend = new();
+    readonly List<TargetItem> _targets = new();
+    readonly Dictionary<CelestialBodyName, List<List<Vector3>>> _paths = new();
+    readonly List<List<Vector3>> _pool = new();
+    float _lineAlpha = 1f;
 
     const float minOrbitLinearSize = 0.001f;
 
@@ -40,7 +42,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
         var keys = _lineTemplate.colorGradient.alphaKeys;
 
         if (keys.Length > 0)
-            lineAlpha = keys[0].alpha;
+            _lineAlpha = keys[0].alpha;
     }
 
     private void AddTargetBody(KeplerOrbitMover obj)
@@ -74,20 +76,21 @@ public class KeplerOrbitLinesController : MonoBehaviour
             var orbitPoints = item.OrbitPoints;
             item.Body.OrbitData.GetOrbitPointsNoAlloc(ref orbitPoints, item.Body.OrbitPointsCount, new KeplerVector3d(), item.Body.MaxOrbitWorldUnitsDistance);
             item.OrbitPoints = orbitPoints;
+
             var attrPos = item.Body.AttractorSettings.AttractorObject.position;
             var projectedPoints = GetListFromPool();
 
             ConvertOrbitPointsToProjectedPoints(orbitPoints, attrPos, _targetCamera, _camDistance, projectedPoints);
 
             List<List<Vector3>> segments;
-            if (allVisibleSegments.ContainsKey(item.Body.name))
+            if (allVisibleSegments.ContainsKey(item.Body.CelestialBody.bodyName))
             {
-                segments = allVisibleSegments[item.Body.name];
+                segments = allVisibleSegments[item.Body.CelestialBody.bodyName];
             }
             else
             {
                 segments = new List<List<Vector3>>();
-                allVisibleSegments[item.Body.name] = segments;
+                allVisibleSegments[item.Body.CelestialBody.bodyName] = segments;
             }
 
             segments.Add(projectedPoints);
@@ -135,7 +138,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
         }
     }
 
-    private void RefreshLineRenderersForCurrentSegments(Dictionary<string, List<List<Vector3>>> allSegments)
+    private void RefreshLineRenderersForCurrentSegments(Dictionary<CelestialBodyName, List<List<Vector3>>> allSegments)
     {
         var i = 0;
         foreach (var kv in allSegments)
@@ -148,7 +151,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
 
                 if (i >= _linesRend.Count)
                 {
-                    instance = CreateLineRendererInstance();
+                    instance = CreateLineRendererInstance(kv.Key);
 
                     _linesRend.Add(instance);
                 }
@@ -175,9 +178,10 @@ public class KeplerOrbitLinesController : MonoBehaviour
         }
     }
 
-    private LineRenderer CreateLineRendererInstance()
+    private LineRenderer CreateLineRendererInstance(CelestialBodyName body)
     {
         var result = Instantiate(_lineTemplate, _targetCamera.transform);
+        SetLineColor(result, body);
         SetAlphaLine(result, 0f);
         result.gameObject.SetActive(true);
         return result;
@@ -186,8 +190,8 @@ public class KeplerOrbitLinesController : MonoBehaviour
     public IEnumerator EaseLines(float easeTime, bool easeOut = false)
     {
         var timeElapsed = 0f;
-        var alpha1 = easeOut ? lineAlpha : 0f;
-        var alpha2 = easeOut ? 0f : lineAlpha;
+        var alpha1 = easeOut ? _lineAlpha : 0f;
+        var alpha2 = easeOut ? 0f : _lineAlpha;
 
         if (!easeOut) enabled = true;
 
@@ -214,8 +218,81 @@ public class KeplerOrbitLinesController : MonoBehaviour
         for (int i = 0; i < _linesRend.Count; i++)
         {
             var lineRend = _linesRend[i];
-            SetAlphaLine(lineRend,alpha);
+            SetAlphaLine(lineRend, alpha);
         }
+    }
+
+    private void SetLineColor(LineRenderer lineRend, CelestialBodyName bodyName)
+    {
+        Color color = Color.blue;
+
+        switch (bodyName)
+        {
+            case CelestialBodyName.Sun:
+                break;
+            case CelestialBodyName.Mercury:
+                color = ConvertColor(140, 136, 136);
+                break;
+            case CelestialBodyName.Venus:
+                color = ConvertColor(217, 179, 145);
+                break;
+            case CelestialBodyName.Earth:
+            case CelestialBodyName.Moon:
+                color = ConvertColor(66, 106, 140);
+                break;
+            case CelestialBodyName.Mars:
+            case CelestialBodyName.Phobos:
+            case CelestialBodyName.Deimos:
+                color = ConvertColor(242, 122, 94);
+                break;
+            case CelestialBodyName.Jupiter:
+            case CelestialBodyName.Io:
+            case CelestialBodyName.Europa:
+            case CelestialBodyName.Ganymede:
+            case CelestialBodyName.Callisto:
+                color = ConvertColor(166, 111, 91);
+                break;
+            case CelestialBodyName.Saturn:
+            case CelestialBodyName.Mimas:
+            case CelestialBodyName.Enceladus:
+            case CelestialBodyName.Tethys:
+            case CelestialBodyName.Dione:
+            case CelestialBodyName.Rhea:
+            case CelestialBodyName.Titan:
+            case CelestialBodyName.Hyperion:
+            case CelestialBodyName.Iapetus:
+                color = ConvertColor(242, 205, 136);
+                break;
+            case CelestialBodyName.Uranus:
+                color = ConvertColor(149, 187, 191);
+                break;
+            case CelestialBodyName.Neptune:
+                color = ConvertColor(77, 93, 115);
+                break;
+            case CelestialBodyName.Pluto:
+            case CelestialBodyName.Charon:
+                color = ConvertColor(150, 133, 112);
+                break;
+            default:
+                color = Color.blue;
+                break;
+        }
+
+        var gradient = new Gradient();
+
+        if (lineRend != null)
+        {
+            gradient.SetKeys(
+                new GradientColorKey[] { new GradientColorKey(color, 0.0f) },
+                new GradientAlphaKey[] { new GradientAlphaKey(_lineAlpha, 0.0f) });
+
+            lineRend.colorGradient = gradient;
+        }
+    }
+
+    private Color ConvertColor(float r, float g, float b)
+    {
+        return new Color(r / 255f, g / 255f, b / 255f);
     }
 
     private void SetAlphaLine(LineRenderer lineRend, float alpha)

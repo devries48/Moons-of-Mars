@@ -1,4 +1,6 @@
 using Cinemachine;
+using System;
+using System.Linq;
 using UnityEngine;
 
 [SelectionBase]
@@ -16,6 +18,8 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region properties
+
+    public float CameraSwitchTime { get; private set; }
 
     public static GameManager Instance
     {
@@ -40,6 +44,22 @@ public class GameManager : MonoBehaviour
         }
     }
     SolarSystemController __solarSystemCtrl;
+
     #endregion
+
+    CelestialBody[] _celestialBodies;
+
+    void Awake()
+    {
+        _celestialBodies = FindObjectsOfType<CelestialBody>();
+        if (MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
+            CameraSwitchTime = brain.m_DefaultBlend.BlendTime;
+    }
+
+    public CelestialBody CelestialBody(SolarSystemController.CelestialBodyName name)
+    {
+        return _celestialBodies.First(b => b.Info.bodyName == name);
+    }
+
 
 }
