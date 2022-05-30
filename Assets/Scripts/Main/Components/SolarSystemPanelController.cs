@@ -8,6 +8,7 @@ using static SolarSystemController;
 [RequireComponent(typeof(MenuController))]
 public class SolarSystemPanelController : MonoBehaviour
 {
+    #region editor fields
     [Header("UI Elements")]
     [SerializeField] GameObject controlPanel;
     [SerializeField] TextMeshProUGUI centerText;
@@ -17,8 +18,10 @@ public class SolarSystemPanelController : MonoBehaviour
     [SerializeField] Sprite[] centerIcons;
     [SerializeField] Image centerImage;
 
-    private readonly float _maxZoomSolarCamDist = 4000f;
-    private readonly float _maxZoomStepValue = 9f;
+    readonly float _maxZoomSolarCamDist = 4000f;
+    readonly float _maxZoomStepValue = 9f;
+    GameObject _followObj;
+    #endregion
 
     #region properties
 
@@ -26,11 +29,11 @@ public class SolarSystemPanelController : MonoBehaviour
 
     #endregion
 
-    public float RotateSpeed = 5;
+    float _rotateIconSpeed = 5;
 
     void Update()
     {
-        speedIcon.transform.Rotate(new Vector3(0,0,-1), Time.deltaTime * RotateSpeed);
+        speedIcon.transform.Rotate(new Vector3(0, 0, -1), Time.deltaTime * _rotateIconSpeed);
     }
 
     /// <summary>
@@ -50,6 +53,9 @@ public class SolarSystemPanelController : MonoBehaviour
     public void HideControlPanel(bool animate = false)
     {
         this.enabled = false;
+
+        _rotateIconSpeed = 5f;
+        GameManager.SolarSystemSpeed = 1;
 
         if (animate)
             MenuController.TweenPivot(controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
@@ -115,7 +121,30 @@ public class SolarSystemPanelController : MonoBehaviour
         GameManager.SolarSystemCamera.Follow = _followObj.transform.parent.transform;
     }
 
-    GameObject _followObj;
+    public void SolarSystemSpeed(System.Single value)
+    {
+        switch (value)
+        {
+            case 2: // 1 second =  1 hour
+                _rotateIconSpeed = 20f;
+                GameManager.SolarSystemSpeed = 60 * 60;
+                break;
+            case 3: // 1 second =  1 day
+                _rotateIconSpeed = 40f;
+                GameManager.SolarSystemSpeed = 60 * 60 * 24;
+                break;
+            case 4: // 1 second =  1 week
+                _rotateIconSpeed = 80f;
+                GameManager.SolarSystemSpeed = 60 * 60 * 24 * 7;
+                break;
+            case 1:
+            default:
+                _rotateIconSpeed = 5f;
+                GameManager.SolarSystemSpeed = 1;
+                break;
+        }
+    }
+
 
     private float ZoomEaseInCubic(float value)
     {

@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 
 [ExecuteInEditMode]
@@ -39,19 +40,38 @@ public class SolarSystemController : MonoBehaviour
 
     // Planet diameter scale 1 = 1unity:10,000km, scale 10 = 1unity:1,000km
     [Range(1, 10)]
-    [SerializeField] private float _planetScaleMultiplier = 1f;
+    [SerializeField]  float _planetScaleMultiplier = 1f;
 
     [Range(50f, 100f)]
     [Tooltip("Orbit scale multiplier: world units per 1 au.")]
-    [SerializeField] internal float UnitsPerAU = 50f;
+    [SerializeField] internal float UnitsPerAU = 60f;
 
     public OrbitActiveType orbitActive;
 
     internal bool IsDemo = true;
     internal bool OrbitLinesVisible = false;
 
-
     private KeplerOrbitLinesController _orbitLinesController;
+    static readonly CelestialBodyName[] _moons =
+{
+            CelestialBodyName.Moon,
+            CelestialBodyName.Phobos,
+            CelestialBodyName.Deimos,
+            CelestialBodyName.Io,
+            CelestialBodyName.Europa,
+            CelestialBodyName.Ganymede,
+            CelestialBodyName.Callisto,
+            CelestialBodyName.Mimas,
+            CelestialBodyName.Enceladus,
+            CelestialBodyName.Tethys,
+            CelestialBodyName.Dione,
+            CelestialBodyName.Rhea,
+            CelestialBodyName.Titan,
+            CelestialBodyName.Hyperion,
+            CelestialBodyName.Iapetus,
+            CelestialBodyName.Charon
+        };
+
 
     // Giant planets scale only 1/10 of the planets and moons.
     public float GetPlanetScaleMultiplier(bool isGiantPlanet = false)
@@ -80,6 +100,11 @@ public class SolarSystemController : MonoBehaviour
         OrbitLinesVisible = false;
     }
 
+    public static bool IsMoon(CelestialBodyName name)
+    {
+        return _moons.Contains(name);    
+    }
+
     private void Awake()
     {
         _orbitLinesController = GetComponent<KeplerOrbitLinesController>();
@@ -97,13 +122,11 @@ public class SolarSystemController : MonoBehaviour
         var movers = (KeplerOrbitMover[])FindObjectsOfType(typeof(KeplerOrbitMover));
         foreach (var mover in movers)
             mover.ApplyChanges();
-
     }
 
     private void OnValidate()
     {
         name = Constants.SolarSystemMain;
-
 
         ApplyChanges();
     }

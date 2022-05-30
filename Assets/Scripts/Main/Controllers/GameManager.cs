@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
 
     public float CameraSwitchTime { get; private set; }
 
+    public int SolarSystemSpeed { get; internal set; }
+
     public static GameManager Instance
     {
         get
@@ -47,11 +49,13 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+
     CelestialBody[] _celestialBodies;
 
     void Awake()
     {
         _celestialBodies = FindObjectsOfType<CelestialBody>();
+
         if (MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
             CameraSwitchTime = brain.m_DefaultBlend.BlendTime;
     }

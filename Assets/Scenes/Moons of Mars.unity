@@ -283,7 +283,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 24437702}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 113.17449, y: -0.30814698, z: 242.84921}
+  m_LocalPosition: {x: 129.57715, y: -0.46712592, z: 291.84317}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -498,7 +498,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 8e20d1fa431332d45b54ac8754d8bbf1, type: 3}
   - {fileID: 21300000, guid: ad5aa5ffc9d97a64985b3c239334dd08, type: 3}
   centerImage: {fileID: 1384152578}
-  RotateSpeed: 5
 --- !u!1 &38303139
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,7 +758,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50351163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 225.88191, y: -1.2278455, z: 446.5544}
+  m_LocalPosition: {x: 271.0583, y: -1.4734147, z: 535.8653}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -955,7 +954,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 50944607}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 223.47757, y: -9.246894, z: 430.81985}
+  m_LocalPosition: {x: 267.96844, y: -11.778745, z: 515.6447}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -978,7 +977,7 @@ MonoBehaviour:
   OrbitalPeriod: 2.74
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 7000
+  OrbitExtraRange: 9000
   eccentricity: 0.001702930902880962
   semiMajorAxis: 0.002524367590081409
   meanAnomalyDeg: 209.8746829881625
@@ -1015,7 +1014,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 57009492}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 28.605806, y: -2.05485, z: 64.06537}
+  m_LocalPosition: {x: 34.32697, y: -2.46582, z: 76.87845}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1268,7 +1267,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 129718586}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1447.8901, y: -25.567432, z: 378.79843}
+  m_LocalPosition: {x: 1737.4683, y: -30.680918, z: 454.5581}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1714,7 +1713,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 239124895}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 243.91885, y: -7.7160015, z: 437.2581}
+  m_LocalPosition: {x: 293.59702, y: -9.580928, z: 524.2487}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1737,7 +1736,7 @@ MonoBehaviour:
   OrbitalPeriod: 4.52
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 6000
+  OrbitExtraRange: 7500
   eccentricity: 0.001220531583480546
   semiMajorAxis: 0.003524469439106127
   meanAnomalyDeg: 42.09179849752181
@@ -2187,7 +2186,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 303489671}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -28.729322, y: 0.0051564607, z: 41.47876}
+  m_LocalPosition: {x: -34.47519, y: 0.006187753, z: 49.774513}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2393,7 +2392,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 344527603}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 223.46532, y: 5.0689573, z: 458.69467}
+  m_LocalPosition: {x: 267.60992, y: 7.5118103, z: 553.18884}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2416,7 +2415,7 @@ MonoBehaviour:
   OrbitalPeriod: 1.89
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 7000
+  OrbitExtraRange: 10000
   eccentricity: 0.0009388952955039203
   semiMajorAxis: 0.001971775318471227
   meanAnomalyDeg: 2.26063783003125
@@ -2524,7 +2523,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 379649851}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 81.39006, y: -0.80462974, z: 245.01231}
+  m_LocalPosition: {x: 97.668076, y: -0.96555567, z: 294.01477}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2661,7 +2660,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410808176}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 28.627863, y: -1.9420015, z: 62.65131}
+  m_LocalPosition: {x: 34.349052, y: -2.3528469, z: 75.46283}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2709,7 +2708,7 @@ GameObject:
   - component: {fileID: 420060238}
   - component: {fileID: 420060237}
   m_Layer: 5
-  m_Name: FrameRate Text
+  m_Name: Text FPS
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3411,7 +3410,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 549881617}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 257.8345, y: -4.926403, z: 445.55084}
+  m_LocalPosition: {x: 307.03452, y: -5.6377163, z: 534.73535}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3434,7 +3433,7 @@ MonoBehaviour:
   OrbitalPeriod: 15.9
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 4000
+  OrbitExtraRange: 4500
   eccentricity: 0.02875559772511478
   semiMajorAxis: 0.008168331024350073
   meanAnomalyDeg: 18.33619485527344
@@ -8397,7 +8396,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 610533907}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -19.995092, y: 1.5297365, z: 3.1272721}
+  m_LocalPosition: {x: -23.99411, y: 1.8356838, z: 3.7527266}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8458,7 +8457,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660032810}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.000061035156, y: -0.000623703, z: 0.00036621094}
+  m_LocalPosition: {x: 0.000061035156, y: -0.00074768066, z: 0.00036621094}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8631,7 +8630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 704681716}
   m_LocalRotation: {x: 0.08715578, y: 0, z: 0, w: 0.9961947}
-  m_LocalPosition: {x: 0, y: 10.418894, z: -59.0885}
+  m_LocalPosition: {x: 0, y: 10.4189, z: -59.08844}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8758,7 +8757,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 716237292}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 85.94335, y: -1.117234, z: 255.42665}
+  m_LocalPosition: {x: 102.232605, y: -1.2789317, z: 304.45483}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8818,7 +8817,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 717846275}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.020507812, y: 0.31113815, z: -0.171875}
+  m_LocalPosition: {x: -0.020568848, y: 0.31215858, z: -0.17236328}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9013,7 +9012,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 740982483}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 227.18419, y: 4.2189775, z: 457.71268}
+  m_LocalPosition: {x: 272.62103, y: 5.0627728, z: 549.25525}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9036,7 +9035,7 @@ MonoBehaviour:
   OrbitalPeriod: 0.9395834
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 10000
+  OrbitExtraRange: 12000
   eccentricity: 0.01960482075770176
   semiMajorAxis: 0.001243457983437091
   meanAnomalyDeg: 86.08846637603772
@@ -9329,7 +9328,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750187246}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -2.5998535, y: 0, z: 0.00036621094}
+  m_LocalPosition: {x: -2.5997925, y: 0, z: 0.00048828125}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -9958,7 +9957,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 811486802}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 89.95319, y: -1.4482272, z: 265.02695}
+  m_LocalPosition: {x: 106.259285, y: -1.6112633, z: 314.09503}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -10841,7 +10840,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _planetScaleMultiplier: 1
-  UnitsPerAU: 50
+  UnitsPerAU: 60
   orbitActive: 0
 --- !u!1 &993721157
 GameObject:
@@ -10956,7 +10955,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1006441347}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 75.113106, y: -0.36144438, z: 230.54427}
+  m_LocalPosition: {x: 91.373436, y: -0.5211219, z: 279.50598}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16498,7 +16497,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1103339999}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 222.66914, y: 3.9853473, z: 455.91098}
+  m_LocalPosition: {x: 266.0181, y: 6.7050133, z: 550.5438}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -16521,7 +16520,7 @@ MonoBehaviour:
   OrbitalPeriod: 1.37
   OrbitPointsCount: 50
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 7000
+  OrbitExtraRange: 11000
   eccentricity: 0.00599105653660171
   semiMajorAxis: 0.001593714789227613
   meanAnomalyDeg: 322.6450627118213
@@ -17349,8 +17348,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -17502,7 +17501,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1320292163}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.2014141, y: 0.1102379, z: 0.11230469}
+  m_LocalPosition: {x: -1.225441, y: 0.11244266, z: 0.114551544}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23228,7 +23227,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486740357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 188.18613, y: 10.916487, z: 463.56534}
+  m_LocalPosition: {x: 228.61563, y: 12.200204, z: 555.0183}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23251,7 +23250,7 @@ MonoBehaviour:
   OrbitalPeriod: 21.276
   OrbitPointsCount: 100
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 4000
+  OrbitExtraRange: 4500
   eccentricity: 0.1240985578249046
   semiMajorAxis: 0.009862343898886404
   meanAnomalyDeg: 235.8712690632686
@@ -23357,7 +23356,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1514701310}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 671.17633, y: -26.791096, z: 1563.9581}
+  m_LocalPosition: {x: 805.4116, y: -32.149315, z: 1876.7498}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -23672,16 +23671,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 0}
   m_HandleRect: {fileID: 1530444669}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 2
+  m_MinValue: 1
+  m_MaxValue: 4
   m_WholeNumbers: 1
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 28288003}
-        m_TargetAssemblyTypeName: PanelControlSystem, Assembly-CSharp
-        m_MethodName: SolarSystemCenter
+        m_TargetAssemblyTypeName: SolarSystemPanelController, Assembly-CSharp
+        m_MethodName: SolarSystemSpeed
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -24050,7 +24049,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659243070}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -199.99997, y: 0, z: 0.00015258789}
+  m_LocalPosition: {x: -199.99995, y: 0, z: 0.00018310547}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24083,7 +24082,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1680309056}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -35.935223, y: 0.28949976, z: -2.7639227}
+  m_LocalPosition: {x: -43.122265, y: 0.3473997, z: -3.3167071}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24316,7 +24315,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: -6.4755135, y: 0.27087867, z: -6.2545547}
+  m_LocalPosition: {x: -6.4755096, y: 0.27087855, z: -6.254547}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -24689,8 +24688,8 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
-  m_IsKinematic: 0
+  m_UseGravity: 0
+  m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -24724,7 +24723,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1812590289}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 793.3377, y: -8.078554, z: -592.1429}
+  m_LocalPosition: {x: 952.00525, y: -9.694264, z: -710.5715}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30344,7 +30343,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944402865}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 165.74294, y: 19.848879, z: 485.07492}
+  m_LocalPosition: {x: 220.58098, y: 16.217213, z: 568.19727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30367,7 +30366,7 @@ MonoBehaviour:
   OrbitalPeriod: 79.3215
   OrbitPointsCount: 100
   MaxOrbitWorldUnitsDistance: 1000
-  OrbitExtraRange: 3000
+  OrbitExtraRange: 2500
   eccentricity: 0.02877662184681641
   semiMajorAxis: 0.02378760401783633
   meanAnomalyDeg: 204.4191635968796
@@ -30796,7 +30795,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035322861}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0014781952, y: -0.00013559312, z: -0.0001373291}
+  m_LocalPosition: {x: 0.0017738342, y: -0.00016271183, z: -0.00016403198}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -30857,7 +30856,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2037492400}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 29.03301, y: -2.2773666, z: 64.36905}
+  m_LocalPosition: {x: 34.754646, y: -2.6885824, z: 77.182465}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

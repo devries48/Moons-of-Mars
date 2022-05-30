@@ -13,47 +13,57 @@ using UnityEngine;
 /// </remarks>
 public class KeplerTimeController : MonoBehaviour
 {
-    private struct BodyTimeData
+    struct BodyTimeData
     {
         public KeplerOrbitMover body;
         public double initialMeanAnomaly;
     }
 
-    private readonly List<BodyTimeData> _bodies = new List<BodyTimeData>();
+    #region editor fields
 
     [SerializeField]
     [Tooltip("Display current solar system date in this field.")]
-    private TMPro.TextMeshProUGUI _displayDateField;
+     TMPro.TextMeshProUGUI _displayDateField;
 
     [SerializeField]
     [Tooltip("Display current solar system time in this field.")]
-    private TMPro.TextMeshProUGUI _displayTimeField;
+    TMPro.TextMeshProUGUI _displayTimeField;
 
     [Header("Epoch origin timestamp")]
     [SerializeField]
-    private int _epochYear;
+    int _epochYear;
 
     [SerializeField]
-    private int _epochMonth;
+    int _epochMonth;
 
     [SerializeField]
-    private int _epochDay;
+    int _epochDay;
 
     [SerializeField]
-    private int _epochHour;
+    int _epochHour;
 
     [SerializeField]
-    private int _epochMinute;
+    int _epochMinute;
 
-    private float _currentTimeScale = 1f;
+    #endregion
 
-    private DateTime _epochDate;
-    private DateTime _currentTime;
+    #region properties
 
     public DateTime CurrentTime
     {
         get { return _currentTime; }
     }
+    private DateTime _currentTime;
+
+    GameManager GameManager => GameManager.Instance;
+
+    #endregion
+
+    #region fields
+
+    private readonly List<BodyTimeData> _bodies = new();
+    private DateTime _epochDate;
+    #endregion
 
     private void Awake()
     {
@@ -72,7 +82,7 @@ public class KeplerTimeController : MonoBehaviour
 
     private void Update()
     {
-        _currentTime = _currentTime.AddSeconds(_currentTimeScale * Time.deltaTime);
+        _currentTime = _currentTime.AddSeconds(GameManager.SolarSystemSpeed * Time.deltaTime);
 
         RefreshTimeDisplay();
     }
@@ -92,8 +102,6 @@ public class KeplerTimeController : MonoBehaviour
             body = b,
             initialMeanAnomaly = b.OrbitData.MeanAnomaly
         });
-
-        b.TimeScale = _currentTimeScale;
     }
 
     public void SetCurrentGlobalTime()
@@ -132,18 +140,6 @@ public class KeplerTimeController : MonoBehaviour
             }
 
             _bodies.RemoveAll(Predicate);
-        }
-    }
-
-    public void SetTimescale(float timescale)
-    {
-        _currentTimeScale = timescale;
-        foreach (var item in _bodies)
-        {
-            if (item.body != null)
-            {
-                item.body.TimeScale = timescale;
-            }
         }
     }
 }

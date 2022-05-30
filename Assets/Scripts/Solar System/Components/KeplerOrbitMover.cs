@@ -38,6 +38,8 @@ public class KeplerOrbitMover : MonoBehaviour
 
     #region properties
 
+    GameManager GameManager => GameManager.Instance;
+
     bool IsReferencesAsigned
     {
         get { return AttractorSettings != null && AttractorSettings.AttractorObject != null; }
@@ -75,7 +77,6 @@ public class KeplerOrbitMover : MonoBehaviour
     #region fields 
 
     public KeplerAttractorData AttractorSettings = new();
-    internal float TimeScale = 1f;
 
     // Astronomical unit in SI units, used to calculate real scale orbit periods.
     const double AU = 1.495978707e11;
@@ -197,7 +198,7 @@ public class KeplerOrbitMover : MonoBehaviour
 
                 if (OrbitData.IsValidOrbit)
                 {
-                    OrbitData.UpdateOrbitDataByTime(Time.deltaTime * TimeScale);
+                    OrbitData.UpdateOrbitDataByTime(Time.deltaTime * GameManager.SolarSystemSpeed);
                     ForceUpdateViewFromInternalState();
                 }
             }

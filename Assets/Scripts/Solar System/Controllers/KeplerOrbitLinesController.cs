@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -222,11 +221,11 @@ public class KeplerOrbitLinesController : MonoBehaviour
         }
     }
 
-    private void SetLineColor(LineRenderer lineRend, CelestialBodyName bodyName)
+    private void SetLineColor(LineRenderer lineRend, CelestialBodyName name)
     {
         Color color = Color.blue;
 
-        switch (bodyName)
+        switch (name)
         {
             case CelestialBodyName.Sun:
                 break;
@@ -278,6 +277,9 @@ public class KeplerOrbitLinesController : MonoBehaviour
                 break;
         }
 
+        if (SolarSystemController.IsMoon(name))
+            color = DarkenColor(color, 2f);
+
         var gradient = new Gradient();
 
         if (lineRend != null)
@@ -290,9 +292,16 @@ public class KeplerOrbitLinesController : MonoBehaviour
         }
     }
 
+
     private Color ConvertColor(float r, float g, float b)
     {
         return new Color(r / 255f, g / 255f, b / 255f);
+    }
+
+    public static Color DarkenColor(Color c, float level)
+    {
+        // 'level' is how dark to make the color.
+        return new Color(c.r / level, c.g / level, c.b / level);
     }
 
     private void SetAlphaLine(LineRenderer lineRend, float alpha)
