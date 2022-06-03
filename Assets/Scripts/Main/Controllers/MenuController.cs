@@ -7,7 +7,6 @@ using static SolarSystemController;
 
 // see https://easings.net/
 
-[SelectionBase]
 [DisallowMultipleComponent]
 public class MenuController : MonoBehaviour
 {
