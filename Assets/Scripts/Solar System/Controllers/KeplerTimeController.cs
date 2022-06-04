@@ -10,8 +10,8 @@ using UnityEngine;
 /// Only uses one epoch for orbits state calculations
 /// which is fine enough for demonstration purposes.
 /// </remarks>
-[SelectionBase]
 [DisallowMultipleComponent]
+[RequireComponent(typeof(SolarSystemPanelController))]
 public class KeplerTimeController : MonoBehaviour
 {
     struct BodyTimeData
@@ -102,6 +102,7 @@ public class KeplerTimeController : MonoBehaviour
 
         if (_currentSolarSystemSpeed != GameManager.SolarSystemSpeed)
         {
+            _currentSolarSystemSpeed= GameManager.SolarSystemSpeed;
             _displayTimeField.enabled = GameManager.SolarSystemSpeed < Constants.SolarSystemSpeedWeek;
             _displaySpeedDescriptorField.enabled = GameManager.SolarSystemSpeed > 1;
 
@@ -122,7 +123,7 @@ public class KeplerTimeController : MonoBehaviour
                     break;
             }
 
-            _displaySpeedDescriptorField.text = $"1 second = 1 {period}";
+            _displaySpeedDescriptorField.text = $"1 second  = 1 {period}";
         }
     }
 
@@ -142,7 +143,7 @@ public class KeplerTimeController : MonoBehaviour
         SetGlobalTime(DateTime.UtcNow);
     }
 
-    public void SetGlobalTime(DateTime time)
+    void SetGlobalTime(DateTime time)
     {
         bool isAnyNull = false;
 

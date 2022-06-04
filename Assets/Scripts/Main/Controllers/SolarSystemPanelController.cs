@@ -43,6 +43,20 @@ public class SolarSystemPanelController : MonoBehaviour
         }
     }
     GameObject __camPivot;
+
+    KeplerTimeController TimeController
+    {
+        get
+        {
+            if (__timeController == null)
+                __timeController = GetComponentInParent<KeplerTimeController>();
+
+            return __timeController;
+        }
+
+    }
+    KeplerTimeController __timeController;
+
     #endregion
 
     #region fields
@@ -78,13 +92,7 @@ public class SolarSystemPanelController : MonoBehaviour
     {
         this.enabled = false;
 
-        ResetCamRotation();
-
-        _slideZoom.value = _slideZoom.minValue;
-        _slideCenter.value = _slideCenter.minValue;
         _slideSpeed.value = _slideSpeed.minValue;
-
-        m_rotateIconSpeed = 5f;
 
         if (animate)
             MenuController.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
@@ -180,11 +188,17 @@ public class SolarSystemPanelController : MonoBehaviour
         }
     }
 
+    public void SolarSystemReset()
+    {
+        _slideSpeed.value = _slideSpeed.minValue;
+        TimeController.SetCurrentGlobalTime();
+    }
+
     void ResetCamRotation()
     {
         _slideRotateVertical.value = _slideRotateVertical.minValue;
         _slideRotateHorizontal.value = _slideRotateHorizontal.minValue;
-        CamPivot.transform.localRotation = Quaternion.Euler(0,0,0);
+        CamPivot.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
         GameManager.SolarSystemCamera.transform.localRotation = Quaternion.Euler(30, 0, 0);
     }
