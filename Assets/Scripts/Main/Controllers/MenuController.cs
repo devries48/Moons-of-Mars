@@ -4,6 +4,7 @@ using UnityEngine.Playables;
 using UnityEngine.Events;
 
 using static SolarSystemController;
+using Cinemachine;
 
 // see https://easings.net/
 
@@ -26,6 +27,7 @@ public class MenuController : MonoBehaviour
 
     #region fields
     PlayableDirector _director;
+    bool _appQuit;
     #endregion
 
     #region properties
@@ -44,27 +46,27 @@ public class MenuController : MonoBehaviour
     SolarSystemPanelController _solarSystemControlPanel;
     #endregion
 
-     void OnEnable()
+    void OnEnable()
     {
         CameraSwitcher.Register(GameManager.MenuCamera);
         CameraSwitcher.Register(GameManager.SolarSystemCamera);
         SystemPanelController.HideControlPanel();
     }
 
-     void OnDisable()
+    void OnDisable()
     {
         CameraSwitcher.Unregister(GameManager.MenuCamera);
         CameraSwitcher.Unregister(GameManager.SolarSystemCamera);
     }
 
-     void Awake()
+    void Awake()
     {
         _director = GetComponent<PlayableDirector>();
         _director.played += Director_played;
         _director.stopped += Director_stopped;
     }
 
-     void Start()
+    void Start()
     {
         ShowMainMenu();
     }
@@ -103,11 +105,7 @@ public class MenuController : MonoBehaviour
 
     public void MenuQuit()
     {
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-		Application.Quit();
-#endif
+        HideMainMenu(true);
     }
 
     public void ExitToMainMenu()
@@ -128,7 +126,6 @@ public class MenuController : MonoBehaviour
         else
             ShowMainMenu();
     }
-
 
     private void SetWindowInfo(CelestialBodyName name)
     {
@@ -167,11 +164,56 @@ public class MenuController : MonoBehaviour
         spaceDebriSystem.Play();
     }
 
-    private void HideMainMenu()
+    private void HideMainMenu(bool quit = false)
     {
+        if (!quit) ShowExitButton();
+
+        var time = quit ? 0.5f : 1f;
+        var id = TweenPivot(mainMenuWindow, new Vector2(1.2f, 0.5f), new Vector3(0, -110, 0), LeanTweenType.easeInExpo, time, LeanTweenType.easeOutCirc, time);
+
         spaceDebriSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
-        ShowExitButton();
-        TweenPivot(mainMenuWindow, new Vector2(1.2f, 0.5f), new Vector3(0, -110, 0), LeanTweenType.easeInExpo, 1f, LeanTweenType.easeOutCirc, 1f);
+
+        if (quit)
+        {
+            //  center & zoom out
+            var zoomId = 0;
+            CinemachineFramingTransposer transposer = null;
+
+            if (GameManager.MenuCamera.TryGetComponent<CinemachineVirtualCamera>(out var cam))
+                transposer = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
+
+            if (transposer != null)
+            {
+                LeanTween.value(transposer.m_ScreenX, 0.5f, time / 2).setEase(LeanTweenType.easeOutQuint).setOnUpdate((float val) =>
+                {
+                    transposer.m_ScreenX = val;
+                });
+                LeanTween.value(transposer.m_ScreenY, 0.5f, time / 2).setEase(LeanTweenType.easeOutQuint).setOnUpdate((float val) =>
+                {
+                    transposer.m_ScreenY = val;
+                });
+                zoomId = LeanTween.value(transposer.m_CameraDistance, 100f, time).setEase(LeanTweenType.easeOutQuad).setOnUpdate((float val) =>
+                {
+                    transposer.m_CameraDistance = val;
+                }).id;
+            }
+
+            var d1 = LeanTween.descr(id);
+            var d2 = LeanTween.descr(zoomId);
+            var d = d1 ?? d2;
+
+            if (d != null)
+                d.setOnComplete(QuitApplication);
+        }
+    }
+
+    private void QuitApplication()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
     }
 
     private void ShowExitButton()
@@ -184,24 +226,28 @@ public class MenuController : MonoBehaviour
         TweenPivot(exitButton, new Vector2(-.2f, 2f), null);
     }
 
-    public static void TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
+    public static int TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
                 LeanTweenType pivotEase = LeanTweenType.easeInOutSine, float pivotTime = 1f,
                 LeanTweenType rotateEase = LeanTweenType.notUsed, float rotateTime = 0f)
     {
         var rect = gameObj.GetComponent<RectTransform>();
+        var id_pivot = 0;
+        var id_rotate = 0;
 
         if (rotateObj is Vector3 rotate)
         {
             if (rotateEase == LeanTweenType.notUsed)
                 rect.Rotate(rotate);
             else
-                LeanTween.rotate(gameObj, rotate, rotateTime).setEase(rotateEase);
+                id_rotate = LeanTween.rotate(gameObj, rotate, rotateTime).setEase(rotateEase).id;
         }
 
-        LeanTween.value(gameObj, rect.pivot, newPivot, pivotTime).setEase(pivotEase).setOnUpdateVector2((Vector2 pos) =>
+        id_pivot = LeanTween.value(gameObj, rect.pivot, newPivot, pivotTime).setEase(pivotEase).setOnUpdateVector2((Vector2 pos) =>
         {
             rect.pivot = pos;
-        });
+        }).id;
+
+        return (pivotTime > rotateTime) ? id_pivot : id_rotate;
     }
 
     private void TweenPlanetScale(float scaleTime, bool scaleOut = false)

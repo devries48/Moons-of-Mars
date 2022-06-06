@@ -87,8 +87,6 @@ public class KeplerOrbitMover : MonoBehaviour
 
     public Color LineColor = Color.white;
 
- 
-
 
     /// <summary>
     /// Disable continious editing orbit in update loop, if you don't need it.
@@ -173,7 +171,6 @@ public class KeplerOrbitMover : MonoBehaviour
     {
         ApplyChanges();
     }
-
 
     /// <summary>
     /// Progress orbit path motion.

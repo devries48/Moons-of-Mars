@@ -81,6 +81,8 @@ public class SolarSystemPanelController : MonoBehaviour
     {
         this.enabled = true;
 
+        SolarSystemReset();
+
         // Pivot y from 0 to -0.1 rotate x from -90 to 15 
         MenuController.TweenPivot(_controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0), LeanTweenType.easeOutQuint, 1f, LeanTweenType.easeInQuad, GameManager.CameraSwitchTime);
     }

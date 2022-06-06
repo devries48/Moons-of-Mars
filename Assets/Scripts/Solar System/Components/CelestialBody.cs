@@ -90,7 +90,7 @@ public class CelestialBody : MonoBehaviour
 
     public bool IsGiantPlanet()
     {
-        CelestialBodyName[] array = { CelestialBodyName.Jupiter, CelestialBodyName.Saturn, CelestialBodyName.Uranus, CelestialBodyName.Neptune };
+        CelestialBodyName[] array = { CelestialBodyName.Jupiter, CelestialBodyName.Saturn};
         return Array.Exists(array, e => e == bodyName);
     }
 

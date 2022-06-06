@@ -55,10 +55,6 @@ public class KeplerTimeController : MonoBehaviour
 
     #region properties
 
-    public DateTime CurrentTime
-    {
-        get { return _currentTime; }
-    }
     DateTime _currentTime;
 
     GameManager GameManager => GameManager.Instance;
@@ -73,19 +69,17 @@ public class KeplerTimeController : MonoBehaviour
 
     #endregion
 
-    void Awake()
+    void Start()
     {
+        SetCurrentGlobalTime();
+
         var instances = FindObjectsOfType<KeplerOrbitMover>();
 
         foreach (var item in instances)
             AddBody(item);
 
         _epochDate = new DateTime(_epochYear, _epochMonth, _epochDay, _epochHour, _epochMinute, 0, DateTimeKind.Utc);
-    }
 
-    void Start()
-    {
-        SetCurrentGlobalTime();
     }
 
     void Update()
@@ -148,6 +142,7 @@ public class KeplerTimeController : MonoBehaviour
         bool isAnyNull = false;
 
         _currentTime = time;
+
         var elapsedTime = (time - _epochDate).TotalSeconds;
 
         foreach (var item in _bodies)
@@ -160,10 +155,9 @@ public class KeplerTimeController : MonoBehaviour
 
             var value = item.initialMeanAnomaly + elapsedTime * item.body.OrbitData.MeanMotion;
             item.body.OrbitData.SetMeanAnomaly(value);
-            if (item.body.AttractorSettings.AttractorObject != null)
-            {
+
+            if (item.body.AttractorSettings.AttractorObject != null) 
                 item.body.ForceUpdateViewFromInternalState();
-            }
         }
 
         if (isAnyNull)

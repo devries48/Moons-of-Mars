@@ -408,7 +408,7 @@ GameObject:
   - component: {fileID: 28288003}
   - component: {fileID: 28288004}
   m_Layer: 0
-  m_Name: Menu Controller
+  m_Name: Menu Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1186,7 +1186,6 @@ Transform:
   m_Children:
   - {fileID: 1057163031}
   - {fileID: 859231293}
-  - {fileID: 1712329843}
   m_Father: {fileID: 1376908350}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10608,7 +10607,7 @@ GameObject:
   - component: {fileID: 917288191}
   - component: {fileID: 917288190}
   m_Layer: 0
-  m_Name: Solar System vcam
+  m_Name: vCam Solar System
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10792,7 +10791,7 @@ GameObject:
   - component: {fileID: 963194229}
   - component: {fileID: 963194230}
   m_Layer: 0
-  m_Name: Main camera
+  m_Name: Camera Main
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11048,8 +11047,8 @@ MonoBehaviour:
   m_YDamping: 0
   m_ZDamping: 0
   m_TargetMovementOnly: 0
-  m_ScreenX: 1.24
-  m_ScreenY: 0.69
+  m_ScreenX: 1.25
+  m_ScreenY: 0.7
   m_CameraDistance: 9
   m_DeadZoneWidth: 0
   m_DeadZoneHeight: 0
@@ -15966,7 +15965,7 @@ GameObject:
   - component: {fileID: 1022311843}
   - component: {fileID: 1022311842}
   m_Layer: 0
-  m_Name: UI camera
+  m_Name: Camera UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16829,7 +16828,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1155153116}
   m_Layer: 0
-  m_Name: Solar System cam pivot
+  m_Name: Solar System  Pivot Cam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24452,9 +24451,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1712329843}
   - component: {fileID: 1712329844}
-  - component: {fileID: 1712329845}
   m_Layer: 0
-  m_Name: Mars vCam zoom
+  m_Name: vCam Menu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -24468,13 +24466,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: -6.4755096, y: 0.27087855, z: -6.254547}
+  m_LocalPosition: {x: 27.848108, y: -2.1918006, z: 70.62721}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 993721158}
-  m_Father: {fileID: 57009493}
-  m_RootOrder: 2
+  m_Father: {fileID: 1921888451}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1712329844
 MonoBehaviour:
@@ -24514,21 +24512,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 993721158}
---- !u!114 &1712329845
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712329842}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44d70cc20219cd84593f67d248eafe36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Offset: {x: -0.4, y: 0, z: 0}
-  m_ApplyAfter: 0
-  m_PreserveComposition: 1
 --- !u!1 &1780605300 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4146707697817101775, guid: 5a27d47534c90474d807350f30bf008b, type: 3}
@@ -30397,6 +30380,7 @@ Transform:
   - {fileID: 963194228}
   - {fileID: 1022311843}
   - {fileID: 1155153116}
+  - {fileID: 1712329843}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
