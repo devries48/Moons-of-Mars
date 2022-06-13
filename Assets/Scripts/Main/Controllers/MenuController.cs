@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 using static SolarSystemController;
 using Cinemachine;
+using System;
 
 // see https://easings.net/
 
@@ -14,6 +15,7 @@ public class MenuController : MonoBehaviour
     #region editor fields
     [Header("UI Elements")]
     [SerializeField] GameObject mainMenuWindow;
+    [SerializeField] GameObject gamesMenuWindow;
     [SerializeField] GameObject infoPanel;
     [SerializeField] GameObject exitButton;
     [SerializeField] ParticleSystem spaceDebriSystem;
@@ -27,7 +29,6 @@ public class MenuController : MonoBehaviour
 
     #region fields
     PlayableDirector _director;
-    bool _appQuit;
     #endregion
 
     #region properties
@@ -69,6 +70,7 @@ public class MenuController : MonoBehaviour
     void Start()
     {
         ShowMainMenu();
+        gamesMenuWindow.SetActive(false);
     }
 
     public void ShowBodyInfoWindow(CelestialBodyName name, bool isDeselect)
@@ -103,6 +105,14 @@ public class MenuController : MonoBehaviour
         CameraSwitcher.SwitchCamera(GameManager.SolarSystemCamera);
     }
 
+    public void MenuGames()
+    {
+        gamesMenuWindow.SetActive(true);
+
+        CloseMenuWindow(mainMenuWindow);
+        OpenMenuWindow(gamesMenuWindow);
+    }
+
     public void MenuQuit()
     {
         HideMainMenu(true);
@@ -127,7 +137,13 @@ public class MenuController : MonoBehaviour
             ShowMainMenu();
     }
 
-    private void SetWindowInfo(CelestialBodyName name)
+    public void BackToMainMenu()
+    {
+        CloseMenuWindow(gamesMenuWindow);
+        OpenMenuWindow(mainMenuWindow);
+    }
+
+    void SetWindowInfo(CelestialBodyName name)
     {
         var info = GameManager.CelestialBody(name).Info;
         if (info == null)
@@ -136,22 +152,20 @@ public class MenuController : MonoBehaviour
         info.SetInfoUI(infoPanel);
     }
 
-    private void Director_stopped(PlayableDirector obj)
+    void Director_stopped(PlayableDirector obj)
     {
         ShowMainMenu();
     }
 
-    private void Director_played(PlayableDirector obj)
+    void Director_played(PlayableDirector obj)
     {
         HideMainMenu();
     }
 
     // Restore MainMenu environment
-    private void ShowMainMenu()
+    void ShowMainMenu()
     {
-
-        if (spaceDebriSystem == null)
-            return;
+        if (spaceDebriSystem == null) return;
 
         CameraSwitcher.SwitchCamera(GameManager.MenuCamera);
 
@@ -164,42 +178,19 @@ public class MenuController : MonoBehaviour
         spaceDebriSystem.Play();
     }
 
-    private void HideMainMenu(bool quit = false)
+    void HideMainMenu(bool quit = false, bool stopDebri = true)
     {
         if (!quit) ShowExitButton();
 
-        var time = quit ? 0.5f : 1f;
-        var id = TweenPivot(mainMenuWindow, new Vector2(1.2f, 0.5f), new Vector3(0, -110, 0), LeanTweenType.easeInExpo, time, LeanTweenType.easeOutCirc, time);
+        var id = CloseMenuWindow(mainMenuWindow);
 
-        spaceDebriSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        if (stopDebri) spaceDebriSystem.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
 
         if (quit)
         {
-            //  center & zoom out
-            var zoomId = 0;
-            CinemachineFramingTransposer transposer = null;
-
-            if (GameManager.MenuCamera.TryGetComponent<CinemachineVirtualCamera>(out var cam))
-                transposer = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
-
-            if (transposer != null)
-            {
-                LeanTween.value(transposer.m_ScreenX, 0.5f, time / 2).setEase(LeanTweenType.easeOutQuint).setOnUpdate((float val) =>
-                {
-                    transposer.m_ScreenX = val;
-                });
-                LeanTween.value(transposer.m_ScreenY, 0.5f, time / 2).setEase(LeanTweenType.easeOutQuint).setOnUpdate((float val) =>
-                {
-                    transposer.m_ScreenY = val;
-                });
-                zoomId = LeanTween.value(transposer.m_CameraDistance, 100f, time).setEase(LeanTweenType.easeOutQuad).setOnUpdate((float val) =>
-                {
-                    transposer.m_CameraDistance = val;
-                }).id;
-            }
-
+            var closeId = Tweens.ApplicationClose(GameManager.MenuCamera);
             var d1 = LeanTween.descr(id);
-            var d2 = LeanTween.descr(zoomId);
+            var d2 = LeanTween.descr(closeId);
             var d = d1 ?? d2;
 
             if (d != null)
@@ -207,7 +198,17 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    private void QuitApplication()
+    void OpenMenuWindow(GameObject window)
+    {
+        Tweens.MenuWindowOpen(window);
+    }
+
+    int CloseMenuWindow(GameObject window)
+    {
+        return Tweens.MenuWindowClose(window);
+    }
+
+    void QuitApplication()
     {
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
@@ -216,12 +217,12 @@ public class MenuController : MonoBehaviour
 #endif
     }
 
-    private void ShowExitButton()
+    void ShowExitButton()
     {
         TweenPivot(exitButton, new Vector2(-.2f, -.2f), GameManager.CameraSwitchTime);
     }
 
-    private void HideExitButton()
+    void HideExitButton()
     {
         TweenPivot(exitButton, new Vector2(-.2f, 2f), null);
     }
@@ -250,7 +251,7 @@ public class MenuController : MonoBehaviour
         return (pivotTime > rotateTime) ? id_pivot : id_rotate;
     }
 
-    private void TweenPlanetScale(float scaleTime, bool scaleOut = false)
+    void TweenPlanetScale(float scaleTime, bool scaleOut = false)
     {
         var start = scaleOut ? 10 : 1;
         var end = scaleOut ? 1 : 10;

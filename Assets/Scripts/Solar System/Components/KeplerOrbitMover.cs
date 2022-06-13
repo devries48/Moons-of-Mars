@@ -105,7 +105,7 @@ public class KeplerOrbitMover : MonoBehaviour
     /// The orbit data.
     /// Internal state of orbit.
     /// </summary>
-    internal KeplerOrbitData OrbitData = new();
+    public KeplerOrbitData OrbitData = new();
 
     private Coroutine _updateRoutine;
 

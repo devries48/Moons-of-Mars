@@ -4,6 +4,12 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Moons of Mars.unity
+    guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/Astroids/Astroids.unity
+    guid: 196e452c2fb7b3f4f995fb45ef5c1a58
   m_configObjects:
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 8ef08d71c4f82f84b8aa6b8b34a191ae, type: 2}

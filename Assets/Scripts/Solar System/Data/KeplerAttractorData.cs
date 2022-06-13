@@ -8,5 +8,5 @@ using UnityEngine;
 {
 	public Transform AttractorObject;
 	public float AttractorMass = 1000;
-	internal float GravityConstant = 0.1f;
+	public float GravityConstant = 0.1f;
 }

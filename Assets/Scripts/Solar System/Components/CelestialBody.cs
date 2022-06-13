@@ -4,35 +4,50 @@ using UnityEngine;
 using static SolarSystemController;
 
 [ExecuteInEditMode]
-[RequireComponent(typeof(Rigidbody))]
 public class CelestialBody : MonoBehaviour
 {
-    #region public fields
+    #region editor fields
+
     public CelestialBodyName bodyName;
     public CelestialBodyType bodyType;
 
-    [Tooltip("")]
-    [Header("Mean distance from sun/planet in 10^6 km")]
-    public float distance;
-    [Header("Diameter in km")]
-    public float diameter;
-    [Header("Surface gravity in g")]
-    public float gravity;
-    [Header("Orbital period in days")]
-    public float period;
-    [Header("Tilt in degrees")]
+    [Header("Custom rotation")]
+    [Tooltip("Rotation time in seconds")]
+    [SerializeField] int rotationTime;
+
+    [Header("Solar System Data")]
+    [Tooltip("Mean distance from sun/planet in 10^6 km")]
+    [SerializeField] float distance;
+
+    [Tooltip("Diameter in km")]
+    [SerializeField] float diameter;
+
+    [Tooltip("Surface gravity in g")]
+    [SerializeField] float gravity;
+
+    [Tooltip("Orbital period in days")]
+    [SerializeField] float period;
+
+    [Tooltip("Tilt in degrees")]
     public float BodyAxialTilt;
-    [Header("Rotation period in hours")]
+
+    [Tooltip("Rotation period in hours")]
     public float RotationPeriod;
     #endregion
 
-    private SolarSystemController _solarSystemController;
-    private CelestialBodyInfoData _celestialBodyInfo;
+    #region properties
 
     public CelestialBodyInfoData Info => _celestialBodyInfo;
 
+    #endregion
+
+    #region fields
+    SolarSystemController _solarSystemController;
+    CelestialBodyInfoData _celestialBodyInfo;
+
     const float sunDiameter = 1392700;
     const float sunScale = .1f; // Make the sun smaller
+    #endregion
 
     void Start()
     {
@@ -43,11 +58,23 @@ public class CelestialBody : MonoBehaviour
     // Handle planet rotation
     void FixedUpdate()
     {
-        var rotationSpeed = _solarSystemController.IsDemo && bodyType != CelestialBodyType.Sun
-            ? 30 * Time.fixedDeltaTime
-            : (1 / RotationPeriod) * 1000 * Time.fixedDeltaTime;
+        float rotationSeconds = 0.0f;
 
-        transform.Rotate(0, rotationSpeed, 0);
+        if (_solarSystemController == null)
+            rotationSeconds = rotationTime;
+        else if (_solarSystemController.IsDemo)
+            if (bodyType != CelestialBodyType.Sun)
+                rotationSeconds = 30.0f;
+            else
+                rotationSeconds = RotationPeriod * 3600.0f;
+
+        if (rotationSeconds > 0.0f)
+        {
+            var degreesPerSecond = 360.0f / rotationSeconds;
+            transform.Rotate(new Vector3(0, degreesPerSecond * Time.fixedDeltaTime, 0));
+        }
+
+        //transform.Rotate(0, rotationSpeed, 0);
     }
 
     void OnValidate()
@@ -61,6 +88,9 @@ public class CelestialBody : MonoBehaviour
     internal void ApplyChanges()
     {
         InitSolarSystemController();
+
+        if (_solarSystemController == null)
+            return;
 
         var trans = gameObject.transform;
         var scaleMultiplier = 0.0001f;
@@ -90,11 +120,11 @@ public class CelestialBody : MonoBehaviour
 
     public bool IsGiantPlanet()
     {
-        CelestialBodyName[] array = { CelestialBodyName.Jupiter, CelestialBodyName.Saturn};
+        CelestialBodyName[] array = { CelestialBodyName.Jupiter, CelestialBodyName.Saturn };
         return Array.Exists(array, e => e == bodyName);
     }
 
-    private void InitSolarSystemController() //make property
+    void InitSolarSystemController()
     {
         if (_solarSystemController == null)
         {
@@ -104,10 +134,8 @@ public class CelestialBody : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Set body type and creates the CelestialBodyInfo class used bij the UI Info Window.
-    /// </summary>
-    private void SetBodyInfo()
+    // Set body type and creates the CelestialBodyInfo class used bij the UI Info Window.
+    void SetBodyInfo()
     {
         string description;
 

@@ -7,7 +7,7 @@ using System;
 [Serializable]
 public class KeplerOrbitData
 {
-    internal double GravConst = 1;
+    public double GravConst = 1;
 
     /// <summary>
     /// Normal of ecliptic plane.
