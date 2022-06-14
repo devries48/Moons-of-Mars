@@ -85,15 +85,24 @@ public class CelestialBody : MonoBehaviour
     /// <summary>
     /// Sets Celestialbody scale, rotation & orbit
     /// </summary>
-    internal void ApplyChanges()
+    public void ApplyChanges()
     {
+        var scaleMultiplier = 0.0001f;
+        var trans = gameObject.transform;
+
+        // Sun isn't scalable yet, this is the default scale
+        if (bodyType == CelestialBodyType.Sun)
+        {
+            diameter = sunDiameter;
+
+            var sunSize = sunDiameter * sunScale * scaleMultiplier;
+            trans.localScale = sunSize * Vector3.one;
+        }
+
         InitSolarSystemController();
 
         if (_solarSystemController == null)
             return;
-
-        var trans = gameObject.transform;
-        var scaleMultiplier = 0.0001f;
 
         if (!Application.isPlaying)
         {
@@ -104,14 +113,7 @@ public class CelestialBody : MonoBehaviour
             trans.rotation = axialTilt;
         }
 
-        if (bodyType == CelestialBodyType.Sun)
-        {
-            diameter = sunDiameter;
-
-            var sunSize = sunDiameter * sunScale * scaleMultiplier;
-            trans.localScale = sunSize * Vector3.one;
-        }
-        else
+        if (bodyType != CelestialBodyType.Sun)
         {
             var mltp = _solarSystemController != null ? _solarSystemController.GetPlanetScaleMultiplier(IsGiantPlanet()) : 1f;
             trans.localScale = diameter * mltp * scaleMultiplier * Vector3.one;

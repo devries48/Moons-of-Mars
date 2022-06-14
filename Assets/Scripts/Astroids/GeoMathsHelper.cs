@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public static class GeoMaths
+public static class GeoMathsHelper
 {
 
 	public const float EarthRadiusKM = 6371;

@@ -7,7 +7,6 @@ namespace SolarSystem
     [CreateAssetMenu(menuName = "Data/Star Data")]
     public class StarData : ScriptableObject
     {
-
         [SerializeField] TextAsset starFile;
         [SerializeField] float magnitudeThreshold = 6.5f;
         [SerializeField] Gradient gradient;
@@ -34,7 +33,6 @@ namespace SolarSystem
         public void CreateStarData()
         {
             List<Star> starList = new();
-
             MinMax magnitudeRange = new();
             MinMax temperatureRange = new();
 
@@ -47,11 +45,10 @@ namespace SolarSystem
                 {
                     string line = reader.ReadLine();
                     if (string.IsNullOrEmpty(line))
-                    {
                         break;
-                    }
+                    
                     string[] values = line.Split(',');
-                    string starName = values[6];
+                    //string starName = values[6];
 
                     float magnitude = float.Parse(values[13]);
                     float rightAscension = float.Parse(values[7]); // Corresponds to longitude. Measured in hours [0, 24)
@@ -60,20 +57,17 @@ namespace SolarSystem
                     if (magnitude <= magnitudeThreshold)
                     {
                         if (float.TryParse(values[16], out float colorIndex))
-                        {
                             temperatureRange.AddValue(colorIndex);
-                        }
 
                         magnitudeRange.AddValue(magnitude);
-                        //temperatureRange.AddValue(colorIndex);
                         Coordinate coord = new((rightAscension * 360f / 24 - 180) * Mathf.Deg2Rad, declination * Mathf.Deg2Rad);
-
-                        Vector3 dir = GeoMaths.CoordinateToPoint(coord, 1);
+                        Vector3 dir = GeoMathsHelper.CoordinateToPoint(coord, 1);
 
                         Star star = new()
                         {
                             direction = dir,
                             brightnessT = magnitude,
+                            
                             //https://en.wikipedia.org/wiki/Color_index
                             colour = gradient.Evaluate(Mathf.InverseLerp(-0.33f, 1.40f, colorIndex))
                         };

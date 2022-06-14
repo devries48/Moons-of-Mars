@@ -13,7 +13,6 @@ public static class EditorShaderHelper
 	public static event System.Action onRebindRequired;
 	static bool editorHasFocus;
 
-
 	static EditorShaderHelper()
 	{
 		editorHasFocus = true;
