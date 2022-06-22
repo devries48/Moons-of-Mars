@@ -1,19 +1,35 @@
+using System.Collections;
 using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    public GameObject bullet;
+    [Header("Weapon & bullet")]
+    [SerializeField, Tooltip("Select a gun prefab")]
+    GameObject gun;
+
+    [SerializeField, Tooltip("Select a bullet prefab")]
+    GameObject bullet;
+
+    [SerializeField, Tooltip("Lifetime in seconds")]
+    float bulletLifetime = 10f;
+
+    [SerializeField, Tooltip("Fire rate in seconds")]
+    float fireRate = 0.5f;
+
+    [SerializeField, Tooltip("Fire rate in seconds")]
+    float fireForce = 350f;
+
     private float thrust = 6f;
     private float rotationSpeed = 180f;
     private float MaxSpeed = 4.5f;
     private Camera mainCam;
     private Rigidbody rb;
+    bool _canShoot = true;
 
     private void Start()
     {
         mainCam = Camera.main;
         rb = GetComponent<Rigidbody>();
-        bullet.SetActive(false);
     }
 
     private void FixedUpdate()
@@ -24,10 +40,11 @@ public class Rocket : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown("space"))
-        {
-            Shoot();
-        }
+        if (!_canShoot)
+            return;
+
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
+            StartCoroutine(Shoot());
     }
 
     private void ControlRocket()
@@ -52,7 +69,11 @@ public class Rocket : MonoBehaviour
         {
             transform.position = new Vector2(sceneLeftEdge, transform.position.y);
         }
-        if (transform.position.x < sceneLeftEdge) { transform.position = new Vector2(sceneRightEdge, transform.position.y); }
+
+        if (transform.position.x < sceneLeftEdge)
+        {
+            transform.position = new Vector2(sceneRightEdge, transform.position.y);
+        }
         if (transform.position.y > sceneTopEdge)
         {
             transform.position = new Vector2(transform.position.x, sceneBottomEdge);
@@ -71,11 +92,18 @@ public class Rocket : MonoBehaviour
         rb.angularVelocity = new Vector3(0f, 0f, 0f);
     }
 
-    void Shoot()
+    IEnumerator Shoot()
     {
-        GameObject BulletClone = Instantiate(bullet, new Vector2(bullet.transform.position.x, bullet.transform.position.y), transform.rotation);
-        BulletClone.SetActive(true);
-        BulletClone.GetComponent<Bullet>().KillOldBullet();
-        BulletClone.GetComponent<Rigidbody>().AddForce(transform.up * 350);
+        _canShoot = false;
+
+        var bullet_obj = Instantiate(bullet, gun.transform.position, gun.transform.rotation) as GameObject;
+        var bullet_rb = bullet_obj.GetComponent<Rigidbody>();
+        bullet_rb.AddForce(transform.up * fireForce);
+
+        Destroy(bullet_obj, bulletLifetime);
+
+        yield return new WaitForSeconds(fireRate);
+
+        _canShoot = true;
     }
 }

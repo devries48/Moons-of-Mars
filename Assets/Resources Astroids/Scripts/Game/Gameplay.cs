@@ -2,12 +2,14 @@ using UnityEngine;
 
 public class Gameplay : MonoBehaviour
 {
+    [SerializeField, Tooltip("Select a spaceship prefab")]
+    GameObject rocket;
 
-    public GameObject asteroid;
-    public GameObject rocket;
+    [SerializeField, Tooltip("Select an astroid prefab")]
+    GameObject asteroid;
 
-    [SerializeField]
-    private int startNumberAstroids = 1;
+    [SerializeField, Tooltip("Starting number of astroids")]
+    int numberAstroids = 2;
 
     private bool _allAsteroidsOffScreen;
     private int levelAsteroidNum;
@@ -18,13 +20,11 @@ public class Gameplay : MonoBehaviour
     {
         asteroid.SetActive(false); // use prefab
         mainCam = Camera.main;
-        CreateAsteroids(startNumberAstroids);
+        CreateAsteroids(numberAstroids);
     }
 
     private void Update()
     {
-        RenderSettings.skybox.SetFloat("_Rotation", Time.time * 0.8f);
-
         if (asteroidLife <= 0)
         {
             asteroidLife = 6;
@@ -57,6 +57,32 @@ public class Gameplay : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(screenPos);
     }
 
+    public static void RePosition(GameObject obj, float offset, Camera cam)
+    {
+        if (cam == null)
+            return;
+
+        var pos = cam.WorldToScreenPoint(obj.transform.position);
+        var newpos = Vector3.zero;
+
+        if (pos.x >= Screen.safeArea.xMax)
+            newpos = new(x: Screen.safeArea.xMin - offset, pos.y, pos.z);
+        else if (pos.x <= Screen.safeArea.xMin)
+            newpos = new(x: Screen.safeArea.xMax + offset, pos.y, pos.z);
+
+        if (newpos != Vector3.zero)
+            obj.transform.position = new Vector3(cam.ScreenToWorldPoint(newpos).x, obj.transform.position.y, obj.transform.position.z);
+
+        if (pos.y >= Screen.safeArea.yMax)
+            newpos = new(pos.x, Screen.safeArea.yMin - offset, pos.z);
+        else if (pos.y <= Screen.safeArea.yMin)
+            newpos = new(pos.x, Screen.safeArea.yMax + offset, pos.z);
+
+        if (newpos != Vector3.zero)
+            obj.transform.position = new Vector3(obj.transform.position.x, cam.ScreenToWorldPoint(newpos).y, obj.transform.position.z);
+    }
+
+
     public void RocketFail()
     {
         Cursor.visible = true;
@@ -68,9 +94,9 @@ public class Gameplay : MonoBehaviour
         asteroidLife--;
     }
 
-    public int startLevelAsteroidsNum
+    public int StartLevelAsteroidsNum
     {
-        get { return startNumberAstroids; }
+        get { return numberAstroids; }
     }
 
     public bool allAsteroidsOffScreen

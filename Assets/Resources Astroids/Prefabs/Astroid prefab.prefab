@@ -128,5 +128,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf7ca57f6a2d0d4da390f641dc3247d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rock: {fileID: 0}
   gameplay: {fileID: 0}
+  offset: 70
+  maxSpeed: 3
