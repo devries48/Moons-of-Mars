@@ -1,9 +1,9 @@
 using UnityEngine;
 
+[SelectionBase]
 [RequireComponent(typeof(Rigidbody))]
 public class Asteroid : MonoBehaviour
 {
-
     [SerializeField]
     Gameplay gameplay;
 
@@ -13,7 +13,6 @@ public class Asteroid : MonoBehaviour
     [SerializeField]
     float maxSpeed = 3f;
 
-    Renderer _renderer;
     Rigidbody _rb;
     float _rotationX;
     float _rotationY;
@@ -22,7 +21,6 @@ public class Asteroid : MonoBehaviour
 
     void Start()
     {
-        _renderer = GetComponent<Renderer>();
         _rb = GetComponent<Rigidbody>();
 
         var maxRotation = 25f;
@@ -39,11 +37,13 @@ public class Asteroid : MonoBehaviour
         transform.Rotate(new Vector3(_rotationX, _rotationY, _rotationZ) * Time.deltaTime);
 
         _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
+       
+        Gameplay.RePosition(gameObject);
     }
 
     void OnCollisionEnter(Collision collisionInfo)
     {
-        if (collisionInfo.collider.tag == "Bullet")
+        if (collisionInfo.collider.CompareTag("Bullet"))
         {
             if (_generation < 3)
                 CreateSmallAsteriods(2);
@@ -56,12 +56,6 @@ public class Asteroid : MonoBehaviour
         if (collisionInfo.collider.name == "Rocket")
             gameplay.RocketFail();
     }
-
-    private void OnBecameInvisible()
-    {
-         Gameplay.RePosition(gameObject, offset, Camera.main);
-    }
-
     public void SetGeneration(int generation)
     {
         _generation = generation;

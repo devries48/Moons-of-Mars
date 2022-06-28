@@ -129,6 +129,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bodyName: 3
   bodyType: 0
+  rotationTime: 0
   distance: 149.6
   diameter: 12756
   gravity: 1

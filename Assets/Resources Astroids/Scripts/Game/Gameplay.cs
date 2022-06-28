@@ -11,31 +11,37 @@ public class Gameplay : MonoBehaviour
     [SerializeField, Tooltip("Starting number of astroids")]
     int numberAstroids = 2;
 
+    [SerializeField]
+    Camera gameCamera;
+
+
+    int _asteroidLife;
+
     private bool _allAsteroidsOffScreen;
     private int levelAsteroidNum;
-    private Camera mainCam;
-    private int asteroidLife;
 
-    private void Start()
+    static CamBounds camBounds;
+
+    void Start()
     {
+        camBounds = new CamBounds(gameCamera);
+        Camera.SetupCurrent(gameCamera);
         asteroid.SetActive(false); // use prefab
-        mainCam = Camera.main;
         CreateAsteroids(numberAstroids);
     }
 
-    private void Update()
+    void Update()
     {
-        if (asteroidLife <= 0)
+        if (_asteroidLife <= 0)
         {
-            asteroidLife = 6;
+            _asteroidLife = 6;
             CreateAsteroids(1);
         }
 
         _allAsteroidsOffScreen = true;
-
     }
 
-    private void CreateAsteroids(float asteroidsNum)
+    void CreateAsteroids(float asteroidsNum)
     {
 
         //print("Min-max: " + Screen.safeArea.xMin + " -  " + Screen.safeArea.xMax);
@@ -54,34 +60,31 @@ public class Gameplay : MonoBehaviour
 
     public static Vector3 WorldPos(Vector3 screenPos)
     {
-        return Camera.main.ScreenToWorldPoint(screenPos);
+        return Camera.current.ScreenToWorldPoint(screenPos);
     }
 
-    public static void RePosition(GameObject obj, float offset, Camera cam)
+    public static void RePosition(GameObject obj)
     {
-        if (cam == null)
-            return;
+        var pos = obj.transform.position;
+        var offset = obj.transform.localScale / 2;
 
-        var pos = cam.WorldToScreenPoint(obj.transform.position);
-        var newpos = Vector3.zero;
-
-        if (pos.x >= Screen.safeArea.xMax)
-            newpos = new(x: Screen.safeArea.xMin - offset, pos.y, pos.z);
-        else if (pos.x <= Screen.safeArea.xMin)
-            newpos = new(x: Screen.safeArea.xMax + offset, pos.y, pos.z);
-
-        if (newpos != Vector3.zero)
-            obj.transform.position = new Vector3(cam.ScreenToWorldPoint(newpos).x, obj.transform.position.y, obj.transform.position.z);
-
-        if (pos.y >= Screen.safeArea.yMax)
-            newpos = new(pos.x, Screen.safeArea.yMin - offset, pos.z);
-        else if (pos.y <= Screen.safeArea.yMin)
-            newpos = new(pos.x, Screen.safeArea.yMax + offset, pos.z);
-
-        if (newpos != Vector3.zero)
-            obj.transform.position = new Vector3(obj.transform.position.x, cam.ScreenToWorldPoint(newpos).y, obj.transform.position.z);
+        if (pos.x > camBounds.RightEdge + offset.x)
+        {
+            obj.transform.position = new Vector2(camBounds.LeftEdge - offset.x, pos.y);
+        }
+        if (pos.x < camBounds.LeftEdge - offset.x)
+        {
+            obj.transform.position = new Vector2(camBounds.RightEdge +offset.x, pos.y);
+        }
+        if (pos.y > camBounds.TopEdge + offset.y)
+        {
+            obj.transform.position = new Vector2(pos.x, camBounds.BottomEdge - offset.y);
+        }
+        if (pos.y < camBounds.BottomEdge - offset.y)
+        {
+            obj.transform.position = new Vector2(pos.x, camBounds.TopEdge + offset.y);
+        }
     }
-
 
     public void RocketFail()
     {
@@ -91,7 +94,7 @@ public class Gameplay : MonoBehaviour
 
     public void asterodDestroyed()
     {
-        asteroidLife--;
+        _asteroidLife--;
     }
 
     public int StartLevelAsteroidsNum
@@ -103,5 +106,30 @@ public class Gameplay : MonoBehaviour
     {
         get { return _allAsteroidsOffScreen; }
     }
+
+    struct CamBounds
+    {
+        public CamBounds(Camera cam)
+        {
+            Width = cam.orthographicSize * 2 * cam.aspect;
+            Height = cam.orthographicSize * 2;
+
+            RightEdge = Width / 2;
+            LeftEdge = RightEdge * -1;
+            TopEdge = Height / 2;
+            BottomEdge = TopEdge * -1;
+            print("width:" + Width);
+            print("height:" + Height);
+            print("aspect:" + cam.aspect);
+        }
+
+        public readonly float Width;
+        public readonly float Height;
+        public readonly float RightEdge;
+        public readonly float LeftEdge;
+        public readonly float TopEdge;
+        public readonly float BottomEdge;
+    }
+
 
 }
