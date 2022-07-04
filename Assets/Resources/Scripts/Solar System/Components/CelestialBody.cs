@@ -73,8 +73,6 @@ public class CelestialBody : MonoBehaviour
             var degreesPerSecond = 360.0f / rotationSeconds;
             transform.Rotate(new Vector3(0, degreesPerSecond * Time.fixedDeltaTime, 0));
         }
-
-        //transform.Rotate(0, rotationSpeed, 0);
     }
 
     void OnValidate()
