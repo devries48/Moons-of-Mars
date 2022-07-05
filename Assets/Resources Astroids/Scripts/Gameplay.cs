@@ -42,7 +42,7 @@ namespace Game.Astroids
             for (int i = 1; i <= asteroidsNum; i++)
             {
                 var AsteroidClone = Instantiate(asteroid, new Vector3(Random.Range(-20, 20), 10f), transform.rotation);
-                AsteroidClone.GetComponent<Asteroid>().SetGeneration(1);
+                AsteroidClone.GetComponent<AsteroidController>().SetGeneration(1);
                 AsteroidClone.SetActive(true);
             }
         }

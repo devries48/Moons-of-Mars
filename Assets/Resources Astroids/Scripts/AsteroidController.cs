@@ -4,7 +4,7 @@ namespace Game.Astroids
 {
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody))]
-    public class Asteroid : MonoBehaviour
+    public class AsteroidController : MonoBehaviour
     {
         [SerializeField]
         Gameplay gameplay;
@@ -42,7 +42,7 @@ namespace Game.Astroids
 
         void OnCollisionEnter(Collision collisionInfo)
         {
-            if (collisionInfo.collider.CompareTag("Bullet"))
+            if (collisionInfo.collider.CompareTag("Bullet")) //constant
             {
                 if (_generation < 3)
                     CreateSmallAsteriods(2);
@@ -79,7 +79,7 @@ namespace Game.Astroids
                 var AsteroidClone = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, 0f), transform.rotation);
 
                 AsteroidClone.transform.localScale = new Vector3(AsteroidClone.transform.localScale.x * scaleSize, AsteroidClone.transform.localScale.y * scaleSize, AsteroidClone.transform.localScale.z * scaleSize);
-                AsteroidClone.GetComponent<Asteroid>().SetGeneration(newGeneration);
+                AsteroidClone.GetComponent<AsteroidController>().SetGeneration(newGeneration);
                 AsteroidClone.SetActive(true);
             }
         }

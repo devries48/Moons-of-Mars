@@ -1,0 +1,93 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-5902090351704684486
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 5
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Mat Shader ForceField
+  m_Shader: {fileID: -6465566751694194690, guid: 87718fc09d3a3ca4d90a50c11b0622a5, type: 3}
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 2
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - Texture2D_79BA51A6:
+        m_Texture: {fileID: 2800000, guid: 9d4cbdae5437f0e4b92f11178e9dd6ae, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _fillTexture:
+        m_Texture: {fileID: 2800000, guid: ac47f16ccb5602f4cb7f38b923d4b4d2, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _scanlineTexture:
+        m_Texture: {fileID: 2800000, guid: c188178d69840b647bf7399d2dbf50dd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - Vector1_37163E29: 0
+    - Vector1_AE9DFBD: 0.01
+    - Vector1_D65B033B: 0
+    - Vector1_E266B039: 10
+    - _QueueControl: 0
+    - _QueueOffset: 0
+    - _enableFillTexture: 1
+    - _enableIntersection: 0
+    - _enableRimGlow: 1
+    - _enableRipple: 0
+    - _enableScanLine: 1
+    - _fill: 0.06
+    - _impactRippleAmplitude: 0
+    - _impactRippleMaxRadius: 0.1
+    - _impactRippleSpeed: 0
+    - _intersectionMultiplier: 1
+    - _intersectionOffset: 0.9
+    - _rimGlowNoiseDensity: 4
+    - _rimGlowNoiseSpeed: 1
+    - _rimPulseSpeed: 3
+    - _scanSize: 0.626
+    - _scanSpeed: 0.8
+    m_Colors:
+    - Color_63659391: {r: 0.09522808, g: 6.0628653, b: 0.22853976, a: 0}
+    - _baseColor: {r: 0.94509804, g: 0.14586872, b: 0.031372547, a: 1}
+    - _fillOffset: {r: 0, g: 0, b: 0, a: 0}
+    - _fillTiling: {r: 8, g: 16, b: 0, a: 0}
+    - _impactPoint: {r: 0, g: 0, b: 0, a: 0}
+    - _impactRippleDirection: {r: 0, g: 0, b: 1, a: 0}
+    - _rimColor: {r: 2, g: 0.2916075, b: 0.052356, a: 0}
+    - _rimPower: {r: 4, g: 4, b: 0, a: 0}
+  m_BuildTextureStacks: []
