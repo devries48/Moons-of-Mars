@@ -39,7 +39,6 @@ namespace Game.Astroids
 
             Gameplay.RePosition(gameObject);
         }
-
         void OnCollisionEnter(Collision collisionInfo)
         {
             if (collisionInfo.collider.CompareTag("Bullet")) //constant
