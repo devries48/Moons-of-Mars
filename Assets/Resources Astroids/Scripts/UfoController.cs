@@ -1,15 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class UfoController : BaseSpaceShipController
+namespace Game.Astroids
 {
-    [Header("UFO")]
-    [SerializeField]
-    float rotationSpeed = 50f;
-    
-    void FixedUpdate()
+    public class UfoController : BaseSpaceShipController
     {
-        transform.Rotate(new Vector3(0, rotationSpeed * Time.fixedDeltaTime, 0));
+        [Header("UFO")]
+        [SerializeField]
+        float rotationSpeed = 50f;
+
+        void FixedUpdate()
+        {
+            transform.Rotate(new Vector3(0, rotationSpeed * Time.fixedDeltaTime, 0));
+        }
     }
 }

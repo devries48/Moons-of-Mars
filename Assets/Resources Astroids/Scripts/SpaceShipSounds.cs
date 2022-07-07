@@ -1,9 +1,21 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[System.Serializable]
-public class SpaceShipSounds
+namespace Game.Astroids
 {
-    public AudioClip ShieldsUp;
+    [System.Serializable]
+    public class SpaceShipSounds
+    {
+        public enum Clip
+        {
+            ShootBullet,
+            ShieldsUp,
+            ShieldsDown,
+            ShieldsHit
+        }
+
+        public AudioClip ShootBullet;
+        public AudioClip ShieldsUp;
+        public AudioClip ShieldsDown;
+        public AudioClip ShieldsHit;
+    }
 }

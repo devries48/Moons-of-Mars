@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class Gameplay : MonoBehaviour
+    public class GameManager : MonoBehaviour
     {
         [SerializeField, Tooltip("Select a spaceship prefab")]
         GameObject rocket;

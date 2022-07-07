@@ -158,6 +158,7 @@ Transform:
   m_Children:
   - {fileID: 1917910233}
   - {fileID: 1552090157}
+  - {fileID: 890396064}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -223,7 +224,10 @@ MonoBehaviour:
   fireRate: 0.5
   fireForce: 350
   sounds:
+    ShootBullet: {fileID: 0}
     ShieldsUp: {fileID: 0}
+    ShieldsDown: {fileID: 0}
+    ShieldsHit: {fileID: 0}
 --- !u!54 &329056516
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -367,16 +371,125 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
+      propertyPath: large
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: gameplay
       value: 
       objectReference: {fileID: 1552090158}
-    m_RemovedComponents: []
+    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 1552090158}
+    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
+      propertyPath: audioManager
+      value: 
+      objectReference: {fileID: 890396063}
+    m_RemovedComponents:
+    - {fileID: 1346044953009467858, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
 --- !u!1 &737061813 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
   m_PrefabInstance: {fileID: 737061812}
   m_PrefabAsset: {fileID: 0}
+--- !u!82 &737061820
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 737061813}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 5d32e58265f883748a4ce6deb8cdb4c2, type: 3}
+  m_PlayOnAwake: 0
+  m_Volume: 0.4
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &814799753
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,6 +648,51 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!1 &890396062
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 890396064}
+  - component: {fileID: 890396063}
+  m_Layer: 0
+  m_Name: Astroids Sound Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &890396063
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890396062}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e03fa0131f3e3f4e886f916ec87a4f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxSoundPlaying: 1
+--- !u!4 &890396064
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 890396062}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 161570623}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &934970956
 GameObject:
   m_ObjectHideFlags: 0
@@ -983,7 +1141,7 @@ GameObject:
   - component: {fileID: 1552090157}
   - component: {fileID: 1552090158}
   m_Layer: 0
-  m_Name: Astroids Gameplay
+  m_Name: Game Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1345,6 +1503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e19870c723237ae4e937bf1de2fb626b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spaceShip: {fileID: 1931148722}
   magnitude: 2000
   shieldVisibleTimer: 2
 --- !u!64 &1899303303
@@ -1460,7 +1619,10 @@ MonoBehaviour:
   fireRate: 0.5
   fireForce: 350
   sounds:
-    ShieldsUp: {fileID: 8300000, guid: c924e20c50e78554e803fd8e9a5413c3, type: 3}
+    ShootBullet: {fileID: 0}
+    ShieldsUp: {fileID: 0}
+    ShieldsDown: {fileID: 8300000, guid: fb6ea42b59abaed4091523c1b134b332, type: 3}
+    ShieldsHit: {fileID: 8300000, guid: 2240939744ed4a94fa1501c1edb6f844, type: 3}
   rotationSpeed: 50
 --- !u!4 &1931148723
 Transform:
@@ -1504,9 +1666,9 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: c924e20c50e78554e803fd8e9a5413c3, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 0.3
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1600,7 +1762,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1951543358}
   m_Layer: 0
-  m_Name: Background
+  m_Name: Environment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

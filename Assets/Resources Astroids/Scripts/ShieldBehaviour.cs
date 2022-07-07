@@ -1,70 +1,89 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MeshRenderer))]
-public class ShieldBehaviour : MonoBehaviour
+namespace Game.Astroids
 {
-    [SerializeField]
-    int magnitude = 2000;
-
-    [SerializeField]
-    float shieldVisibleTimer = 2f;
-    MeshRenderer MeshRend
+    [RequireComponent(typeof(MeshRenderer))]
+    public class ShieldBehaviour : MonoBehaviour
     {
-        get
+        [SerializeField]
+        BaseSpaceShipController spaceShip;
+
+        [SerializeField]
+        int magnitude = 2000;
+
+        [SerializeField]
+        float shieldVisibleTimer = 2f;
+        MeshRenderer MeshRend
         {
-            if (__meshRend == null)
-                TryGetComponent(out __meshRend);
+            get
+            {
+                if (__meshRend == null)
+                    TryGetComponent(out __meshRend);
 
-            return __meshRend;
+                return __meshRend;
+            }
         }
-    }
-    MeshRenderer __meshRend;
+        MeshRenderer __meshRend;
 
-    float _visibleTimer;
+        float _visibleTimer;
 
-    void Start()
-    {
-        MeshRend.enabled = false;
-    }
-
-    void Update()
-    {
-        if (_visibleTimer > 0f)
+        void Start()
         {
-            _visibleTimer -= Time.deltaTime;
-
-            if (_visibleTimer <= 0f)
-                ShieldsDown();
+            MeshRend.enabled = false;
         }
-    }
 
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Astroid"))
+        void Update()
         {
-            ShieldsUp();
-            var force = transform.position - other.transform.position;
+            if (_visibleTimer > 0f)
+            {
+                _visibleTimer -= Time.deltaTime;
 
-            other.TryGetComponent<Rigidbody>(out var rb);
-            if (rb == null)
-                return;
-
-            force.Normalize();
-            rb.AddForce(-force * magnitude);
+                if (_visibleTimer <= 0f)
+                    ShieldsDown();
+            }
         }
-    }
 
-    void ShieldsUp()
-    {
-        MeshRend.enabled = true;
-        _visibleTimer = shieldVisibleTimer;
-    }
+        void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Astroid"))
+            {
+                ShieldsUp(true);
 
-    void ShieldsDown()
-    {
-        MeshRend.enabled = false;
+                var force = transform.position - other.transform.position;
+
+                other.TryGetComponent<Rigidbody>(out var rb);
+                if (rb == null)
+                    return;
+
+                force.Normalize();
+                rb.AddForce(-force * magnitude);
+            }
+        }
+
+        void ShieldsUp(bool isAuto)
+        {
+            if (spaceShip == null)
+                Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
+            else
+            {
+                if (isAuto)
+                    spaceShip.PlaySound(SpaceShipSounds.Clip.ShieldsHit);
+                else
+                    spaceShip.PlaySound(SpaceShipSounds.Clip.ShieldsUp);
+            }
+
+            MeshRend.enabled = true;
+            _visibleTimer = shieldVisibleTimer;
+        }
+
+        void ShieldsDown()
+        {
+            MeshRend.enabled = false;
+            if (spaceShip == null)
+                Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
+            else
+                    spaceShip.PlaySound(SpaceShipSounds.Clip.ShieldsDown);
+
+        }
     }
 }

@@ -6,13 +6,35 @@ namespace Game.Astroids
     [RequireComponent(typeof(Rigidbody))]
     public class AsteroidController : MonoBehaviour
     {
+        #region editor fields
+        [Header("Managers")]
+
         [SerializeField]
-        Gameplay gameplay;
+        GameManager gameManager;
+
+        [SerializeField, Tooltip("Controls the sound of colliding astroids")]
+        AudioManager audioManager;
+
+        [Header("Astroid Collision Volume")]
+
+        [SerializeField, Range(0f, 1f)]
+        float small = .1f;
+
+        [SerializeField, Range(0f, 1f)]
+        float medium = .2f;
+
+        [SerializeField, Range(0f, 1f)]
+        float large = .4f;
+
+        [Header("Other")]
 
         [SerializeField]
         float maxSpeed = 3f;
+        #endregion
 
         Rigidbody _rb;
+        AudioSource _audio;
+
         float _rotationX;
         float _rotationY;
         float _rotationZ;
@@ -21,6 +43,7 @@ namespace Game.Astroids
         void Start()
         {
             _rb = GetComponent<Rigidbody>();
+            _audio = GetComponent<AudioSource>();
 
             var maxRotation = 25f;
             _rotationX = Random.Range(-maxRotation, maxRotation);
@@ -37,11 +60,13 @@ namespace Game.Astroids
 
             _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
 
-            Gameplay.RePosition(gameObject);
+            GameManager.RePosition(gameObject);
         }
         void OnCollisionEnter(Collision collisionInfo)
         {
-            if (collisionInfo.collider.CompareTag("Bullet")) //constant
+            if (collisionInfo.collider.name == "Rocket")
+                gameManager.RocketFail();
+            else if (collisionInfo.collider.CompareTag("Bullet")) //constant
             {
                 if (_generation < 3)
                     CreateSmallAsteriods(2);
@@ -50,9 +75,19 @@ namespace Game.Astroids
                 Destroy();
                 Destroy(collisionInfo.gameObject);
             }
+            else if (collisionInfo.collider.name == "Astroid")
+            {
+                collisionInfo.gameObject.TryGetComponent<AsteroidController>(out var other);
+                if (other == null)
+                {
+                    Debug.LogWarning("AsteroidController on collision is NULL");
+                    return;
+                }
 
-            if (collisionInfo.collider.name == "Rocket")
-                gameplay.RocketFail();
+                // play smallest astroid collision sound
+                var g = System.Math.Min(_generation, other._generation);
+
+            }
         }
         public void SetGeneration(int generation)
         {
@@ -85,7 +120,7 @@ namespace Game.Astroids
 
         public void Destroy()
         {
-            gameplay.AsterodDestroyed();
+            gameManager.AsterodDestroyed();
             Destroy(gameObject, 0.01f);
         }
 
