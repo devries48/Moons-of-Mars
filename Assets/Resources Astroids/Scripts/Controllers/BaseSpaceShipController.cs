@@ -58,7 +58,6 @@ namespace Game.Astroids
         }
         AudioSource __audio;
 
-
         #endregion
 
         protected bool m_canShoot = true;

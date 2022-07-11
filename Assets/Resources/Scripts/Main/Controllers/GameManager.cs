@@ -62,7 +62,9 @@ public class GameManager : MonoBehaviour
 
     public CelestialBody CelestialBody(SolarSystemController.CelestialBodyName name)
     {
-        return _celestialBodies.First(b => b.Info.bodyName == name);
+        Debug.LogWarning(name);
+        var body = _celestialBodies.First(b => b.Info.bodyName == name);
+        return body;
     }
 
 

@@ -18,13 +18,13 @@ namespace Game.Astroids
         [Header("Astroid Collision Volume")]
 
         [SerializeField, Range(0f, 1f)]
-        float small = .1f;
+        float smallAstroid = .1f;
 
         [SerializeField, Range(0f, 1f)]
-        float medium = .2f;
+        float mediumAstroid = .2f;
 
         [SerializeField, Range(0f, 1f)]
-        float large = .4f;
+        float largeAstroid = .4f;
 
         [Header("Other")]
 
@@ -32,24 +32,40 @@ namespace Game.Astroids
         float maxSpeed = 3f;
         #endregion
 
+        #region properties
+         AudioSource Audio
+        {
+            get
+            {
+                if (__audio == null)
+                    TryGetComponent(out __audio);
+
+                return __audio;
+            }
+        }
+        AudioSource __audio;
+
+        public int Generation { get; private set; }
+
+        #endregion
+
+        #region fields
         Rigidbody _rb;
-        AudioSource _audio;
 
         float _rotationX;
         float _rotationY;
         float _rotationZ;
-        int _generation;
+
+        #endregion
 
         void Start()
         {
-            _rb = GetComponent<Rigidbody>();
-            _audio = GetComponent<AudioSource>();
-
             var maxRotation = 25f;
             _rotationX = Random.Range(-maxRotation, maxRotation);
             _rotationY = Random.Range(-maxRotation, maxRotation);
             _rotationZ = Random.Range(-maxRotation, maxRotation);
 
+            _rb = GetComponent<Rigidbody>();
             _rb.AddForce(transform.right * CreateRandomSpeed());
             _rb.AddForce(transform.up * CreateRandomSpeed());
         }
@@ -62,20 +78,23 @@ namespace Game.Astroids
 
             GameManager.RePosition(gameObject);
         }
+
         void OnCollisionEnter(Collision collisionInfo)
         {
+            print("boem " + collisionInfo.collider.tag);
+
             if (collisionInfo.collider.name == "Rocket")
                 gameManager.RocketFail();
             else if (collisionInfo.collider.CompareTag("Bullet")) //constant
             {
-                if (_generation < 3)
+                if (Generation < 3)
                     CreateSmallAsteriods(2);
 
                 // Destroy astroid & bullet
                 Destroy();
                 Destroy(collisionInfo.gameObject);
             }
-            else if (collisionInfo.collider.name == "Astroid")
+            else if (collisionInfo.collider.CompareTag("Astroid"))
             {
                 collisionInfo.gameObject.TryGetComponent<AsteroidController>(out var other);
                 if (other == null)
@@ -85,13 +104,21 @@ namespace Game.Astroids
                 }
 
                 // play smallest astroid collision sound
-                var g = System.Math.Min(_generation, other._generation);
+                var minGen = System.Math.Max(Generation, other.Generation);
+                var volume = smallAstroid;
 
+                if (minGen == 2)
+                    volume = mediumAstroid;
+                else if (minGen == 1)
+                    volume = largeAstroid;
+
+                PlaySound(volume);
+                print("botsing:" + Generation +  " en " + other.Generation + " = "+ minGen + " vol:" + volume);
             }
         }
         public void SetGeneration(int generation)
         {
-            _generation = generation;
+            Generation = generation;
         }
 
         float CreateRandomSpeed()
@@ -105,7 +132,7 @@ namespace Game.Astroids
 
         void CreateSmallAsteriods(int asteroidsNum)
         {
-            int newGeneration = _generation + 1;
+            int newGeneration = Generation + 1;
             var scaleSize = 0.5f;
 
             for (int i = 1; i <= asteroidsNum; i++)
@@ -114,8 +141,13 @@ namespace Game.Astroids
 
                 AsteroidClone.transform.localScale = new Vector3(AsteroidClone.transform.localScale.x * scaleSize, AsteroidClone.transform.localScale.y * scaleSize, AsteroidClone.transform.localScale.z * scaleSize);
                 AsteroidClone.GetComponent<AsteroidController>().SetGeneration(newGeneration);
-                AsteroidClone.SetActive(true);
             }
+        }
+
+        void PlaySound(float volume)
+        {
+            Audio.volume = volume;
+            audioManager.PlaySound(Audio);
         }
 
         public void Destroy()

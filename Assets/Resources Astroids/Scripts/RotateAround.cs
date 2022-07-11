@@ -12,7 +12,7 @@ namespace Game.Astroids
 
         void Update()
         {
-            transform.RotateAround(target.transform.position, Vector3.up, degreesPerSecond * Time.deltaTime);
+            transform.RotateAround(target.transform.position, Vector3.down, degreesPerSecond * Time.deltaTime);
         }
     }
 }
