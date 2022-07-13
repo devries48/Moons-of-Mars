@@ -13,6 +13,10 @@ namespace Game.Astroids
 
         [SerializeField]
         float shieldVisibleTimer = 2f;
+
+        [SerializeField,Tooltip("Shield will activate automaticly")]
+        bool autoActivate = false;
+
         MeshRenderer MeshRend
         {
             get
@@ -27,9 +31,10 @@ namespace Game.Astroids
 
         float _visibleTimer;
 
-        void Start()
+        void Awake()
         {
-            MeshRend.enabled = false;
+            if (autoActivate)
+                MeshRend.enabled = false;
         }
 
         void Update()
@@ -72,7 +77,9 @@ namespace Game.Astroids
                     spaceShip.PlaySound(SpaceShipSounds.Clip.ShieldsUp);
             }
 
-            MeshRend.enabled = true;
+            if (autoActivate)
+                MeshRend.enabled = true;
+            
             _visibleTimer = shieldVisibleTimer;
         }
 

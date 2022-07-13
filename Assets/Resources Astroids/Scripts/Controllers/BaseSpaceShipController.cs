@@ -11,8 +11,11 @@ namespace Game.Astroids
         #region editor fields
         [Header("Spaceship")]
 
+        [SerializeField, Tooltip("Select shield gameobject")]
+        protected ShieldBehaviour shield;
+
         [Header("Weapon & bullet")]
-        [SerializeField, Tooltip("Select a weapon prefab")]
+        [SerializeField, Tooltip("Select a weapon gameobject")]
         protected GameObject weapon;
 
         [SerializeField, Tooltip("Select a bullet prefab")]
@@ -68,7 +71,7 @@ namespace Game.Astroids
 
             var bullet_obj = Instantiate(bullet, weapon.transform.position, weapon.transform.rotation) as GameObject;
             var bullet_rb = bullet_obj.GetComponent<Rigidbody>();
-
+            
             PlaySound(SpaceShipSounds.Clip.ShootBullet);
             bullet_rb.AddForce(transform.up * fireForce);
 

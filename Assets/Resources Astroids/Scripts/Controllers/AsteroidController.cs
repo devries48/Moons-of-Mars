@@ -81,8 +81,6 @@ namespace Game.Astroids
 
         void OnCollisionEnter(Collision collisionInfo)
         {
-            print("boem " + collisionInfo.collider.tag);
-
             if (collisionInfo.collider.name == "Rocket")
                 gameManager.RocketFail();
             else if (collisionInfo.collider.CompareTag("Bullet")) //constant
@@ -113,7 +111,6 @@ namespace Game.Astroids
                     volume = largeAstroid;
 
                 PlaySound(volume);
-                print("botsing:" + Generation +  " en " + other.Generation + " = "+ minGen + " vol:" + volume);
             }
         }
         public void SetGeneration(int generation)
