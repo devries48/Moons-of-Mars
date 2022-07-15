@@ -3,10 +3,9 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody))]
-    public class BaseSpaceShipController : MonoBehaviour
+    public class BaseSpaceShipController : GameMonoBehaviour
     {
         #region editor fields
         [Header("Spaceship")]
@@ -49,18 +48,6 @@ namespace Game.Astroids
         }
         Rigidbody __rb;
 
-        protected AudioSource Audio
-        {
-            get
-            {
-                if (__audio == null)
-                    TryGetComponent(out __audio);
-
-                return __audio;
-            }
-        }
-        AudioSource __audio;
-
         #endregion
 
         protected bool m_canShoot = true;
@@ -72,7 +59,7 @@ namespace Game.Astroids
             var bullet_obj = Instantiate(bullet, weapon.transform.position, weapon.transform.rotation) as GameObject;
             var bullet_rb = bullet_obj.GetComponent<Rigidbody>();
             
-            PlaySound(SpaceShipSounds.Clip.ShootBullet);
+            PlayAudioClip(SpaceShipSounds.Clip.ShootBullet);
             bullet_rb.AddForce(transform.up * fireForce);
 
             Destroy(bullet_obj, bulletLifetime);
@@ -81,26 +68,11 @@ namespace Game.Astroids
             m_canShoot = true;
         }
 
-        public void PlaySound(SpaceShipSounds.Clip clip)
+        public void PlayAudioClip(SpaceShipSounds.Clip clip)
         {
-            var soundClip = clip switch
-            {
-                SpaceShipSounds.Clip.ShootBullet => sounds.ShootBullet,
-                SpaceShipSounds.Clip.ShieldsUp => sounds.ShieldsUp,
-                SpaceShipSounds.Clip.ShieldsDown => sounds.ShieldsDown,
-                SpaceShipSounds.Clip.ShieldsHit => sounds.ShieldsHit,
-                _ => null
-            };
+            var sound = sounds.GetClip(clip);
 
-            PlaySound(soundClip);
-        }
-
-        void PlaySound(AudioClip clip)
-        {
-            if (clip == null || Audio == null)
-                return;
-
-            Audio.PlayOneShot(clip);
+            PlaySound(sound);
         }
 
         public void ResetRocket()

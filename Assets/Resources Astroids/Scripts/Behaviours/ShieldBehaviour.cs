@@ -72,9 +72,9 @@ namespace Game.Astroids
             else
             {
                 if (isAuto)
-                    spaceShip.PlaySound(SpaceShipSounds.Clip.ShieldsHit);
+                    spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsHit);
                 else
-                    spaceShip.PlaySound(SpaceShipSounds.Clip.ShieldsUp);
+                    spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsUp);
             }
 
             if (autoActivate)
@@ -89,7 +89,7 @@ namespace Game.Astroids
             if (spaceShip == null)
                 Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
             else
-                    spaceShip.PlaySound(SpaceShipSounds.Clip.ShieldsDown);
+                    spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsDown);
 
         }
     }

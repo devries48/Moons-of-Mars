@@ -4,11 +4,10 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class ExplosionBehaviour : MonoBehaviour
+    public class ExplosionBehaviour : GameMonoBehaviour
     {
-
         [SerializeField, Tooltip("Select an explosion prefab")]
-        protected GameObject bullet;
+        GameObject explosion;
 
 
     }

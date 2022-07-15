@@ -4,46 +4,33 @@ namespace Game.Astroids
 {
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody))]
-    public class AsteroidController : MonoBehaviour
+    public class AsteroidController : GameMonoBehaviour
     {
         #region editor fields
-        [Header("Managers")]
 
         [SerializeField]
-        GameManager gameManager;
-
-        [SerializeField, Tooltip("Controls the sound of colliding astroids")]
-        AudioManager audioManager;
-
-        [Header("Astroid Collision Volume")]
-
-        [SerializeField, Range(0f, 1f)]
-        float smallAstroid = .1f;
-
-        [SerializeField, Range(0f, 1f)]
-        float mediumAstroid = .2f;
-
-        [SerializeField, Range(0f, 1f)]
-        float largeAstroid = .4f;
-
-        [Header("Other")]
+        AstroidsGameManager gameManager;
 
         [SerializeField]
         float maxSpeed = 3f;
+
+        [Header("Astroid Explosion Size")]
+
+        [SerializeField, Range(0f, 1f)]
+        float smallAstroid = .25f;
+
+        [SerializeField, Range(0f, 1f)]
+        float mediumAstroid = .5f;
+
+        [SerializeField, Range(0f, 1f)]
+        float largeAstroid = 1f;
+
+        [SerializeField]
+        AstroidSounds sounds = new();
+
         #endregion
 
         #region properties
-         AudioSource Audio
-        {
-            get
-            {
-                if (__audio == null)
-                    TryGetComponent(out __audio);
-
-                return __audio;
-            }
-        }
-        AudioSource __audio;
 
         public int Generation { get; private set; }
 
@@ -76,7 +63,7 @@ namespace Game.Astroids
 
             _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
 
-            GameManager.RePosition(gameObject);
+            AstroidsGameManager.RePosition(gameObject);
         }
 
         void OnCollisionEnter(Collision collisionInfo)
@@ -103,16 +90,12 @@ namespace Game.Astroids
 
                 // play smallest astroid collision sound
                 var minGen = System.Math.Max(Generation, other.Generation);
-                var volume = smallAstroid;
 
-                if (minGen == 2)
-                    volume = mediumAstroid;
-                else if (minGen == 1)
-                    volume = largeAstroid;
-
-                PlaySound(volume);
+ 
+                PlayAudioClip(AstroidSounds.Clip.Collide, minGen);
             }
         }
+
         public void SetGeneration(int generation)
         {
             Generation = generation;
@@ -141,10 +124,13 @@ namespace Game.Astroids
             }
         }
 
-        void PlaySound(float volume)
+        void PlayAudioClip(AstroidSounds.Clip clip, float generation)
         {
-            Audio.volume = volume;
-            audioManager.PlaySound(Audio);
+            sounds.SetVolume(Audio, generation);
+
+            var sound = sounds.GetClip(AstroidSounds.Clip.Collide);
+
+            PlaySound(sound);
         }
 
         public void Destroy()

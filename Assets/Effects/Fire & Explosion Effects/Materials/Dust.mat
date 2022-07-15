@@ -21,14 +21,14 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Dust
-  m_Shader: {fileID: 4800000, guid: 0406db5a14f94604a8c57ccfbc9f3b46, type: 3}
+  m_Shader: {fileID: 4800000, guid: b7839dad95683814aa64166edc107ae2, type: 3}
   m_ValidKeywords:
   - _EMISSION
   - _FADING_ON
-  - _FLIPBOOKBLENDING_ON
   - _SOFTPARTICLES_ON
   - _SURFACE_TYPE_TRANSPARENT
-  m_InvalidKeywords: []
+  m_InvalidKeywords:
+  - _FLIPBOOKBLENDING_OFF
   m_LightmapFlags: 0
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -100,7 +100,7 @@ Material:
     - _DistortionStrengthScaled: 0.1
     - _DstBlend: 10
     - _EmissionEnabled: 1
-    - _FlipbookBlending: 1
+    - _FlipbookBlending: 0
     - _FlipbookMode: 1
     - _GlossMapScale: 1
     - _Glossiness: 0
