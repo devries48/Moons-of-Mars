@@ -61,8 +61,8 @@ namespace Game.Astroids
             
             PlayAudioClip(SpaceShipSounds.Clip.ShootBullet);
             bullet_rb.AddForce(transform.up * fireForce);
-
             Destroy(bullet_obj, bulletLifetime);
+            
             yield return new WaitForSeconds(fireRate);
 
             m_canShoot = true;
@@ -75,14 +75,14 @@ namespace Game.Astroids
             PlaySound(sound);
         }
 
-        public void ResetRocket()
-        {
-            transform.position = new Vector2(0f, 0f);
-            transform.eulerAngles = new Vector3(0, 180f, 0);
+        //public void ResetRocket()
+        //{
+        //    transform.position = new Vector2(0f, 0f);
+        //    transform.eulerAngles = new Vector3(0, 180f, 0);
 
-            Rb.velocity = new Vector3(0f, 0f, 0f);
-            Rb.angularVelocity = new Vector3(0f, 0f, 0f);
-        }
+        //    Rb.velocity = new Vector3(0f, 0f, 0f);
+        //    Rb.angularVelocity = new Vector3(0f, 0f, 0f);
+        //}
 
     }
 }

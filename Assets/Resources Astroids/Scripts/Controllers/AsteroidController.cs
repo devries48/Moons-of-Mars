@@ -63,37 +63,53 @@ namespace Game.Astroids
 
             _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
 
-            AstroidsGameManager.RePosition(gameObject);
+            AstroidsGameManager.Instance.RePosition(gameObject);
         }
 
         void OnCollisionEnter(Collision collisionInfo)
         {
+            // TODO constant tag names
             if (collisionInfo.collider.name == "Rocket")
                 gameManager.RocketFail();
-            else if (collisionInfo.collider.CompareTag("Bullet")) //constant
-            {
-                if (Generation < 3)
-                    CreateSmallAsteriods(2);
-
-                // Destroy astroid & bullet
-                Destroy();
-                Destroy(collisionInfo.gameObject);
-            }
+            else if (collisionInfo.collider.CompareTag("Bullet")) 
+                HitByBullet(collisionInfo.gameObject);        
             else if (collisionInfo.collider.CompareTag("Astroid"))
+                HitByAstroid(collisionInfo.gameObject);
+        }
+
+         void HitByAstroid(GameObject astroid)
+        {
+            astroid.TryGetComponent<AsteroidController>(out var other);
+
+            if (other == null)
             {
-                collisionInfo.gameObject.TryGetComponent<AsteroidController>(out var other);
-                if (other == null)
-                {
-                    Debug.LogWarning("AsteroidController on collision is NULL");
-                    return;
-                }
-
-                // play smallest astroid collision sound
-                var minGen = System.Math.Max(Generation, other.Generation);
-
- 
-                PlayAudioClip(AstroidSounds.Clip.Collide, minGen);
+                Debug.LogWarning("AsteroidController on collision is NULL");
+                return;
             }
+
+            // play smallest astroid collision sound
+            var minGen = System.Math.Max(Generation, other.Generation);
+
+            PlayAudioClip(AstroidSounds.Clip.Collide, minGen);
+        }
+
+        void HitByBullet(GameObject bullet)
+        {
+            var scale = Generation switch
+            {
+                1 => largeAstroid,
+                2 => mediumAstroid,
+                _ => smallAstroid
+            };
+
+            PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, scale);
+            PlayAudioClip(AstroidSounds.Clip.Explode, Generation);
+
+            if (Generation < 3)
+                CreateSmallAsteriods(2);
+
+            RemoveFromGame(bullet);
+            RemoveFromGame();
         }
 
         public void SetGeneration(int generation)

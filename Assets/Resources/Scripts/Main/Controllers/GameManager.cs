@@ -7,6 +7,12 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class GameManager : MonoBehaviour
 {
+    /// <summary>
+    /// Singleton GameManager
+    /// </summary>
+    public static GameManager Instance => __instance;
+    static GameManager __instance;
+
     #region editor fields
     [Header("Cameras")]
     [SerializeField] public Camera MainCamera;
@@ -23,18 +29,6 @@ public class GameManager : MonoBehaviour
 
     public int SolarSystemSpeed { get; internal set; }
 
-    public static GameManager Instance
-    {
-        get
-        {
-            if (__instance == null)
-                __instance = FindObjectOfType<GameManager>();
-
-            return __instance;
-        }
-    }
-    static GameManager __instance;
-
     public SolarSystemController SolarSystemCtrl
     {
         get
@@ -49,11 +43,17 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
-
     CelestialBody[] _celestialBodies;
+
+    private void OnEnable()
+    {
+        __instance = this;
+    }
 
     void Awake()
     {
+        SingletonInstanceGuard();
+
         _celestialBodies = FindObjectsOfType<CelestialBody>();
 
         if (MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
@@ -65,6 +65,20 @@ public class GameManager : MonoBehaviour
         Debug.LogWarning(name);
         var body = _celestialBodies.First(b => b.Info.bodyName == name);
         return body;
+    }
+
+    void SingletonInstanceGuard()
+    {
+        if (__instance == null)
+        {
+            __instance = this;
+            DontDestroyOnLoad(transform.root.gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            throw new System.Exception("Only one instance is allowed");
+        }
     }
 
 

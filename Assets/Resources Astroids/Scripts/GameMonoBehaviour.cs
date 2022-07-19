@@ -2,10 +2,8 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class GameMonoBehaviour : MonoBehaviour, IPoolableAware, IRecyclable
+    public class GameMonoBehaviour : MonoBehaviour
     {
-        Poolable poolable;
-
         protected AudioSource Audio
         {
             get
@@ -18,21 +16,11 @@ namespace Game.Astroids
         }
         AudioSource __audio;
 
-        void IPoolableAware.PoolableAwoke(Poolable p) 
+        protected void Score(int score)
         {
-            poolable = p; 
+            Astroids.Score.Earn(score);
         }
 
-        void IRecyclable.Recycle() 
-        {
-            RemoveFromGame(); 
-        }
-
-        protected void Score(int score) 
-        {
-            Astroids.Score.Earn(score); 
-        }
-        
         protected void PlaySound(AudioClip clip)
         {
             if (clip == null || Audio == null)
@@ -41,27 +29,28 @@ namespace Game.Astroids
             Audio.PlayOneShot(clip);
         }
 
+        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f)
+        {
+            AstroidsGameManager.Instance.PlayEffect(effect, position, scale);
+        }
 
-        protected virtual void OnDisable() 
-        { 
+        protected virtual void OnDisable()
+        {
             CancelInvokeRemoveFromGame();
         }
 
-        public void InvokeRemoveFromGame(float time) 
-        { 
+        public void InvokeRemoveFromGame(float time)
+        {
             Invoke(nameof(RemoveFromGame), time);
         }
 
-        public void CancelInvokeRemoveFromGame() 
-        { 
-            CancelInvoke(nameof(RemoveFromGame)); 
+        public void CancelInvokeRemoveFromGame()
+        {
+            CancelInvoke(nameof(RemoveFromGame));
         }
 
         public void RemoveFromGame()
         {
-            if (poolable)
-                poolable.Recycle();
-            else
                 RequestDestruction();
         }
 
@@ -75,14 +64,14 @@ namespace Game.Astroids
                 RequestDefaultDestruction(victim);
         }
 
-        protected virtual void RequestDestruction() 
+        protected virtual void RequestDestruction()
         {
-            RequestDefaultDestruction(gameObject); 
+            RequestDefaultDestruction(gameObject);
         }
 
-        static void RequestDefaultDestruction(GameObject gameObject) 
+        static void RequestDefaultDestruction(GameObject gameObject)
         {
-            Destroy(gameObject); 
+            Destroy(gameObject);
         }
     }
 }

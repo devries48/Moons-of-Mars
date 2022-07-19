@@ -2,8 +2,15 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
+    [RequireComponent(typeof(EffectsManager))]
     public class AstroidsGameManager : MonoBehaviour
     {
+        /// <summary>
+        /// Singleton GameManager
+        /// </summary>
+        public static AstroidsGameManager Instance => __instance;
+        static AstroidsGameManager __instance;
+
         [SerializeField, Tooltip("Select a spaceship prefab")]
         GameObject rocket;
 
@@ -17,15 +24,25 @@ namespace Game.Astroids
         Camera gameCamera;
 
         int _asteroidLife;
+        CamBounds _camBounds;
+        EffectsManager _effects;
 
-        static CamBounds camBounds;
-
-        void Start()
+        void Awake()
         {
-            camBounds = new CamBounds(gameCamera);
+            SingletonInstanceGuard();
+
+            _camBounds = new CamBounds(gameCamera);
+            TryGetComponent(out _effects);
+        }
+        private void Start()
+        {
             Camera.SetupCurrent(gameCamera);
-            asteroid.SetActive(false); // use prefab
             CreateAsteroids(numberAstroids);
+        }
+
+        void OnEnable() 
+        { 
+            __instance = this; 
         }
 
         void Update()
@@ -34,6 +51,20 @@ namespace Game.Astroids
             {
                 _asteroidLife = 6;
                 CreateAsteroids(1);
+            }
+        }
+
+        void SingletonInstanceGuard()
+        {
+            if (__instance == null)
+            {
+                __instance = this;
+                DontDestroyOnLoad(transform.root.gameObject);
+            }
+            else
+            {
+                Destroy(gameObject);
+                throw new System.Exception("Only one instance is allowed");
             }
         }
 
@@ -47,32 +78,32 @@ namespace Game.Astroids
             }
         }
 
-        public static Vector3 WorldPos(Vector3 screenPos)
-        {
-            return Camera.current.ScreenToWorldPoint(screenPos);
-        }
+        //public static Vector3 WorldPos(Vector3 screenPos)
+        //{
+        //    return Camera.current.ScreenToWorldPoint(screenPos);
+        //}
 
-        public static void RePosition(GameObject obj)
+        public void RePosition(GameObject obj)
         {
             var pos = obj.transform.position;
             var offset = obj.transform.localScale / 2;
 
-            if (pos.x > camBounds.RightEdge + offset.x)
-            {
-                obj.transform.position = new Vector2(camBounds.LeftEdge - offset.x, pos.y);
-            }
-            if (pos.x < camBounds.LeftEdge - offset.x)
-            {
-                obj.transform.position = new Vector2(camBounds.RightEdge + offset.x, pos.y);
-            }
-            if (pos.y > camBounds.TopEdge + offset.y)
-            {
-                obj.transform.position = new Vector2(pos.x, camBounds.BottomEdge - offset.y);
-            }
-            if (pos.y < camBounds.BottomEdge - offset.y)
-            {
-                obj.transform.position = new Vector2(pos.x, camBounds.TopEdge + offset.y);
-            }
+            if (pos.x > _camBounds.RightEdge + offset.x)
+                obj.transform.position = new Vector2(_camBounds.LeftEdge - offset.x, pos.y);
+
+            if (pos.x < _camBounds.LeftEdge - offset.x)
+                obj.transform.position = new Vector2(_camBounds.RightEdge + offset.x, pos.y);
+
+            if (pos.y > _camBounds.TopEdge + offset.y)
+                obj.transform.position = new Vector2(pos.x, _camBounds.BottomEdge - offset.y);
+
+            if (pos.y < _camBounds.BottomEdge - offset.y)
+                obj.transform.position = new Vector2(pos.x, _camBounds.TopEdge + offset.y);
+        }
+
+        public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f)
+        {
+            _effects.StartEffect(effect, position, scale);
         }
 
         public void RocketFail()

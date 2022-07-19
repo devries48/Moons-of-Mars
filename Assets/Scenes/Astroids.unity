@@ -139,10 +139,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: DustExplosion
       objectReference: {fileID: 0}
-    - target: {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4203849390966504, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -220,7 +216,6 @@ Transform:
   - {fileID: 1917910233}
   - {fileID: 1552090157}
   - {fileID: 890396064}
-  - {fileID: 1789800136}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -249,7 +244,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &329056514
 Transform:
   m_ObjectHideFlags: 0
@@ -390,10 +385,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: SmallExplosion
       objectReference: {fileID: 0}
-    - target: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4361801158873524, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -518,11 +509,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: smallAstroid
-      value: 0.2
+      value: 0.4
       objectReference: {fileID: 0}
     - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: mediumAstroid
-      value: 0.4
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: sounds.m_Collide
@@ -1194,6 +1185,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1552090157}
   - component: {fileID: 1552090158}
+  - component: {fileID: 1552090159}
   m_Layer: 0
   m_Name: Game Manager
   m_TagString: Untagged
@@ -1232,6 +1224,21 @@ MonoBehaviour:
   asteroid: {fileID: 737061813}
   numberAstroids: 2
   gameCamera: {fileID: 871487411}
+--- !u!114 &1552090159
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1552090156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0db21f9316090bd41a46a9d4f944c674, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ExplosionPrefab: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
+  DustExplosionPrefab: {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
+  GreenExplosionPrefab: {fileID: 2181198869971512289, guid: 0f968a0cd567c954a89c439f5c9c75f8, type: 3}
 --- !u!1001 &1647903553
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1319,37 +1326,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2184489348068980993, guid: 0f968a0cd567c954a89c439f5c9c75f8, type: 3}
   m_PrefabInstance: {fileID: 2180188262144362621}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1789800135
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1789800136}
-  m_Layer: 0
-  m_Name: Effects Manager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1789800136
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1789800135}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 161570623}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1799868394
 GameObject:
   m_ObjectHideFlags: 0
@@ -2124,10 +2100,6 @@ PrefabInstance:
     - target: {fileID: 2181198869971512289, guid: 0f968a0cd567c954a89c439f5c9c75f8, type: 3}
       propertyPath: m_Name
       value: EnergyExplosion Green
-      objectReference: {fileID: 0}
-    - target: {fileID: 2181198869971512289, guid: 0f968a0cd567c954a89c439f5c9c75f8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2184489348068980993, guid: 0f968a0cd567c954a89c439f5c9c75f8, type: 3}
       propertyPath: m_RootOrder

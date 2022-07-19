@@ -21,7 +21,7 @@ namespace Game.Astroids
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
                 StartCoroutine(Shoot());
 
-            AstroidsGameManager.RePosition(gameObject);
+            AstroidsGameManager.Instance.RePosition(gameObject);
         }
 
         private void ControlRocket()
