@@ -5,7 +5,7 @@ namespace Game.Astroids
 {
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody))]
-    public class BaseSpaceShipController : GameMonoBehaviour
+    public class SpaceShipMonoBehaviour : GameMonoBehaviour
     {
         #region editor fields
         [Header("Spaceship")]
@@ -18,16 +18,10 @@ namespace Game.Astroids
         protected GameObject weapon;
 
         [SerializeField, Tooltip("Select a bullet prefab")]
-        protected GameObject bullet;
-
-        [SerializeField, Tooltip("Lifetime in seconds")]
-        protected float bulletLifetime = 10f;
+        protected GameObject bulletPrefab;
 
         [SerializeField, Tooltip("Fire rate in seconds")]
-        protected float fireRate = 0.5f;
-
-        [SerializeField]
-        protected float fireForce = 350f;
+        protected float fireRate = 0.25f;
 
         [SerializeField]
         protected SpaceShipSounds sounds = new();
@@ -52,20 +46,41 @@ namespace Game.Astroids
 
         protected bool m_canShoot = true;
 
-        protected IEnumerator Shoot()
+        GameObjectPool _bulletPool;
+
+        void Awake() => BuilPool();
+
+        void BuilPool()
         {
+            if (bulletPrefab)
+                _bulletPool = GameObjectPool.Build(bulletPrefab, 10, 20);
+        }
+
+        protected void FireWeapon()
+        {
+            StartCoroutine(Shoot());
+        }
+
+        IEnumerator Shoot()
+        {
+            if (!bulletPrefab)
+                yield break;
+
             m_canShoot = false;
 
-            var bullet_obj = Instantiate(bullet, weapon.transform.position, weapon.transform.rotation) as GameObject;
-            var bullet_rb = bullet_obj.GetComponent<Rigidbody>();
-            
             PlayAudioClip(SpaceShipSounds.Clip.ShootBullet);
-            bullet_rb.AddForce(transform.up * fireForce);
-            Destroy(bullet_obj, bulletLifetime);
-            
+            Bullet().Fire(transform.up);
+
             yield return new WaitForSeconds(fireRate);
 
             m_canShoot = true;
+        }
+
+        BulletController Bullet()
+        {
+            return _bulletPool.GetComponentFromPool<BulletController>(
+                weapon.transform.position,
+                weapon.transform.rotation);
         }
 
         public void PlayAudioClip(SpaceShipSounds.Clip clip)

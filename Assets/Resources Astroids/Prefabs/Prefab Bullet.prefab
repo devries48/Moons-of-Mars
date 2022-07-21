@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1346366504891872073}
   - component: {fileID: 7887090123575860728}
   - component: {fileID: 4672886806290005570}
+  - component: {fileID: 3392202735789566687}
   m_Layer: 9
   m_Name: Prefab Bullet
   m_TagString: Bullet
@@ -108,9 +109,23 @@ Rigidbody:
   serializedVersion: 2
   m_Mass: 1
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: Infinity
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &3392202735789566687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148460054002388969}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 15e032cf4bbd65c49ab1568efdf654f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletLifetime: 2
+  bulletSpeed: 25

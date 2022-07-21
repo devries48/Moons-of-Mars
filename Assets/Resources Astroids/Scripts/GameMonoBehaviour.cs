@@ -2,7 +2,8 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class GameMonoBehaviour : MonoBehaviour
+    [DisallowMultipleComponent]
+    public class GameMonoBehaviour : MonoBehaviour, IPoolable
     {
         protected AudioSource Audio
         {
@@ -14,7 +15,12 @@ namespace Game.Astroids
                 return __audio;
             }
         }
+
         AudioSource __audio;
+
+        public bool IsPooled => _pool != null;
+
+        GameObjectPool _pool;
 
         protected void Score(int score)
         {
@@ -39,6 +45,16 @@ namespace Game.Astroids
             CancelInvokeRemoveFromGame();
         }
 
+        protected virtual void RequestDestruction()
+        {
+            RequestDefaultDestruction(gameObject);
+        }
+
+        static void RequestDefaultDestruction(GameObject gameObject)
+        {
+            Destroy(gameObject);
+        }
+
         public void InvokeRemoveFromGame(float time)
         {
             Invoke(nameof(RemoveFromGame), time);
@@ -51,6 +67,9 @@ namespace Game.Astroids
 
         public void RemoveFromGame()
         {
+            if (IsPooled)
+                _pool.ReturnToPool(gameObject);
+            else
                 RequestDestruction();
         }
 
@@ -64,14 +83,14 @@ namespace Game.Astroids
                 RequestDefaultDestruction(victim);
         }
 
-        protected virtual void RequestDestruction()
+        public void SetPool(GameObjectPool pool)
         {
-            RequestDefaultDestruction(gameObject);
+            _pool = pool;
         }
 
-        static void RequestDefaultDestruction(GameObject gameObject)
+        public void ReturnToPool()
         {
-            Destroy(gameObject);
+            _pool.ReturnToPool(gameObject);
         }
     }
 }

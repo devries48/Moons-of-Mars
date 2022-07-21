@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class UfoController : BaseSpaceShipController
+    public class UfoController : SpaceShipMonoBehaviour
     {
         [Header("UFO")]
         [SerializeField]

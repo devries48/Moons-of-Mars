@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class RocketController : BaseSpaceShipController
+    public class RocketController : SpaceShipMonoBehaviour
     {
         float _thrust = 6f;
         float _rotationSpeed = 180f;
@@ -18,8 +18,8 @@ namespace Game.Astroids
             if (!m_canShoot)
                 return;
 
-            if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
-                StartCoroutine(Shoot());
+            if (Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.Space))
+                FireWeapon();
 
             AstroidsGameManager.Instance.RePosition(gameObject);
         }

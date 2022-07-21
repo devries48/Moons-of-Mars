@@ -277,10 +277,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shield: {fileID: 0}
   weapon: {fileID: 1799868394}
-  bullet: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
-  bulletLifetime: 4
-  fireRate: 0.5
-  fireForce: 350
+  bulletPrefab: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
+  fireRate: 0.25
   sounds:
     shootBullet: {fileID: 0}
     shieldsUp: {fileID: 0}
@@ -447,10 +445,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Astroid
       objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -499,26 +493,6 @@ PrefabInstance:
       propertyPath: gameManager
       value: 
       objectReference: {fileID: 1552090158}
-    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: audioManager
-      value: 
-      objectReference: {fileID: 890396063}
-    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: largeAstroid
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: smallAstroid
-      value: 0.4
-      objectReference: {fileID: 0}
-    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: mediumAstroid
-      value: 0.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: sounds.m_Collide
-      value: 
-      objectReference: {fileID: 8300000, guid: 5d32e58265f883748a4ce6deb8cdb4c2, type: 3}
     - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: sounds.audioManager
       value: 
@@ -1336,7 +1310,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1799868395}
   m_Layer: 9
-  m_Name: Weapon
+  m_Name: Weapon Gun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1725,10 +1699,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shield: {fileID: 0}
   weapon: {fileID: 0}
-  bullet: {fileID: 0}
-  bulletLifetime: 10
+  bulletPrefab: {fileID: 0}
   fireRate: 0.5
-  fireForce: 350
   sounds:
     shootBullet: {fileID: 0}
     shieldsUp: {fileID: 0}

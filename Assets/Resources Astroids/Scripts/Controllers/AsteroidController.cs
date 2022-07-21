@@ -144,7 +144,7 @@ namespace Game.Astroids
         {
             sounds.SetVolume(Audio, generation);
 
-            var sound = sounds.GetClip(AstroidSounds.Clip.Collide);
+            var sound = sounds.GetClip(clip);
 
             PlaySound(sound);
         }

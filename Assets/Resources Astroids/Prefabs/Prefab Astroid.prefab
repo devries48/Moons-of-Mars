@@ -130,11 +130,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManager: {fileID: 0}
-  audioManager: {fileID: 0}
-  smallAstroid: 0.1
-  mediumAstroid: 0.2
-  largeAstroid: 0.4
   maxSpeed: 3
+  smallAstroid: 0.4
+  mediumAstroid: 0.6
+  largeAstroid: 0.8
+  sounds:
+    audioManager: {fileID: 0}
+    collide: {fileID: 0}
+    explode: {fileID: 0}
+    smallAstroid: 0.1
+    mediumAstroid: 0.2
+    largeAstroid: 0.4
 --- !u!82 &737061820
 AudioSource:
   m_ObjectHideFlags: 0

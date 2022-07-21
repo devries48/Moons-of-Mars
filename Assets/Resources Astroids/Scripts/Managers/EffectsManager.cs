@@ -16,11 +16,10 @@ namespace Game.Astroids
         public GameObject DustExplosionPrefab;
         public GameObject GreenExplosionPrefab;
 
-        PrefabObjectPool _explosionPool;
-        PrefabObjectPool _dustExplosionPool;
-        PrefabObjectPool _greenExplosionPool;
+        GameObjectPool _explosionPool;
+        GameObjectPool _dustExplosionPool;
+        GameObjectPool _greenExplosionPool;
 
-        bool _poolsBuilt;
         readonly List<System.Tuple<GameObject, Effect>> _effectsPlaying = new();
 
         void Awake() => BuildPools();
@@ -58,14 +57,9 @@ namespace Game.Astroids
 
         public void BuildPools()
         {
-            if (!_poolsBuilt)
-            {
-                _explosionPool =  PrefabObjectPool.Build(ExplosionPrefab, 1);
-                _dustExplosionPool = PrefabObjectPool.Build(DustExplosionPrefab, 5);
-                _greenExplosionPool = PrefabObjectPool.Build(GreenExplosionPrefab, 1);
-
-                _poolsBuilt = true;
-            }
+            _explosionPool = GameObjectPool.Build(ExplosionPrefab, 1);
+            _dustExplosionPool = GameObjectPool.Build(DustExplosionPrefab, 5);
+            _greenExplosionPool = GameObjectPool.Build(GreenExplosionPrefab, 1);
         }
 
         public void StartEffect(Effect effect, Vector3 position, float scale)

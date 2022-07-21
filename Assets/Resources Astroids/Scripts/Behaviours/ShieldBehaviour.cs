@@ -6,7 +6,7 @@ namespace Game.Astroids
     public class ShieldBehaviour : MonoBehaviour
     {
         [SerializeField]
-        BaseSpaceShipController spaceShip;
+        SpaceShipMonoBehaviour spaceShip;
 
         [SerializeField]
         int magnitude = 2000;
