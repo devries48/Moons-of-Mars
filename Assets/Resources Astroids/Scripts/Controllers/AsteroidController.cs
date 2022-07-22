@@ -48,6 +48,7 @@ namespace Game.Astroids
         void Start()
         {
             var maxRotation = 25f;
+
             _rotationX = Random.Range(-maxRotation, maxRotation);
             _rotationY = Random.Range(-maxRotation, maxRotation);
             _rotationZ = Random.Range(-maxRotation, maxRotation);
