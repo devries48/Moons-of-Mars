@@ -64,7 +64,7 @@ namespace Game.Astroids
 
             _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
 
-            AstroidsGameManager.Instance.RePosition(gameObject);
+            AstroidsGameManager.Instance.ScreenWrapObject(gameObject);
         }
 
         void OnCollisionEnter(Collision collisionInfo)

@@ -34,23 +34,27 @@ namespace Game.Astroids
         [SerializeField, Tooltip("Select an astroid prefab")]
         GameObject asteroidPrefab;
 
+        [SerializeField, Tooltip("Select an UFO prefab")]
+        GameObject ufoPrefab;
+
         [SerializeField]
         Camera gameCamera;
         #endregion
 
         #region fields
+
         bool _requestTitleScreen;
-        int _currentLevel;
-        int _numAstroidsForLevel;
 
-        int _asteroidsActive;
-
-        GameObjectPool _astoidsPool;
+        GameObjectPool _astoidPool;
+        GameObjectPool _ufoPool;
 
         PlayerShipController _playerShip;
         EffectsManager _effects;
 
+        CurrentLevel _level;
         CamBounds _camBounds;
+
+        public bool m_GamePlaying;
         #endregion
 
         void Awake()
@@ -58,32 +62,43 @@ namespace Game.Astroids
             SingletonInstanceGuard();
             TryGetComponent(out _effects);
 
-            _astoidsPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
             _camBounds = new CamBounds(gameCamera);
+
+            if (asteroidPrefab == null)
+                Debug.LogWarning("Asteriod Prefab not set!");
+
+            if (ufoPrefab == null)
+                Debug.LogWarning("UfoPrefab Prefab not set!");
+
+            if (asteroidPrefab == null || ufoPrefab == null)
+                return;
+
+            _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
+            _ufoPool = GameObjectPool.Build(ufoPrefab, 2);
         }
 
         void Start()
         {
             Camera.SetupCurrent(gameCamera);
+
+            if (_astoidPool == null)
+                return;
+
+            m_GamePlaying = true;
+
             StartCoroutine(GameLoop());
+            StartCoroutine(UfoSpawnLoop());
         }
 
         void OnEnable() => __instance = this;
 
-        PlayerShipController SpawnPlayer(GameObject spaceShip)
-        {
-            GameObject ship = Instantiate(spaceShip);
-            ship.TryGetComponent(out PlayerShipController shipCtrl);
-
-            return shipCtrl;
-        }
-
+        #region Game Loop
 
         IEnumerator GameLoop()
         {
             GameStart();
 
-            while (true)
+            while (m_GamePlaying)
             {
                 if (_requestTitleScreen)
                 {
@@ -98,55 +113,57 @@ namespace Game.Astroids
             }
         }
 
+        void GameStart()
+        {
+            _playerShip = SpawnPlayer(shipPrefab);
+            _requestTitleScreen = true;
+            _level.Level1();
+        }
+
         IEnumerator ShowTitleScreen()
         {
             //announce.Title();
             while (!Input.anyKeyDown) yield return null;
         }
 
-        void GameStart()
-        {
-            _playerShip = SpawnPlayer(shipPrefab);
-            _requestTitleScreen = true;
-            _currentLevel = 1;
-            _numAstroidsForLevel = 2;
-        }
-
         IEnumerator LevelStart()
         {
             _playerShip.Recover();
             _playerShip.EnableControls();
-            // announce.LevelStarts(level);
+            print("// announce.LevelStarts(level);");
             yield return PauseLong();
-            SpawnAsteroids(_numAstroidsForLevel, 1);
+
+            SpawnAsteroids(_level.AstroidsForLevel, 1);
         }
 
         IEnumerator LevelPlay()
         {
-            //announce.LevelPlaying();
-            while (_playerShip.IsAlive && _asteroidsActive > 0) yield return null;
+            print("//announce.LevelPlaying();");
+            while (_playerShip.IsAlive && _level.HasEnemy) yield return null;
         }
 
         IEnumerator LevelEnd()
         {
-            bool gameover = !_playerShip.IsAlive;  //AsteroidBehaviour.Any;
+            bool gameover = !_playerShip.IsAlive;
+
             if (gameover)
             {
-                //announce.GameOver();
+                print("//announce.GameOver();");
                 yield return PauseBrief();
                 Score.Tally();
                 yield return PauseBrief();
                 Score.Reset();
                 RemoveRemainingGameTokens();
                 //powerupManager.DenyAllPower(); // ship should reset itself?
-                //announce.ClearAnnouncements();
+                print("//announce.ClearAnnouncements();");
                 GameStart();
             }
             else
             {
-                //announce.LevelCleared();
+                print("level:" + _level.Level);
+                print("//announce.LevelCleared();");
                 yield return PauseBrief();
-                Score.LevelCleared(_currentLevel);
+                Score.LevelCleared(_level.Level);
                 yield return PauseBrief();
                 AdvanceLevel();
             }
@@ -155,17 +172,46 @@ namespace Game.Astroids
 
         void AdvanceLevel()
         {
-            _currentLevel++;
-            _numAstroidsForLevel += _currentLevel;
+            _level.LevelAdvance();
         }
 
         void RemoveRemainingGameTokens()
         {
-        //    foreach (var a in FindObjectsOfType<GameToken>())
-        //        a.RemoveFromGame();
+            //    foreach (var a in FindObjectsOfType<GameToken>())
+            //        a.RemoveFromGame();
         }
 
-        void SpawnAsteroids(float asteroidsNum, int generation, Vector3 position = default)
+        #endregion
+
+        IEnumerator UfoSpawnLoop()
+        {
+            while (m_GamePlaying)
+            {
+                var wait = Random.Range(15f, 30f);
+
+                if (_level.HasAstroids)
+                    SpawnUfo();
+
+                yield return new WaitForSeconds(wait);
+            }
+        }
+
+        PlayerShipController SpawnPlayer(GameObject spaceShip)
+        {
+            GameObject ship = Instantiate(spaceShip);
+            ship.TryGetComponent(out PlayerShipController shipCtrl);
+
+            return shipCtrl;
+        }
+
+        void SpawnUfo()
+        {
+            var position = ufoPrefab.transform.position;
+            var ufo = _ufoPool.GetFromPool(position);
+            print("ufo");
+        }
+
+        public void SpawnAsteroids(float asteroidsNum, int generation, Vector3 position = default)
         {
             var isRandom = position == default;
 
@@ -181,10 +227,10 @@ namespace Game.Astroids
                     _ => .25f
                 };
 
-                var astroid = _astoidsPool.GetFromPool(position, scale: scaleFact);
+                var astroid = _astoidPool.GetFromPool(position, scale: scaleFact);
 
                 astroid.GetComponent<AsteroidController>().SetGeneration(generation);
-                ++_asteroidsActive;
+                _level.AstroidAdd();
             }
         }
 
@@ -193,7 +239,7 @@ namespace Game.Astroids
         //    return Camera.current.ScreenToWorldPoint(screenPos);
         //}
 
-        public void RePosition(GameObject obj)
+        public void ScreenWrapObject(GameObject obj)
         {
             var pos = obj.transform.position;
             var offset = obj.transform.localScale / 2;
@@ -211,13 +257,6 @@ namespace Game.Astroids
                 obj.transform.position = new Vector2(pos.x, _camBounds.TopEdge + offset.y);
         }
 
-        public PlayerShipController Spawn(GameObject prefab)
-        {
-            GameObject clone = Instantiate(prefab);
-            var existingShip = clone.GetComponent<PlayerShipController>();
-            return existingShip ? existingShip : clone.AddComponent<PlayerShipController>();
-        }
-
         public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
 
         public void RocketFail()
@@ -228,7 +267,12 @@ namespace Game.Astroids
 
         public void AsterodDestroyed()
         {
-            _asteroidsActive--;
+            _level.AstroidRemove();
+        }
+
+        public void UfoDestroyed()
+        {
+            _level.UfoRemove();
         }
 
         public static WaitForSeconds PauseLong()
@@ -265,5 +309,34 @@ namespace Game.Astroids
         }
         #endregion
 
+        struct CurrentLevel
+        {
+            int _level;
+            int _astroidsForLevel;
+            int _asteroidsActive;
+            int _ufosActive;
+
+            public int Level => _level;
+            public int AstroidsForLevel => _astroidsForLevel;
+            public bool HasAstroids => _asteroidsActive > 0;
+            public bool HasEnemy => _asteroidsActive > 0 || _ufosActive > 0;
+
+            public void AstroidAdd() => _asteroidsActive++;
+            public void AstroidRemove() => _asteroidsActive--;
+            public void UfoAdd() => _asteroidsActive++;
+            public void UfoRemove() => _asteroidsActive--;
+            public void Level1() => SetLevel(1);
+            public void LevelAdvance() => _level++;
+
+            void SetLevel(int level)
+            {
+                _level = level;
+                _astroidsForLevel = level + 1;
+
+                _asteroidsActive = 0;
+                _ufosActive = 0;
+            }
+
+        }
     }
 }
