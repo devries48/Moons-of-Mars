@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -7,9 +8,6 @@ namespace Game.Astroids
     public class AsteroidController : GameMonoBehaviour
     {
         #region editor fields
-
-        [SerializeField]
-        AstroidsGameManager gameManager;
 
         [SerializeField]
         float maxSpeed = 3f;
@@ -37,13 +35,19 @@ namespace Game.Astroids
         #endregion
 
         #region fields
+        AstroidsGameManager _gameManager;
         Rigidbody _rb;
+        Renderer _render;
 
         float _rotationX;
         float _rotationY;
         float _rotationZ;
 
+        bool _explosionActive;
+
         #endregion
+
+        private void Awake() => _gameManager = AstroidsGameManager.Instance;
 
         void Start()
         {
@@ -56,6 +60,9 @@ namespace Game.Astroids
             _rb = GetComponent<Rigidbody>();
             _rb.AddForce(transform.right * CreateRandomSpeed());
             _rb.AddForce(transform.up * CreateRandomSpeed());
+
+            _render = GetComponent<Renderer>();
+            _render.enabled = true;
         }
 
         void Update()
@@ -63,22 +70,21 @@ namespace Game.Astroids
             transform.Rotate(new Vector3(_rotationX, _rotationY, _rotationZ) * Time.deltaTime);
 
             _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
-
-            AstroidsGameManager.Instance.ScreenWrapObject(gameObject);
+            _gameManager.ScreenWrapObject(gameObject);
         }
 
         void OnCollisionEnter(Collision collisionInfo)
         {
             // TODO constant tag names
             if (collisionInfo.collider.name == "Rocket")
-                gameManager.RocketFail();
-            else if (collisionInfo.collider.CompareTag("Bullet")) 
-                HitByBullet(collisionInfo.gameObject);        
+                _gameManager.RocketFail();
+            else if (collisionInfo.collider.CompareTag("Bullet"))
+                HitByBullet(collisionInfo.gameObject);
             else if (collisionInfo.collider.CompareTag("Astroid"))
                 HitByAstroid(collisionInfo.gameObject);
         }
 
-         void HitByAstroid(GameObject astroid)
+        void HitByAstroid(GameObject astroid)
         {
             astroid.TryGetComponent<AsteroidController>(out var other);
 
@@ -88,6 +94,8 @@ namespace Game.Astroids
                 return;
             }
 
+            if (_explosionActive) return;
+
             // play smallest astroid collision sound
             var minGen = System.Math.Max(Generation, other.Generation);
 
@@ -96,6 +104,19 @@ namespace Game.Astroids
 
         void HitByBullet(GameObject bullet)
         {
+            StartCoroutine(ExplodeAstroid());
+
+            if (Generation < 3)
+                CreateSmallAsteriods(2);
+
+            RemoveFromGame(bullet);
+        }
+
+        IEnumerator ExplodeAstroid()
+        {
+            _explosionActive = true;
+            _render.enabled = false;
+
             var scale = Generation switch
             {
                 1 => largeAstroid,
@@ -106,17 +127,17 @@ namespace Game.Astroids
             PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, scale);
             PlayAudioClip(AstroidSounds.Clip.Explode, Generation);
 
-            if (Generation < 3)
-                CreateSmallAsteriods(2);
+            while (Audio.isPlaying)
+            {
+                yield return null;
+            }
 
-            RemoveFromGame(bullet);
             RemoveFromGame();
+
+            _explosionActive = false;
         }
 
-        public void SetGeneration(int generation)
-        {
-            Generation = generation;
-        }
+        public void SetGeneration(int generation) => Generation = generation;
 
         float CreateRandomSpeed()
         {
@@ -148,17 +169,6 @@ namespace Game.Astroids
             var sound = sounds.GetClip(clip);
 
             PlaySound(sound);
-        }
-
-        public void Destroy()
-        {
-            gameManager.AsterodDestroyed();
-            Destroy(gameObject, 0.01f);
-        }
-
-        public void DestroySilent()
-        {
-            Destroy(gameObject, 0.00f);
         }
     }
 }

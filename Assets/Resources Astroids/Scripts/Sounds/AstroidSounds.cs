@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -22,13 +23,13 @@ namespace Game.Astroids
         [Header("Volume")]
 
         [Range(0f, 1f)]
-        [SerializeField] float smallAstroid = .1f;
+        [SerializeField] float smallAstroidVol = .1f;
 
         [Range(0f, 1f)]
-        [SerializeField] float mediumAstroid = .2f;
+        [SerializeField] float mediumAstroidVol = .2f;
 
         [Range(0f, 1f)]
-        [SerializeField] float largeAstroid = .4f;
+        [SerializeField] float largeAstroidVol = .4f;
 
         internal AudioClip GetClip(Clip clip)
         {
@@ -40,13 +41,13 @@ namespace Game.Astroids
             };
         }
 
-        internal void SetVolume(AudioSource audioSource,float generation)
+        internal void SetVolume(AudioSource audioSource, float generation)
         {
             audioSource.volume = generation switch
             {
-                1 => largeAstroid,
-                2 => mediumAstroid,
-                _ => smallAstroid,
+                1 => largeAstroidVol,
+                2 => mediumAstroidVol,
+                _ => smallAstroidVol,
             };
         }
     }

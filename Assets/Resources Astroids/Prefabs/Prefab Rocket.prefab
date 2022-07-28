@@ -59,7 +59,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2874880245280111037}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
   m_ConstrainProportionsScale: 1
@@ -154,6 +154,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7246517b0236f7d46ace6b0ca05fd1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shield: {fileID: 0}
+  weapon: {fileID: 2874880243799144278}
+  bulletPrefab: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
+  fireRate: 0.25
+  sounds:
+    shootBullet: {fileID: 0}
+    shieldsUp: {fileID: 0}
+    shieldsDown: {fileID: 0}
+    shieldsHit: {fileID: 0}
+    shipExplosion: {fileID: 0}
 --- !u!114 &2874880245280111035
 MonoBehaviour:
   m_ObjectHideFlags: 0

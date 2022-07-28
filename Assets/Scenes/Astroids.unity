@@ -337,10 +337,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: gameManager
-      value: 
-      objectReference: {fileID: 1552090158}
-    - target: {fileID: 934453153039138345, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: sounds.audioManager
       value: 
       objectReference: {fileID: 890396063}
@@ -525,7 +521,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &890396063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -684,6 +680,10 @@ PrefabInstance:
     - target: {fileID: 2874880245280111037, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
       propertyPath: m_Name
       value: Prefab Rocket
+      objectReference: {fileID: 0}
+    - target: {fileID: 2874880245280111037, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2874880245280111038, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
       propertyPath: m_RootOrder
@@ -847,7 +847,6 @@ MonoBehaviour:
   asteroidPrefab: {fileID: 100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
   ufoPrefab: {fileID: 6822937921655954936, guid: a3114f21cfb941449bd866fcd7796dd9, type: 3}
   gameCamera: {fileID: 871487411}
-  m_GamePlaying: 0
 --- !u!114 &1552090159
 MonoBehaviour:
   m_ObjectHideFlags: 0

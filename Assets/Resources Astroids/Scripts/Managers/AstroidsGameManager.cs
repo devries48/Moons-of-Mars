@@ -3,10 +3,11 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
+    [SelectionBase]
     [RequireComponent(typeof(EffectsManager))]
     public class AstroidsGameManager : MonoBehaviour
     {
-        #region Singleton
+        #region singleton
 
         public static AstroidsGameManager Instance => __instance;
         static AstroidsGameManager __instance;
@@ -52,9 +53,9 @@ namespace Game.Astroids
         EffectsManager _effects;
 
         CurrentLevel _level;
-        CamBounds _camBounds;
 
-        public bool m_GamePlaying;
+        internal CamBounds m_camBounds;
+        internal bool m_GamePlaying;
         #endregion
 
         void Awake()
@@ -62,7 +63,7 @@ namespace Game.Astroids
             SingletonInstanceGuard();
             TryGetComponent(out _effects);
 
-            _camBounds = new CamBounds(gameCamera);
+            m_camBounds = new CamBounds(gameCamera);
 
             if (asteroidPrefab == null)
                 Debug.LogWarning("Asteriod Prefab not set!");
@@ -206,9 +207,11 @@ namespace Game.Astroids
 
         void SpawnUfo()
         {
-            var position = ufoPrefab.transform.position;
-            var ufo = _ufoPool.GetFromPool(position);
-            print("ufo");
+            if (!_level.CanAddUfo)
+                return;
+
+            _ufoPool.GetFromPool();
+            _level.UfoAdd();
         }
 
         public void SpawnAsteroids(float asteroidsNum, int generation, Vector3 position = default)
@@ -244,17 +247,17 @@ namespace Game.Astroids
             var pos = obj.transform.position;
             var offset = obj.transform.localScale / 2;
 
-            if (pos.x > _camBounds.RightEdge + offset.x)
-                obj.transform.position = new Vector2(_camBounds.LeftEdge - offset.x, pos.y);
+            if (pos.x > m_camBounds.RightEdge + offset.x)
+                obj.transform.position = new Vector2(m_camBounds.LeftEdge - offset.x, pos.y);
 
-            if (pos.x < _camBounds.LeftEdge - offset.x)
-                obj.transform.position = new Vector2(_camBounds.RightEdge + offset.x, pos.y);
+            if (pos.x < m_camBounds.LeftEdge - offset.x)
+                obj.transform.position = new Vector2(m_camBounds.RightEdge + offset.x, pos.y);
 
-            if (pos.y > _camBounds.TopEdge + offset.y)
-                obj.transform.position = new Vector2(pos.x, _camBounds.BottomEdge - offset.y);
+            if (pos.y > m_camBounds.TopEdge + offset.y)
+                obj.transform.position = new Vector2(pos.x, m_camBounds.BottomEdge - offset.y);
 
-            if (pos.y < _camBounds.BottomEdge - offset.y)
-                obj.transform.position = new Vector2(pos.x, _camBounds.TopEdge + offset.y);
+            if (pos.y < m_camBounds.BottomEdge - offset.y)
+                obj.transform.position = new Vector2(pos.x, m_camBounds.TopEdge + offset.y);
         }
 
         public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
@@ -287,7 +290,7 @@ namespace Game.Astroids
 
         #region struct CamBounds
 
-        struct CamBounds
+        public struct CamBounds
         {
             public CamBounds(Camera cam)
             {
@@ -309,17 +312,22 @@ namespace Game.Astroids
         }
         #endregion
 
+        #region struct CurrentLevel
+
         struct CurrentLevel
         {
             int _level;
             int _astroidsForLevel;
             int _asteroidsActive;
             int _ufosActive;
+            int _ufosForLevel;
 
             public int Level => _level;
             public int AstroidsForLevel => _astroidsForLevel;
             public bool HasAstroids => _asteroidsActive > 0;
             public bool HasEnemy => _asteroidsActive > 0 || _ufosActive > 0;
+
+            public bool CanAddUfo => _ufosActive < _ufosForLevel;
 
             public void AstroidAdd() => _asteroidsActive++;
             public void AstroidRemove() => _asteroidsActive--;
@@ -332,11 +340,12 @@ namespace Game.Astroids
             {
                 _level = level;
                 _astroidsForLevel = level + 1;
+                _ufosForLevel = level;
 
                 _asteroidsActive = 0;
                 _ufosActive = 0;
             }
-
         }
+        #endregion
     }
 }

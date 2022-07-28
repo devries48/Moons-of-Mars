@@ -31,6 +31,7 @@ namespace Game.Astroids
         {
             if (clip == null || Audio == null)
                 return;
+            Debug.Log(clip); 
 
             Audio.PlayOneShot(clip);
         }
@@ -40,30 +41,15 @@ namespace Game.Astroids
             AstroidsGameManager.Instance.PlayEffect(effect, position, scale);
         }
 
-        protected virtual void OnDisable()
-        {
-            CancelInvokeRemoveFromGame();
-        }
+        protected virtual void OnDisable() => CancelInvokeRemoveFromGame();
 
-        protected virtual void RequestDestruction()
-        {
-            RequestDefaultDestruction(gameObject);
-        }
+        protected virtual void RequestDestruction() => RequestDefaultDestruction(gameObject);
 
-        static void RequestDefaultDestruction(GameObject gameObject)
-        {
-            Destroy(gameObject);
-        }
+        static void RequestDefaultDestruction(GameObject gameObject) => Destroy(gameObject);
 
-        public void InvokeRemoveFromGame(float time)
-        {
-            Invoke(nameof(RemoveFromGame), time);
-        }
+        public void InvokeRemoveFromGame(float time) => Invoke(nameof(RemoveFromGame), time);
 
-        public void CancelInvokeRemoveFromGame()
-        {
-            CancelInvoke(nameof(RemoveFromGame));
-        }
+        public void CancelInvokeRemoveFromGame() => CancelInvoke(nameof(RemoveFromGame));
 
         public void RemoveFromGame()
         {
@@ -83,14 +69,8 @@ namespace Game.Astroids
                 RequestDefaultDestruction(victim);
         }
 
-        public void SetPool(GameObjectPool pool)
-        {
-            _pool = pool;
-        }
+        public void SetPool(GameObjectPool pool) => _pool = pool;
 
-        public void ReturnToPool()
-        {
-            _pool.ReturnToPool(gameObject);
-        }
+        public void ReturnToPool() => _pool.ReturnToPool(gameObject);
     }
 }

@@ -10,10 +10,7 @@ namespace Game.Astroids
 
         public static GameObjectPool Build(GameObject prefab, int initialCapacity, int maxCapacity = 1000)
         {
-            var objPool = new GameObjectPool
-            {
-                _prefab = prefab
-            };
+            var objPool = new GameObjectPool { _prefab = prefab };
 
             objPool._pool = new ObjectPool<GameObject>(
                                     objPool.CreatePooledItem,
@@ -26,10 +23,7 @@ namespace Game.Astroids
             return objPool;
         }
 
-        public GameObject GetFromPool()
-        {
-            return _pool.Get();
-        }
+        public GameObject GetFromPool() => _pool.Get();
 
         public GameObject GetFromPool(Vector3 position, Quaternion rotation = default, float scale = 0f)
         {
@@ -47,45 +41,24 @@ namespace Game.Astroids
             return GetFromPool(position, rotation).GetComponent<T>();
         }
 
-        public void ReturnToPool(GameObject obj)
-        {
-            _pool.Release(obj);
-        }
+        public void ReturnToPool(GameObject obj) => _pool.Release(obj);
 
         GameObject CreatePooledItem()
         {
             var obj = Object.Instantiate(_prefab);
-            Debug.Log("createPooledItem");
-
             obj.TryGetComponent(out IPoolable instance);
 
             if (instance != null)
-            {
                 instance.SetPool(this);
-                Debug.Log("SetPool");
-            }
 
             return obj;
         }
 
-        void OnTakeFromPool(GameObject obj)
-        {
-            Debug.Log("OnTakeFromPool, poolsize: " + _pool.CountAll);
-            obj.SetActive(true);
-        }
+        void OnTakeFromPool(GameObject obj) => obj.SetActive(true);
 
-        void OnReturnedToPool(GameObject obj)
-        {
-            Debug.Log("OnReturnedToPool, poolsize: " + _pool.CountAll);
+        void OnReturnedToPool(GameObject obj) => obj.SetActive(false);
 
-            obj.SetActive(false);
-        }
-
-        void OnDestroyPoolObject(GameObject obj)
-        {
-            Debug.LogWarning("Pooled object is requested to be destroyed!");
-            obj.SetActive(false);
-        }
+        void OnDestroyPoolObject(GameObject obj) => obj.SetActive(false);
 
     }
 

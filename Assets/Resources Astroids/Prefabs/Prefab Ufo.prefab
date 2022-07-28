@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1931569096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1931569097}
+  m_Layer: 9
+  m_Name: Weapon Laser (ufo)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1931569097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1931569096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 6822937921691562443}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6822937921655954936
 GameObject:
   m_ObjectHideFlags: 0
@@ -27,7 +58,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6822937921655954936}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
   m_ConstrainProportionsScale: 1
@@ -203,15 +234,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shield: {fileID: 6822937921691562433}
-  weapon: {fileID: 0}
+  weapon: {fileID: 1931569096}
   bulletPrefab: {fileID: 0}
   fireRate: 0.5
   sounds:
-    shootBullet: {fileID: 0}
+    shootBullet: {fileID: 8300000, guid: af932e479fea0664ba78f3f92a4c87d6, type: 3}
     shieldsUp: {fileID: 0}
-    shieldsDown: {fileID: 0}
-    shieldsHit: {fileID: 0}
-    shipExplosion: {fileID: 0}
+    shieldsDown: {fileID: 8300000, guid: fb6ea42b59abaed4091523c1b134b332, type: 3}
+    shieldsHit: {fileID: 8300000, guid: 2240939744ed4a94fa1501c1edb6f844, type: 3}
+    shipExplosion: {fileID: 8300000, guid: 64e2f27a2aa5956408a71bc3a0344edd, type: 3}
+  speed: 2
   rotationSpeed: 50
 --- !u!1 &6822937921691562440
 GameObject:
@@ -246,6 +278,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6423620290668262748}
+  - {fileID: 1931569097}
   m_Father: {fileID: 6822937921655954938}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

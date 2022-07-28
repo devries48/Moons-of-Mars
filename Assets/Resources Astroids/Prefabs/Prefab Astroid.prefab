@@ -127,7 +127,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 5d32e58265f883748a4ce6deb8cdb4c2, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 0.4
   m_Pitch: 1
@@ -225,15 +225,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bcf7ca57f6a2d0d4da390f641dc3247d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameManager: {fileID: 0}
   maxSpeed: 3
   smallAstroid: 0.4
   mediumAstroid: 0.6
   largeAstroid: 0.8
   sounds:
     audioManager: {fileID: 0}
-    collide: {fileID: 0}
-    explode: {fileID: 0}
-    smallAstroid: 0.1
-    mediumAstroid: 0.2
-    largeAstroid: 0.4
+    collide: {fileID: 8300000, guid: 7521c9024ef9186468429b110652d760, type: 3}
+    explode: {fileID: 8300000, guid: 64e2f27a2aa5956408a71bc3a0344edd, type: 3}
+    smallAstroidVol: 0.1
+    mediumAstroidVol: 0.2
+    largeAstroidVol: 0.4
