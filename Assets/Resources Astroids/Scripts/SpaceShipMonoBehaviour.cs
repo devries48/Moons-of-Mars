@@ -1,10 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 namespace Game.Astroids
 {
     [SelectionBase]
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(AudioSource))]
     public class SpaceShipMonoBehaviour : GameMonoBehaviour
     {
         #region editor fields
@@ -42,13 +43,21 @@ namespace Game.Astroids
         }
         Rigidbody __rb;
 
+        protected bool AreShieldsUp => shield != null && shield.ShieldsUp;
+
         #endregion
 
         protected bool m_canShoot = true;
 
         GameObjectPool _bulletPool;
 
-        void Awake() => BuilPool();
+        protected virtual void Awake() => BuilPool();
+
+        protected virtual void OnTriggerEnter(Collider bulletCollider)
+        {
+            //HitByBullet(bulletCollider.gameObject);
+            print("trigger: bullet");
+        }
 
         void BuilPool()
         {
@@ -69,7 +78,7 @@ namespace Game.Astroids
             m_canShoot = false;
 
             PlayAudioClip(SpaceShipSounds.Clip.ShootBullet);
-            Bullet().Fire(transform.up);
+            Bullet().Fire(weapon.transform.up);
 
             yield return new WaitForSeconds(fireRate);
 
@@ -83,12 +92,7 @@ namespace Game.Astroids
                 weapon.transform.rotation);
         }
 
-        public void PlayAudioClip(SpaceShipSounds.Clip clip)
-        {
-            var sound = sounds.GetClip(clip);
-
-            PlaySound(sound);
-        }
+        public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds.PlayClip(clip);
 
         //public void ResetRocket()
         //{

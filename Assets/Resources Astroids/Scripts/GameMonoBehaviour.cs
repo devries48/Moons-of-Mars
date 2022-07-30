@@ -31,7 +31,6 @@ namespace Game.Astroids
         {
             if (clip == null || Audio == null)
                 return;
-            Debug.Log(clip); 
 
             Audio.PlayOneShot(clip);
         }

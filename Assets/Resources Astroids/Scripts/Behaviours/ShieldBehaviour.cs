@@ -8,33 +8,47 @@ namespace Game.Astroids
         [SerializeField]
         SpaceShipMonoBehaviour spaceShip;
 
-        [SerializeField]
+        [SerializeField,Tooltip("The magnitude of the force when hit by an astroid")]
         int magnitude = 2000;
 
         [SerializeField]
         float shieldVisibleTimer = 2f;
 
-        [SerializeField,Tooltip("Shield will activate automaticly")]
+        [SerializeField, Tooltip("Shield will activate automaticly")]
         bool autoActivate = false;
 
-        MeshRenderer MeshRend
+        MeshRenderer Renderer
         {
             get
             {
-                if (__meshRend == null)
-                    TryGetComponent(out __meshRend);
+                if (__Renderer == null)
+                    TryGetComponent(out __Renderer);
 
-                return __meshRend;
+                return __Renderer;
             }
         }
-        MeshRenderer __meshRend;
+        MeshRenderer __Renderer;
+
+        public bool ShieldsUp
+        {
+            get
+            {
+                return Renderer != null && Renderer.enabled;
+            }
+            set
+            {
+                if (Renderer != null)
+                    Renderer.enabled = value;
+            }
+        }
 
         float _visibleTimer;
 
         void Awake()
         {
+
             if (autoActivate)
-                MeshRend.enabled = false;
+                Renderer.enabled = false;
         }
 
         void Update()
@@ -44,7 +58,7 @@ namespace Game.Astroids
                 _visibleTimer -= Time.deltaTime;
 
                 if (_visibleTimer <= 0f)
-                    ShieldsDown();
+                    SetShieldsDown();
             }
         }
 
@@ -52,7 +66,7 @@ namespace Game.Astroids
         {
             if (other.CompareTag("Astroid"))
             {
-                ShieldsUp(true);
+                SetShieldsUp(true);
 
                 var force = transform.position - other.transform.position;
 
@@ -63,33 +77,40 @@ namespace Game.Astroids
                 force.Normalize();
                 rb.AddForce(-force * magnitude);
             }
-        }
-
-        void ShieldsUp(bool isAuto)
-        {
-            if (spaceShip == null)
-                Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
-            else
+            else if (ShieldsUp)
             {
-                if (isAuto)
-                    spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsHit);
-                else
-                    spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsUp);
+                if (other.CompareTag("Bullet") || other.CompareTag("AlienBullet")){
+                    GameMonoBehaviour.RemoveFromGame(other.gameObject);
+                }
             }
 
+        }
+
+        void SetShieldsUp(bool isAuto)
+        {
+            if (spaceShip == null)
+                return;
+
+            if (isAuto)
+                spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsHit);
+            else
+                spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsUp);
+
+
             if (autoActivate)
-                MeshRend.enabled = true;
-            
+                Renderer.enabled = true;
+
             _visibleTimer = shieldVisibleTimer;
         }
 
-        void ShieldsDown()
+        void SetShieldsDown()
         {
-            MeshRend.enabled = false;
+            Renderer.enabled = false;
+
             if (spaceShip == null)
                 Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
             else
-                    spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsDown);
+                spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsDown);
 
         }
     }

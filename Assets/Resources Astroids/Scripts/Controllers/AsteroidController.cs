@@ -12,7 +12,7 @@ namespace Game.Astroids
         [SerializeField]
         float maxSpeed = 3f;
 
-        [Header("Astroid Explosion Size")]
+        [Header("Astroid Explosion Scale")]
 
         [SerializeField, Range(0f, 1f)]
         float smallAstroid = .25f;
@@ -80,6 +80,8 @@ namespace Game.Astroids
                 _gameManager.RocketFail();
             else if (collisionInfo.collider.CompareTag("Bullet"))
                 HitByBullet(collisionInfo.gameObject);
+            else if (collisionInfo.collider.CompareTag("AlienBullet"))
+                HitByAlienBullet(collisionInfo.gameObject);
             else if (collisionInfo.collider.CompareTag("Astroid"))
                 HitByAstroid(collisionInfo.gameObject);
         }
@@ -112,17 +114,32 @@ namespace Game.Astroids
             RemoveFromGame(bullet);
         }
 
-        IEnumerator ExplodeAstroid()
+        void HitByAlienBullet(GameObject bullet)
+        {
+            if (Generation < 3)
+            {
+                PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, smallAstroid);
+                PlayAudioClip(AstroidSounds.Clip.Explode, 3);
+
+                CreateSmallAsteriods(1, bullet.transform.position);
+                RemoveFromGame(bullet);
+            }
+        }
+
+        IEnumerator ExplodeAstroid(float scale = 0)
         {
             _explosionActive = true;
             _render.enabled = false;
 
-            var scale = Generation switch
+            if (scale == 0)
             {
-                1 => largeAstroid,
-                2 => mediumAstroid,
-                _ => smallAstroid
-            };
+                scale = Generation switch
+                {
+                    1 => largeAstroid,
+                    2 => mediumAstroid,
+                    _ => smallAstroid
+                };
+            }
 
             PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, scale);
             PlayAudioClip(AstroidSounds.Clip.Explode, Generation);
@@ -148,18 +165,16 @@ namespace Game.Astroids
             return speed * dir;
         }
 
-        void CreateSmallAsteriods(int asteroidsNum)
+        void CreateSmallAsteriods(int asteroidsNum, Vector3 position = default)
         {
             int newGeneration = Generation + 1;
-            var scaleSize = 0.5f;
 
-            for (int i = 1; i <= asteroidsNum; i++)
-            {
-                var AsteroidClone = Instantiate(gameObject, new Vector3(transform.position.x, transform.position.y, 0f), transform.rotation);
+            if (position == default)
+                position = transform.position;
+            else
+                newGeneration = 3;
 
-                AsteroidClone.transform.localScale = new Vector3(AsteroidClone.transform.localScale.x * scaleSize, AsteroidClone.transform.localScale.y * scaleSize, AsteroidClone.transform.localScale.z * scaleSize);
-                AsteroidClone.GetComponent<AsteroidController>().SetGeneration(newGeneration);
-            }
+            _gameManager.SpawnAsteroids(asteroidsNum, newGeneration, position);
         }
 
         void PlayAudioClip(AstroidSounds.Clip clip, float generation)

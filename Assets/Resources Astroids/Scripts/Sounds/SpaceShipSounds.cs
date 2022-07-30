@@ -15,15 +15,19 @@ namespace Game.Astroids
             ShipExplosion
         }
 
+        [SerializeField]
+        AudioSource clipsAudioSource;
+
+        [Header("Clips")]
         [SerializeField] AudioClip shootBullet;
         [SerializeField] AudioClip shieldsUp;
         [SerializeField] AudioClip shieldsDown;
         [SerializeField] AudioClip shieldsHit;
         [SerializeField] AudioClip shipExplosion;
 
-        internal AudioClip GetClip(Clip clip)
+        internal void PlayClip(Clip clip)
         {
-            return clip switch
+            var audioClip = clip switch
             {
                 Clip.ShootBullet => shootBullet,
                 Clip.ShieldsUp => shieldsUp,
@@ -31,6 +35,9 @@ namespace Game.Astroids
                 Clip.ShieldsHit => shieldsHit,
                 _ => null
             };
+
+            if (audioClip)
+                clipsAudioSource.PlayOneShot(audioClip);
         }
     }
 }
