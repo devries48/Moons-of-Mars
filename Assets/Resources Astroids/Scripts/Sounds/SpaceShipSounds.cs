@@ -33,6 +33,7 @@ namespace Game.Astroids
                 Clip.ShieldsUp => shieldsUp,
                 Clip.ShieldsDown => shieldsDown,
                 Clip.ShieldsHit => shieldsHit,
+                Clip.ShipExplosion => shipExplosion,
                 _ => null
             };
 

@@ -31,7 +31,7 @@ namespace Game.Astroids
             while (i < _effectsPlaying.Count)
             {
                 _effectsPlaying[i].Item1.TryGetComponent(out ParticleSystem ps);
-
+             
                 if (ps)
                 {
                     if (ps.IsAlive())
@@ -59,7 +59,7 @@ namespace Game.Astroids
         {
             _explosionPool = GameObjectPool.Build(ExplosionPrefab, 1);
             _dustExplosionPool = GameObjectPool.Build(DustExplosionPrefab, 5);
-            _greenExplosionPool = GameObjectPool.Build(GreenExplosionPrefab, 1);
+            _greenExplosionPool = GameObjectPool.Build(GreenExplosionPrefab, 2);
         }
 
         public void StartEffect(Effect effect, Vector3 position, float scale)

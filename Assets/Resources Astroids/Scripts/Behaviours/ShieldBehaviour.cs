@@ -64,6 +64,9 @@ namespace Game.Astroids
 
         void OnTriggerEnter(Collider other)
         {
+            if (!spaceShip.m_isAlive)
+                return;
+
             if (other.CompareTag("Astroid"))
             {
                 SetShieldsUp(true);
@@ -81,6 +84,7 @@ namespace Game.Astroids
             {
                 if (other.CompareTag("Bullet") || other.CompareTag("AlienBullet")){
                     GameMonoBehaviour.RemoveFromGame(other.gameObject);
+                    print("kogel op schild");
                 }
             }
 

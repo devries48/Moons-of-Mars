@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Game.Astroids
 {
     [SelectionBase]
-    [RequireComponent(typeof(Rigidbody))]
+    [RequireComponent(typeof(Rigidbody), typeof(Renderer))]
     public class AsteroidController : GameMonoBehaviour
     {
         #region editor fields
@@ -25,7 +25,6 @@ namespace Game.Astroids
 
         [SerializeField]
         AstroidSounds sounds = new();
-
         #endregion
 
         #region properties
@@ -42,26 +41,27 @@ namespace Game.Astroids
         float _rotationX;
         float _rotationY;
         float _rotationZ;
+        readonly float _maxRotation = 25f;
 
         bool _explosionActive;
-
         #endregion
 
-        private void Awake() => _gameManager = AstroidsGameManager.Instance;
-
-        void Start()
+        private void Awake()
         {
-            var maxRotation = 25f;
-
-            _rotationX = Random.Range(-maxRotation, maxRotation);
-            _rotationY = Random.Range(-maxRotation, maxRotation);
-            _rotationZ = Random.Range(-maxRotation, maxRotation);
-
+            _gameManager = AstroidsGameManager.Instance;
             _rb = GetComponent<Rigidbody>();
+            _render = GetComponent<Renderer>();
+        }
+
+        void OnEnable()
+        {
+            _rotationX = Random.Range(-_maxRotation, _maxRotation);
+            _rotationY = Random.Range(-_maxRotation, _maxRotation);
+            _rotationZ = Random.Range(-_maxRotation, _maxRotation);
+
             _rb.AddForce(transform.right * CreateRandomSpeed());
             _rb.AddForce(transform.up * CreateRandomSpeed());
 
-            _render = GetComponent<Renderer>();
             _render.enabled = true;
         }
 
@@ -106,23 +106,23 @@ namespace Game.Astroids
 
         void HitByBullet(GameObject bullet)
         {
+            RemoveFromGame(bullet);
             StartCoroutine(ExplodeAstroid());
 
             if (Generation < 3)
                 CreateSmallAsteriods(2);
-
-            RemoveFromGame(bullet);
         }
 
         void HitByAlienBullet(GameObject bullet)
         {
+            RemoveFromGame(bullet);
+
             if (Generation < 3)
             {
                 PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, smallAstroid);
                 PlayAudioClip(AstroidSounds.Clip.Explode, 3);
 
                 CreateSmallAsteriods(1, bullet.transform.position);
-                RemoveFromGame(bullet);
             }
         }
 

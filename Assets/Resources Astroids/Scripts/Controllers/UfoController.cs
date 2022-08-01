@@ -23,6 +23,18 @@ namespace Game.Astroids
 
         [SerializeField]
         AudioSource engineAudio;
+
+        [Header("UFO Model")]
+
+        [SerializeField]
+        GameObject bodyModel;
+
+        [SerializeField]
+        GameObject cockpitModel;
+
+        [SerializeField]
+        GameObject lightsModel;
+
         #endregion
 
         #region fields
@@ -30,16 +42,19 @@ namespace Game.Astroids
         AstroidsGameManager _gameManager;
         Vector3 _target;
         bool _remove;
+        Renderer _rndBody;
+        Renderer _rndCockpit;
         #endregion
 
         protected override void Awake()
         {
             _gameManager = AstroidsGameManager.Instance;
+            m_isEnemy = true;
 
             base.Awake();
         }
 
-        void OnEnable()
+        protected override void OnEnable()
         {
             _remove = false;
 
@@ -47,19 +62,28 @@ namespace Game.Astroids
                 FadeInEngine(.5f);
 
             SetRandomUfoBehaviour();
+            ShowModel();
+            base.OnEnable();
         }
 
         protected override void OnDisable()
         {
             CancelInvoke(nameof(FireRandomDirection));
-
             base.OnDisable();
         }
 
         void FixedUpdate()
         {
+            if (!m_isAlive) return;
+
             MoveUfo();
             SpinUfo();
+        }
+
+        protected override void HitByBullet(GameObject bullet)
+        {
+            HideModel();
+            base.HitByBullet(bullet);
         }
 
         void SetRandomUfoBehaviour()
@@ -91,7 +115,6 @@ namespace Game.Astroids
         void RemoveUfo()
         {
             _remove = true;
-
             FadeOutEngine(1f);
         }
 
@@ -145,8 +168,8 @@ namespace Game.Astroids
             engineAudio.volume = startVolume;
 
             _gameManager.UfoDestroyed();
-            RemoveFromGame();
 
+            RemoveFromGame();
         }
 
         Vector3 SpawnPoint(bool left)
@@ -161,5 +184,28 @@ namespace Game.Astroids
 
             return new Vector3(xPos, yPos);
         }
+
+        private void ShowModel(bool show = true)
+        {
+            if (_rndBody == null && bodyModel != null)
+                bodyModel.TryGetComponent(out _rndBody);
+
+            if (_rndCockpit == null && cockpitModel != null)
+                cockpitModel.TryGetComponent(out _rndCockpit);
+
+            if (_rndBody != null)
+                _rndBody.enabled = show;
+
+            if (_rndCockpit != null)
+                _rndCockpit.enabled = show;
+
+            if (lightsModel != null)
+                lightsModel.SetActive(show);
+
+            print("rnderer: " + _rndBody != null);
+        }
+
+        private void HideModel() => ShowModel(false);
+
     }
 }

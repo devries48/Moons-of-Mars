@@ -232,7 +232,7 @@ MonoBehaviour:
   sounds:
     audioManager: {fileID: 0}
     collide: {fileID: 8300000, guid: 7521c9024ef9186468429b110652d760, type: 3}
-    explode: {fileID: 8300000, guid: 64e2f27a2aa5956408a71bc3a0344edd, type: 3}
-    smallAstroidVol: 0.2
-    mediumAstroidVol: 0.4
-    largeAstroidVol: 0.6
+    explode: {fileID: 8300000, guid: e75016634f3aef84c9b3d936e5e8eb61, type: 3}
+    smallAstroidVol: 0.25
+    mediumAstroidVol: 1
+    largeAstroidVol: 1

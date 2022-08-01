@@ -47,22 +47,38 @@ namespace Game.Astroids
 
         #endregion
 
+        internal bool m_isAlive;
+        protected bool m_isEnemy = false;
         protected bool m_canShoot = true;
 
         GameObjectPool _bulletPool;
 
-        protected virtual void Awake() => BuilPool();
-
-        protected virtual void OnTriggerEnter(Collider bulletCollider)
+        protected virtual void Awake()
         {
-            //HitByBullet(bulletCollider.gameObject);
-            print("trigger: bullet");
+            BuilPool();
+        }
+
+        protected virtual void OnEnable()
+        {
+            m_isAlive = true;
+        }
+
+        protected virtual void OnTriggerEnter(Collider collider)
+        {
+            if (m_isAlive && !AreShieldsUp)
+            {
+                if (collider.CompareTag("Bullet"))
+                {
+                    HitByBullet(collider.gameObject);
+                    print("trigger: bullet");
+                }
+            }
         }
 
         void BuilPool()
         {
             if (bulletPrefab)
-                _bulletPool = GameObjectPool.Build(bulletPrefab, 10, 20);
+                _bulletPool = GameObjectPool.Build(bulletPrefab, 8, 16);
         }
 
         protected void FireWeapon()
@@ -93,6 +109,28 @@ namespace Game.Astroids
         }
 
         public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds.PlayClip(clip);
+
+        protected virtual void HitByBullet(GameObject bullet)
+        {
+            m_isAlive = false;
+
+            RemoveFromGame(bullet);
+            StartCoroutine(ExplodeUfo());
+        }
+
+        IEnumerator ExplodeUfo()
+        {
+            PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
+            PlayAudioClip(SpaceShipSounds.Clip.ShipExplosion);
+
+            while (Audio.isPlaying)
+            {
+                yield return null;
+            }
+
+            print("ExplodeUFO");
+            RemoveFromGame();
+        }
 
         //public void ResetRocket()
         //{
