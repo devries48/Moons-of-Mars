@@ -129,7 +129,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.4
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -226,13 +226,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxSpeed: 3
-  smallAstroid: 0.4
-  mediumAstroid: 0.6
-  largeAstroid: 0.8
+  smallAstroidScale: 0.4
+  mediumAstroidScale: 0.6
+  largeAstroidScale: 0.8
+  smallAstroidScore: 50
+  mediumAstroidScore: 25
+  largeAstroidScore: 10
   sounds:
     audioManager: {fileID: 0}
     collide: {fileID: 8300000, guid: 7521c9024ef9186468429b110652d760, type: 3}
     explode: {fileID: 8300000, guid: e75016634f3aef84c9b3d936e5e8eb61, type: 3}
-    smallAstroidVol: 0.25
-    mediumAstroidVol: 1
+    smallAstroidVol: 0.3
+    mediumAstroidVol: 0.6
     largeAstroidVol: 1

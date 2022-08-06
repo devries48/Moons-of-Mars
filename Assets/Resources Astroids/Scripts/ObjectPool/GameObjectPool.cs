@@ -25,13 +25,13 @@ namespace Game.Astroids
 
         public GameObject GetFromPool() => _pool.Get();
 
-        public GameObject GetFromPool(Vector3 position, Quaternion rotation = default, float scale = 0f)
+        public GameObject GetFromPool(Vector3 position, Quaternion rotation = default, Vector3 size = default)
         {
             var obj = _pool.Get();
             obj.transform.SetPositionAndRotation(position, rotation);
 
-            if (scale != 0f)
-                obj.transform.localScale *= scale;
+            if (size != default)
+                obj.transform.localScale = size;
 
             return obj;
         }

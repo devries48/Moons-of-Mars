@@ -21,6 +21,9 @@ namespace Game.Astroids
         [SerializeField]
         float rotationSpeed = 50f;
 
+        [SerializeField, Range(0, 200)]
+        int destructionScore = 100;
+
         [SerializeField]
         AudioSource engineAudio;
 
@@ -40,10 +43,11 @@ namespace Game.Astroids
         #region fields
 
         AstroidsGameManager _gameManager;
-        Vector3 _target;
+        Vector3 _targetPos; // Ufo target position
         bool _remove;
         Renderer _rndBody;
         Renderer _rndCockpit;
+
         #endregion
 
         protected override void Awake()
@@ -76,22 +80,25 @@ namespace Game.Astroids
         {
             if (!m_isAlive) return;
 
-            MoveUfo();
             SpinUfo();
+            MoveUfo();
         }
 
         protected override void HitByBullet(GameObject bullet)
         {
             HideModel();
             base.HitByBullet(bullet);
+            Score(destructionScore);
         }
 
         void SetRandomUfoBehaviour()
         {
             var side = RandomEnumUtil<SpawnSide>.Get();
+            var tilt = Random.Range(-15f, 60f);
 
             Rb.transform.position = SpawnPoint(side == SpawnSide.left);
-            _target = SpawnPoint(side != SpawnSide.left);
+            Rb.transform.localRotation= Quaternion.AngleAxis(tilt, Vector3.right);
+            _targetPos = SpawnPoint(side != SpawnSide.left);
 
             InvokeRepeating(nameof(FireRandomDirection), fireRate, fireRate);
         }
@@ -101,9 +108,9 @@ namespace Game.Astroids
             //linear movement
             var step = speed * Time.fixedDeltaTime;
 
-            Rb.transform.position = Vector3.MoveTowards(Rb.transform.position, _target, step);
+            Rb.transform.position = Vector3.MoveTowards(Rb.transform.position, _targetPos, step);
 
-            if (!_remove && Vector3.Distance(Rb.transform.position, _target) < 0.1f)
+            if (!_remove && Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
                 RemoveUfo();
         }
 
@@ -185,7 +192,7 @@ namespace Game.Astroids
             return new Vector3(xPos, yPos);
         }
 
-        private void ShowModel(bool show = true)
+        void ShowModel(bool show = true)
         {
             if (_rndBody == null && bodyModel != null)
                 bodyModel.TryGetComponent(out _rndBody);
@@ -201,11 +208,9 @@ namespace Game.Astroids
 
             if (lightsModel != null)
                 lightsModel.SetActive(show);
-
-            print("rnderer: " + _rndBody != null);
         }
 
-        private void HideModel() => ShowModel(false);
+        void HideModel() => ShowModel(false);
 
     }
 }

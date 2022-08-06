@@ -15,13 +15,24 @@ namespace Game.Astroids
         [Header("Astroid Explosion Scale")]
 
         [SerializeField, Range(0f, 1f)]
-        float smallAstroid = .25f;
+        float smallAstroidScale = .4f;
 
         [SerializeField, Range(0f, 1f)]
-        float mediumAstroid = .5f;
+        float mediumAstroidScale = .6f;
 
         [SerializeField, Range(0f, 1f)]
-        float largeAstroid = 1f;
+        float largeAstroidScale = .8f;
+
+        [Header("Astroid Score")]
+
+        [SerializeField, Range(0, 200)]
+        int smallAstroidScore = 50;
+
+        [SerializeField, Range(0f, 200)]
+        int mediumAstroidScore = 25;
+
+        [SerializeField, Range(0f, 200)]
+        int largeAstroidScore = 10;
 
         [SerializeField]
         AstroidSounds sounds = new();
@@ -119,30 +130,35 @@ namespace Game.Astroids
 
             if (Generation < 3)
             {
-                PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, smallAstroid);
+                PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, smallAstroidScale);
                 PlayAudioClip(AstroidSounds.Clip.Explode, 3);
 
                 CreateSmallAsteriods(1, bullet.transform.position);
             }
         }
 
-        IEnumerator ExplodeAstroid(float scale = 0)
+        IEnumerator ExplodeAstroid()
         {
             _explosionActive = true;
             _render.enabled = false;
 
-            if (scale == 0)
+            var scale = Generation switch
             {
-                scale = Generation switch
-                {
-                    1 => largeAstroid,
-                    2 => mediumAstroid,
-                    _ => smallAstroid
-                };
-            }
+                1 => largeAstroidScale,
+                2 => mediumAstroidScale,
+                _ => smallAstroidScale
+            };
+
+            var points = Generation switch
+            {
+                1 => largeAstroidScore,
+                2 => mediumAstroidScore,
+                _ => smallAstroidScore
+            };
 
             PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, scale);
             PlayAudioClip(AstroidSounds.Clip.Explode, Generation);
+            Score(points);
 
             while (Audio.isPlaying)
             {
@@ -179,7 +195,7 @@ namespace Game.Astroids
 
         void PlayAudioClip(AstroidSounds.Clip clip, float generation)
         {
-            sounds.SetVolume(Audio, generation);
+            sounds.SetVolume(Audio, generation, clip == AstroidSounds.Clip.Collide);
 
             var sound = sounds.GetClip(clip);
 

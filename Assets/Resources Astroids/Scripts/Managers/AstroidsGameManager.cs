@@ -223,14 +223,14 @@ namespace Game.Astroids
                 if (isRandom)
                     position = new Vector3(Random.Range(-20, 20), 10f);
 
-                var scaleFact = generation switch
+                var scale = generation switch
                 {
                     1 => 1f,
                     2 => .5f,
                     _ => .25f
                 };
 
-                var astroid = _astoidPool.GetFromPool(position, scale: scaleFact);
+                var astroid = _astoidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
 
                 astroid.GetComponent<AsteroidController>().SetGeneration(generation);
                 _level.AstroidAdd();

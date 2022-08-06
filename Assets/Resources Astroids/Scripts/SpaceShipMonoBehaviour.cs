@@ -68,10 +68,7 @@ namespace Game.Astroids
             if (m_isAlive && !AreShieldsUp)
             {
                 if (collider.CompareTag("Bullet"))
-                {
                     HitByBullet(collider.gameObject);
-                    print("trigger: bullet");
-                }
             }
         }
 

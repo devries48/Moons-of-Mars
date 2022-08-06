@@ -41,14 +41,16 @@ namespace Game.Astroids
             };
         }
 
-        internal void SetVolume(AudioSource audioSource, float generation)
+        internal void SetVolume(AudioSource audioSource, float generation, bool isCollision = false)
         {
-            audioSource.volume = generation switch
+            var volume = generation switch
             {
                 1 => largeAstroidVol,
                 2 => mediumAstroidVol,
                 _ => smallAstroidVol,
             };
+            if (isCollision) volume *= .75f;
+            audioSource.volume = volume;
         }
     }
 }
