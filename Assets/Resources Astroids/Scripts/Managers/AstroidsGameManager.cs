@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using TMPro;
 
 namespace Game.Astroids
 {
@@ -39,11 +40,18 @@ namespace Game.Astroids
         GameObject ufoPrefab;
 
         [SerializeField]
+        TextMeshProUGUI announcerTextUI;
+
+        [SerializeField]
         Camera gameCamera;
         #endregion
 
-        #region fields
+        #region public fields
+        internal CamBounds m_camBounds;
+        internal bool m_GamePlaying;
+        #endregion
 
+        #region fields
         bool _requestTitleScreen;
 
         GameObjectPool _astoidPool;
@@ -51,11 +59,11 @@ namespace Game.Astroids
 
         PlayerShipController _playerShip;
         EffectsManager _effects;
-
+        GameAnnouncer _announce;
         CurrentLevel _level;
+ 
+        const string _strTitle = "A S T E R O I D S";
 
-        internal CamBounds m_camBounds;
-        internal bool m_GamePlaying;
         #endregion
 
         void Awake()
@@ -76,6 +84,7 @@ namespace Game.Astroids
 
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
             _ufoPool = GameObjectPool.Build(ufoPrefab, 2);
+            _announce = GameAnnouncer.AnnounceTo(Announcer.TextComponent(announcerTextUI), Announcer.Log(this));
         }
 
         void Start()
@@ -104,7 +113,8 @@ namespace Game.Astroids
                 if (_requestTitleScreen)
                 {
                     _requestTitleScreen = false;
-                    // yield return StartCoroutine(ShowTitleScreen());
+
+                    yield return StartCoroutine(ShowTitleScreen());
                 }
                 yield return StartCoroutine(LevelStart());
                 yield return StartCoroutine(LevelPlay());
@@ -123,7 +133,8 @@ namespace Game.Astroids
 
         IEnumerator ShowTitleScreen()
         {
-            //announce.Title();
+            _announce.Title(_strTitle);
+
             while (!Input.anyKeyDown) yield return null;
         }
 
