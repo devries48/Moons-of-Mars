@@ -32,7 +32,7 @@ public class MenuController : MonoBehaviour
     #endregion
 
     #region properties
-    GameManager GameManager => GameManager.Instance;
+    GameManager GmManager => GameManager.Instance;
 
     SolarSystemPanelController SystemPanelController
     {
@@ -49,15 +49,15 @@ public class MenuController : MonoBehaviour
 
     void OnEnable()
     {
-        CameraSwitcher.Register(GameManager.MenuCamera);
-        CameraSwitcher.Register(GameManager.SolarSystemCamera);
+        CameraSwitcher.Register(GmManager.MenuCamera);
+        CameraSwitcher.Register(GmManager.SolarSystemCamera);
         SystemPanelController.HideControlPanel();
     }
 
     void OnDisable()
     {
-        CameraSwitcher.Unregister(GameManager.MenuCamera);
-        CameraSwitcher.Unregister(GameManager.SolarSystemCamera);
+        CameraSwitcher.Unregister(GmManager.MenuCamera);
+        CameraSwitcher.Unregister(GmManager.SolarSystemCamera);
     }
 
     void Awake()
@@ -97,12 +97,12 @@ public class MenuController : MonoBehaviour
 
         SystemPanelController.ShowControlPanel();
 
-        StartCoroutine(DelayExecute(GameManager.CameraSwitchTime, GameManager.SolarSystemCtrl.ShowOrbitLines));
+        StartCoroutine(DelayExecute(GmManager.CameraSwitchTime, GmManager.SolarSystemCtrl.ShowOrbitLines));
 
-        if (GameManager.SolarSystemCtrl.GetPlanetScaleMultiplier() == 1)
-            TweenPlanetScale(GameManager.CameraSwitchTime);
+        if (GmManager.SolarSystemCtrl.GetPlanetScaleMultiplier() == 1)
+            TweenPlanetScale(GmManager.CameraSwitchTime);
 
-        CameraSwitcher.SwitchCamera(GameManager.SolarSystemCamera);
+        CameraSwitcher.SwitchCamera(GmManager.SolarSystemCamera);
     }
 
     public void MenuGames()
@@ -122,10 +122,10 @@ public class MenuController : MonoBehaviour
     {
         var wait = 0f;
 
-        if (GameManager.SolarSystemCtrl.OrbitLinesVisible)
+        if (GmManager.SolarSystemCtrl.OrbitLinesVisible)
         {
             wait = .5f; // Wait for orbit lines to fade away
-            GameManager.SolarSystemCtrl.HideOrbitLines();
+            GmManager.SolarSystemCtrl.HideOrbitLines();
             SystemPanelController.HideControlPanel(true);
         }
 
@@ -145,7 +145,7 @@ public class MenuController : MonoBehaviour
 
     void SetWindowInfo(CelestialBodyName name)
     {
-        var info = GameManager.CelestialBody(name).Info;
+        var info = GmManager.CelestialBody(name).Info;
         if (info == null)
             return;
 
@@ -167,13 +167,13 @@ public class MenuController : MonoBehaviour
     {
         if (spaceDebriSystem == null) return;
 
-        CameraSwitcher.SwitchCamera(GameManager.MenuCamera);
+        CameraSwitcher.SwitchCamera(GmManager.MenuCamera);
 
-        if (GameManager.SolarSystemCtrl.GetPlanetScaleMultiplier() > 1)
+        if (GmManager.SolarSystemCtrl.GetPlanetScaleMultiplier() > 1)
             TweenPlanetScale(1f, true);
 
         HideExitButton();
-        TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, GameManager.CameraSwitchTime);
+        TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, GmManager.CameraSwitchTime);
 
         spaceDebriSystem.Play();
     }
@@ -188,7 +188,7 @@ public class MenuController : MonoBehaviour
 
         if (quit)
         {
-            var closeId = Tweens.ApplicationClose(GameManager.MenuCamera);
+            var closeId = Tweens.ApplicationClose(GmManager.MenuCamera);
             var d1 = LeanTween.descr(id);
             var d2 = LeanTween.descr(closeId);
             var d = d1 ?? d2;
@@ -219,7 +219,7 @@ public class MenuController : MonoBehaviour
 
     void ShowExitButton()
     {
-        TweenPivot(exitButton, new Vector2(-.2f, -.2f), GameManager.CameraSwitchTime);
+        TweenPivot(exitButton, new Vector2(-.2f, -.2f), GmManager.CameraSwitchTime);
     }
 
     void HideExitButton()
@@ -259,7 +259,7 @@ public class MenuController : MonoBehaviour
 
         LeanTween.value(start, end, scaleTime).setEase(type).setOnUpdate((float val) =>
         {
-            GameManager.SolarSystemCtrl.SetPlanetScaleMultiplier(val);
+            GmManager.SolarSystemCtrl.SetPlanetScaleMultiplier(val);
         });
     }
 

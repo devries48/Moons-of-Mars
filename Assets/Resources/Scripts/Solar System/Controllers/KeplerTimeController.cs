@@ -57,7 +57,7 @@ public class KeplerTimeController : MonoBehaviour
 
     DateTime _currentTime;
 
-    GameManager GameManager => GameManager.Instance;
+    GameManager GmManager => GameManager.Instance;
 
     #endregion
 
@@ -84,7 +84,7 @@ public class KeplerTimeController : MonoBehaviour
 
     void Update()
     {
-        _currentTime = _currentTime.AddSeconds(GameManager.SolarSystemSpeed * Time.deltaTime);
+        _currentTime = _currentTime.AddSeconds(GmManager.SolarSystemSpeed * Time.deltaTime);
 
         RefreshTimeDisplay();
     }
@@ -94,15 +94,15 @@ public class KeplerTimeController : MonoBehaviour
         _displayDateField.text = _currentTime.ToString("yyyy - MM - dd");
         _displayTimeField.text = _currentTime.ToString("HH : mm : ss");
 
-        if (_currentSolarSystemSpeed != GameManager.SolarSystemSpeed)
+        if (_currentSolarSystemSpeed != GmManager.SolarSystemSpeed)
         {
-            _currentSolarSystemSpeed= GameManager.SolarSystemSpeed;
-            _displayTimeField.enabled = GameManager.SolarSystemSpeed < Constants.SolarSystemSpeedWeek;
-            _displaySpeedDescriptorField.enabled = GameManager.SolarSystemSpeed > 1;
+            _currentSolarSystemSpeed = GmManager.SolarSystemSpeed;
+            _displayTimeField.enabled = GmManager.SolarSystemSpeed < Constants.SolarSystemSpeedWeek;
+            _displaySpeedDescriptorField.enabled = GmManager.SolarSystemSpeed > 1;
 
             string period = "second";
 
-            switch (GameManager.SolarSystemSpeed)
+            switch (GmManager.SolarSystemSpeed)
             {
                 case Constants.SolarSystemSpeedHour:
                     period = "hour";
@@ -156,7 +156,7 @@ public class KeplerTimeController : MonoBehaviour
             var value = item.initialMeanAnomaly + elapsedTime * item.body.OrbitData.MeanMotion;
             item.body.OrbitData.SetMeanAnomaly(value);
 
-            if (item.body.AttractorSettings.AttractorObject != null) 
+            if (item.body.AttractorSettings.AttractorObject != null)
                 item.body.ForceUpdateViewFromInternalState();
         }
 

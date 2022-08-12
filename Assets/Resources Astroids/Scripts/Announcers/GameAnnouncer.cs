@@ -2,6 +2,7 @@ using TMPro;
 
 public class GameAnnouncer : Announcer
 {
+    const string title = "Astroids";
     const string cleared = "Level Cleared!";
     const string gameover = "GAME OVER";
 
@@ -31,7 +32,7 @@ public class GameAnnouncer : Announcer
         Announce("");
     }
 
-    public virtual void Title(string title)
+    public virtual void Title()
     {
         Announce(title);
     }

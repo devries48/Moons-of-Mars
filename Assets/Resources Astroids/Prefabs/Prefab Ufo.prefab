@@ -97,7 +97,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.3
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -248,6 +248,7 @@ MonoBehaviour:
     shipExplosion: {fileID: 8300000, guid: 813d3c4b45cbea74895ed1621255275e, type: 3}
   speed: 2
   rotationSpeed: 50
+  destructionScore: 100
   engineAudio: {fileID: 556465343}
   bodyModel: {fileID: 4551867226063374528}
   cockpitModel: {fileID: 1616262529821430169}

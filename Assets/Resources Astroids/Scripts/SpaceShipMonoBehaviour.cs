@@ -47,21 +47,18 @@ namespace Game.Astroids
 
         #endregion
 
+        #region fields
+
         internal bool m_isAlive;
         protected bool m_isEnemy = false;
         protected bool m_canShoot = true;
 
         GameObjectPool _bulletPool;
+        #endregion
 
-        protected virtual void Awake()
-        {
-            BuilPool();
-        }
+        protected virtual void Awake() => BuilPool();
 
-        protected virtual void OnEnable()
-        {
-            m_isAlive = true;
-        }
+        protected virtual void OnEnable() => m_isAlive = true;
 
         protected virtual void OnTriggerEnter(Collider collider)
         {
@@ -72,15 +69,29 @@ namespace Game.Astroids
             }
         }
 
+        public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds.PlayClip(clip);
+
+        protected virtual void FireWeapon() => StartCoroutine(Shoot());
+
+        protected virtual void HitByBullet(GameObject bullet)
+        {
+            m_isAlive = false;
+
+            RemoveFromGame(bullet);
+            StartCoroutine(ExplodeUfo());
+        }
+
         void BuilPool()
         {
             if (bulletPrefab)
                 _bulletPool = GameObjectPool.Build(bulletPrefab, 8, 16);
         }
 
-        protected void FireWeapon()
+        BulletController Bullet()
         {
-            StartCoroutine(Shoot());
+            return _bulletPool.GetComponentFromPool<BulletController>(
+                weapon.transform.position,
+                weapon.transform.rotation);
         }
 
         IEnumerator Shoot()
@@ -98,23 +109,6 @@ namespace Game.Astroids
             m_canShoot = true;
         }
 
-        BulletController Bullet()
-        {
-            return _bulletPool.GetComponentFromPool<BulletController>(
-                weapon.transform.position,
-                weapon.transform.rotation);
-        }
-
-        public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds.PlayClip(clip);
-
-        protected virtual void HitByBullet(GameObject bullet)
-        {
-            m_isAlive = false;
-
-            RemoveFromGame(bullet);
-            StartCoroutine(ExplodeUfo());
-        }
-
         IEnumerator ExplodeUfo()
         {
             PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
@@ -125,18 +119,7 @@ namespace Game.Astroids
                 yield return null;
             }
 
-            print("ExplodeUFO");
             RemoveFromGame();
         }
-
-        //public void ResetRocket()
-        //{
-        //    transform.position = new Vector2(0f, 0f);
-        //    transform.eulerAngles = new Vector3(0, 180f, 0);
-
-        //    Rb.velocity = new Vector3(0f, 0f, 0f);
-        //    Rb.angularVelocity = new Vector3(0f, 0f, 0f);
-        //}
-
     }
 }

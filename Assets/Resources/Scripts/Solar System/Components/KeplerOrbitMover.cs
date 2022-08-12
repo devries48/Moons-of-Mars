@@ -38,7 +38,7 @@ public class KeplerOrbitMover : MonoBehaviour
 
     #region properties
 
-    GameManager GameManager => GameManager.Instance;
+    GameManager GmManager => GameManager.Instance;
 
     bool IsReferencesAsigned
     {
@@ -78,15 +78,14 @@ public class KeplerOrbitMover : MonoBehaviour
 
     public KeplerAttractorData AttractorSettings = new();
 
+    public Color LineColor = Color.white;
+
     // Astronomical unit in SI units, used to calculate real scale orbit periods.
     const double AU = 1.495978707e11;
 
     // Gravitational constant. In this context plays role of speed muliplier.
     const double GConstant = 100;
     #endregion
-
-    public Color LineColor = Color.white;
-
 
     /// <summary>
     /// Disable continious editing orbit in update loop, if you don't need it.
@@ -193,9 +192,12 @@ public class KeplerOrbitMover : MonoBehaviour
                     OrbitData.CalculateOrbitStateFromOrbitalVectors();
                 }
 
-                if (OrbitData.IsValidOrbit)
+                if (OrbitData.IsValidOrbit && GmManager)
                 {
-                    OrbitData.UpdateOrbitDataByTime(Time.deltaTime * GameManager.SolarSystemSpeed);
+                    print("gamemanager: " + GmManager == null);
+                    print("speed: " + GmManager.SolarSystemSpeed);
+                    print("ja");
+                    OrbitData.UpdateOrbitDataByTime(Time.deltaTime * GmManager.SolarSystemSpeed);
                     ForceUpdateViewFromInternalState();
                 }
             }
