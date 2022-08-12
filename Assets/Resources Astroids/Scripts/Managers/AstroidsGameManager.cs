@@ -154,8 +154,6 @@ namespace Game.Astroids
             while (_playerShip.IsAlive && _level.HasEnemy)
                 yield return null;
 
-            print("alive:" + _playerShip.IsAlive);
-            print("enemy:" + _level.HasEnemy);
         }
 
         IEnumerator LevelEnd()
@@ -239,13 +237,10 @@ namespace Game.Astroids
                     _ => .25f
                 };
 
-                print("1");
                 var astroid = _astoidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
-                print("2");
                 astroid.GetComponent<AsteroidController>().SetGeneration(generation);
-                print("3");
+               
                 _level.AstroidAdd();
-                print("4");
             }
         }
 
@@ -334,12 +329,39 @@ namespace Game.Astroids
             public bool HasEnemy => _asteroidsActive > 0 || _ufosActive > 0;
             public bool CanAddUfo => _ufosActive < _ufosForLevel && _asteroidsActive > 0;
 
-            public void AstroidAdd() => _asteroidsActive++;
-            public void AstroidRemove() => _asteroidsActive--;
-            public void UfoAdd() => _asteroidsActive++;
-            public void UfoRemove() => _asteroidsActive--;
+            public void AstroidAdd()
+            {
+                _asteroidsActive++;
+                log();
+            }
+
+            public void AstroidRemove()
+            {
+                _asteroidsActive--;
+                log();
+            }
+
+            public void UfoAdd()
+            {
+                _ufosActive++;
+                log();
+            }
+
+            public void UfoRemove()
+            {
+                _ufosActive--;
+                log();
+            }
+
             public void Level1() => SetLevel(1);
             public void LevelAdvance() => _level++;
+
+            void log()
+            {
+                print("enemy:" + HasEnemy);
+                print("astroids:" + _asteroidsActive);
+                print("ufos:" + _ufosActive);
+            }
 
             void SetLevel(int level)
             {

@@ -194,9 +194,6 @@ public class KeplerOrbitMover : MonoBehaviour
 
                 if (OrbitData.IsValidOrbit && GmManager)
                 {
-                    print("gamemanager: " + GmManager == null);
-                    print("speed: " + GmManager.SolarSystemSpeed);
-                    print("ja");
                     OrbitData.UpdateOrbitDataByTime(Time.deltaTime * GmManager.SolarSystemSpeed);
                     ForceUpdateViewFromInternalState();
                 }

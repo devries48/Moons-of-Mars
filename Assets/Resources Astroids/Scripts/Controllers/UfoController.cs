@@ -86,8 +86,11 @@ namespace Game.Astroids
 
         protected override void HitByBullet(GameObject bullet)
         {
+            _gameManager.UfoDestroyed();
+
             HideModel();
             base.HitByBullet(bullet);
+
             Score(destructionScore);
         }
 

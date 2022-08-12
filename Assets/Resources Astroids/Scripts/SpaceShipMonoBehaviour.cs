@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -96,7 +95,7 @@ namespace Game.Astroids
 
         IEnumerator Shoot()
         {
-            if (!bulletPrefab)
+            if (!bulletPrefab || !m_isAlive)
                 yield break;
 
             m_canShoot = false;

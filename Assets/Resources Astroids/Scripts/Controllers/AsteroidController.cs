@@ -117,6 +117,8 @@ namespace Game.Astroids
 
         void HitByBullet(GameObject bullet)
         {
+            _gameManager.AsterodDestroyed();
+
             RemoveFromGame(bullet);
             StartCoroutine(ExplodeAstroid());
 

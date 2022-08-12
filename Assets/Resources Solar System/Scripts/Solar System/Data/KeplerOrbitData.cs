@@ -735,13 +735,9 @@ public class KeplerOrbitData
     /// <param name="deltaTime">The delta time.</param>
     public void UpdateOrbitDataByTime(double deltaTime)
     {
-        Debug.Log("1");
         UpdateOrbitAnomaliesByTime(deltaTime);
-        Debug.Log("2");
         SetPositionByCurrentAnomaly();
-        Debug.Log("3");
         SetVelocityByCurrentAnomaly();
-        Debug.Log("4");
     }
 
     /// <summary>

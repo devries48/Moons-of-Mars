@@ -382,7 +382,7 @@ MonoBehaviour:
   m_text: Astroids
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
-  m_sharedMaterial: {fileID: 5774329478888551352, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 93af645c29473e348ba058c674d7bd1c, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
