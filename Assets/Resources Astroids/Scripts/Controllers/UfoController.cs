@@ -44,8 +44,8 @@ namespace Game.Astroids
 
         AstroidsGameManager _gameManager;
         Vector3 _targetPos; // Ufo target position
-        bool _remove;
-        Renderer _rndBody;
+        bool _isUfoRemoved; // Prevent Ufo remove recursion
+        Renderer _rndBody;  // Hide Ufo when hit before explosion
         Renderer _rndCockpit;
 
         #endregion
@@ -60,12 +60,12 @@ namespace Game.Astroids
 
         protected override void OnEnable()
         {
-            _remove = false;
+            _isUfoRemoved = false;
 
             if (engineAudio != null)
                 FadeInEngine(.5f);
 
-            SetRandomUfoBehaviour();
+            SetRandomShipBehaviour();
             ShowModel();
             base.OnEnable();
         }
@@ -94,7 +94,7 @@ namespace Game.Astroids
             Score(destructionScore);
         }
 
-        void SetRandomUfoBehaviour()
+        void SetRandomShipBehaviour()
         {
             var side = RandomEnumUtil<SpawnSide>.Get();
             var tilt = Random.Range(-15f, 60f);
@@ -113,7 +113,7 @@ namespace Game.Astroids
 
             Rb.transform.position = Vector3.MoveTowards(Rb.transform.position, _targetPos, step);
 
-            if (!_remove && Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
+            if (!_isUfoRemoved && Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
                 RemoveUfo();
         }
 
@@ -124,7 +124,7 @@ namespace Game.Astroids
 
         void RemoveUfo()
         {
-            _remove = true;
+            _isUfoRemoved = true;
             FadeOutEngine(1f);
         }
 

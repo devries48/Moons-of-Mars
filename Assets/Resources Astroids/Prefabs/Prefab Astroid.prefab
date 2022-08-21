@@ -236,6 +236,6 @@ MonoBehaviour:
     audioManager: {fileID: 0}
     collide: {fileID: 8300000, guid: 7521c9024ef9186468429b110652d760, type: 3}
     explode: {fileID: 8300000, guid: e75016634f3aef84c9b3d936e5e8eb61, type: 3}
-    smallAstroidVol: 0.3
-    mediumAstroidVol: 0.6
+    smallAstroidVol: 0.6
+    mediumAstroidVol: 0.8
     largeAstroidVol: 1

@@ -358,7 +358,6 @@ namespace Game.Astroids
 
             void log()
             {
-                print("enemy:" + HasEnemy);
                 print("astroids:" + _asteroidsActive);
                 print("ufos:" + _ufosActive);
             }

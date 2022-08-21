@@ -50,6 +50,7 @@ namespace Game.Astroids
 
         internal bool m_isAlive;
         protected bool m_isEnemy = false;
+        protected bool m_isAllied = false;
         protected bool m_canShoot = true;
 
         GameObjectPool _bulletPool;

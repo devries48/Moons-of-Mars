@@ -8,11 +8,15 @@ namespace Game.Astroids
         GameObject target;
 
         [SerializeField]
+        Vector3 targetVector = new();
+
+        [SerializeField]
         float degreesPerSecond = 20;
 
         void Update()
         {
-            transform.RotateAround(target.transform.position, Vector3.down, degreesPerSecond * Time.deltaTime);
+            var vector = target != null ? target.transform.position : targetVector;
+            transform.RotateAround(vector, Vector3.down, degreesPerSecond * Time.deltaTime);
         }
     }
 }
