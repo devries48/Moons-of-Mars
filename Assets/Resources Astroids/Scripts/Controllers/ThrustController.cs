@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -18,46 +16,45 @@ namespace Game.Astroids
         [SerializeField]
         float changePerSecondByInput;
 
+        [SerializeField]
+        [Range(0f, 1f)]
         float _currentThrust;
+
         float _thrustInPercentageOfMax;
 
         public event Action<float> EventThrustChanged = delegate { };
 
+        void OnEnable() => SetToMinThrust();
 
-        // Start is called before the first frame update
-        void Start()
+        void OnDisable() => SetToMinThrust();
+
+        public void SetThrust(float thrust)
         {
-            SetToMinThrust();
+            _currentThrust = thrust;
+            RaiseThrustChangedEvent();
         }
 
-        void Update()
-        {
-            if (Input.GetKey(KeyCode.Space))
-                ChangeThrust(changePerSecondByInput * Time.deltaTime);
-            else if (Input.GetKey(KeyCode.B))
-                ChangeThrust(-changePerSecondByInput * Time.deltaTime);
-        }
+        public void IncreaseThrust() => ChangeThrust(changePerSecondByInput * Time.deltaTime);
+
+        public void DecreaseThrust() => ChangeThrust(-changePerSecondByInput * Time.deltaTime);
 
         void ChangeThrust(float changeBy)
         {
             _currentThrust = Mathf.Clamp(_currentThrust + changeBy, minThrust, maxThrust);
+            RaiseThrustChangedEvent();
+        }
+        void RaiseThrustChangedEvent()
+        {
             _thrustInPercentageOfMax = (_currentThrust - minThrust) / (maxThrust - minThrust);
 
             EventThrustChanged(_thrustInPercentageOfMax);
         }
 
         [ContextMenu("SetToMinThrust")]
-        void SetToMinThrust()
-        {
-            EventThrustChanged(minThrust);
-        }
+        void SetToMinThrust() => EventThrustChanged(minThrust);
 
         [ContextMenu("SetToMaxThrust")]
-        void SetToMaxThrust()
-        {
-            EventThrustChanged(maxThrust);
-        }
-
+        void SetToMaxThrust() => EventThrustChanged(maxThrust);
 
     }
 }

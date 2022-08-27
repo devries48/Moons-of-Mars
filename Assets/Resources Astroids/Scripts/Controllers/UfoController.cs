@@ -43,9 +43,9 @@ namespace Game.Astroids
         #region fields
 
         AstroidsGameManager _gameManager;
-        Vector3 _targetPos; // Ufo target position
-        bool _isUfoRemoved; // Prevent Ufo remove recursion
-        Renderer _rndBody;  // Hide Ufo when hit before explosion
+        Vector3 _targetPos;  // Ufo target position
+        bool _isShipRemoved; // Prevent ship remove recursion
+        Renderer _rndBody;   // Hide Ufo when hit before explosion
         Renderer _rndCockpit;
 
         #endregion
@@ -60,7 +60,7 @@ namespace Game.Astroids
 
         protected override void OnEnable()
         {
-            _isUfoRemoved = false;
+            _isShipRemoved = false;
 
             if (engineAudio != null)
                 FadeInEngine(.5f);
@@ -113,8 +113,8 @@ namespace Game.Astroids
 
             Rb.transform.position = Vector3.MoveTowards(Rb.transform.position, _targetPos, step);
 
-            if (!_isUfoRemoved && Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
-                RemoveUfo();
+            if (!_isShipRemoved && Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
+                RemoveShip();
         }
 
         void SpinUfo()
@@ -122,9 +122,9 @@ namespace Game.Astroids
             Rb.transform.Rotate(new Vector3(0, rotationSpeed * speed * Time.fixedDeltaTime, 0));
         }
 
-        void RemoveUfo()
+        void RemoveShip()
         {
-            _isUfoRemoved = true;
+            _isShipRemoved = true;
             FadeOutEngine(1f);
         }
 

@@ -37,8 +37,13 @@ namespace Game.Astroids
                 _ => null
             };
 
-            if (audioClip)
-                clipsAudioSource.PlayOneShot(audioClip);
+            PlayClip(audioClip);
+        }
+
+        internal void PlayClip(AudioClip clip)
+        {
+            if (clip)
+                clipsAudioSource.PlayOneShot(clip);
         }
     }
 }

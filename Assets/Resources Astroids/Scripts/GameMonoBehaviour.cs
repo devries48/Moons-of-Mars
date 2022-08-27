@@ -1,4 +1,6 @@
+using System.Collections;
 using UnityEngine;
+using static Cinemachine.DocumentationSortingAttribute;
 
 namespace Game.Astroids
 {
@@ -56,6 +58,18 @@ namespace Game.Astroids
                 _pool.ReturnToPool(gameObject);
             else
                 RequestDestruction();
+        }
+
+        public void RemoveFromGame(float t)
+        {
+            StartCoroutine(RemoveFromGameCore(t));
+        }
+
+        IEnumerator RemoveFromGameCore(float t)
+        {
+            yield return new WaitForSeconds(t);
+
+            RemoveFromGame();
         }
 
         public static void RemoveFromGame(GameObject victim)

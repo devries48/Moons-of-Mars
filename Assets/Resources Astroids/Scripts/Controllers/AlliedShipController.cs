@@ -4,14 +4,23 @@ namespace Game.Astroids
 {
     public class AlliedShipController : SpaceShipMonoBehaviour
     {
-        enum SpawnSide
-        {
-            left,
-            right,
-            top
-        }
+        #region editor fields
+        [Header("Allied Ship")]
 
-        Vector3 oldPos;
+        [SerializeField]
+        ThrustController _thrustController;
+
+        [SerializeField]
+        AudioSource spawnAudio;
+
+        #endregion
+
+        bool _isShipRemoved;        // Prevent ship remove recursion
+        bool _isPackageEjected;     // Prevent ejecing multiple packages
+                                    
+        Vector3 _oldPos;            // used to determine direction
+        Vector3 _targetPos;
+
         AstroidsGameManager _gameManager;
 
         protected override void Awake()
@@ -25,57 +34,80 @@ namespace Game.Astroids
         protected override void OnEnable()
         {
             base.OnEnable();
-            oldPos = new();
+
+            _isShipRemoved = false;
+            _isPackageEjected = false;
+
+            _oldPos = new();
             MoveShip();
         }
 
         void Update()
         {
-            Vector3 direction = (transform.position - oldPos).normalized;
+            Vector3 direction = (transform.position - _oldPos).normalized;
 
-            if (direction != Vector3.zero || oldPos == Vector3.zero)
+            if (direction != Vector3.zero || _oldPos == Vector3.zero)
                 transform.rotation = Quaternion.LookRotation(direction);
+
+            if (!_isPackageEjected && transform.position.z > -.5f && transform.position.z < .5f)
+                EjectPackage();
+
+            if (!_isShipRemoved && Vector3.Distance(transform.position, _targetPos) < .1f)
+                RemoveShip();
         }
 
-        void LateUpdate()
-        {
-            oldPos = transform.position;
-        }
+        void LateUpdate() => _oldPos = transform.position;
 
         void MoveShip()
         {
-            LeanTween.move(gameObject, CreatePath(), 4f)
+            var duration = 5f;
+
+            LeanTween.move(gameObject, CreatePath(), duration)
                 .setEaseOutQuad()
                 .setOrientToPath(true);
+
+            if (_thrustController != null)
+            {
+                LeanTween.value(gameObject, 1f, 0f, duration).setOnUpdate((float val) =>
+                    {
+                        _thrustController.SetThrust(val);
+                    })
+                    .setEaseOutCubic();
+            }
+            spawnAudio.volume = 1f;
+            spawnAudio.Play();
+
+            StartCoroutine(FadeMixerGroup.StartFade(spawnAudio.outputAudioMixerGroup.audioMixer, "Vol1", duration - .5f, 0f, 1f));
+        }
+
+        void RemoveShip()
+        {
+            print("Remove Shuttle!");
+
+            _isShipRemoved = true;
+
+            RemoveFromGame(5f);
+        }
+
+        void EjectPackage()
+        {
+            _isPackageEjected = true;
+            print("Eject Package! " + transform.position.z);
+
         }
 
         LTBezierPath CreatePath(int increments = 4)
         {
             var path = new Vector3[increments];
 
-            float x;
-            float y;
-            var side = RandomEnumUtil<SpawnSide>.Get();
+            // first position, spawn
+            _oldPos = new Vector3(Random.Range(-50f, 50f), Random.Range(-20f, 20f), 100f);
+            transform.position = _oldPos;
+            path[0] = _oldPos;
 
-            // first position
-            if (side == SpawnSide.top)
-            {
-                x = Random.Range(-50f, 50f);
-                y = 20f;
-            }
-            else
-            {
-                x = side == SpawnSide.left ? -50f : 50f;
-                y = Random.Range(-20f, 20f);
-            }
-            oldPos = new Vector3(x, y, -100);
-            transform.position = oldPos;
-
-            path[0] = oldPos;
-
-            // second position
-            x = Random.Range(-15f, 15f);
-            path[1] = new Vector3(x, Random.Range(-7f, 4f), 0);
+            // second position, bring within game cam view
+            float x = Random.Range(-15f, 15f);
+            path[1] = new Vector3(x, Random.Range(-8f, -8f), 0);
 
             // third position
             if (x < 0)
@@ -83,19 +115,12 @@ namespace Game.Astroids
             else
                 x -= 20;
 
-            path[2] = new Vector3(x, Random.Range(-7f, 4f), 0);
+            path[2] = new Vector3(x, Random.Range(-8f, 8f), 0);
 
             // last position
-            y = Random.Range(-2f, 5f);
+            _targetPos = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f), -30f);
+            path[3] = _targetPos;
 
-            // leave on the bottom of the screen sometimes.
-            if (Random.Range(1f, 5f) == 1f)
-                y = -5.2f;
-
-            path[3] = new Vector3(Random.Range(-10f, 10f), y, 25);
-            print("----");
-            print(path[1]);
-            print(path[2]);
             return new LTBezierPath(path);
         }
 

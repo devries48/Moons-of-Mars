@@ -71,6 +71,11 @@ namespace Game.Astroids
 
         public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds.PlayClip(clip);
 
+        public void PlayAudioClip(AudioClip clip)
+        {
+            sounds.PlayClip(clip);
+        }
+
         protected virtual void FireWeapon() => StartCoroutine(Shoot());
 
         protected virtual void HitByBullet(GameObject bullet)

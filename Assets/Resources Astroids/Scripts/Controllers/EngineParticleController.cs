@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -10,9 +8,8 @@ namespace Game.Astroids
     [ExecuteAlways]
     public class EngineParticleController : MonoBehaviour
     {
-
         [SerializeField]
-        ParticleSystem sys; // use requiredcomponent?
+        ParticleSystem sys;
 
         [SerializeField]
         ThrustController thrustController;
@@ -31,6 +28,15 @@ namespace Game.Astroids
 
         void OnEnable()
         {
+            if (sys)
+            {
+                _sysMain = sys.main;
+                _sysEmission = sys.emission;
+            }
+
+            if (thrustController == null)
+                return;
+
             thrustController.EventThrustChanged += SetStartSpeed;
 
             if (minPosition != maxPosition)
@@ -38,13 +44,13 @@ namespace Game.Astroids
 
             if (minEmission != maxEmission)
                 thrustController.EventThrustChanged += SetEmission;
-
-            _sysMain = sys.main;
-            _sysEmission = sys.emission;
         }
 
         void OnDisable()
         {
+            if (thrustController == null)
+                return;
+
             thrustController.EventThrustChanged -= SetStartSpeed;
 
             if (minPosition != maxPosition)
@@ -73,16 +79,10 @@ namespace Game.Astroids
         }
 
         [ContextMenu("SetMinPosition")]
-        void SetMinPosition()
-        {
-            minPosition = sys.transform.localPosition;
-        }
+        void SetMinPosition() => minPosition = sys.transform.localPosition;
 
         [ContextMenu("SetMaxPosition")]
-        void SetMaxPosition()
-        {
-            maxPosition = sys.transform.localPosition;
-        }
+        void SetMaxPosition() => maxPosition = sys.transform.localPosition;
 
     }
 }
