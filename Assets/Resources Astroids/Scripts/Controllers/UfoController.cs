@@ -16,6 +16,9 @@ namespace Game.Astroids
         [Header("UFO")]
 
         [SerializeField]
+        GameObject pivot;
+
+        [SerializeField]
         float speed = 10f;
 
         [SerializeField]
@@ -97,10 +100,11 @@ namespace Game.Astroids
         void SetRandomShipBehaviour()
         {
             var side = RandomEnumUtil<SpawnSide>.Get();
-            var tilt = Random.Range(-15f, 60f);
+            
+            LeanTween.rotateX(pivot, -10f, 1f).setFrom(10f).setLoopPingPong();
 
             Rb.transform.position = SpawnPoint(side == SpawnSide.left);
-            Rb.transform.localRotation= Quaternion.AngleAxis(tilt, Vector3.right);
+            //Rb.transform.localRotation= Quaternion.AngleAxis(tilt, Vector3.right);
             _targetPos = SpawnPoint(side != SpawnSide.left);
 
             InvokeRepeating(nameof(FireRandomDirection), fireRate, fireRate);
@@ -184,6 +188,9 @@ namespace Game.Astroids
 
         Vector3 SpawnPoint(bool left)
         {
+            if (_gameManager == null)
+                return Vector3.zero;
+
             var xPos = (left)
                  ? _gameManager.m_camBounds.LeftEdge - 1
                  : _gameManager.m_camBounds.RightEdge + 1;

@@ -40,7 +40,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 6ea288f62c2abd84282d183b64ff87a3, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Low
@@ -76,7 +76,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: c75539516ae2b814d957a0583df39f77, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Medium
@@ -112,7 +112,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: d8a85a0eac43d6f42bcc6afc30ace38f, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: High
@@ -148,7 +148,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 36c80d1f1fffa6e42874df631ecd33e5, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Very High
@@ -184,7 +184,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 7a130022213732b4dab229632b568ecf, type: 2}
     excludedTargetPlatforms: []
   - serializedVersion: 2
     name: Ultra
@@ -220,7 +220,7 @@ QualitySettings:
     asyncUploadBufferSize: 16
     asyncUploadPersistentBuffer: 1
     resolutionScalingFixedDPIFactor: 1
-    customRenderPipeline: {fileID: 0}
+    customRenderPipeline: {fileID: 11400000, guid: 3464fac413b6f0543b8202d505897afd, type: 2}
     excludedTargetPlatforms: []
   m_PerPlatformDefaultQuality:
     Android: 2
