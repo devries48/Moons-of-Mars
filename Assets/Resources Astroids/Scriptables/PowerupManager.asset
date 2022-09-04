@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a88e7374beb4d94e8d848310736b035, type: 3}
+  m_Name: PowerupManager
+  m_EditorClassIdentifier: 
+  minSpawnWait: 10
+  maxSpawnWait: 30
+  ShuttlePrefab: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
+  FirePowerupPrefab: {fileID: 8621384794249824610, guid: dd4380ed1d4c5974e89bd2fb533371c0, type: 3}

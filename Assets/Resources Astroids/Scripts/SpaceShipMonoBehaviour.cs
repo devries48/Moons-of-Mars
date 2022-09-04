@@ -49,7 +49,7 @@ namespace Game.Astroids
         #region fields
 
         internal bool m_isAlive;
-        protected bool m_isEnemy = false;
+        internal bool m_isEnemy = false;
         protected bool m_isAllied = false;
         protected bool m_canShoot = true;
 

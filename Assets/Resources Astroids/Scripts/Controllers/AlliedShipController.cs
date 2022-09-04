@@ -21,6 +21,7 @@ namespace Game.Astroids
         Vector3 _oldPos;            // used to determine direction
         Vector3 _targetPos;
 
+        GameObject _powerup;
         AstroidsGameManager _gameManager;
 
         protected override void Awake()
@@ -57,6 +58,11 @@ namespace Game.Astroids
         }
 
         void LateUpdate() => _oldPos = transform.position;
+
+        public void SetPowerup(GameObject powerup)
+        {
+            _powerup = powerup;
+        }
 
         void MoveShip()
         {
@@ -123,6 +129,5 @@ namespace Game.Astroids
 
             return new LTBezierPath(path);
         }
-
     }
 }

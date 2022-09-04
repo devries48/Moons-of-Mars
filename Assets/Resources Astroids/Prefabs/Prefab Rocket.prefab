@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4622462081951471734}
   m_Layer: 8
   m_Name: Prefab Rocket
-  m_TagString: Untagged
+  m_TagString: SpaceShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -393,8 +393,8 @@ GameObject:
   - component: {fileID: 2258893236872677646}
   - component: {fileID: 2258893236872677642}
   - component: {fileID: 4753200369740720206}
-  m_Layer: 0
-  m_Name: Prefab Ufo
+  m_Layer: 9
+  m_Name: Ufo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,13 +1009,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4753200371372890115}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Prefab Ufo
-  m_TagString: Untagged
+  m_TagString: SpaceShip
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4753200371372890115
 Transform:
   m_ObjectHideFlags: 0

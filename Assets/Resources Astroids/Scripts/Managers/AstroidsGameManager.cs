@@ -41,6 +41,9 @@ namespace Game.Astroids
         GameObject ufoPrefab;
 
         [SerializeField]
+        PowerupManager powerupManager;
+
+        [SerializeField]
         TextMeshProUGUI announcerTextUI;
 
         [SerializeField]
@@ -95,6 +98,7 @@ namespace Game.Astroids
 
             StartCoroutine(GameLoop());
             StartCoroutine(UfoSpawnLoop());
+            StartCoroutine(powerupManager.PowerupSpawnLoop());
         }
 
         void OnEnable() => __instance = this;

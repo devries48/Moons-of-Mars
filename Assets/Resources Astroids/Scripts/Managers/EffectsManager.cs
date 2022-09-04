@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
+    //TODO: Scriptable object? (see powerupManager
     public class EffectsManager : MonoBehaviour
     {
         public enum Effect
@@ -55,7 +56,7 @@ namespace Game.Astroids
             }
         }
 
-        public void BuildPools()
+        void BuildPools()
         {
             _explosionPool = GameObjectPool.Build(ExplosionPrefab, 1);
             _dustExplosionPool = GameObjectPool.Build(DustExplosionPrefab, 5);
