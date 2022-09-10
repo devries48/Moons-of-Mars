@@ -19,6 +19,18 @@ namespace Game.Astroids
         [SerializeField]
         GameObject FirePowerupPrefab;
 
+        protected AstroidsGameManager GameManager
+        {
+            get
+            {
+                if (__gameManager == null)
+                    __gameManager = AstroidsGameManager.Instance;
+
+                return __gameManager;
+            }
+        }
+        AstroidsGameManager __gameManager;
+
         List<Powerup> _powerupList;
 
         GameObjectPool _shuttlePool;
@@ -49,20 +61,22 @@ namespace Game.Astroids
             if (_shuttlePool == null)
                 BuildPools();
 
-            while (true)
+            while (GameManager.m_GamePlaying)
             {
-                var wait = Random.Range(minSpawnWait, maxSpawnWait);
-                yield return new WaitForSeconds(wait);
+                while (GameManager.m_GamePaused)
+                    yield return null;
 
-                Debug.Log("Powerup pool");
-                var powerup = _firePool.GetFromPool();
-                var shuttle = _shuttlePool.GetFromPool();
+                yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                Debug.Log("shuttle");
-                var control = shuttle.GetComponent<AlliedShipController>();
-                control.SetPowerup(powerup);
-                control.enabled = true;
+                if (!GameManager.m_GamePaused)
+                    _shuttlePool.GetFromPool();
             }
+        }
+
+        public void SpawnPowerup(Vector3 pos)
+        {
+            Debug.Log("Powerup pool");
+            _firePool.GetFromPool(pos);
         }
     }
 }

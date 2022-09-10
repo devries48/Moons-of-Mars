@@ -19,7 +19,7 @@ namespace Game.Astroids
 
         void Update()
         {
-            AstroidsGameManager.Instance.ScreenWrapObject(gameObject);
+            GameManager.ScreenWrapObject(gameObject);
 
             if (!m_canShoot)
                 return;

@@ -1,12 +1,13 @@
 using System.Collections;
 using UnityEngine;
-using static Cinemachine.DocumentationSortingAttribute;
 
 namespace Game.Astroids
 {
     [DisallowMultipleComponent]
     public class GameMonoBehaviour : MonoBehaviour, IPoolable
     {
+        #region properties
+
         protected AudioSource Audio
         {
             get
@@ -17,17 +18,27 @@ namespace Game.Astroids
                 return __audio;
             }
         }
-
         AudioSource __audio;
+
+        protected AstroidsGameManager GameManager
+        {
+            get
+            {
+                if (__gameManager == null)
+                    __gameManager = AstroidsGameManager.Instance;
+
+                return __gameManager;
+            }
+        }
+        AstroidsGameManager __gameManager;
 
         public bool IsPooled => _pool != null;
 
+        #endregion
+
         GameObjectPool _pool;
 
-        protected void Score(int score)
-        {
-            Astroids.Score.Earn(score);
-        }
+        protected void Score(int score) => Astroids.Score.Earn(score);
 
         protected void PlaySound(AudioClip clip)
         {
@@ -39,7 +50,7 @@ namespace Game.Astroids
 
         protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f)
         {
-            AstroidsGameManager.Instance.PlayEffect(effect, position, scale);
+            GameManager.PlayEffect(effect, position, scale);
         }
 
         protected virtual void OnDisable() => CancelInvokeRemoveFromGame();
@@ -60,10 +71,7 @@ namespace Game.Astroids
                 RequestDestruction();
         }
 
-        public void RemoveFromGame(float t)
-        {
-            StartCoroutine(RemoveFromGameCore(t));
-        }
+        public void RemoveFromGame(float t) => StartCoroutine(RemoveFromGameCore(t));
 
         IEnumerator RemoveFromGameCore(float t)
         {

@@ -46,10 +46,13 @@ namespace Game.Astroids
         GameObject CreatePooledItem()
         {
             var obj = Object.Instantiate(_prefab);
-            obj.TryGetComponent(out IPoolable instance);
+            var instance = obj.GetComponentInChildren<IPoolable>();
+            //obj.TryGetComponent(out IPoolable instance);
 
             if (instance != null)
                 instance.SetPool(this);
+            else
+                Debug.LogWarning("Unable to find IPoolable interface!");
 
             return obj;
         }

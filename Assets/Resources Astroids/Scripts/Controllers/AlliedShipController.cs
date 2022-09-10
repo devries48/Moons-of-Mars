@@ -21,12 +21,8 @@ namespace Game.Astroids
         Vector3 _oldPos;            // used to determine direction
         Vector3 _targetPos;
 
-        GameObject _powerup;
-        AstroidsGameManager _gameManager;
-
         protected override void Awake()
         {
-            _gameManager = AstroidsGameManager.Instance;
             m_isAllied = true;
 
             base.Awake();
@@ -59,11 +55,6 @@ namespace Game.Astroids
 
         void LateUpdate() => _oldPos = transform.position;
 
-        public void SetPowerup(GameObject powerup)
-        {
-            _powerup = powerup;
-        }
-
         void MoveShip()
         {
             var duration = 5f;
@@ -88,8 +79,6 @@ namespace Game.Astroids
 
         void RemoveShip()
         {
-            print("Remove Shuttle!");
-
             _isShipRemoved = true;
 
             RemoveFromGame(5f);
@@ -99,7 +88,6 @@ namespace Game.Astroids
         {
             _isPackageEjected = true;
             print("Eject Package! " + transform.position.z);
-
         }
 
         LTBezierPath CreatePath(int increments = 4)

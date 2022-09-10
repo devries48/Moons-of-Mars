@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using TMPro;
 
 namespace Game.Astroids
 {
@@ -44,15 +43,17 @@ namespace Game.Astroids
         PowerupManager powerupManager;
 
         [SerializeField]
-        TextMeshProUGUI announcerTextUI;
+        Camera gameCamera;
 
         [SerializeField]
-        Camera gameCamera;
+        UIManager uiManager = new();
+
         #endregion
 
         #region fields
         internal CamBounds m_camBounds;
         internal bool m_GamePlaying;
+        internal bool m_GamePaused;
 
         bool _requestTitleScreen;
 
@@ -61,10 +62,18 @@ namespace Game.Astroids
 
         PlayerShipController _playerShip;
         EffectsManager _effects;
-        GameAnnouncer _announce;
         CurrentLevel _level;
 
         #endregion
+
+        enum Menu
+        {
+            none = 0,
+            start = 1,
+            exit = 2
+        }
+
+        #region Unity Messages
 
         void Awake()
         {
@@ -84,7 +93,6 @@ namespace Game.Astroids
 
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
             _ufoPool = GameObjectPool.Build(ufoPrefab, 2);
-            _announce = GameAnnouncer.AnnounceTo(Announcer.TextComponent(announcerTextUI), Announcer.Log(this));
         }
 
         void Start()
@@ -103,7 +111,9 @@ namespace Game.Astroids
 
         void OnEnable() => __instance = this;
 
-        #region Game Loop
+        #endregion
+
+        #region game loops
 
         IEnumerator GameLoop()
         {
@@ -114,14 +124,30 @@ namespace Game.Astroids
                 if (_requestTitleScreen)
                 {
                     _requestTitleScreen = false;
-
-                    yield return StartCoroutine(ShowTitleScreen());
+                    m_GamePaused = true;
+                    string result = null;
+                    yield return Run<string>(ShowTitleScreen(), (output) => result = output);
                 }
+
+                while (m_GamePaused)
+                    yield return null;
+
                 yield return StartCoroutine(LevelStart());
                 yield return StartCoroutine(LevelPlay());
                 yield return StartCoroutine(LevelEnd());
 
                 System.GC.Collect();
+            }
+        }
+
+        IEnumerator UfoSpawnLoop()
+        {
+            while (m_GamePlaying)
+            {
+                var wait = Random.Range(15f, 30f);
+                SpawnUfo();
+
+                yield return new WaitForSeconds(wait);
             }
         }
 
@@ -132,19 +158,19 @@ namespace Game.Astroids
             _level.Level1();
         }
 
-        //todo make gameobject
         IEnumerator ShowTitleScreen()
         {
-            _announce.Title();
+            uiManager.ShowMainMenu();
 
-            while (!Input.anyKeyDown) yield return null;
+            yield return null;
         }
 
         IEnumerator LevelStart()
         {
             _playerShip.Recover();
             _playerShip.EnableControls();
-            _announce.LevelStarts(_level.Level);
+
+            uiManager.LevelStarts(_level.Level);
 
             yield return PauseLong();
 
@@ -153,11 +179,9 @@ namespace Game.Astroids
 
         IEnumerator LevelPlay()
         {
-            _announce.LevelPlaying();
 
             while (_playerShip.IsAlive && _level.HasEnemy)
                 yield return null;
-
         }
 
         IEnumerator LevelEnd()
@@ -166,7 +190,7 @@ namespace Game.Astroids
 
             if (gameover)
             {
-                _announce.GameOver();
+                uiManager.GameOver();
                 yield return PauseBrief();
 
                 Score.Tally();
@@ -174,12 +198,12 @@ namespace Game.Astroids
 
                 Score.Reset();
                 //powerupManager.DenyAllPower(); // ship should reset itself?
-                _announce.ClearAnnouncements();
+                uiManager.Reset();
                 GameStart();
             }
             else
             {
-                _announce.LevelCleared();
+                uiManager.LevelCleared();
                 yield return PauseBrief();
 
                 Score.LevelCleared(_level.Level);
@@ -197,16 +221,7 @@ namespace Game.Astroids
 
         #endregion
 
-        IEnumerator UfoSpawnLoop()
-        {
-            while (m_GamePlaying)
-            {
-                var wait = Random.Range(15f, 30f);
-                SpawnUfo();
-
-                yield return new WaitForSeconds(wait);
-            }
-        }
+        #region spawn player, astroids, enemies & powerups
 
         PlayerShipController SpawnPlayer(GameObject spaceShip)
         {
@@ -243,8 +258,28 @@ namespace Game.Astroids
 
                 var astroid = _astoidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
                 astroid.GetComponent<AsteroidController>().SetGeneration(generation);
-               
+
                 _level.AstroidAdd();
+            }
+        }
+
+        public void SpawnPowerup(Vector3 pos) => powerupManager.SpawnPowerup(pos);
+
+        #endregion
+
+        public void MenuSelect(int i)
+        {
+            var menu = (Menu)i;
+            switch (menu)
+            {
+                case Menu.start:
+                    m_GamePaused = false;
+                    break;
+                case Menu.exit:
+                    break;
+                case Menu.none:
+                default:
+                    break;
             }
         }
 
@@ -292,6 +327,17 @@ namespace Game.Astroids
         public static WaitForSeconds PauseBrief()
         {
             return new WaitForSeconds(1f);
+        }
+
+        static IEnumerator Run<T>(IEnumerator target, System.Action<T> output)
+        {
+            object result = null;
+            while (target.MoveNext())
+            {
+                result = target.Current;
+                yield return result;
+            }
+            output((T)result);
         }
 
         #region struct CamBounds

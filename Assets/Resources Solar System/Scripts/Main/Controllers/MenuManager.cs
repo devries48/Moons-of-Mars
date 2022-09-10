@@ -4,13 +4,11 @@ using UnityEngine.Playables;
 using UnityEngine.Events;
 
 using static SolarSystemController;
-using Cinemachine;
-using System;
 
 // see https://easings.net/
 
 [DisallowMultipleComponent]
-public class MenuController : MonoBehaviour
+public class MenuManager : MonoBehaviour
 {
     #region editor fields
     [Header("UI Elements")]
@@ -76,12 +74,12 @@ public class MenuController : MonoBehaviour
     public void ShowBodyInfoWindow(CelestialBodyName name, bool isDeselect)
     {
         if (isDeselect)
-            TweenPivot(infoPanel, new Vector2(0f, 0.5f), null, LeanTweenType.easeInOutBack);
+            TweenUtil.TweenPivot(infoPanel, new Vector2(0f, 0.5f), null, LeanTweenType.easeInOutBack);
         else
         {
             SetWindowInfo(name);
             slideInSound.Play();
-            TweenPivot(infoPanel, new Vector2(1.2f, 0.5f), null, LeanTweenType.easeInOutBack);
+            TweenUtil.TweenPivot(infoPanel, new Vector2(1.2f, 0.5f), null, LeanTweenType.easeInOutBack);
         }
     }
 
@@ -173,7 +171,7 @@ public class MenuController : MonoBehaviour
             TweenPlanetScale(1f, true);
 
         HideExitButton();
-        TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, GmManager.CameraSwitchTime);
+        TweenUtil.TweenPivot(mainMenuWindow, new Vector2(0f, 0.5f), new Vector3(0, -30, 0), LeanTweenType.easeInOutSine, 1f, LeanTweenType.easeInCirc, GmManager.CameraSwitchTime);
 
         spaceDebriSystem.Play();
     }
@@ -219,37 +217,15 @@ public class MenuController : MonoBehaviour
 
     void ShowExitButton()
     {
-        TweenPivot(exitButton, new Vector2(-.2f, -.2f), GmManager.CameraSwitchTime);
+        TweenUtil.TweenPivot(exitButton, new Vector2(-.2f, -.2f), GmManager.CameraSwitchTime);
     }
 
     void HideExitButton()
     {
-        TweenPivot(exitButton, new Vector2(-.2f, 2f), null);
+        TweenUtil.TweenPivot(exitButton, new Vector2(-.2f, 2f), null);
     }
 
-    public static int TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
-                LeanTweenType pivotEase = LeanTweenType.easeInOutSine, float pivotTime = 1f,
-                LeanTweenType rotateEase = LeanTweenType.notUsed, float rotateTime = 0f)
-    {
-        var rect = gameObj.GetComponent<RectTransform>();
-        var id_pivot = 0;
-        var id_rotate = 0;
-
-        if (rotateObj is Vector3 rotate)
-        {
-            if (rotateEase == LeanTweenType.notUsed)
-                rect.Rotate(rotate);
-            else
-                id_rotate = LeanTween.rotate(gameObj, rotate, rotateTime).setEase(rotateEase).id;
-        }
-
-        id_pivot = LeanTween.value(gameObj, rect.pivot, newPivot, pivotTime).setEase(pivotEase).setOnUpdateVector2((Vector2 pos) =>
-        {
-            rect.pivot = pos;
-        }).id;
-
-        return (pivotTime > rotateTime) ? id_pivot : id_rotate;
-    }
+ 
 
     void TweenPlanetScale(float scaleTime, bool scaleOut = false)
     {

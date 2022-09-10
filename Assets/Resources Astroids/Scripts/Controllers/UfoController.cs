@@ -45,7 +45,6 @@ namespace Game.Astroids
 
         #region fields
 
-        AstroidsGameManager _gameManager;
         Vector3 _targetPos;  // Ufo target position
         bool _isShipRemoved; // Prevent ship remove recursion
         Renderer _rndBody;   // Hide Ufo when hit before explosion
@@ -55,7 +54,6 @@ namespace Game.Astroids
 
         protected override void Awake()
         {
-            _gameManager = AstroidsGameManager.Instance;
             m_isEnemy = true;
 
             base.Awake();
@@ -63,6 +61,9 @@ namespace Game.Astroids
 
         protected override void OnEnable()
         {
+            TryGetComponent(out UfoController ctr);
+
+            print("start pooled: " + ctr.IsPooled);
             _isShipRemoved = false;
 
             if (engineAudio != null)
@@ -70,6 +71,7 @@ namespace Game.Astroids
 
             SetRandomShipBehaviour();
             ShowModel();
+
             base.OnEnable();
         }
 
@@ -81,15 +83,15 @@ namespace Game.Astroids
 
         void FixedUpdate()
         {
-            if (!m_isAlive) return;
-
+            if (!m_isAlive || _isShipRemoved) return;
+            
             SpinUfo();
             MoveUfo();
         }
 
         protected override void HitByBullet(GameObject bullet)
         {
-            _gameManager.UfoDestroyed();
+            GameManager.UfoDestroyed();
 
             HideModel();
             base.HitByBullet(bullet);
@@ -117,7 +119,7 @@ namespace Game.Astroids
 
             Rb.transform.position = Vector3.MoveTowards(Rb.transform.position, _targetPos, step);
 
-            if (!_isShipRemoved && Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
+            if (Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
                 RemoveShip();
         }
 
@@ -181,23 +183,23 @@ namespace Game.Astroids
             engineAudio.Stop();
             engineAudio.volume = startVolume;
 
-            _gameManager.UfoDestroyed();
+            GameManager.UfoDestroyed();
 
             RemoveFromGame();
         }
 
         Vector3 SpawnPoint(bool left)
         {
-            if (_gameManager == null)
+            if (GameManager == null)
                 return Vector3.zero;
 
             var xPos = (left)
-                 ? _gameManager.m_camBounds.LeftEdge - 1
-                 : _gameManager.m_camBounds.RightEdge + 1;
+                 ? GameManager.m_camBounds.LeftEdge - 1
+                 : GameManager.m_camBounds.RightEdge + 1;
 
             var yPos = Random.Range(
-                _gameManager.m_camBounds.TopEdge - 1,
-                _gameManager.m_camBounds.BottomEdge + 1);
+                GameManager.m_camBounds.TopEdge - 1,
+                GameManager.m_camBounds.BottomEdge + 1);
 
             return new Vector3(xPos, yPos);
         }

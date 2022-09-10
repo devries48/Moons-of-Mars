@@ -6,7 +6,7 @@ using static SolarSystemController;
 
 [DisallowMultipleComponent]
 [SelectionBase]
-[RequireComponent(typeof(MenuController))]
+[RequireComponent(typeof(MenuManager))]
 public class SolarSystemPanelController : MonoBehaviour
 {
     #region editor fields
@@ -84,7 +84,7 @@ public class SolarSystemPanelController : MonoBehaviour
         SolarSystemReset();
 
         // Pivot y from 0 to -0.1 rotate x from -90 to 15 
-        MenuController.TweenPivot(_controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0), LeanTweenType.easeOutQuint, 1f, LeanTweenType.easeInQuad, GmManager.CameraSwitchTime);
+        TweenUtil.TweenPivot(_controlPanel, new Vector2(0.5f, -.1f), new Vector3(15, 0, 0), LeanTweenType.easeOutQuint, 1f, LeanTweenType.easeInQuad, GmManager.CameraSwitchTime);
     }
 
     /// <summary>
@@ -97,9 +97,9 @@ public class SolarSystemPanelController : MonoBehaviour
         _slideSpeed.value = _slideSpeed.minValue;
 
         if (animate)
-            MenuController.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
+            TweenUtil.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
         else
-            MenuController.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0));
+            TweenUtil.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0));
     }
 
     /// <summary>

@@ -45,7 +45,6 @@ namespace Game.Astroids
         #endregion
 
         #region fields
-        AstroidsGameManager _gameManager;
         Rigidbody _rb;
         Renderer _render;
 
@@ -59,7 +58,6 @@ namespace Game.Astroids
 
         private void Awake()
         {
-            _gameManager = AstroidsGameManager.Instance;
             _rb = GetComponent<Rigidbody>();
             _render = GetComponent<Renderer>();
         }
@@ -81,14 +79,14 @@ namespace Game.Astroids
             transform.Rotate(new Vector3(_rotationX, _rotationY, _rotationZ) * Time.deltaTime);
 
             _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
-            _gameManager.ScreenWrapObject(gameObject);
+            GameManager.ScreenWrapObject(gameObject);
         }
 
         void OnCollisionEnter(Collision collisionInfo)
         {
             // TODO constant tag names
             if (collisionInfo.collider.name == "Rocket")
-                _gameManager.RocketFail();
+                GameManager.RocketFail();
             else if (collisionInfo.collider.CompareTag("Bullet"))
                 HitByBullet(collisionInfo.gameObject);
             else if (collisionInfo.collider.CompareTag("AlienBullet"))
@@ -117,7 +115,7 @@ namespace Game.Astroids
 
         void HitByBullet(GameObject bullet)
         {
-            _gameManager.AsterodDestroyed();
+            GameManager.AsterodDestroyed();
 
             RemoveFromGame(bullet);
             StartCoroutine(ExplodeAstroid());
@@ -192,7 +190,7 @@ namespace Game.Astroids
             else
                 newGeneration = 3;
 
-            _gameManager.SpawnAsteroids(asteroidsNum, newGeneration, position);
+            GameManager.SpawnAsteroids(asteroidsNum, newGeneration, position);
         }
 
         void PlayAudioClip(AstroidSounds.Clip clip, float generation)
