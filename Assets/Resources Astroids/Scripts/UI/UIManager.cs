@@ -20,7 +20,7 @@ namespace Game.Astroids
         {
             get
             {
-                if (Announce == null)
+                if (__announce == null)
                     __announce = GameAnnouncer.AnnounceTo(Announcer.TextComponent(announcerTextUI));
 
                 return __announce;
