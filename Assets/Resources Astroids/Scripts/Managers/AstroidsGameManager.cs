@@ -93,6 +93,8 @@ namespace Game.Astroids
 
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
             _ufoPool = GameObjectPool.Build(ufoPrefab, 2);
+
+            uiManager.ResetUI();
         }
 
         void Start()
@@ -117,6 +119,8 @@ namespace Game.Astroids
 
         IEnumerator GameLoop()
         {
+            yield return Wait(1);
+
             GameStart();
 
             while (m_GamePlaying)
@@ -172,7 +176,7 @@ namespace Game.Astroids
 
             uiManager.LevelStarts(_level.Level);
 
-            yield return PauseLong();
+            yield return Wait(2);
 
             SpawnAsteroids(_level.AstroidsForLevel);
         }
@@ -191,10 +195,10 @@ namespace Game.Astroids
             if (gameover)
             {
                 uiManager.GameOver();
-                yield return PauseBrief();
+                yield return Wait(1);
 
                 Score.Tally();
-                yield return PauseBrief();
+                yield return Wait(1);
 
                 Score.Reset();
                 //powerupManager.DenyAllPower(); // ship should reset itself?
@@ -204,14 +208,14 @@ namespace Game.Astroids
             else
             {
                 uiManager.LevelCleared();
-                yield return PauseBrief();
+                yield return Wait(1);
 
                 Score.LevelCleared(_level.Level);
-                yield return PauseBrief();
+                yield return Wait(1);
 
                 AdvanceLevel();
             }
-            yield return PauseLong();
+            yield return Wait(2);
         }
 
         void AdvanceLevel()
@@ -273,6 +277,7 @@ namespace Game.Astroids
             switch (menu)
             {
                 case Menu.start:
+                    uiManager.HideMainMenu();
                     m_GamePaused = false;
                     break;
                 case Menu.exit:
@@ -283,6 +288,7 @@ namespace Game.Astroids
             }
         }
 
+        // TODO: Move to gamebaseclass? 
         public void ScreenWrapObject(GameObject obj)
         {
             var pos = obj.transform.position;
@@ -319,14 +325,9 @@ namespace Game.Astroids
             _level.UfoRemove();
         }
 
-        public static WaitForSeconds PauseLong()
+        public static WaitForSeconds Wait(float duration)
         {
-            return new WaitForSeconds(2f);
-        }
-
-        public static WaitForSeconds PauseBrief()
-        {
-            return new WaitForSeconds(1f);
+            return new WaitForSeconds(duration);
         }
 
         static IEnumerator Run<T>(IEnumerator target, System.Action<T> output)

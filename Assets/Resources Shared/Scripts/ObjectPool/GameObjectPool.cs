@@ -41,19 +41,21 @@ namespace Game.Astroids
             return GetFromPool(position, rotation).GetComponent<T>();
         }
 
-        public void ReturnToPool(GameObject obj) => _pool.Release(obj);
+        public void ReturnToPool(GameObject obj)
+        {
+            _pool.Release(obj);
+        }
 
         GameObject CreatePooledItem()
         {
             var obj = Object.Instantiate(_prefab);
             var instance = obj.GetComponentInChildren<IPoolable>();
-            //obj.TryGetComponent(out IPoolable instance);
 
             if (instance != null)
                 instance.SetPool(this);
             else
-                Debug.LogWarning("Unable to find IPoolable interface!");
-
+                Debug.LogError("Unable to find IPoolable interface: " + obj.ToString());
+            
             return obj;
         }
 
@@ -62,13 +64,13 @@ namespace Game.Astroids
         void OnReturnedToPool(GameObject obj) => obj.SetActive(false);
 
         void OnDestroyPoolObject(GameObject obj) => obj.SetActive(false);
-
     }
 
     interface IPoolable
     {
         bool IsPooled { get; }
         void SetPool(GameObjectPool pool);
+        void ReturnToPool(GameObject obj);
         void ReturnToPool();
     }
 }

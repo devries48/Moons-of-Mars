@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    [DisallowMultipleComponent]
-    public class GameMonoBehaviour : MonoBehaviour, IPoolable
+    public class GameMonoBehaviour : PoolableMonoBehaviour
     {
         #region properties
 
@@ -32,11 +31,8 @@ namespace Game.Astroids
         }
         AstroidsGameManager __gameManager;
 
-        public bool IsPooled => _pool != null;
-
         #endregion
 
-        GameObjectPool _pool;
 
         protected void Score(int score) => Astroids.Score.Earn(score);
 
@@ -65,8 +61,10 @@ namespace Game.Astroids
 
         public void RemoveFromGame()
         {
+            print("ispooled: " + IsPooled);
+
             if (IsPooled)
-                _pool.ReturnToPool(gameObject);
+                ReturnToPool();
             else
                 RequestDestruction();
         }
@@ -90,8 +88,5 @@ namespace Game.Astroids
                 RequestDefaultDestruction(victim);
         }
 
-        public void SetPool(GameObjectPool pool) => _pool = pool;
-
-        public void ReturnToPool() => _pool.ReturnToPool(gameObject);
     }
 }

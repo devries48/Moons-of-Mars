@@ -7,7 +7,7 @@ namespace Game.Astroids
     [Serializable]
     public class UIManager
     {
-        [SerializeField] 
+        [SerializeField]
         GameObject mainMenuWindow;
 
         [SerializeField]
@@ -28,10 +28,23 @@ namespace Game.Astroids
         }
         GameAnnouncer __announce;
 
+        // Set window in start position & hide ui items
+        public void ResetUI()
+        {
+            scoreTextUI.gameObject.SetActive(false);
+            TweenUtil.MenuWindowClose(mainMenuWindow, true);
+        }
+
         public void ShowMainMenu()
         {
             scoreTextUI.gameObject.SetActive(false);
-            mainMenuWindow.SetActive(true);
+            TweenUtil.MenuWindowOpen(mainMenuWindow);
+        }
+
+        public void HideMainMenu(bool startGame = true)
+        {
+            scoreTextUI.gameObject.SetActive(startGame);
+            TweenUtil.MenuWindowClose(mainMenuWindow);
         }
 
         public void LevelStarts(int level)

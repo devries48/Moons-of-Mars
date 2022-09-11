@@ -184,7 +184,7 @@ namespace Game.Astroids
             engineAudio.volume = startVolume;
 
             GameManager.UfoDestroyed();
-
+            print("ufo destroyed");
             RemoveFromGame();
         }
 

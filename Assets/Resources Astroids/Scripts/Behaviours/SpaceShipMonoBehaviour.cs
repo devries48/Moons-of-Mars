@@ -4,7 +4,6 @@ using UnityEngine;
 namespace Game.Astroids
 {
     [SelectionBase]
-    [RequireComponent(typeof(Rigidbody), typeof(AudioSource))]
     public class SpaceShipMonoBehaviour : GameMonoBehaviour
     {
         #region editor fields
@@ -35,7 +34,7 @@ namespace Game.Astroids
             get
             {
                 if (__rb == null)
-                    TryGetComponent(out __rb);
+                    __rb = GetComponentInChildren<Rigidbody>();
 
                 return __rb;
             }

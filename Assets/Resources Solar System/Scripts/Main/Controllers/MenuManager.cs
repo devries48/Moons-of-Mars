@@ -4,6 +4,7 @@ using UnityEngine.Playables;
 using UnityEngine.Events;
 
 using static SolarSystemController;
+using Cinemachine;
 
 // see https://easings.net/
 
@@ -63,6 +64,8 @@ public class MenuManager : MonoBehaviour
         _director = GetComponent<PlayableDirector>();
         _director.played += Director_played;
         _director.stopped += Director_stopped;
+
+        // TODO: Use ResetUI as in AstroidsGameManager, so menu is visible in editmode
     }
 
     void Start()
@@ -83,6 +86,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
+    // TODO: Use menu enum as in AstroidsGameManager
     public void MenuStartTour()
     {
         _director.Play();
@@ -186,7 +190,7 @@ public class MenuManager : MonoBehaviour
 
         if (quit)
         {
-            var closeId = Tweens.ApplicationClose(GmManager.MenuCamera);
+            var closeId = ApplicationClose(GmManager.MenuCamera);
             var d1 = LeanTween.descr(id);
             var d2 = LeanTween.descr(closeId);
             var d = d1 ?? d2;
@@ -198,12 +202,41 @@ public class MenuManager : MonoBehaviour
 
     void OpenMenuWindow(GameObject window)
     {
-        Tweens.MenuWindowOpen(window);
+        TweenUtil.MenuWindowOpen(window);
     }
 
     int CloseMenuWindow(GameObject window)
     {
-        return Tweens.MenuWindowClose(window);
+        return TweenUtil.MenuWindowClose(window);
+    }
+
+     int ApplicationClose(CinemachineVirtualCamera menuCamera)
+    {
+        var zoomId = 0;
+        var timeApplicationClose = TweenUtil.m_timeMenuOpenClose;
+
+        CinemachineFramingTransposer transposer = null;
+
+        if (menuCamera.TryGetComponent<CinemachineVirtualCamera>(out var cam))
+            transposer = cam.GetCinemachineComponent<CinemachineFramingTransposer>();
+
+        if (transposer != null)
+        {
+            LeanTween.value(transposer.m_ScreenX, 0.5f, timeApplicationClose / 2).setEase(LeanTweenType.easeOutQuint).setOnUpdate((float val) =>
+            {
+                transposer.m_ScreenX = val;
+            });
+            LeanTween.value(transposer.m_ScreenY, 0.5f, timeApplicationClose / 2).setEase(LeanTweenType.easeOutQuint).setOnUpdate((float val) =>
+            {
+                transposer.m_ScreenY = val;
+            });
+            zoomId = LeanTween.value(transposer.m_CameraDistance, timeApplicationClose * 50f, timeApplicationClose).setEase(LeanTweenType.easeInOutSine).setOnUpdate((float val) =>
+            {
+                transposer.m_CameraDistance = val;
+            }).id;
+        }
+
+        return zoomId;
     }
 
     void QuitApplication()

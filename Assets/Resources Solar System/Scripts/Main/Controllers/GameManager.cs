@@ -1,5 +1,4 @@
 using Cinemachine;
-using System;
 using System.Linq;
 using UnityEngine;
 
@@ -26,12 +25,12 @@ public class GameManager : MonoBehaviour
 
     #region editor fields
     [Header("Cameras")]
-    [SerializeField] public Camera MainCamera;
-    [SerializeField] public CinemachineVirtualCamera MenuCamera;
-    [SerializeField] public CinemachineVirtualCamera SolarSystemCamera;
+    public Camera MainCamera;
+    public CinemachineVirtualCamera MenuCamera;
+    public CinemachineVirtualCamera SolarSystemCamera;
 
     [Header("Solar System Controller")]
-    [SerializeField] public GameObject SolarSystem;
+    public GameObject SolarSystem;
     #endregion
 
     #region properties
@@ -56,7 +55,7 @@ public class GameManager : MonoBehaviour
 
     CelestialBody[] _celestialBodies;
 
-    private void OnEnable() => __instance = this;
+    void OnEnable() => __instance = this;
 
     void Awake()
     {
@@ -68,8 +67,6 @@ public class GameManager : MonoBehaviour
 
     public CelestialBody CelestialBody(SolarSystemController.CelestialBodyName name)
     {
-        Debug.LogWarning(name);
-        var body = _celestialBodies.First(b => b.Info.bodyName == name);
-        return body;
+        return _celestialBodies.First(b => b.Info.bodyName == name);
     }
 }
