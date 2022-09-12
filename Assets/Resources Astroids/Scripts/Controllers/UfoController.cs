@@ -61,9 +61,6 @@ namespace Game.Astroids
 
         protected override void OnEnable()
         {
-            TryGetComponent(out UfoController ctr);
-
-            print("start pooled: " + ctr.IsPooled);
             _isShipRemoved = false;
 
             if (engineAudio != null)
@@ -78,6 +75,7 @@ namespace Game.Astroids
         protected override void OnDisable()
         {
             CancelInvoke(nameof(FireRandomDirection));
+            LeanTween.cancel(pivot);
             base.OnDisable();
         }
 
@@ -102,11 +100,10 @@ namespace Game.Astroids
         void SetRandomShipBehaviour()
         {
             var side = RandomEnumUtil<SpawnSide>.Get();
-            
-            LeanTween.rotateX(pivot, -10f, 1f).setFrom(10f).setLoopPingPong();
+
+            LeanTween.rotateX(pivot, -10f, 1f).setFrom(10f).setLoopPingPong(5);
 
             Rb.transform.position = SpawnPoint(side == SpawnSide.left);
-            //Rb.transform.localRotation= Quaternion.AngleAxis(tilt, Vector3.right);
             _targetPos = SpawnPoint(side != SpawnSide.left);
 
             InvokeRepeating(nameof(FireRandomDirection), fireRate, fireRate);

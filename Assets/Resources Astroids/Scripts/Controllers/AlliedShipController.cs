@@ -112,7 +112,7 @@ namespace Game.Astroids
             path[2] = new Vector3(x, Random.Range(-8f, 8f), 0);
 
             // last position
-            _targetPos = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f), -30f);
+            _targetPos = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f), -31f);
             path[3] = _targetPos;
 
             return new LTBezierPath(path);
