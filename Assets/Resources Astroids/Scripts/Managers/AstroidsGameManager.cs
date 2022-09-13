@@ -183,6 +183,7 @@ namespace Game.Astroids
 
         IEnumerator LevelPlay()
         {
+            uiManager.LevelPlay();
 
             while (_playerShip.IsAlive && _level.HasEnemy)
                 yield return null;

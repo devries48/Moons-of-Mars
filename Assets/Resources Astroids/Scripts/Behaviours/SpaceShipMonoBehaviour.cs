@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -97,8 +98,7 @@ namespace Game.Astroids
         BulletController Bullet()
         {
             return _bulletPool.GetComponentFromPool<BulletController>(
-                weapon.transform.position,
-                weapon.transform.rotation);
+                weapon.transform.position, quaternion.identity);
         }
 
         IEnumerator Shoot()

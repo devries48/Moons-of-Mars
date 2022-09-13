@@ -16,7 +16,11 @@ namespace Game.Astroids
 
         void Awake() => _rb = GetComponent<Rigidbody>();
 
-        void OnEnable() => InvokeRemoveFromGame(bulletLifetime);
+        void OnEnable()
+        {
+            transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+            InvokeRemoveFromGame(bulletLifetime);
+        }
 
         public virtual void Fire(Vector3 direction)
         {

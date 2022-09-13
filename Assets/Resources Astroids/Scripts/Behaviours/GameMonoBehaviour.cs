@@ -61,8 +61,6 @@ namespace Game.Astroids
 
         public void RemoveFromGame()
         {
-            print("ispooled: " + IsPooled);
-
             if (IsPooled)
                 ReturnToPool();
             else
