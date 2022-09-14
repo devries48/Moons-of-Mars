@@ -83,10 +83,10 @@ namespace Game.Astroids
             m_camBounds = new CamBounds(gameCamera);
 
             if (asteroidPrefab == null)
-                Debug.LogWarning("Asteriod Prefab not set!");
+                Debug.LogError("Asteriod Prefab not set!");
 
             if (ufoPrefab == null)
-                Debug.LogWarning("UfoPrefab Prefab not set!");
+                Debug.LogError("UfoPrefab Prefab not set!");
 
             if (asteroidPrefab == null || ufoPrefab == null)
                 return;
@@ -165,8 +165,13 @@ namespace Game.Astroids
         IEnumerator ShowTitleScreen()
         {
             uiManager.ShowMainMenu();
-
             yield return null;
+        }
+
+        IEnumerator ResumeGame()
+        {
+            yield return new WaitForSeconds(.5f);
+            m_GamePaused = false;
         }
 
         IEnumerator LevelStart()
@@ -279,7 +284,7 @@ namespace Game.Astroids
             {
                 case Menu.start:
                     uiManager.HideMainMenu();
-                    m_GamePaused = false;
+                    StartCoroutine(ResumeGame());
                     break;
                 case Menu.exit:
                     break;

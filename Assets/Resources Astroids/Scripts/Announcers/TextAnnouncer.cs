@@ -28,8 +28,8 @@ namespace Announcers
 
             if (string.IsNullOrEmpty(message))
             {
-                m_TmPro.rectTransform.localScale = _defScale * 2;
-                LeanTween.scale(m_TmPro.rectTransform, _minScale, .5f).setOnComplete(() =>
+                m_TmPro.rectTransform.localScale = _defScale * 1.5f;
+                LeanTween.scale(m_TmPro.rectTransform, _minScale, .5f).setDelay(.5f).setOnComplete(() =>
                 {
                     m_TmPro.text = "";
                 });
@@ -37,7 +37,7 @@ namespace Announcers
             else
             {
                 m_TmPro.rectTransform.localScale = _minScale;
-                LeanTween.scale(m_TmPro.rectTransform, _defScale * 2, 2f);
+                LeanTween.scale(m_TmPro.rectTransform, _defScale * 1.5f, 2f).setEaseOutElastic();
                 m_TmPro.text = message;
             }
 

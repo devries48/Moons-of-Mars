@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a88e7374beb4d94e8d848310736b035, type: 3}
   m_Name: PowerupManager
   m_EditorClassIdentifier: 
-  minSpawnWait: 10
-  maxSpawnWait: 30
-  ShuttlePrefab: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
-  FirePowerupPrefab: {fileID: 8621384794249824610, guid: dd4380ed1d4c5974e89bd2fb533371c0, type: 3}
+  minSpawnWait: 20
+  maxSpawnWait: 60
+  shuttlePrefab: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
+  firePowerupPrefab: {fileID: 8621384794249824610, guid: dd4380ed1d4c5974e89bd2fb533371c0, type: 3}

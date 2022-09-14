@@ -14,10 +14,10 @@ namespace Game.Astroids
         int maxSpawnWait = 30;
 
         [SerializeField, Tooltip("Shuttle delivering the power-up")]
-        GameObject ShuttlePrefab;
+        GameObject shuttlePrefab;
 
         [SerializeField]
-        GameObject FirePowerupPrefab;
+        GameObject firePowerupPrefab;
 
         protected AstroidsGameManager GameManager
         {
@@ -40,8 +40,8 @@ namespace Game.Astroids
 
         public void BuildPools()
         {
-            _shuttlePool = GameObjectPool.Build(ShuttlePrefab, 1);
-            _firePool = GameObjectPool.Build(FirePowerupPrefab, 1);
+            _shuttlePool = GameObjectPool.Build(shuttlePrefab, 1);
+            _firePool = GameObjectPool.Build(firePowerupPrefab, 1);
         }
 
         public void HideAllPowerups()
