@@ -2,13 +2,12 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    [RequireComponent(typeof(MeshRenderer))]
-    public class ShieldBehaviour : MonoBehaviour
+    public class ShieldController : MonoBehaviour
     {
         [SerializeField]
         SpaceShipMonoBehaviour spaceShip;
 
-        [SerializeField,Tooltip("The magnitude of the force when hit by an astroid")]
+        [SerializeField, Tooltip("The magnitude of the force when hit by an astroid")]
         int magnitude = 2000;
 
         [SerializeField]
@@ -79,13 +78,29 @@ namespace Game.Astroids
 
                 force.Normalize();
                 rb.AddForce(-force * magnitude);
+
+                return;
             }
-            else if (ShieldsUp)
+
+            if (other.CompareTag("Player"))
             {
-                if (other.CompareTag("Bullet") || other.CompareTag("AlienBullet")){
+                SetShieldsUp(true);
+
+                //weg met de speler en ontplof maar
+            }
+
+            if (ShieldsUp)
+            {
+                if (other.CompareTag("Bullet") || other.CompareTag("AlienBullet"))
+                {
                     GameMonoBehaviour.RemoveFromGame(other.gameObject);
                     print("kogel op schild");
                 }
+                else if (other.CompareTag("Player"))
+                {
+
+                }
+                // ook astroide
             }
 
         }

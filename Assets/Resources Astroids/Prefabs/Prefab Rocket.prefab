@@ -48,7 +48,7 @@ GameObject:
   - component: {fileID: 4622462081951471734}
   m_Layer: 8
   m_Name: Prefab Rocket
-  m_TagString: SpaceShip
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -80,12 +80,12 @@ Rigidbody:
   m_GameObject: {fileID: 2874880245280111037}
   serializedVersion: 2
   m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
+  m_Drag: 1
+  m_AngularDrag: 15
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 64
+  m_Constraints: 8
   m_CollisionDetection: 0
 --- !u!136 &2874880245280111033
 CapsuleCollider:
@@ -96,7 +96,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2874880245280111037}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.28477055
   m_Height: 1.1502756
   m_Direction: 1
@@ -165,7 +165,11 @@ MonoBehaviour:
     shieldsUp: {fileID: 0}
     shieldsDown: {fileID: 0}
     shieldsHit: {fileID: 0}
-    shipExplosion: {fileID: 0}
+    shipExplosion: {fileID: 8300000, guid: 52a1f7212f9e8aa4aa1595355508a0b6, type: 3}
+  thrust: 500
+  rotationSpeed: 180
+  maxSpeed: 4.5
+  model: {fileID: 2874880244354272700}
 --- !u!114 &2874880245280111035
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,6 +386,11 @@ PrefabInstance:
 --- !u!4 &2874880244353978780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400012, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
+  m_PrefabInstance: {fileID: 2874880244354370320}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2874880244354272700 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 100012, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
   m_PrefabInstance: {fileID: 2874880244354370320}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3730601149969533948

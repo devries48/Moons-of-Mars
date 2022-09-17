@@ -4,6 +4,7 @@ using UnityEngine;
 public class TweenUtil
 {
     public static readonly float m_timeMenuOpenClose = 2f;
+    static readonly float _menuTilt= -10f;
 
     /// <summary>
     /// Open the menu window.
@@ -12,7 +13,7 @@ public class TweenUtil
     /// <returns>LeanTween ID for optional waiting to complete.</returns>
     public static int MenuWindowOpen(GameObject window)
     {
-        return LeanTween.rotate(window, new Vector3(0, -30, 0), m_timeMenuOpenClose).setEase(LeanTweenType.easeOutQuad).id;
+        return LeanTween.rotate(window, new Vector3(0, _menuTilt, 0), m_timeMenuOpenClose).setEase(LeanTweenType.easeOutQuad).id;
     }
 
     /// <summary>

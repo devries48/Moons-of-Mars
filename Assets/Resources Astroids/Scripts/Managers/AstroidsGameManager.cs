@@ -190,13 +190,13 @@ namespace Game.Astroids
         {
             uiManager.LevelPlay();
 
-            while (_playerShip.IsAlive && _level.HasEnemy)
+            while (_playerShip.m_isAlive && _level.HasEnemy)
                 yield return null;
         }
 
         IEnumerator LevelEnd()
         {
-            bool gameover = !_playerShip.IsAlive;
+            bool gameover = !_playerShip.m_isAlive;
 
             if (gameover)
             {
@@ -315,7 +315,24 @@ namespace Game.Astroids
 
         public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
 
-        public void RocketFail()
+        /// <summary>
+        /// Destroy player with explosion
+        /// </summary>
+        public void PlayerDestroyed(GameObject player)
+        {
+            var ship = player.GetComponent<SpaceShipMonoBehaviour>();
+            if (ship.m_isAlive)
+            {
+                ship.Explode();
+
+                PlayerDestroyed();
+            }
+        }
+
+        /// <summary>
+        /// Destroy player without explosion
+        /// </summary>
+        public void PlayerDestroyed()
         {
             Cursor.visible = true;
             print("GAME OVER");
@@ -389,34 +406,33 @@ namespace Game.Astroids
             public void AstroidAdd()
             {
                 _asteroidsActive++;
-                log();
+                Log();
             }
 
             public void AstroidRemove()
             {
                 _asteroidsActive--;
-                log();
+                Log();
             }
 
             public void UfoAdd()
             {
                 _ufosActive++;
-                log();
+                Log();
             }
 
             public void UfoRemove()
             {
                 _ufosActive--;
-                log();
+                Log();
             }
 
             public void Level1() => SetLevel(1);
             public void LevelAdvance() => _level++;
 
-            void log()
+            void Log()
             {
-                print("astroids:" + _asteroidsActive);
-                print("ufos:" + _ufosActive);
+                print("Active Astroids: " + _asteroidsActive + " - Ufo's: " + _ufosActive);
             }
 
             void SetLevel(int level)

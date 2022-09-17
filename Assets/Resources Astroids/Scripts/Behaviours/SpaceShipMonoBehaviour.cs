@@ -10,8 +10,11 @@ namespace Game.Astroids
         #region editor fields
         [Header("Spaceship")]
 
+        [SerializeField, Tooltip("Select model only when ship can explode")]
+        GameObject model;
+
         [SerializeField, Tooltip("Select shield gameobject")]
-        protected ShieldBehaviour shield;
+        protected ShieldController shield;
 
         [Header("Weapon & bullet")]
         [SerializeField, Tooltip("Select a weapon gameobject")]
@@ -54,39 +57,68 @@ namespace Game.Astroids
         protected bool m_canShoot = true;
 
         GameObjectPool _bulletPool;
+
         #endregion
 
         protected virtual void Awake() => BuilPool();
 
-        protected virtual void OnEnable() => m_isAlive = true;
-
-        protected virtual void OnTriggerEnter(Collider collider)
+        protected virtual void OnEnable()
         {
+            ShowModel();
+
+            m_isAlive = true;
+        }
+
+        protected virtual void OnTriggerEnter(Collider other)
+        {
+            var c = other;
+            var o = other.gameObject;
+
             if (m_isAlive && !AreShieldsUp)
-            {
-                if (collider.CompareTag("Bullet"))
-                    HitByBullet(collider.gameObject);
-            }
+                if (c.CompareTag("Bullet") && m_isEnemy || c.CompareTag("AlienBullet") && !m_isEnemy)
+                    HitByBullet(o);
+                else if (c.CompareTag("Enemy"))
+                    HitByShield(o);
         }
 
-        public void PlayAudioClip(SpaceShipSounds.Clip clip)
-        {
-            sounds?.PlayClip(clip);
-        }
+        public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds?.PlayClip(clip);
 
-        public void PlayAudioClip(AudioClip clip)
+        public void Explode()
         {
-            sounds?.PlayClip(clip);
+            m_isAlive = false;
+            StartCoroutine(ExplodeShip());
         }
 
         protected virtual void FireWeapon() => StartCoroutine(Shoot());
 
-        protected virtual void HitByBullet(GameObject bullet)
+        /// <summary>
+        /// Handle bullet hits
+        /// </summary>
+        protected virtual void HitByBullet(GameObject other)
         {
-            m_isAlive = false;
+            RemoveFromGame(other);
 
-            RemoveFromGame(bullet);
-            StartCoroutine(ExplodeUfo());
+            if (m_isEnemy)
+            {
+                GameManager.UfoDestroyed();
+                Explode();
+            }
+            else
+                GameManager.PlayerDestroyed(gameObject);
+        }
+
+        /// <summary>
+        /// Only a player ship can be hit by a shield. (Astroids are handled in the AstroidsController)
+        /// Enemy ship can only be hit by bullets!
+        /// </summary>
+        void HitByShield(GameObject other)
+        {
+            other.TryGetComponent(out ShieldController otherShield);
+
+            if (otherShield == null)
+                return;
+
+            GameManager.PlayerDestroyed(gameObject);
         }
 
         void BuilPool()
@@ -95,11 +127,7 @@ namespace Game.Astroids
                 _bulletPool = GameObjectPool.Build(bulletPrefab, 8, 16);
         }
 
-        BulletController Bullet()
-        {
-            return _bulletPool.GetComponentFromPool<BulletController>(
-                weapon.transform.position, quaternion.identity);
-        }
+        BulletController Bullet() => _bulletPool.GetComponentFromPool<BulletController>(weapon.transform.position, quaternion.identity);
 
         IEnumerator Shoot()
         {
@@ -116,17 +144,33 @@ namespace Game.Astroids
             m_canShoot = true;
         }
 
-        IEnumerator ExplodeUfo()
+        IEnumerator ExplodeShip()
         {
-            PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
+            HideModel();
+
+            if (m_isEnemy)
+                PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
+            else
+                PlayEffect(EffectsManager.Effect.bigExplosion, transform.position);
+
             PlayAudioClip(SpaceShipSounds.Clip.ShipExplosion);
 
             while (Audio.isPlaying)
-            {
                 yield return null;
-            }
 
             RemoveFromGame();
         }
+
+        void ShowModel(bool show = true)
+        {
+            if (model != null)
+            {
+                foreach (var rend in model.GetComponentsInChildren<Renderer>())
+                    rend.enabled = show;
+            }
+
+        }
+
+        void HideModel() => ShowModel(false);
     }
 }

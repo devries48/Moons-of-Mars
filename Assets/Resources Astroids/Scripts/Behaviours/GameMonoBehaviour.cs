@@ -44,10 +44,8 @@ namespace Game.Astroids
             Audio.PlayOneShot(clip);
         }
 
-        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f)
-        {
-            GameManager.PlayEffect(effect, position, scale);
-        }
+        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) 
+            => GameManager.PlayEffect(effect, position, scale);
 
         protected virtual void OnDisable() => CancelInvokeRemoveFromGame();
 

@@ -4,37 +4,78 @@ namespace Game.Astroids
 {
     public class PlayerShipController : SpaceShipMonoBehaviour
     {
-        public bool IsAlive => gameObject.activeSelf;
 
+        [Header("Player")]
+
+        [SerializeField] float thrust = 500f;
+        [SerializeField] float rotationSpeed = 180f;
+        [SerializeField] float maxSpeed = 4.5f;
         bool _canMove = true;
-        float _thrust = 6f;
-        float _rotationSpeed = 180f;
-        float _maxSpeed = 4.5f;
+        float _thrustInput;
+        float _turnInput;
 
-        void FixedUpdate()
+        Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
+
+        protected override void OnEnable()
         {
-            if (_canMove)
-                ControlRocket();
+            _thrustInput = 0f;
+            _turnInput = 0f;
+
+            base.OnEnable();
         }
 
         void Update()
         {
             GameManager.ScreenWrapObject(gameObject);
 
+            _turnInput = ShipInput.GetTurnAxis();
+            _thrustInput = ShipInput.GetForwardThrust();
+
             if (!m_canShoot)
                 return;
 
-            if (Input.GetMouseButtonDown(0) || Input.GetKey(KeyCode.Space))
+            if (ShipInput.IsShooting())
                 FireWeapon();
+        }
+
+        void FixedUpdate()
+        {
+
+            if (!_canMove)
+                return;
+
+            Move();
+            Turn();
+            ClampSpeed();
+        }
+
+        // Create a vector in the direction the ship is facing.
+        // Magnitude based on the input, speed and the time between frames.
+        void Move()
+        {
+            var thrustForce = _thrustInput * thrust * Time.deltaTime * transform.up;
+            Rb.AddForce(thrustForce);
+        }
+
+        void Turn()
+        {
+            transform.Rotate(0, 0, _turnInput * rotationSpeed * Time.deltaTime);
+        }
+
+        void ClampSpeed()
+        {
+            Rb.velocity = new Vector2(
+                Mathf.Clamp(Rb.velocity.x, -maxSpeed, maxSpeed),
+                Mathf.Clamp(Rb.velocity.y, -maxSpeed, maxSpeed));
         }
 
         public void Recover()
         {
-            if (!IsAlive)
+            if (!m_isAlive)
             {
+                ResetRigidbody();
                 ResetTransform();
                 gameObject.SetActive(true);
-                ResetRigidbody();
             }
         }
 
@@ -50,15 +91,7 @@ namespace Game.Astroids
             m_canShoot = false;
         }
 
-        void ControlRocket()
-        {
-            transform.Rotate(0, 0, Input.GetAxis("Horizontal") * _rotationSpeed * Time.deltaTime);
-
-            Rb.AddForce(Input.GetAxis("Vertical") * _thrust * transform.up);
-            Rb.velocity = new Vector2(Mathf.Clamp(Rb.velocity.x, -_maxSpeed, _maxSpeed), Mathf.Clamp(Rb.velocity.y, -_maxSpeed, _maxSpeed));
-        }
-
-        void ResetTransform() => transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
+        void ResetTransform() => transform.SetPositionAndRotation(Vector3.zero, _initialRotation);
 
         void ResetRigidbody() => RigidbodyUtil.Reset(GetComponent<Rigidbody>());
 

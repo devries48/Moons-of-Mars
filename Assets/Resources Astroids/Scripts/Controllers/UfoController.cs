@@ -30,13 +30,7 @@ namespace Game.Astroids
         [SerializeField]
         AudioSource engineAudio;
 
-        [Header("UFO Model")]
-
-        [SerializeField]
-        GameObject bodyModel;
-
-        [SerializeField]
-        GameObject cockpitModel;
+        [Header("UFO Lights")]
 
         [SerializeField]
         GameObject lightsModel;
@@ -47,8 +41,6 @@ namespace Game.Astroids
 
         Vector3 _targetPos;  // Ufo target position
         bool _isShipRemoved; // Prevent ship remove recursion
-        Renderer _rndBody;   // Hide Ufo when hit before explosion
-        Renderer _rndCockpit;
 
         #endregion
 
@@ -67,7 +59,7 @@ namespace Game.Astroids
                 FadeInEngine(.5f);
 
             SetRandomShipBehaviour();
-            ShowModel();
+            ShowLights();
 
             base.OnEnable();
         }
@@ -87,13 +79,10 @@ namespace Game.Astroids
             MoveUfo();
         }
 
-        protected override void HitByBullet(GameObject bullet)
+        protected override void HitByBullet(GameObject obj)
         {
-            GameManager.UfoDestroyed();
-
-            HideModel();
-            base.HitByBullet(bullet);
-
+            HideLights();
+            base.HitByBullet(obj);
             Score(destructionScore);
         }
 
@@ -181,7 +170,6 @@ namespace Game.Astroids
             engineAudio.volume = startVolume;
 
             GameManager.UfoDestroyed();
-            print("ufo destroyed");
             RemoveFromGame();
         }
 
@@ -201,25 +189,12 @@ namespace Game.Astroids
             return new Vector3(xPos, yPos);
         }
 
-        void ShowModel(bool show = true)
+        void ShowLights(bool show = true)
         {
-            if (_rndBody == null && bodyModel != null)
-                bodyModel.TryGetComponent(out _rndBody);
-
-            if (_rndCockpit == null && cockpitModel != null)
-                cockpitModel.TryGetComponent(out _rndCockpit);
-
-            if (_rndBody != null)
-                _rndBody.enabled = show;
-
-            if (_rndCockpit != null)
-                _rndCockpit.enabled = show;
-
             if (lightsModel != null)
                 lightsModel.SetActive(show);
         }
 
-        void HideModel() => ShowModel(false);
-
+        void HideLights() => ShowLights(false);
     }
 }

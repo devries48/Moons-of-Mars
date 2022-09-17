@@ -78,21 +78,30 @@ namespace Game.Astroids
         {
             transform.Rotate(new Vector3(_rotationX, _rotationY, _rotationZ) * Time.deltaTime);
 
-            _rb.velocity = new Vector2(Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed), Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
+            _rb.velocity = new Vector2(
+                Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed),
+                Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
+
             GameManager.ScreenWrapObject(gameObject);
         }
 
-        void OnCollisionEnter(Collision collisionInfo)
+        void OnCollisionEnter(Collision other)
         {
-            // TODO constant tag names
-            if (collisionInfo.collider.name == "Rocket")
-                GameManager.RocketFail();
-            else if (collisionInfo.collider.CompareTag("Bullet"))
-                HitByBullet(collisionInfo.gameObject);
-            else if (collisionInfo.collider.CompareTag("AlienBullet"))
-                HitByAlienBullet(collisionInfo.gameObject);
-            else if (collisionInfo.collider.CompareTag("Astroid"))
-                HitByAstroid(collisionInfo.gameObject);
+            var c = other.collider;
+            var o = other.gameObject;
+
+            // TODO constant tag names shared static method: CompareTag(other, Tags.Player)
+            if (c.CompareTag("Player"))
+                GameManager.PlayerDestroyed(o);
+
+            else if (c.CompareTag("Bullet"))
+                HitByBullet(o);
+
+            else if (c.CompareTag("AlienBullet"))
+                HitByAlienBullet(o);
+
+            else if (c.CompareTag("Astroid"))
+                HitByAstroid(o);
         }
 
         void HitByAstroid(GameObject astroid)
@@ -132,7 +141,7 @@ namespace Game.Astroids
             {
                 PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, smallAstroidScale);
                 PlayAudioClip(AstroidSounds.Clip.Explode, 3);
-
+                print("dat is een extra steentje!");
                 CreateSmallAsteriods(1, bullet.transform.position);
             }
         }

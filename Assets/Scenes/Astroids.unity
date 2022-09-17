@@ -169,10 +169,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigExplosion
       objectReference: {fileID: 0}
-    - target: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4388947112716342, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
       propertyPath: m_RootOrder
       value: 6
@@ -954,18 +950,6 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4207595557771450407, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4207595557771450407, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4207595557771450407, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.8
-      objectReference: {fileID: 0}
-    - target: {fileID: 4207595557771450407, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1008,10 +992,6 @@ PrefabInstance:
     - target: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
       propertyPath: m_Name
       value: Prefab Shuttle
-      objectReference: {fileID: 0}
-    - target: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
-      propertyPath: m_IsActive
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
@@ -2303,10 +2283,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prefab Alien
       objectReference: {fileID: 0}
-    - target: {fileID: 8088883916150568979, guid: 47dd58d5aeb4f3345bb4d4c52e730291, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 8866089840357548713, guid: 47dd58d5aeb4f3345bb4d4c52e730291, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -3228,8 +3204,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4294937600
+  m_fontColor: {r: 0, g: 0.54901963, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:

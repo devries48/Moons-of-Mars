@@ -470,7 +470,7 @@ GameObject:
   - component: {fileID: 2258893236908844336}
   m_Layer: 9
   m_Name: Shield (alien)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -772,7 +772,7 @@ GameObject:
   - component: {fileID: 1632186447}
   m_Layer: 9
   m_Name: Prefab Ufo
-  m_TagString: SpaceShip
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -821,6 +821,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf415cd589fb66e4fb08572c59f0f34e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  model: {fileID: 1411978263432657687}
   shield: {fileID: 2258893236908844336}
   weapon: {fileID: 4753200371116880697}
   bulletPrefab: {fileID: 1129769470639164986, guid: 1d363a81db381f74e8c649064d3efdc5, type: 3}
@@ -837,8 +838,6 @@ MonoBehaviour:
   rotationSpeed: 50
   destructionScore: 100
   engineAudio: {fileID: 5726150658436945605}
-  bodyModel: {fileID: 9141666974328970289}
-  cockpitModel: {fileID: 6312037562744276328}
   lightsModel: {fileID: 2358202614618130107}
 --- !u!82 &5726150658436945605
 AudioSource:

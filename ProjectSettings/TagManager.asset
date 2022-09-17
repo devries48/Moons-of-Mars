@@ -8,7 +8,7 @@ TagManager:
   - GameCamera
   - Astroid
   - AlienBullet
-  - SpaceShip
+  - Enemy
   layers:
   - Default
   - TransparentFX
