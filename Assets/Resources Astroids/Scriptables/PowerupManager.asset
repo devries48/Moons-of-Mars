@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minSpawnWait: 20
   maxSpawnWait: 60
-  shuttlePrefab: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
-  firePowerupPrefab: {fileID: 8621384794249824610, guid: dd4380ed1d4c5974e89bd2fb533371c0, type: 3}
+  shuttle: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
+  powerup: {fileID: 8251889107635498336, guid: 96cdc47c7f989dc4198e5f408f32830e, type: 3}
+  bulletPowerup: {fileID: 2100000, guid: 3c036f38b40259e45a863337e27b122a, type: 2}
+  shieldPowerup: {fileID: 2100000, guid: 032e5a63a1b322342831192a5e100236, type: 2}
+  thrustPowerup: {fileID: 2100000, guid: bfbe601b19435ad4ba58180f5d3a490f, type: 2}

@@ -74,11 +74,15 @@ namespace Game.Astroids
             var c = other;
             var o = other.gameObject;
 
-            if (m_isAlive && !AreShieldsUp)
-                if (c.CompareTag("Bullet") && m_isEnemy || c.CompareTag("AlienBullet") && !m_isEnemy)
-                    HitByBullet(o);
-                else if (c.CompareTag("Enemy"))
-                    HitByShield(o);
+            if (m_isAlive)
+            {
+                if (!AreShieldsUp)
+                    if (c.CompareTag("Bullet") && m_isEnemy || c.CompareTag("AlienBullet") && !m_isEnemy)
+                        HitByBullet(o);
+
+                    else if (c.CompareTag("Enemy"))
+                        HitByShield(o);
+            }
         }
 
         public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds?.PlayClip(clip);
@@ -106,6 +110,8 @@ namespace Game.Astroids
             else
                 GameManager.PlayerDestroyed(gameObject);
         }
+
+        protected virtual void HideModel() => ShowModel(false);
 
         /// <summary>
         /// Only a player ship can be hit by a shield. (Astroids are handled in the AstroidsController)
@@ -151,7 +157,7 @@ namespace Game.Astroids
             if (m_isEnemy)
                 PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
             else
-                PlayEffect(EffectsManager.Effect.bigExplosion, transform.position);
+                PlayEffect(EffectsManager.Effect.bigExplosion, transform.position, .8f);
 
             PlayAudioClip(SpaceShipSounds.Clip.ShipExplosion);
 
@@ -171,6 +177,5 @@ namespace Game.Astroids
 
         }
 
-        void HideModel() => ShowModel(false);
     }
 }

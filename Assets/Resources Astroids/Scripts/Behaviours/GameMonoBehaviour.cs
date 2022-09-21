@@ -33,18 +33,20 @@ namespace Game.Astroids
 
         #endregion
 
-
         protected void Score(int score) => Astroids.Score.Earn(score);
 
-        protected void PlaySound(AudioClip clip)
+        protected void PlaySound(AudioClip clip, AudioSource audioSource = null)
         {
-            if (clip == null || Audio == null)
+            if (clip == null)
                 return;
 
-            Audio.PlayOneShot(clip);
+            if (audioSource != null)
+                audioSource.PlayOneShot(clip);
+            else if (Audio != null)
+                Audio.PlayOneShot(clip);
         }
 
-        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) 
+        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f)
             => GameManager.PlayEffect(effect, position, scale);
 
         protected virtual void OnDisable() => CancelInvokeRemoveFromGame();

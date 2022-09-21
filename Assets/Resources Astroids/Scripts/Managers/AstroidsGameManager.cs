@@ -174,6 +174,15 @@ namespace Game.Astroids
             m_GamePaused = false;
         }
 
+        void QuitGame()
+        {
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#else
+		Application.Quit();
+#endif
+        }
+
         IEnumerator LevelStart()
         {
             _playerShip.Recover();
@@ -200,6 +209,10 @@ namespace Game.Astroids
 
             if (gameover)
             {
+                m_GamePaused = true;
+
+                StartCoroutine(RemoveRemainingObjects());
+
                 uiManager.GameOver();
                 yield return Wait(1);
 
@@ -208,6 +221,7 @@ namespace Game.Astroids
 
                 Score.Reset();
                 //powerupManager.DenyAllPower(); // ship should reset itself?
+
                 uiManager.Reset();
                 GameStart();
             }
@@ -227,6 +241,14 @@ namespace Game.Astroids
         void AdvanceLevel()
         {
             _level.LevelAdvance();
+        }
+
+        IEnumerator RemoveRemainingObjects()
+        {
+            foreach (var obj in FindObjectsOfType<GameMonoBehaviour>())
+                obj.RemoveFromGame();
+
+            yield return null;
         }
 
         #endregion
@@ -286,8 +308,14 @@ namespace Game.Astroids
                     uiManager.HideMainMenu();
                     StartCoroutine(ResumeGame());
                     break;
+
                 case Menu.exit:
+                    var id=uiManager.HideMainMenu(false);
+                    var d = LeanTween.descr(id);
+
+                    d?.setOnComplete(QuitGame);
                     break;
+
                 case Menu.none:
                 default:
                     break;

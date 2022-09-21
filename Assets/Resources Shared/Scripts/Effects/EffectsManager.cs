@@ -17,8 +17,8 @@ public class EffectsManager : MonoBehaviour
     [SerializeField] GameObject dustExplosionPrefab;
     [SerializeField] GameObject greenExplosionPrefab;
 
-    GameObjectPool _bigExplosionPool;
     GameObjectPool _smallExplosionPool;
+    GameObjectPool _bigExplosionPool;
     GameObjectPool _dustExplosionPool;
     GameObjectPool _greenExplosionPool;
 

@@ -9,6 +9,7 @@ TagManager:
   - Astroid
   - AlienBullet
   - Enemy
+  - Powerup
   layers:
   - Default
   - TransparentFX

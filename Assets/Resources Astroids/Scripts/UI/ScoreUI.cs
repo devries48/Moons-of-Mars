@@ -13,6 +13,9 @@ namespace Game.Astroids
         Color highlightColor = Color.yellow;
 
         [SerializeField]
+        Color negativeColor = Color.red;
+
+        [SerializeField]
         string scoreFormat = "{0:000000}";
 
         TextMeshProUGUI _scoreText;
@@ -36,6 +39,9 @@ namespace Game.Astroids
         }
         void ScoreEarned(int points)
         {
+            if (points == 0)
+                return;
+
             SetScore(Score.Earned);
 
             LeanTween.scale(gameObject, new Vector3(1.5f, 1.5f, 1.5f), .5f).setEasePunch();

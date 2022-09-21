@@ -41,10 +41,10 @@ namespace Game.Astroids
             TweenUtil.MenuWindowOpen(mainMenuWindow);
         }
 
-        public void HideMainMenu(bool startGame = true)
+        public int HideMainMenu(bool startGame = true)
         {
             scoreTextUI.gameObject.SetActive(startGame);
-            TweenUtil.MenuWindowClose(mainMenuWindow);
+            return TweenUtil.MenuWindowClose(mainMenuWindow);
         }
 
         public void LevelStarts(int level)

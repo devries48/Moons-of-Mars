@@ -14,26 +14,14 @@ namespace Game.Astroids
         #region editor fields
 
         [Header("UFO")]
-
-        [SerializeField]
-        GameObject pivot;
-
-        [SerializeField]
-        float speed = 10f;
-
-        [SerializeField]
-        float rotationSpeed = 50f;
-
-        [SerializeField, Range(0, 200)]
-        int destructionScore = 100;
-
-        [SerializeField]
-        AudioSource engineAudio;
+        [SerializeField] GameObject pivot;
+        [SerializeField] float speed = 10f;
+        [SerializeField] float rotationSpeed = 50f;
+        [SerializeField, Range(0, 200)] int destructionScore = 100;
+        [SerializeField] AudioSource engineAudio;
 
         [Header("UFO Lights")]
-
-        [SerializeField]
-        GameObject lightsModel;
+        [SerializeField] GameObject lightsModel;
 
         #endregion
 
@@ -41,7 +29,6 @@ namespace Game.Astroids
 
         Vector3 _targetPos;  // Ufo target position
         bool _isShipRemoved; // Prevent ship remove recursion
-
         #endregion
 
         protected override void Awake()
@@ -67,14 +54,14 @@ namespace Game.Astroids
         protected override void OnDisable()
         {
             CancelInvoke(nameof(FireRandomDirection));
-            LeanTween.cancel(pivot);
+            LeanTween.cancel(pivot, true);
             base.OnDisable();
         }
 
         void FixedUpdate()
         {
             if (!m_isAlive || _isShipRemoved) return;
-            
+
             SpinUfo();
             MoveUfo();
         }
@@ -86,11 +73,23 @@ namespace Game.Astroids
             Score(destructionScore);
         }
 
+        protected override void HideModel()
+        {
+            if (engineAudio)
+                engineAudio.Stop();
+
+            LeanTween.cancel(pivot, true);
+            base.HideModel();
+        }
+
         void SetRandomShipBehaviour()
         {
             var side = RandomEnumUtil<SpawnSide>.Get();
-
-            LeanTween.rotateX(pivot, -10f, 1f).setFrom(10f).setLoopPingPong(5);
+            pivot.transform.localRotation = Quaternion.identity;
+           
+            LeanTween.rotateX(pivot, -10f, 1f).setFrom(10f)
+                .setLoopPingPong(5)
+                .setOnComplete(() => { print("UFO rotate complete"); });
 
             Rb.transform.position = SpawnPoint(side == SpawnSide.left);
             _targetPos = SpawnPoint(side != SpawnSide.left);

@@ -7,17 +7,17 @@ namespace Game.Astroids
     [CreateAssetMenu(fileName = "PowerupManager", menuName = "PowerupManager")]
     public class PowerupManager : ScriptableObject
     {
-        [SerializeField, Range(10, 60)]
-        int minSpawnWait = 10;
+        [SerializeField, Range(10, 60)] int minSpawnWait = 10;
+        [SerializeField, Range(10, 60)] int maxSpawnWait = 30;
 
-        [SerializeField, Range(10, 60)]
-        int maxSpawnWait = 30;
+        [Header("Prefabs")]
+        [SerializeField, Tooltip("Shuttle delivering the power-up")]GameObject shuttle;
+        [SerializeField] GameObject powerup;
 
-        [SerializeField, Tooltip("Shuttle delivering the power-up")]
-        GameObject shuttlePrefab;
-
-        [SerializeField]
-        GameObject firePowerupPrefab;
+        [Header("Materials")]
+        [SerializeField] Material bulletPowerup;
+        [SerializeField] Material shieldPowerup;
+        [SerializeField] Material thrustPowerup;
 
         protected AstroidsGameManager GameManager
         {
@@ -31,17 +31,17 @@ namespace Game.Astroids
         }
         AstroidsGameManager __gameManager;
 
-        List<Powerup> _powerupList;
+        List<PowerupController> _powerupList;
 
         GameObjectPool _shuttlePool;
-        GameObjectPool _firePool;
+        GameObjectPool _powerupPool;
 
         void OnDisable() => _powerupList = null;
 
         public void BuildPools()
         {
-            _shuttlePool = GameObjectPool.Build(shuttlePrefab, 1);
-            _firePool = GameObjectPool.Build(firePowerupPrefab, 1);
+            _shuttlePool = GameObjectPool.Build(shuttle, 1);
+            _powerupPool = GameObjectPool.Build(powerup, 1);
         }
 
         public void HideAllPowerups()
@@ -75,8 +75,7 @@ namespace Game.Astroids
 
         public void SpawnPowerup(Vector3 pos)
         {
-            Debug.Log("Powerup pool");
-            _firePool.GetFromPool(pos);
+            _powerupPool.GetFromPool(pos);
         }
     }
 }

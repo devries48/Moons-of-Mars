@@ -40,14 +40,35 @@ namespace Game.Astroids
 
         #region properties
 
+        Rigidbody Rb
+        {
+            get
+            {
+                if (__rb == null)
+                    __rb = GetComponent<Rigidbody>();
+
+                return __rb;
+            }
+        }
+        Rigidbody __rb;
+
+        Renderer Renderer
+        {
+            get
+            {
+                if (__renderer == null)
+                    __renderer = GetComponent<Renderer>();
+
+                return __renderer;
+            }
+        }
+        Renderer __renderer;
         public int Generation { get; private set; }
+
 
         #endregion
 
         #region fields
-        Rigidbody _rb;
-        Renderer _render;
-
         float _rotationX;
         float _rotationY;
         float _rotationZ;
@@ -56,31 +77,24 @@ namespace Game.Astroids
         bool _explosionActive;
         #endregion
 
-        private void Awake()
-        {
-            _rb = GetComponent<Rigidbody>();
-            _render = GetComponent<Renderer>();
-        }
-
         void OnEnable()
         {
+            RigidbodyUtil.SetRandomForceAndTorque(Rb, transform);
+
             _rotationX = Random.Range(-_maxRotation, _maxRotation);
             _rotationY = Random.Range(-_maxRotation, _maxRotation);
             _rotationZ = Random.Range(-_maxRotation, _maxRotation);
 
-            _rb.AddForce(transform.right * CreateRandomSpeed());
-            _rb.AddForce(transform.up * CreateRandomSpeed());
-
-            _render.enabled = true;
+            Renderer.enabled = true;
         }
 
         void Update()
         {
             transform.Rotate(new Vector3(_rotationX, _rotationY, _rotationZ) * Time.deltaTime);
 
-            _rb.velocity = new Vector2(
-                Mathf.Clamp(_rb.velocity.x, -maxSpeed, maxSpeed),
-                Mathf.Clamp(_rb.velocity.y, -maxSpeed, maxSpeed));
+            Rb.velocity = new Vector2(
+                Mathf.Clamp(Rb.velocity.x, -maxSpeed, maxSpeed),
+                Mathf.Clamp(Rb.velocity.y, -maxSpeed, maxSpeed));
 
             GameManager.ScreenWrapObject(gameObject);
         }
@@ -149,7 +163,7 @@ namespace Game.Astroids
         IEnumerator ExplodeAstroid()
         {
             _explosionActive = true;
-            _render.enabled = false;
+            Renderer.enabled = false;
 
             var scale = Generation switch
             {
@@ -170,9 +184,7 @@ namespace Game.Astroids
             Score(points);
 
             while (Audio.isPlaying)
-            {
                 yield return null;
-            }
 
             RemoveFromGame();
 
@@ -180,15 +192,6 @@ namespace Game.Astroids
         }
 
         public void SetGeneration(int generation) => Generation = generation;
-
-        float CreateRandomSpeed()
-        {
-            var speed = Random.Range(200f, 800f);
-            var selector = Random.Range(0, 2);
-            var dir = selector == 1 ? -1 : 1;
-
-            return speed * dir;
-        }
 
         void CreateSmallAsteriods(int asteroidsNum, Vector3 position = default)
         {
@@ -207,7 +210,6 @@ namespace Game.Astroids
             sounds.SetVolume(Audio, generation, clip == AstroidSounds.Clip.Collide);
 
             var sound = sounds.GetClip(clip);
-
             PlaySound(sound);
         }
     }

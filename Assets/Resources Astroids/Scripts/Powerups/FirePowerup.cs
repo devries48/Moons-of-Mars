@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class FirePowerup : Powerup
+    public class FirePowerup : PowerupController
     {
         public override void GrantPower()
         {

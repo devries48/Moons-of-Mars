@@ -4,17 +4,25 @@ namespace Game.Astroids
 {
     public class ShieldController : MonoBehaviour
     {
-        [SerializeField]
-        SpaceShipMonoBehaviour spaceShip;
+        [SerializeField]SpaceShipMonoBehaviour spaceShip;
 
         [SerializeField, Tooltip("The magnitude of the force when hit by an astroid")]
         int magnitude = 2000;
 
-        [SerializeField]
-        float shieldVisibleTimer = 2f;
+        [SerializeField]float shieldVisibleTimer = 2f;
 
         [SerializeField, Tooltip("Shield will activate automaticly")]
         bool autoActivate = false;
+
+        [Header("Impact settings")]
+        [Range(0.1f, 5f)]
+        [SerializeField] float dampenTime = 1.5f;
+
+        // maximum displacement on impact
+        [Range(0.002f, 0.1f)]
+        [SerializeField]  float impactRippleAmplitude = 0.005f;
+        [Range(0.05f, 0.5f)]
+        [SerializeField]  float impactRippleMaxRadius = 0.35f;
 
         MeshRenderer Renderer
         {
@@ -130,7 +138,25 @@ namespace Game.Astroids
                 Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
             else
                 spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsDown);
+        }
 
+         void ApplyImpact(Vector3 hitPoint, Vector3 rippleDirection)
+        {
+            if (Renderer != null)
+            {
+                EnableRipple(true);
+                Renderer.material.SetFloat("_impactRippleMaxRadius", impactRippleMaxRadius);
+                Renderer.material.SetFloat("_impactRippleAmplitude", impactRippleAmplitude);
+                Renderer.material.SetVector("_impactRippleDirection", rippleDirection);
+                Renderer.material.SetVector("_impactPoint", hitPoint);
+
+            }
+        }
+
+        void EnableRipple(bool state = false)
+        {
+            int onOff = state ? 1 : 0;
+            Renderer.material.SetFloat("_enableRipple", onOff);
         }
     }
 }

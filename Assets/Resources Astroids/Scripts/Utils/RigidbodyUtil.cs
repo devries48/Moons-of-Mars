@@ -10,11 +10,13 @@ public static class RigidbodyUtil
         rb.angularVelocity = Vector3.zero;
     }
 
-    public static void SetRandomForce(Rigidbody rb, float maxForce)
+    public static void SetRandomForce2D(Rigidbody rb, float maxForce)
     {
-        Vector3 randomForce = maxForce * Random.insideUnitSphere;
+        Vector3 randomForce = maxForce * Random.insideUnitCircle;
         rb.velocity = Vector3.zero;
         rb.AddForce(randomForce);
+
+        Debug.Log("force: " + randomForce);
     }
 
     public static void SetRandomTorque(Rigidbody rb, float maxTorque)
@@ -23,4 +25,20 @@ public static class RigidbodyUtil
         rb.angularVelocity = Vector3.zero;
         rb.AddTorque(randomTorque);
     }
+
+    internal static void SetRandomForceAndTorque(Rigidbody rb, Transform trans)
+    {
+        rb.AddForce(CreateRandomSpeed()  * trans.right);
+        rb.AddForce(CreateRandomSpeed() * trans.up);
+    }
+
+    static float CreateRandomSpeed()
+    {
+        var speed = Random.Range(200f, 800f);
+        var selector = Random.Range(0, 2);
+        var dir = selector == 1 ? -1 : 1;
+
+        return speed * dir;
+    }
+
 }

@@ -80,14 +80,13 @@ namespace Game.Astroids
         void RemoveShip()
         {
             _isShipRemoved = true;
-
             RemoveFromGame(5f);
         }
 
         void EjectPackage()
         {
             _isPackageEjected = true;
-            print("Eject Package! " + transform.position.z);
+            GameManager.SpawnPowerup(transform.position);
         }
 
         LTBezierPath CreatePath(int increments = 4)

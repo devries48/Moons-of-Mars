@@ -3,8 +3,9 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour
 {
-
     [SerializeField] RectTransform fader;
+
+    public static bool m_returnToMain;
 
     void Start()
     {
@@ -19,6 +20,8 @@ public class SceneController : MonoBehaviour
 
     public void OpenMain()
     {
+        m_returnToMain = true;
+
         fader.gameObject.SetActive(true);
 
         LeanTween.alpha(fader, 0, 0);

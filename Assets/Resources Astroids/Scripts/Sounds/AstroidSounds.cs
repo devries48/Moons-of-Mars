@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -12,24 +11,14 @@ namespace Game.Astroids
             Explode
         }
 
-        [SerializeField, Tooltip("Controls the sound of colliding astroids")]
-        AudioManager audioManager;
-
         [Header("Clips")]
-
         [SerializeField] AudioClip collide;
         [SerializeField] AudioClip explode;
 
         [Header("Volume")]
-
-        [Range(0f, 1f)]
-        [SerializeField] float smallAstroidVol = .1f;
-
-        [Range(0f, 1f)]
-        [SerializeField] float mediumAstroidVol = .2f;
-
-        [Range(0f, 1f)]
-        [SerializeField] float largeAstroidVol = .4f;
+        [SerializeField, Range(0f, 1f)] float smallAstroidVol = .1f;
+        [SerializeField, Range(0f, 1f)] float mediumAstroidVol = .2f;
+        [SerializeField, Range(0f, 1f)] float largeAstroidVol = .4f;
 
         internal AudioClip GetClip(Clip clip)
         {

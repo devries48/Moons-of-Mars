@@ -233,7 +233,6 @@ MonoBehaviour:
   mediumAstroidScore: 25
   largeAstroidScore: 10
   sounds:
-    audioManager: {fileID: 0}
     collide: {fileID: 8300000, guid: 7521c9024ef9186468429b110652d760, type: 3}
     explode: {fileID: 8300000, guid: 7ea09051f7f115344ac9cbc80b62d4df, type: 3}
     smallAstroidVol: 0.6

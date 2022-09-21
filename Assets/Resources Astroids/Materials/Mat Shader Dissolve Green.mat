@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat Shader Dissolve
+  m_Name: Mat Shader Dissolve Green
   m_Shader: {fileID: -6465566751694194690, guid: e5447624500612b4087553fd22d4299e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -38,11 +38,11 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: f94e91000a2be784ca373769accb575d, type: 3}
+        m_Texture: {fileID: 2800000, guid: 75c3d66c473058f4ba30738189565362, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 40b75539fcef15d4ba33ceff0a8a0809, type: 3}
+        m_Texture: {fileID: 2800000, guid: 8c2833d9ac698424bb9b8917b4c81bd9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -54,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 436438d47b2904245952211ba4fb8256, type: 3}
+        m_Texture: {fileID: 2800000, guid: 5e6af425901bfc3499f70763bd1f1946, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -81,6 +81,6 @@ Material:
     - _Smoothness: 0.5
     m_Colors:
     - Color_6DF76E71: {r: 0, g: 5.145098, b: 16, a: 0}
-    - _BaseColor: {r: 2.1490197, g: 0.29803923, b: 0.29803923, a: 0}
+    - _BaseColor: {r: 0.49765623, g: 2.1490197, b: 0.3037881, a: 0}
     - _Color: {r: 0.13725491, g: 0.57254905, b: 0.2627451, a: 0.8352941}
   m_BuildTextureStacks: []

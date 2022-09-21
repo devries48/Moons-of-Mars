@@ -15,8 +15,7 @@ namespace Game.Astroids
             ShipExplosion
         }
 
-        [SerializeField]
-        AudioSource clipsAudioSource;
+        [SerializeField] AudioSource clipsAudioSource;
 
         [Header("Clips")]
         [SerializeField] AudioClip shootBullet;

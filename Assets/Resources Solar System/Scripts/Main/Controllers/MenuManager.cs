@@ -195,8 +195,7 @@ public class MenuManager : MonoBehaviour
             var d2 = LeanTween.descr(closeId);
             var d = d1 ?? d2;
 
-            if (d != null)
-                d.setOnComplete(QuitApplication);
+            d?.setOnComplete(QuitApplication);
         }
     }
 
