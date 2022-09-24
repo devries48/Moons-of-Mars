@@ -7,11 +7,12 @@ namespace Game.Astroids
     [CreateAssetMenu(fileName = "PowerupManager", menuName = "PowerupManager")]
     public class PowerupManager : ScriptableObject
     {
+        #region editor fields
         [SerializeField, Range(10, 60)] int minSpawnWait = 10;
         [SerializeField, Range(10, 60)] int maxSpawnWait = 30;
 
         [Header("Prefabs")]
-        [SerializeField, Tooltip("Shuttle delivering the power-up")]GameObject shuttle;
+        [SerializeField, Tooltip("Shuttle delivering the power-up")] GameObject shuttle;
         [SerializeField] GameObject powerup;
 
         [Header("Materials")]
@@ -19,6 +20,20 @@ namespace Game.Astroids
         [SerializeField] Material shieldPowerup;
         [SerializeField] Material thrustPowerup;
 
+        [Header("Duration")]
+        [Range(5, 30)] public int m_showTime = 15;
+        [Range(5, 30)] public int m_powerDuration = 10;
+
+        [Header("Score")]
+        [SerializeField, Range(0, 200)] int pickupScore = 25;
+        [SerializeField, Range(-200, 0)] int destructionScore = -50;
+        [SerializeField, Range(-200, 0)] int enemyPickupScore = -50;
+        [SerializeField, Range(-200, 0)] int enemyDestructionScore = -25;
+
+        public PowerupSounds m_sounds = new();
+        #endregion
+
+        #region properties
         protected AstroidsGameManager GameManager
         {
             get
@@ -32,9 +47,18 @@ namespace Game.Astroids
         AstroidsGameManager __gameManager;
 
         List<PowerupController> _powerupList;
+        #endregion
 
+        #region fields
         GameObjectPool _shuttlePool;
         GameObjectPool _powerupPool;
+        #endregion
+
+        public enum Powerup
+        {
+            firerate, // red
+            shield    // blue
+        }
 
         void OnDisable() => _powerupList = null;
 
@@ -48,12 +72,6 @@ namespace Game.Astroids
         {
             foreach (var powerup in _powerupList)
                 powerup.RemoveFromGame();
-        }
-
-        public void DenyAllPower()
-        {
-            foreach (var powerup in _powerupList)
-                powerup.DenyPower();
         }
 
         public IEnumerator PowerupSpawnLoop()
@@ -73,9 +91,14 @@ namespace Game.Astroids
             }
         }
 
-        public void SpawnPowerup(Vector3 pos)
+        public void SpawnPowerup(Vector3 pos) => _powerupPool.GetFromPool(pos);
+        public int GetPickupScore(bool isEnemy) => isEnemy ? enemyPickupScore : pickupScore;
+        public int GetDestructionScore(bool isEnemy) => isEnemy ? enemyDestructionScore : destructionScore;
+        public void PlayAudio(PowerupSounds.Clip clip, AudioSource audioSource) => m_sounds.PlayClip(clip, audioSource);
+        public IEnumerator PlayDelayedAudio(PowerupSounds.Clip clip, AudioSource audioSource, float delay)
         {
-            _powerupPool.GetFromPool(pos);
+            yield return new WaitForSeconds(delay);
+            PlayAudio(clip, audioSource);
         }
     }
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
+using static Game.Astroids.PowerupManager;
 
 namespace Game.Astroids
 {
@@ -28,11 +29,9 @@ namespace Game.Astroids
 
         [SerializeField]
         protected SpaceShipSounds sounds = new();
-
         #endregion
 
         #region properties
-
         protected Rigidbody Rb
         {
             get
@@ -50,16 +49,17 @@ namespace Game.Astroids
         #endregion
 
         #region fields
-
         internal bool m_isAlive;
         internal bool m_isEnemy = false;
         protected bool m_isAllied = false;
         protected bool m_canShoot = true;
 
-        GameObjectPool _bulletPool;
+        internal float m_pwrFireRateTime;
 
+        GameObjectPool _bulletPool;
         #endregion
 
+        #region unity events
         protected virtual void Awake() => BuilPool();
 
         protected virtual void OnEnable()
@@ -82,6 +82,45 @@ namespace Game.Astroids
 
                     else if (c.CompareTag("Enemy"))
                         HitByShield(o);
+            }
+        }
+        #endregion
+
+        public void ActivatePowerup(PowerupManager.Powerup powerup)
+        {
+            switch (powerup)
+            {
+                case PowerupManager.Powerup.firerate:
+                    StartCoroutine(PowerupFireRateLoop());
+                    break;
+                case PowerupManager.Powerup.shield:
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        IEnumerator PowerupFireRateLoop()
+        {
+            if (m_pwrFireRateTime > 0)
+            {
+                m_pwrFireRateTime += GameManager.m_powerupManager.m_powerDuration;
+                yield return null;
+            }
+            else
+            {
+                var orgVal = fireRate;
+                fireRate *= .5f;
+                m_pwrFireRateTime = GameManager.m_powerupManager.m_powerDuration;
+
+                while (m_isAlive && m_canShoot & m_pwrFireRateTime > 0)
+                {
+                    m_pwrFireRateTime -= Time.deltaTime;
+                    yield return null;
+                }
+
+                fireRate = orgVal;
+                m_pwrFireRateTime = 0;
             }
         }
 
@@ -112,6 +151,16 @@ namespace Game.Astroids
         }
 
         protected virtual void HideModel() => ShowModel(false);
+
+        void ShowModel(bool show = true)
+        {
+            if (model != null)
+            {
+                foreach (var rend in model.GetComponentsInChildren<Renderer>())
+                    rend.enabled = show;
+            }
+
+        }
 
         /// <summary>
         /// Only a player ship can be hit by a shield. (Astroids are handled in the AstroidsController)
@@ -167,15 +216,6 @@ namespace Game.Astroids
             RemoveFromGame();
         }
 
-        void ShowModel(bool show = true)
-        {
-            if (model != null)
-            {
-                foreach (var rend in model.GetComponentsInChildren<Renderer>())
-                    rend.enabled = show;
-            }
-
-        }
 
     }
 }

@@ -101,6 +101,9 @@ namespace Game.Astroids
 
         void OnCollisionEnter(Collision other)
         {
+            if (!Renderer.enabled)
+                return;
+
             var c = other.collider;
             var o = other.gameObject;
 

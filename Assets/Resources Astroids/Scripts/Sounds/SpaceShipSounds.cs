@@ -24,7 +24,7 @@ namespace Game.Astroids
         [SerializeField] AudioClip shieldsHit;
         [SerializeField] AudioClip shipExplosion;
 
-        internal void PlayClip(Clip clip)
+        public void PlayClip(Clip clip)
         {
             var audioClip = clip switch
             {
@@ -39,7 +39,7 @@ namespace Game.Astroids
             PlayClip(audioClip);
         }
 
-        internal void PlayClip(AudioClip clip)
+        void PlayClip(AudioClip clip)
         {
             if (clip)
                 clipsAudioSource.PlayOneShot(clip);

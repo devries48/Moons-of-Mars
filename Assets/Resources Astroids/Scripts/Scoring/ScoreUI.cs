@@ -18,6 +18,19 @@ namespace Game.Astroids
         [SerializeField]
         string scoreFormat = "{0:000000}";
 
+        protected UIManager UIManager
+        {
+            get
+            {
+                if (__uiManager == null)
+                    __uiManager = AstroidsGameManager.Instance.m_uiManager;
+
+                return __uiManager;
+            }
+        }
+        UIManager __uiManager;
+
+
         TextMeshProUGUI _scoreText;
 
         void Awake()
@@ -47,10 +60,15 @@ namespace Game.Astroids
             LeanTween.scale(gameObject, new Vector3(1.5f, 1.5f, 1.5f), .5f).setEasePunch();
             LeanTween.scale(gameObject, new Vector3(1f, 1f, 1f), .2f).setDelay(.5f).setEase(LeanTweenType.easeInOutCubic);
 
-            TweenColor(textColor, highlightColor, .5f);
+            TweenColor(textColor, points > 0 ? highlightColor : negativeColor, .5f);
             TweenColor(textColor, textColor, .1f, .5f);
-        }
 
+            if (points > 0)
+                UIManager.PlayDelayedAudio(UISounds.Clip.ScorePlus, .2f);
+            else
+                UIManager.PlayDelayedAudio(UISounds.Clip.ScoreMinus,.2f);
+
+        }
 
         void SetScore(int points)
         {

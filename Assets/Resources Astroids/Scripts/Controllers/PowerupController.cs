@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -9,17 +10,8 @@ namespace Game.Astroids
     {
         #region editor fields
 
-        [SerializeField, Range(5, 30)] int showTime = 10;
-        [SerializeField, Range(5, 30)] int powerDuration = 10;
-
-        [Header("Score")]
-        [SerializeField, Range(0, 200)] int pickupScore = 20;
-        [SerializeField, Range(-200, 0)] int enemyPickupScore = -50;
-
-        [Header("Audio")]
         [SerializeField] AudioSource clipsAudioSource;
-        [SerializeField] AudioClip ejectedAudioClip;
-        [SerializeField] AudioClip explodeClip;
+
         #endregion
 
         #region properties
@@ -47,24 +39,38 @@ namespace Game.Astroids
         }
         Renderer __renderer;
 
+        PowerupManager Powerup
+        {
+            get
+            {
+                if (__powerup == null)
+                    __powerup = GameManager.m_powerupManager;
+
+                return __powerup;
+            }
+        }
+        PowerupManager __powerup;
         #endregion
 
         #region fields
+        bool _isAlive;
+        PowerupManager.Powerup _powerup;
 
-        protected SpaceShipMonoBehaviour m_ship; // receiver of powerups
-
-        public bool m_isVisible;
-
+        internal bool m_isVisible;
         #endregion
 
         void OnEnable()
         {
+            _isAlive = true;
+            Renderer.enabled = true;
+            Renderer.material.SetFloat("_Dissolve", 0);
+
             RigidbodyUtil.SetRandomForce2D(Rb, 100f);
             RigidbodyUtil.SetRandomTorque(Rb, 250f);
 
             SetRandomPowerUp();
-            InvokeRemoveFromGame(showTime);
-            StartCoroutine(PlayAudio(ejectedAudioClip));
+            StartCoroutine(Powerup.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
+            StartCoroutine(KeepAliveLoop());
         }
 
         void Update()
@@ -78,71 +84,79 @@ namespace Game.Astroids
             var o = other.gameObject;
 
             if (c.CompareTag("Enemy") || c.CompareTag("Player"))
-            {
-                o.TryGetComponent(out m_ship);
-                if (m_ship != null)
-                {
-                    Score(m_ship.m_isEnemy ? enemyPickupScore : pickupScore);
-                    GrantPower();
-                }
-                RemoveFromGame(); // dissolve
-            }
+                HitByShip(o);
+
             else if (c.CompareTag("Bullet"))
                 HitByBullet(o);
 
             else if (c.CompareTag("AlienBullet"))
                 HitByAlienBullet(o);
-
-            else if (c.CompareTag("Astroid"))
-                HitByAstroid(o);
-
         }
 
-
-        public virtual void GrantPower()
+        IEnumerator KeepAliveLoop()
         {
-            CancelInvoke(nameof(DenyPower)); // Allows power "refresh" if got again.
-            Invoke(nameof(DenyPower), powerDuration);
+            float timePassed = 0;
+
+            while (_isAlive && timePassed < Powerup.m_showTime)
+            {
+                timePassed += Time.deltaTime;
+
+                yield return null;
+            }
+            DissolvePowerup();
         }
 
-        public virtual void DenyPower() { }
-
-        void HitByAstroid(GameObject o)
+        void HitByShip(GameObject o)
         {
-            print("Power hit by astroid");
+            _isAlive = false;
+
+            o.TryGetComponent(out SpaceShipMonoBehaviour ship);
+            if (ship != null)
+            {
+                Score(Powerup.GetPickupScore(ship.m_isEnemy));
+                ship.ActivatePowerup(_powerup);
+            }
+            RemoveFromGame();
         }
 
         void HitByAlienBullet(GameObject alienBullet)
         {
             RemoveFromGame(alienBullet);
+            Score(Powerup.GetDestructionScore(true));
             StartCoroutine(ExplodePowerup());
-            print("Power hit by alien bullet");
         }
 
         void HitByBullet(GameObject bullet)
         {
             RemoveFromGame(bullet);
+            Score(Powerup.GetDestructionScore(false));
             StartCoroutine(ExplodePowerup());
-
-            print("Power hit by bullet");
         }
 
-        IEnumerator PlayAudio(AudioClip clip)
+        void DissolvePowerup()
         {
-            yield return new WaitForSeconds(.1f);
+            if (!_isAlive) return;
 
-            if (clipsAudioSource && clip)
-                PlaySound(clip, clipsAudioSource);
+            _isAlive = false;
+
+            LeanTween.value(0f, 1f, 2f)
+                .setOnUpdate((float val) =>
+                    {
+                        Renderer.material.SetFloat("_Dissolve", val);
+                    })
+                .setOnComplete(RemoveFromGame)
+                .setEaseInQuint();
         }
 
         IEnumerator ExplodePowerup()
         {
+            _isAlive = false;
             Renderer.enabled = false;
 
             PlayEffect(EffectsManager.Effect.smallExplosion, transform.position, .5f);
-            PlaySound(explodeClip, clipsAudioSource);
+            Powerup.PlayAudio(PowerupSounds.Clip.Explode, clipsAudioSource);
 
-            while (Audio.isPlaying)
+            while (clipsAudioSource.isPlaying)
                 yield return null;
 
             RemoveFromGame();
@@ -151,6 +165,7 @@ namespace Game.Astroids
 
         void SetRandomPowerUp()
         {
+            _powerup = RandomEnumUtil<PowerupManager.Powerup>.Get();
             //set material for shader
             //throw new NotImplementedException();
         }

@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using System;
+using System.Collections;
 
 namespace Game.Astroids
 {
@@ -15,6 +16,9 @@ namespace Game.Astroids
 
         [SerializeField]
         TextMeshProUGUI announcerTextUI;
+
+        [SerializeField]
+        UISounds uiSounds = new();
 
         GameAnnouncer Announce
         {
@@ -75,6 +79,14 @@ namespace Game.Astroids
         public void Reset()
         {
             Announce.ClearAnnouncements();
+        }
+
+        public void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);
+
+        public IEnumerator PlayDelayedAudio(UISounds.Clip clip, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            PlayAudio(clip);
         }
     }
 }

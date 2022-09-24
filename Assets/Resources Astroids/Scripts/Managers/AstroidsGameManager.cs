@@ -39,16 +39,15 @@ namespace Game.Astroids
         [SerializeField, Tooltip("Select an UFO prefab")]
         GameObject ufoPrefab;
 
-        [SerializeField]
-        PowerupManager powerupManager;
+        public PowerupManager m_powerupManager;
 
         [SerializeField]
         Camera gameCamera;
 
-        [SerializeField]
-        UIManager uiManager = new();
+        public UIManager m_uiManager = new();
 
         #endregion
+
 
         #region fields
         internal CamBounds m_camBounds;
@@ -94,7 +93,7 @@ namespace Game.Astroids
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
             _ufoPool = GameObjectPool.Build(ufoPrefab, 2);
 
-            uiManager.ResetUI();
+            m_uiManager.ResetUI();
         }
 
         void Start()
@@ -108,7 +107,7 @@ namespace Game.Astroids
 
             StartCoroutine(GameLoop());
             StartCoroutine(UfoSpawnLoop());
-            StartCoroutine(powerupManager.PowerupSpawnLoop());
+            StartCoroutine(m_powerupManager.PowerupSpawnLoop());
         }
 
         void OnEnable() => __instance = this;
@@ -164,7 +163,7 @@ namespace Game.Astroids
 
         IEnumerator ShowTitleScreen()
         {
-            uiManager.ShowMainMenu();
+            m_uiManager.ShowMainMenu();
             yield return null;
         }
 
@@ -188,7 +187,7 @@ namespace Game.Astroids
             _playerShip.Recover();
             _playerShip.EnableControls();
 
-            uiManager.LevelStarts(_level.Level);
+            m_uiManager.LevelStarts(_level.Level);
 
             yield return Wait(2);
 
@@ -197,7 +196,7 @@ namespace Game.Astroids
 
         IEnumerator LevelPlay()
         {
-            uiManager.LevelPlay();
+            m_uiManager.LevelPlay();
 
             while (_playerShip.m_isAlive && _level.HasEnemy)
                 yield return null;
@@ -213,7 +212,7 @@ namespace Game.Astroids
 
                 StartCoroutine(RemoveRemainingObjects());
 
-                uiManager.GameOver();
+                m_uiManager.GameOver();
                 yield return Wait(1);
 
                 Score.Tally();
@@ -222,12 +221,12 @@ namespace Game.Astroids
                 Score.Reset();
                 //powerupManager.DenyAllPower(); // ship should reset itself?
 
-                uiManager.Reset();
+                m_uiManager.Reset();
                 GameStart();
             }
             else
             {
-                uiManager.LevelCleared();
+                m_uiManager.LevelCleared();
                 yield return Wait(1);
 
                 Score.LevelCleared(_level.Level);
@@ -295,8 +294,6 @@ namespace Game.Astroids
             }
         }
 
-        public void SpawnPowerup(Vector3 pos) => powerupManager.SpawnPowerup(pos);
-
         #endregion
 
         public void MenuSelect(int i)
@@ -305,12 +302,12 @@ namespace Game.Astroids
             switch (menu)
             {
                 case Menu.start:
-                    uiManager.HideMainMenu();
+                    m_uiManager.HideMainMenu();
                     StartCoroutine(ResumeGame());
                     break;
 
                 case Menu.exit:
-                    var id=uiManager.HideMainMenu(false);
+                    var id=m_uiManager.HideMainMenu(false);
                     var d = LeanTween.descr(id);
 
                     d?.setOnComplete(QuitGame);

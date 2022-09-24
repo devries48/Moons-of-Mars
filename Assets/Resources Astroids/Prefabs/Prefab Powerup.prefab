@@ -21,7 +21,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8251889107635073344
 Transform:
   m_ObjectHideFlags: 0
@@ -29,7 +29,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8251889107635498336}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
@@ -94,12 +94,12 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8251889107635498336}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 0b8a10e9562c9d948b715e43c7564449, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.7855099, y: 1.2169144, z: 0.78597397}
-  m_Center: {x: -0.00049015874, y: -0.07237553, z: -0.0013314186}
+  m_Size: {x: 0.4276345, y: 0.6396516, z: 0.48300862}
+  m_Center: {x: -0.0026584663, y: -0.028908115, z: 0.003815939}
 --- !u!54 &-4148769800863476076
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -108,7 +108,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8251889107635498336}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 0.5
   m_Drag: 0
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -221,14 +221,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8251889107635498336}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7dd405e1f466714a95ae27a2f2811e7, type: 3}
+  m_Script: {fileID: 11500000, guid: e64bd1e163abc1042aec445cafa99c08, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  showTime: 30
-  powerDuration: 10
-  pickupScore: 20
-  enemyPickupScore: -40
   clipsAudioSource: {fileID: -5536350605308655866}
-  ejectedAudioClip: {fileID: 8300000, guid: b16a54a9665f0404da32e7f4d6513953, type: 3}
-  explodeClip: {fileID: 8300000, guid: 64ce9035394019647b51743c04632791, type: 3}
-  m_isVisible: 0

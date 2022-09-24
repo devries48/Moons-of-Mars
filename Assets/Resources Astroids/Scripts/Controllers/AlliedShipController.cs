@@ -86,7 +86,7 @@ namespace Game.Astroids
         void EjectPackage()
         {
             _isPackageEjected = true;
-            GameManager.SpawnPowerup(transform.position);
+            GameManager.m_powerupManager.SpawnPowerup(transform.position);
         }
 
         LTBezierPath CreatePath(int increments = 4)
