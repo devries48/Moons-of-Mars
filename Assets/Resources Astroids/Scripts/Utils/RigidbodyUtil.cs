@@ -15,8 +15,6 @@ public static class RigidbodyUtil
         Vector3 randomForce = maxForce * Random.insideUnitCircle;
         rb.velocity = Vector3.zero;
         rb.AddForce(randomForce);
-
-        Debug.Log("force: " + randomForce);
     }
 
     public static void SetRandomTorque(Rigidbody rb, float maxTorque)

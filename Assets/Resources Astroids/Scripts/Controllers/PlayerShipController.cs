@@ -4,17 +4,20 @@ namespace Game.Astroids
 {
     public class PlayerShipController : SpaceShipMonoBehaviour
     {
-
+        #region editor fields
         [Header("Player")]
-
         [SerializeField] float thrust = 500f;
         [SerializeField] float rotationSpeed = 180f;
         [SerializeField] float maxSpeed = 4.5f;
+        #endregion
+
+        #region fields
         bool _canMove = true;
         float _thrustInput;
         float _turnInput;
 
         Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
+        #endregion
 
         protected override void OnEnable()
         {
@@ -40,7 +43,6 @@ namespace Game.Astroids
 
         void FixedUpdate()
         {
-
             if (!_canMove)
                 return;
 

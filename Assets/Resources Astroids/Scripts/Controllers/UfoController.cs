@@ -86,10 +86,9 @@ namespace Game.Astroids
         {
             var side = RandomEnumUtil<SpawnSide>.Get();
             pivot.transform.localRotation = Quaternion.identity;
-           
+
             LeanTween.rotateX(pivot, -10f, 1f).setFrom(10f)
-                .setLoopPingPong(5)
-                .setOnComplete(() => { print("UFO rotate complete"); });
+                .setLoopPingPong(5);
 
             Rb.transform.position = SpawnPoint(side == SpawnSide.left);
             _targetPos = SpawnPoint(side != SpawnSide.left);

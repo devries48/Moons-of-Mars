@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -39,17 +38,17 @@ namespace Game.Astroids
         }
         Renderer __renderer;
 
-        PowerupManager Powerup
+        PowerupManager PwrManager
         {
             get
             {
-                if (__powerup == null)
-                    __powerup = GameManager.m_powerupManager;
+                if (__pwrManager == null)
+                    __pwrManager = GameManager.m_powerupManager;
 
-                return __powerup;
+                return __pwrManager;
             }
         }
-        PowerupManager __powerup;
+        PowerupManager __pwrManager;
         #endregion
 
         #region fields
@@ -69,7 +68,7 @@ namespace Game.Astroids
             RigidbodyUtil.SetRandomTorque(Rb, 250f);
 
             SetRandomPowerUp();
-            StartCoroutine(Powerup.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
+            StartCoroutine(PwrManager.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
             StartCoroutine(KeepAliveLoop());
         }
 
@@ -85,25 +84,44 @@ namespace Game.Astroids
 
             if (c.CompareTag("Enemy") || c.CompareTag("Player"))
                 HitByShip(o);
+        }
+
+        void OnTriggerEnter(Collider other)
+        {
+            var c = other;
+            var o = other.gameObject;
+
+            if (c.CompareTag("AlienBullet"))
+                HitByAlienBullet(o);
 
             else if (c.CompareTag("Bullet"))
                 HitByBullet(o);
 
-            else if (c.CompareTag("AlienBullet"))
-                HitByAlienBullet(o);
+            else if (c.CompareTag("Shield"))
+                HitByShield(o);
         }
+
 
         IEnumerator KeepAliveLoop()
         {
             float timePassed = 0;
 
-            while (_isAlive && timePassed < Powerup.m_showTime)
+            while (_isAlive && timePassed < PwrManager.m_showTime)
             {
                 timePassed += Time.deltaTime;
 
                 yield return null;
             }
             DissolvePowerup();
+        }
+
+        void HitByShield(GameObject o)
+        {
+            _isAlive = false;
+
+            o.TryGetComponent(out ShieldController shield);
+            if (shield != null)
+                HitByShip(shield.m_spaceShip.gameObject);
         }
 
         void HitByShip(GameObject o)
@@ -113,7 +131,7 @@ namespace Game.Astroids
             o.TryGetComponent(out SpaceShipMonoBehaviour ship);
             if (ship != null)
             {
-                Score(Powerup.GetPickupScore(ship.m_isEnemy));
+                Score(PwrManager.GetPickupScore(ship.m_isEnemy));
                 ship.ActivatePowerup(_powerup);
             }
             RemoveFromGame();
@@ -122,14 +140,14 @@ namespace Game.Astroids
         void HitByAlienBullet(GameObject alienBullet)
         {
             RemoveFromGame(alienBullet);
-            Score(Powerup.GetDestructionScore(true));
+            Score(PwrManager.GetDestructionScore(true));
             StartCoroutine(ExplodePowerup());
         }
 
         void HitByBullet(GameObject bullet)
         {
             RemoveFromGame(bullet);
-            Score(Powerup.GetDestructionScore(false));
+            Score(PwrManager.GetDestructionScore(false));
             StartCoroutine(ExplodePowerup());
         }
 
@@ -154,7 +172,7 @@ namespace Game.Astroids
             Renderer.enabled = false;
 
             PlayEffect(EffectsManager.Effect.smallExplosion, transform.position, .5f);
-            Powerup.PlayAudio(PowerupSounds.Clip.Explode, clipsAudioSource);
+            PwrManager.PlayAudio(PowerupSounds.Clip.Explode, clipsAudioSource);
 
             while (clipsAudioSource.isPlaying)
                 yield return null;
@@ -162,23 +180,20 @@ namespace Game.Astroids
             RemoveFromGame();
         }
 
-
         void SetRandomPowerUp()
         {
             _powerup = RandomEnumUtil<PowerupManager.Powerup>.Get();
-            //set material for shader
-            //throw new NotImplementedException();
+ 
+            var mat = _powerup switch
+            {
+                PowerupManager.Powerup.fireRate => PwrManager.m_fireRatePowerup,
+                PowerupManager.Powerup.shield => PwrManager.m_shieldPowerup,
+                PowerupManager.Powerup.weapon => PwrManager.m_weaponPowerup,
+                _ => null
+            };
+            if (mat != null)
+                Renderer.material = mat;
         }
-
-        //public GameObject box;
-        //public Material red;
-        //private void OnTriggerEnter(Collider other)
-        //{
-        //    if (other.gameObject.tag == "Pickupable")
-        //    {
-        //        box.GetComponent<Renderer>().material = red;
-        //    }
-        //}
 
     }
 }

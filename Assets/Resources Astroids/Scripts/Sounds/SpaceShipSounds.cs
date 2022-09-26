@@ -8,11 +8,12 @@ namespace Game.Astroids
     {
         public enum Clip
         {
-            ShootBullet,
-            ShieldsUp,
-            ShieldsDown,
-            ShieldsHit,
-            ShipExplosion
+            shootBullet,
+            shieldsUp,
+            shieldsDown,
+            shieldsHit,
+            shipExplosion,
+            powerupPickup
         }
 
         [SerializeField] AudioSource clipsAudioSource;
@@ -23,16 +24,18 @@ namespace Game.Astroids
         [SerializeField] AudioClip shieldsDown;
         [SerializeField] AudioClip shieldsHit;
         [SerializeField] AudioClip shipExplosion;
+        [SerializeField] AudioClip powerupPickup;
 
         public void PlayClip(Clip clip)
         {
             var audioClip = clip switch
             {
-                Clip.ShootBullet => shootBullet,
-                Clip.ShieldsUp => shieldsUp,
-                Clip.ShieldsDown => shieldsDown,
-                Clip.ShieldsHit => shieldsHit,
-                Clip.ShipExplosion => shipExplosion,
+                Clip.shootBullet => shootBullet,
+                Clip.shieldsUp => shieldsUp,
+                Clip.shieldsDown => shieldsDown,
+                Clip.shieldsHit => shieldsHit,
+                Clip.shipExplosion => shipExplosion,
+                Clip.powerupPickup => powerupPickup,
                 _ => null
             };
 
@@ -41,8 +44,11 @@ namespace Game.Astroids
 
         void PlayClip(AudioClip clip)
         {
-            if (clip)
+            if (clip !=null)
+            {
+                Debug.Log("boem: " + clipsAudioSource.volume);
                 clipsAudioSource.PlayOneShot(clip);
+            }
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Game.Astroids
 {
     public class ShieldController : MonoBehaviour
     {
-        [SerializeField]SpaceShipMonoBehaviour spaceShip;
+        public SpaceShipMonoBehaviour m_spaceShip;
 
         [SerializeField, Tooltip("The magnitude of the force when hit by an astroid")]
         int magnitude = 2000;
@@ -71,7 +71,7 @@ namespace Game.Astroids
 
         void OnTriggerEnter(Collider other)
         {
-            if (!spaceShip.m_isAlive)
+            if (!m_spaceShip.m_isAlive)
                 return;
 
             if (other.CompareTag("Astroid"))
@@ -115,13 +115,13 @@ namespace Game.Astroids
 
         void SetShieldsUp(bool isAuto)
         {
-            if (spaceShip == null)
+            if (m_spaceShip == null)
                 return;
 
             if (isAuto)
-                spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsHit);
+                m_spaceShip.PlayAudioClip(SpaceShipSounds.Clip.shieldsHit);
             else
-                spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsUp);
+                m_spaceShip.PlayAudioClip(SpaceShipSounds.Clip.shieldsUp);
 
 
             if (autoActivate)
@@ -134,10 +134,10 @@ namespace Game.Astroids
         {
             Renderer.enabled = false;
 
-            if (spaceShip == null)
+            if (m_spaceShip == null)
                 Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
             else
-                spaceShip.PlayAudioClip(SpaceShipSounds.Clip.ShieldsDown);
+                m_spaceShip.PlayAudioClip(SpaceShipSounds.Clip.shieldsDown);
         }
 
          void ApplyImpact(Vector3 hitPoint, Vector3 rippleDirection)

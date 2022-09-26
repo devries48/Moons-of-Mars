@@ -1,11 +1,10 @@
 using UnityEngine;
 using TMPro;
-using System;
 using System.Collections;
 
 namespace Game.Astroids
 {
-    [Serializable]
+    [System.Serializable]
     public class UIManager
     {
         [SerializeField]
@@ -39,10 +38,13 @@ namespace Game.Astroids
             TweenUtil.MenuWindowClose(mainMenuWindow, true);
         }
 
-        public void ShowMainMenu()
+        //TODO while loop and return selected
+        public IEnumerator ShowMainMenu()
         {
             scoreTextUI.gameObject.SetActive(false);
             TweenUtil.MenuWindowOpen(mainMenuWindow);
+
+            yield return null;
         }
 
         public int HideMainMenu(bool startGame = true)
@@ -61,9 +63,12 @@ namespace Game.Astroids
             Announce.LevelPlaying();
         }
 
-        public void LevelCleared()
+        public IEnumerator LevelCleared(int level)
         {
             Announce.LevelCleared();
+            uiSounds.PlayClip(UISounds.Clip.levelComplete);
+            yield return AstroidsGameManager.Wait(1);
+            Score.LevelCleared(level);
         }
 
         public void GameStart()
@@ -71,9 +76,14 @@ namespace Game.Astroids
             scoreTextUI.gameObject.SetActive(true);
         }
 
-        public void GameOver()
+        public IEnumerator GameOver()
         {
             Announce.GameOver();
+            yield return AstroidsGameManager.Wait(2);
+            PlayAudio(UISounds.Clip.gameOver);
+            
+            Score.Reset();
+            Reset();
         }
 
         public void Reset()

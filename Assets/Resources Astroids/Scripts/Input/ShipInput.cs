@@ -6,7 +6,7 @@ namespace Game.Astroids
     {
         public static bool IsShooting()
         {
-            return Input.GetButtonDown("Fire1");
+            return Input.GetButton("Fire1");
         }
 
         public static bool IsHyperspacing()

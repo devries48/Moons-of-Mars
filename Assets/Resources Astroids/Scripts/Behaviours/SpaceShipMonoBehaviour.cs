@@ -1,7 +1,6 @@
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using static Game.Astroids.PowerupManager;
 
 namespace Game.Astroids
 {
@@ -69,20 +68,30 @@ namespace Game.Astroids
             m_isAlive = true;
         }
 
+        protected virtual void OnCollision(Collision other)
+        {
+            if (!m_isAlive) return;
+
+            var c = other.collider;
+
+            if (!AreShieldsUp)
+                if (c.CompareTag("Enemy") && !m_isEnemy)
+                    HitByAlienShip();
+        }
+
         protected virtual void OnTriggerEnter(Collider other)
         {
+            if (!m_isAlive) return;
+
             var c = other;
             var o = other.gameObject;
 
-            if (m_isAlive)
-            {
-                if (!AreShieldsUp)
-                    if (c.CompareTag("Bullet") && m_isEnemy || c.CompareTag("AlienBullet") && !m_isEnemy)
-                        HitByBullet(o);
+            if (!AreShieldsUp)
+                if (c.CompareTag("Bullet") && m_isEnemy || c.CompareTag("AlienBullet") && !m_isEnemy)
+                    HitByBullet(o);
 
-                    else if (c.CompareTag("Enemy"))
-                        HitByShield(o);
-            }
+                else if (c.CompareTag("Shield"))
+                    HitByShield(o);
         }
         #endregion
 
@@ -90,7 +99,7 @@ namespace Game.Astroids
         {
             switch (powerup)
             {
-                case PowerupManager.Powerup.firerate:
+                case PowerupManager.Powerup.fireRate:
                     StartCoroutine(PowerupFireRateLoop());
                     break;
                 case PowerupManager.Powerup.shield:
@@ -109,6 +118,8 @@ namespace Game.Astroids
             }
             else
             {
+                PlayAudioClip(SpaceShipSounds.Clip.powerupPickup);
+
                 var orgVal = fireRate;
                 fireRate *= .5f;
                 m_pwrFireRateTime = GameManager.m_powerupManager.m_powerDuration;
@@ -134,8 +145,19 @@ namespace Game.Astroids
 
         protected virtual void FireWeapon() => StartCoroutine(Shoot());
 
+        protected virtual void HideModel() => ShowModel(false);
+
+        void ShowModel(bool show = true)
+        {
+            if (model != null)
+            {
+                foreach (var rend in model.GetComponentsInChildren<Renderer>())
+                    rend.enabled = show;
+            }
+        }
+
         /// <summary>
-        /// Handle bullet hits
+        /// Handle bullet hits.
         /// </summary>
         protected virtual void HitByBullet(GameObject other)
         {
@@ -150,18 +172,6 @@ namespace Game.Astroids
                 GameManager.PlayerDestroyed(gameObject);
         }
 
-        protected virtual void HideModel() => ShowModel(false);
-
-        void ShowModel(bool show = true)
-        {
-            if (model != null)
-            {
-                foreach (var rend in model.GetComponentsInChildren<Renderer>())
-                    rend.enabled = show;
-            }
-
-        }
-
         /// <summary>
         /// Only a player ship can be hit by a shield. (Astroids are handled in the AstroidsController)
         /// Enemy ship can only be hit by bullets!
@@ -173,6 +183,11 @@ namespace Game.Astroids
             if (otherShield == null)
                 return;
 
+            GameManager.PlayerDestroyed(gameObject);
+        }
+
+        void HitByAlienShip()
+        {
             GameManager.PlayerDestroyed(gameObject);
         }
 
@@ -191,7 +206,7 @@ namespace Game.Astroids
 
             m_canShoot = false;
 
-            PlayAudioClip(SpaceShipSounds.Clip.ShootBullet);
+            PlayAudioClip(SpaceShipSounds.Clip.shootBullet);
             Bullet().Fire(weapon.transform.up);
 
             yield return new WaitForSeconds(fireRate);
@@ -208,7 +223,7 @@ namespace Game.Astroids
             else
                 PlayEffect(EffectsManager.Effect.bigExplosion, transform.position, .8f);
 
-            PlayAudioClip(SpaceShipSounds.Clip.ShipExplosion);
+            PlayAudioClip(SpaceShipSounds.Clip.shipExplosion);
 
             while (Audio.isPlaying)
                 yield return null;

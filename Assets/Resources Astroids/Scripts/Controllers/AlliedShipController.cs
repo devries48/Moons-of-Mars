@@ -73,8 +73,8 @@ namespace Game.Astroids
             }
             spawnAudio.volume = 1f;
             spawnAudio.Play();
-
-            StartCoroutine(FadeMixerGroup.StartFade(spawnAudio.outputAudioMixerGroup.audioMixer, "Vol1", duration - .5f, 0f, 1f));
+            GameManager.AudioFadeOut(duration - .5f, 0f, 1f);
+            //StartCoroutine(FadeMixerGroup.StartFade(spawnAudio.outputAudioMixerGroup.audioMixer, "Vol1", duration - .5f, 0f, 1f));
         }
 
         void RemoveShip()

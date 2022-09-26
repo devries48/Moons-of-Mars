@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Audio;
 
 namespace Game.Astroids
 {
@@ -44,10 +45,12 @@ namespace Game.Astroids
         [SerializeField]
         Camera gameCamera;
 
+        [SerializeField]
+        AudioMixer audioMixer;
+
         public UIManager m_uiManager = new();
 
         #endregion
-
 
         #region fields
         internal CamBounds m_camBounds;
@@ -72,7 +75,7 @@ namespace Game.Astroids
             exit = 2
         }
 
-        #region Unity Messages
+        #region unity events
 
         void Awake()
         {
@@ -129,7 +132,8 @@ namespace Game.Astroids
                     _requestTitleScreen = false;
                     m_GamePaused = true;
                     string result = null;
-                    yield return Run<string>(ShowTitleScreen(), (output) => result = output);
+                    yield return Run<string>(m_uiManager.ShowMainMenu(), (output) => result = output);
+                    print("Result: " + result);
                 }
 
                 while (m_GamePaused)
@@ -161,11 +165,6 @@ namespace Game.Astroids
             _level.Level1();
         }
 
-        IEnumerator ShowTitleScreen()
-        {
-            m_uiManager.ShowMainMenu();
-            yield return null;
-        }
 
         IEnumerator ResumeGame()
         {
@@ -186,7 +185,6 @@ namespace Game.Astroids
         {
             _playerShip.Recover();
             _playerShip.EnableControls();
-
             m_uiManager.LevelStarts(_level.Level);
 
             yield return Wait(2);
@@ -210,28 +208,14 @@ namespace Game.Astroids
             {
                 m_GamePaused = true;
 
+                StartCoroutine(m_uiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
 
-                m_uiManager.GameOver();
-                yield return Wait(1);
-
-                Score.Tally();
-                yield return Wait(1);
-
-                Score.Reset();
-                //powerupManager.DenyAllPower(); // ship should reset itself?
-
-                m_uiManager.Reset();
                 GameStart();
             }
             else
             {
-                m_uiManager.LevelCleared();
-                yield return Wait(1);
-
-                Score.LevelCleared(_level.Level);
-                yield return Wait(1);
-
+                StartCoroutine(m_uiManager.LevelCleared(_level.Level));
                 AdvanceLevel();
             }
             yield return Wait(2);
@@ -245,7 +229,10 @@ namespace Game.Astroids
         IEnumerator RemoveRemainingObjects()
         {
             foreach (var obj in FindObjectsOfType<GameMonoBehaviour>())
-                obj.RemoveFromGame();
+            {
+                if (!obj.gameObject.CompareTag("Player"))
+                    obj.RemoveFromGame();
+            }
 
             yield return null;
         }
@@ -307,7 +294,7 @@ namespace Game.Astroids
                     break;
 
                 case Menu.exit:
-                    var id=m_uiManager.HideMainMenu(false);
+                    var id = m_uiManager.HideMainMenu(false);
                     var d = LeanTween.descr(id);
 
                     d?.setOnComplete(QuitGame);
@@ -339,6 +326,15 @@ namespace Game.Astroids
         }
 
         public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
+
+        /// <summary>
+        /// spawnAudio.Play();
+        /// AudioFadeOut(duration, 0f, 1f);
+        /// </summary>
+        public void AudioFadeOut(float duration, float targetVol, float startVol = -1)
+        {
+            StartCoroutine(FadeMixerGroup.StartFade(audioMixer, "Vol1", duration, targetVol, startVol));
+        }
 
         /// <summary>
         /// Destroy player with explosion

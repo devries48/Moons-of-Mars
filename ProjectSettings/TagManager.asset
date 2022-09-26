@@ -10,6 +10,7 @@ TagManager:
   - AlienBullet
   - Enemy
   - Powerup
+  - Shield
   layers:
   - Default
   - TransparentFX

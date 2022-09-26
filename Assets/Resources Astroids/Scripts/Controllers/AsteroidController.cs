@@ -8,7 +8,6 @@ namespace Game.Astroids
     public class AsteroidController : GameMonoBehaviour
     {
         #region editor fields
-
         [SerializeField]
         float maxSpeed = 3f;
 
@@ -39,7 +38,6 @@ namespace Game.Astroids
         #endregion
 
         #region properties
-
         Rigidbody Rb
         {
             get
@@ -64,8 +62,6 @@ namespace Game.Astroids
         }
         Renderer __renderer;
         public int Generation { get; private set; }
-
-
         #endregion
 
         #region fields
@@ -101,9 +97,6 @@ namespace Game.Astroids
 
         void OnCollisionEnter(Collision other)
         {
-            if (!Renderer.enabled)
-                return;
-
             var c = other.collider;
             var o = other.gameObject;
 
@@ -111,31 +104,33 @@ namespace Game.Astroids
             if (c.CompareTag("Player"))
                 GameManager.PlayerDestroyed(o);
 
-            else if (c.CompareTag("Bullet"))
-                HitByBullet(o);
-
-            else if (c.CompareTag("AlienBullet"))
-                HitByAlienBullet(o);
-
             else if (c.CompareTag("Astroid"))
                 HitByAstroid(o);
         }
 
+        void OnTriggerEnter(Collider other)
+        {
+            if (!Renderer.enabled)
+                return;
+
+            var c = other;
+            var o = other.gameObject;
+
+            if (c.CompareTag("AlienBullet"))
+                HitByAlienBullet(o);
+
+            else if (c.CompareTag("Bullet"))
+                HitByBullet(o);
+        }
+
         void HitByAstroid(GameObject astroid)
         {
-            astroid.TryGetComponent<AsteroidController>(out var other);
-
-            if (other == null)
-            {
-                Debug.LogWarning("AsteroidController on collision is NULL");
-                return;
-            }
-
             if (_explosionActive) return;
+
+            astroid.TryGetComponent<AsteroidController>(out var other);
 
             // play smallest astroid collision sound
             var minGen = System.Math.Max(Generation, other.Generation);
-
             PlayAudioClip(AstroidSounds.Clip.Collide, minGen);
         }
 

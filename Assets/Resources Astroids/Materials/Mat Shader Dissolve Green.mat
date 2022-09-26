@@ -42,7 +42,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
-        m_Texture: {fileID: 2800000, guid: 8c2833d9ac698424bb9b8917b4c81bd9, type: 3}
+        m_Texture: {fileID: 2800000, guid: 40b75539fcef15d4ba33ceff0a8a0809, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -54,7 +54,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
-        m_Texture: {fileID: 2800000, guid: 5e6af425901bfc3499f70763bd1f1946, type: 3}
+        m_Texture: {fileID: 2800000, guid: 436438d47b2904245952211ba4fb8256, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -74,6 +74,9 @@ Material:
     - Vector1_1D9A2AE: 0.01
     - Vector1_EFE64959: 30
     - Vector1_FEFF47F1: 0
+    - _Dissolve: 0
+    - _EdgeWidth: 0.01
+    - _NoiseScale: 30
     - _NormalStrenght: 1
     - _OcclusionStrengh: 1
     - _QueueControl: 0
@@ -83,4 +86,5 @@ Material:
     - Color_6DF76E71: {r: 0, g: 5.145098, b: 16, a: 0}
     - _BaseColor: {r: 0.49765623, g: 2.1490197, b: 0.3037881, a: 0}
     - _Color: {r: 0.13725491, g: 0.57254905, b: 0.2627451, a: 0.8352941}
+    - _EdgeColor: {r: 15.999998, g: 6.2360587, b: 0, a: 0}
   m_BuildTextureStacks: []

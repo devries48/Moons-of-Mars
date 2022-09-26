@@ -96,7 +96,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2874880245280111037}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.28477055
   m_Height: 1.1502756
   m_Direction: 1
@@ -159,7 +159,7 @@ MonoBehaviour:
   shield: {fileID: 0}
   weapon: {fileID: 2874880243799144278}
   bulletPrefab: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
-  fireRate: 0.25
+  fireRate: 0.6
   sounds:
     clipsAudioSource: {fileID: 4622462081951471734}
     shootBullet: {fileID: 8300000, guid: 5fa25b0052f7ad549896c493765b1e7d, type: 3}
@@ -167,6 +167,7 @@ MonoBehaviour:
     shieldsDown: {fileID: 0}
     shieldsHit: {fileID: 0}
     shipExplosion: {fileID: 8300000, guid: 52a1f7212f9e8aa4aa1595355508a0b6, type: 3}
+    powerupPickup: {fileID: 8300000, guid: eaa08a35249239f418043b7428b57027, type: 3}
   thrust: 500
   rotationSpeed: 180
   maxSpeed: 4.5
@@ -197,7 +198,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0

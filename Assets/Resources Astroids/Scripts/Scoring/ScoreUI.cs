@@ -64,9 +64,9 @@ namespace Game.Astroids
             TweenColor(textColor, textColor, .1f, .5f);
 
             if (points > 0)
-                UIManager.PlayDelayedAudio(UISounds.Clip.ScorePlus, .2f);
+                UIManager.PlayDelayedAudio(UISounds.Clip.scorePlus, .2f);
             else
-                UIManager.PlayDelayedAudio(UISounds.Clip.ScoreMinus,.2f);
+                UIManager.PlayDelayedAudio(UISounds.Clip.scoreMinus,.2f);
 
         }
 

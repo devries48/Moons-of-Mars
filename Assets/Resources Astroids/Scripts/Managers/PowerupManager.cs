@@ -16,9 +16,9 @@ namespace Game.Astroids
         [SerializeField] GameObject powerup;
 
         [Header("Materials")]
-        [SerializeField] Material bulletPowerup;
-        [SerializeField] Material shieldPowerup;
-        [SerializeField] Material thrustPowerup;
+        public Material m_fireRatePowerup;
+        public Material m_shieldPowerup;
+        public Material m_weaponPowerup;
 
         [Header("Duration")]
         [Range(5, 30)] public int m_showTime = 15;
@@ -56,8 +56,9 @@ namespace Game.Astroids
 
         public enum Powerup
         {
-            firerate, // red
-            shield    // blue
+            fireRate, // red
+            shield,   // blue
+            weapon    // green
         }
 
         void OnDisable() => _powerupList = null;
