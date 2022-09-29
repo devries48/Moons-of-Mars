@@ -9,6 +9,7 @@ namespace Game.Astroids
         {
             scorePlus,
             scoreMinus,
+            gameStart,
             levelComplete,
             gameOver
         }
@@ -18,8 +19,10 @@ namespace Game.Astroids
         [Header("Clips")]
         [SerializeField] AudioClip scorePlus;
         [SerializeField] AudioClip scoreMinus;
+        [SerializeField] AudioClip[] gameStart;
         [SerializeField] AudioClip[] levelComplete;
         [SerializeField] AudioClip[] gameOver;
+
 
         public void PlayClip(Clip clip)
         {
@@ -27,6 +30,7 @@ namespace Game.Astroids
             {
                 Clip.scorePlus => scorePlus,
                 Clip.scoreMinus => scoreMinus,
+                Clip.gameStart => RandomClip(gameStart),
                 Clip.levelComplete => RandomClip(levelComplete),
                 Clip.gameOver => RandomClip(gameOver),
                 _ => null
@@ -34,8 +38,13 @@ namespace Game.Astroids
             PlayAudioClip(audioClip);    
         }
 
+        public bool AudioIsPlaying => clipsAudioSource.isPlaying;
+
         AudioClip RandomClip(AudioClip[] clips)
         {
+            if (clips == null || clips.Length == 0) 
+                return null;
+
             return clips[Random.Range(0, clips.Length)];
         }
 

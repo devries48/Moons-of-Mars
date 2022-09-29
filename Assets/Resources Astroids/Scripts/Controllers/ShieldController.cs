@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
+    [SelectionBase]
     public class ShieldController : MonoBehaviour
     {
         public SpaceShipMonoBehaviour m_spaceShip;
@@ -9,7 +10,7 @@ namespace Game.Astroids
         [SerializeField, Tooltip("The magnitude of the force when hit by an astroid")]
         int magnitude = 2000;
 
-        [SerializeField]float shieldVisibleTimer = 2f;
+        [SerializeField] float shieldVisibleTimer = 2f;
 
         [SerializeField, Tooltip("Shield will activate automaticly")]
         bool autoActivate = false;
@@ -20,9 +21,9 @@ namespace Game.Astroids
 
         // maximum displacement on impact
         [Range(0.002f, 0.1f)]
-        [SerializeField]  float impactRippleAmplitude = 0.005f;
+        [SerializeField] float impactRippleAmplitude = 0.005f;
         [Range(0.05f, 0.5f)]
-        [SerializeField]  float impactRippleMaxRadius = 0.35f;
+        [SerializeField] float impactRippleMaxRadius = 0.35f;
 
         MeshRenderer Renderer
         {
@@ -53,13 +54,15 @@ namespace Game.Astroids
 
         void Awake()
         {
-
             if (autoActivate)
                 Renderer.enabled = false;
         }
 
         void Update()
         {
+            if (!autoActivate)
+                return;
+
             if (_visibleTimer > 0f)
             {
                 _visibleTimer -= Time.deltaTime;
@@ -74,43 +77,51 @@ namespace Game.Astroids
             if (!m_spaceShip.m_isAlive)
                 return;
 
-            if (other.CompareTag("Astroid"))
-            {
-                SetShieldsUp(true);
+            var c = other;
+            var o = other.gameObject;
 
-                var force = transform.position - other.transform.position;
+            if (c.CompareTag("Astroid"))
+                HitByAstroid(o);
+            else if (other.CompareTag("Player"))
+                HitByPlayer();
+            else if (c.CompareTag("Bullet"))
+                HitByBullet(o, false);
+            else if (c.CompareTag("AlienBullet"))
+                HitByBullet(o,true);
+        }
 
-                other.TryGetComponent<Rigidbody>(out var rb);
-                if (rb == null)
-                    return;
+        void HitByAstroid(GameObject other)
+        {
+            if (!autoActivate) return;
 
-                force.Normalize();
-                rb.AddForce(-force * magnitude);
+            SetShieldsUp(true);
 
+            // Player shield hit destroys astroid, handled by AstroidController
+            if (!m_spaceShip.m_isEnemy)
                 return;
-            }
 
-            if (other.CompareTag("Player"))
+            other.TryGetComponent<Rigidbody>(out var rb);
+            if (rb == null)
+                return;
+
+            var force = transform.position - other.transform.position;
+            force.Normalize();
+            rb.AddForce(-force * magnitude);
+        }
+
+        void HitByPlayer()
+        {
+            SetShieldsUp(true);
+        }
+
+        void HitByBullet(GameObject bullet, bool isEnemy)
+        {
+            if (m_spaceShip.m_isEnemy && isEnemy)
             {
+                PoolableMonoBehaviour.RemoveFromGame(bullet);
                 SetShieldsUp(true);
-
-                //weg met de speler en ontplof maar
-            }
-
-            if (ShieldsUp)
-            {
-                if (other.CompareTag("Bullet") || other.CompareTag("AlienBullet"))
-                {
-                    GameMonoBehaviour.RemoveFromGame(other.gameObject);
-                    print("kogel op schild");
-                }
-                else if (other.CompareTag("Player"))
-                {
-
-                }
-                // ook astroide
-            }
-
+            } else if(ShieldsUp)
+                PoolableMonoBehaviour.RemoveFromGame(bullet);
         }
 
         void SetShieldsUp(bool isAuto)
@@ -140,7 +151,7 @@ namespace Game.Astroids
                 m_spaceShip.PlayAudioClip(SpaceShipSounds.Clip.shieldsDown);
         }
 
-         void ApplyImpact(Vector3 hitPoint, Vector3 rippleDirection)
+        void ApplyImpact(Vector3 hitPoint, Vector3 rippleDirection)
         {
             if (Renderer != null)
             {

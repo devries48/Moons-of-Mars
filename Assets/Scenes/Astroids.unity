@@ -1065,6 +1065,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1892224866}
     m_Modifications:
+    - target: {fileID: 1525731017988237746, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
+      propertyPath: shieldVisibleTimer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2874880245280111037, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
       propertyPath: m_Name
       value: Prefab Rocket
@@ -1743,6 +1747,10 @@ MonoBehaviour:
       clipsAudioSource: {fileID: 1552090160}
       scorePlus: {fileID: 8300000, guid: fb42e3d705cb52a489d7bb53d64f306f, type: 3}
       scoreMinus: {fileID: 8300000, guid: fb42e3d705cb52a489d7bb53d64f306f, type: 3}
+      gameStart:
+      - {fileID: 8300000, guid: c2671193f62733140bdc052f86eb3382, type: 3}
+      - {fileID: 8300000, guid: dddad25e68f08ea428d2d4d214790208, type: 3}
+      - {fileID: 8300000, guid: e95aa1e3c0a6b4343828bb35581f6ffa, type: 3}
       levelComplete:
       - {fileID: 8300000, guid: a42be2a2dfc2f1247bd86b358110d0f2, type: 3}
       - {fileID: 8300000, guid: 1c3fc0a6330595743bd61b1583676eb0, type: 3}

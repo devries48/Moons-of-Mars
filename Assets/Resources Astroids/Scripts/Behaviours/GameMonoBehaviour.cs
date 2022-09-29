@@ -51,21 +51,9 @@ namespace Game.Astroids
 
         protected virtual void OnDisable() => CancelInvokeRemoveFromGame();
 
-        protected virtual void RequestDestruction() => RequestDefaultDestruction(gameObject);
-
-        static void RequestDefaultDestruction(GameObject gameObject) => Destroy(gameObject);
-
         public void InvokeRemoveFromGame(float time) => Invoke(nameof(RemoveFromGame), time);
 
         public void CancelInvokeRemoveFromGame() => CancelInvoke(nameof(RemoveFromGame));
-
-        public void RemoveFromGame()
-        {
-            if (IsPooled)
-                ReturnToPool();
-            else
-                RequestDestruction();
-        }
 
         public void RemoveFromGame(float t) => StartCoroutine(RemoveFromGameCore(t));
 
@@ -75,16 +63,5 @@ namespace Game.Astroids
 
             RemoveFromGame();
         }
-
-        public static void RemoveFromGame(GameObject victim)
-        {
-            GameMonoBehaviour handler = victim.GetComponent<GameMonoBehaviour>();
-
-            if (handler)
-                handler.RemoveFromGame();
-            else
-                RequestDefaultDestruction(victim);
-        }
-
     }
 }

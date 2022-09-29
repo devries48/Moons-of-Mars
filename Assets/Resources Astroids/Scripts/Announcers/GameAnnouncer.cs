@@ -2,7 +2,7 @@ using TMPro;
 
 public class GameAnnouncer : Announcer
 {
-    const string title = "Astroids";
+    const string gamestart = "Ready";
     const string cleared = "Level Cleared!";
     const string gameover = "GAME OVER";
 
@@ -32,11 +32,6 @@ public class GameAnnouncer : Announcer
         Announce("");
     }
 
-    public virtual void Title()
-    {
-        Announce(title);
-    }
-
     public virtual void LevelCleared()
     {
         Announce(cleared);
@@ -55,5 +50,10 @@ public class GameAnnouncer : Announcer
     public override void Announce(string message)
     {
         strategy.Announce(message);
+    }
+
+    public virtual void GameStart()
+    {
+        Announce(gamestart);
     }
 }

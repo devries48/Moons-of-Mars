@@ -19,6 +19,9 @@ namespace Game.Astroids
         [SerializeField]
         UISounds uiSounds = new();
 
+        // Show mainMenu directly the first run.
+        bool _firstRun = true; 
+       
         GameAnnouncer Announce
         {
             get
@@ -41,6 +44,11 @@ namespace Game.Astroids
         //TODO while loop and return selected
         public IEnumerator ShowMainMenu()
         {
+            if (_firstRun)
+                _firstRun = false;
+            else
+                yield return AstroidsGameManager.Wait(2);
+            
             scoreTextUI.gameObject.SetActive(false);
             TweenUtil.MenuWindowOpen(mainMenuWindow);
 
@@ -55,7 +63,13 @@ namespace Game.Astroids
 
         public void LevelStarts(int level)
         {
-            Announce.LevelStarts(level);
+            if (level == 1)
+            {
+                Announce.GameStart();
+                PlayAudio(UISounds.Clip.gameStart);
+            }
+            else
+                Announce.LevelStarts(level);
         }
 
         public void LevelPlay()
@@ -71,24 +85,23 @@ namespace Game.Astroids
             Score.LevelCleared(level);
         }
 
-        public void GameStart()
-        {
-            scoreTextUI.gameObject.SetActive(true);
-        }
-
         public IEnumerator GameOver()
         {
             Announce.GameOver();
             yield return AstroidsGameManager.Wait(2);
+
             PlayAudio(UISounds.Clip.gameOver);
-            
-            Score.Reset();
+            while (uiSounds.AudioIsPlaying)
+                yield return null;
+
+            yield return null ;
             Reset();
         }
 
         public void Reset()
         {
             Announce.ClearAnnouncements();
+            Score.Reset();
         }
 
         public void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);

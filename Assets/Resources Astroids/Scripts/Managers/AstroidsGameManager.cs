@@ -133,7 +133,6 @@ namespace Game.Astroids
                     m_GamePaused = true;
                     string result = null;
                     yield return Run<string>(m_uiManager.ShowMainMenu(), (output) => result = output);
-                    print("Result: " + result);
                 }
 
                 while (m_GamePaused)
@@ -185,6 +184,9 @@ namespace Game.Astroids
         {
             _playerShip.Recover();
             _playerShip.EnableControls();
+            
+            yield return Wait(1);
+
             m_uiManager.LevelStarts(_level.Level);
 
             yield return Wait(2);
@@ -210,7 +212,6 @@ namespace Game.Astroids
 
                 StartCoroutine(m_uiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
-
                 GameStart();
             }
             else

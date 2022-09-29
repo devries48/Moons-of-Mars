@@ -54,6 +54,7 @@ namespace Game.Astroids
         protected bool m_canShoot = true;
 
         internal float m_pwrFireRateTime;
+        internal float m_pwrShieldTime;
 
         GameObjectPool _bulletPool;
         #endregion
@@ -103,6 +104,7 @@ namespace Game.Astroids
                     StartCoroutine(PowerupFireRateLoop());
                     break;
                 case PowerupManager.Powerup.shield:
+                    StartCoroutine(PowerupShieldLoop());
                     break;
                 default:
                     break;
@@ -121,10 +123,10 @@ namespace Game.Astroids
                 PlayAudioClip(SpaceShipSounds.Clip.powerupPickup);
 
                 var orgVal = fireRate;
-                fireRate *= .5f;
+                fireRate *= .25f;
                 m_pwrFireRateTime = GameManager.m_powerupManager.m_powerDuration;
 
-                while (m_isAlive && m_canShoot & m_pwrFireRateTime > 0)
+                while (m_isAlive && m_pwrFireRateTime > 0)
                 {
                     m_pwrFireRateTime -= Time.deltaTime;
                     yield return null;
@@ -132,6 +134,29 @@ namespace Game.Astroids
 
                 fireRate = orgVal;
                 m_pwrFireRateTime = 0;
+            }
+        }
+
+        IEnumerator PowerupShieldLoop()
+        {
+            if (m_pwrShieldTime > 0)
+            {
+                m_pwrShieldTime += GameManager.m_powerupManager.m_powerDuration;
+                yield return null;
+            }
+            else
+            {
+                PlayAudioClip(SpaceShipSounds.Clip.powerupPickup);
+     
+                shield.ShieldsUp = true;
+                m_pwrShieldTime = GameManager.m_powerupManager.m_powerDuration;
+
+                while (m_isAlive && m_pwrShieldTime > 0)
+                {
+                    m_pwrShieldTime -= Time.deltaTime;
+                    yield return null;
+                }
+                m_pwrShieldTime = 0;
             }
         }
 

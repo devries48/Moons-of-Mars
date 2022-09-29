@@ -45,10 +45,7 @@ namespace Game.Astroids
         void PlayClip(AudioClip clip)
         {
             if (clip !=null)
-            {
-                Debug.Log("boem: " + clipsAudioSource.volume);
                 clipsAudioSource.PlayOneShot(clip);
-            }
         }
     }
 }
