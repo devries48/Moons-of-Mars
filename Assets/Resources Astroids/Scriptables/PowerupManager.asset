@@ -16,9 +16,9 @@ MonoBehaviour:
   maxSpawnWait: 60
   shuttle: {fileID: 4207595557771450426, guid: 0b76749bea066694b9e22cc2a6e9d763, type: 3}
   powerup: {fileID: 8251889107635498336, guid: 96cdc47c7f989dc4198e5f408f32830e, type: 3}
-  m_fireRatePowerup: {fileID: 2100000, guid: 3c036f38b40259e45a863337e27b122a, type: 2}
-  m_shieldPowerup: {fileID: 2100000, guid: 032e5a63a1b322342831192a5e100236, type: 2}
-  m_weaponPowerup: {fileID: 2100000, guid: bfbe601b19435ad4ba58180f5d3a490f, type: 2}
+  fireRatePowerup: {fileID: 2100000, guid: 3c036f38b40259e45a863337e27b122a, type: 2}
+  shieldPowerup: {fileID: 2100000, guid: 032e5a63a1b322342831192a5e100236, type: 2}
+  weaponPowerup: {fileID: 2100000, guid: bfbe601b19435ad4ba58180f5d3a490f, type: 2}
   m_showTime: 15
   m_powerDuration: 10
   pickupScore: 20

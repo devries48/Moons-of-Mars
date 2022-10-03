@@ -97,7 +97,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2874880245280111037}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.28477055
   m_Height: 1.1502756
   m_Direction: 1
@@ -156,8 +156,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7246517b0236f7d46ace6b0ca05fd1e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  model: {fileID: 2874880244354272700}
-  shield: {fileID: 0}
+  m_Model: {fileID: 2874880244354272700}
+  m_Shield: {fileID: 0}
   weapon: {fileID: 2874880243799144278}
   bulletPrefab: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
   fireRate: 0.6
@@ -397,7 +397,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_spaceShip: {fileID: 2874880245280111039}
   magnitude: 2000
-  shieldVisibleTimer: 2
+  shieldVisibleTimer: 0
   autoActivate: 0
   dampenTime: 1.5
   impactRippleAmplitude: 0.005

@@ -23,8 +23,7 @@ namespace Game.Astroids
 
         protected override void Awake()
         {
-            m_isAllied = true;
-
+            m_shipType = ShipType.allied;   
             base.Awake();
         }
 

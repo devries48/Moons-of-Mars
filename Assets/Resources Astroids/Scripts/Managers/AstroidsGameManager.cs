@@ -30,23 +30,20 @@ namespace Game.Astroids
         #endregion
 
         #region editor fields
+        [Header("Scriptables")]
+        public UfoManager m_ufoManager;
+        public PowerupManager m_powerupManager;
 
+        [Header("Prefabs")]
         [SerializeField, Tooltip("Select a spaceship prefab")]
-        GameObject shipPrefab;
+        GameObject playerShipPrefab;
 
         [SerializeField, Tooltip("Select an astroid prefab")]
         GameObject asteroidPrefab;
 
-        [SerializeField, Tooltip("Select an UFO prefab")]
-        GameObject ufoPrefab;
-
-        public PowerupManager m_powerupManager;
-
-        [SerializeField]
-        Camera gameCamera;
-
-        [SerializeField]
-        AudioMixer audioMixer;
+        [Header("Other")]
+        [SerializeField] Camera gameCamera;
+        [SerializeField] AudioMixer audioMixer;
 
         public UIManager m_uiManager = new();
 
@@ -56,27 +53,19 @@ namespace Game.Astroids
         internal CamBounds m_camBounds;
         internal bool m_GamePlaying;
         internal bool m_GamePaused;
+        internal CurrentLevel m_level;
 
         bool _requestTitleScreen;
 
         GameObjectPool _astoidPool;
-        GameObjectPool _ufoPool;
-
         PlayerShipController _playerShip;
         EffectsManager _effects;
-        CurrentLevel _level;
 
         #endregion
 
-        enum Menu
-        {
-            none = 0,
-            start = 1,
-            exit = 2
-        }
+        enum Menu { none = 0, start = 1, exit = 2 }
 
         #region unity events
-
         void Awake()
         {
             SingletonInstanceGuard();
@@ -85,16 +74,12 @@ namespace Game.Astroids
             m_camBounds = new CamBounds(gameCamera);
 
             if (asteroidPrefab == null)
+            {
                 Debug.LogError("Asteriod Prefab not set!");
-
-            if (ufoPrefab == null)
-                Debug.LogError("UfoPrefab Prefab not set!");
-
-            if (asteroidPrefab == null || ufoPrefab == null)
                 return;
+            }
 
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
-            _ufoPool = GameObjectPool.Build(ufoPrefab, 2);
 
             m_uiManager.ResetUI();
         }
@@ -109,7 +94,7 @@ namespace Game.Astroids
             m_GamePlaying = true;
 
             StartCoroutine(GameLoop());
-            StartCoroutine(UfoSpawnLoop());
+            StartCoroutine(m_ufoManager.UfoSpawnLoop());
             StartCoroutine(m_powerupManager.PowerupSpawnLoop());
         }
 
@@ -118,7 +103,6 @@ namespace Game.Astroids
         #endregion
 
         #region game loops
-
         IEnumerator GameLoop()
         {
             yield return Wait(1);
@@ -146,24 +130,12 @@ namespace Game.Astroids
             }
         }
 
-        IEnumerator UfoSpawnLoop()
-        {
-            while (m_GamePlaying)
-            {
-                var wait = Random.Range(15f, 30f);
-                SpawnUfo();
-
-                yield return new WaitForSeconds(wait);
-            }
-        }
-
         void GameStart()
         {
-            _playerShip = SpawnPlayer(shipPrefab);
+            _playerShip = SpawnPlayer(playerShipPrefab);
             _requestTitleScreen = true;
-            _level.Level1();
+            m_level.Level1();
         }
-
 
         IEnumerator ResumeGame()
         {
@@ -184,21 +156,21 @@ namespace Game.Astroids
         {
             _playerShip.Recover();
             _playerShip.EnableControls();
-            
+
             yield return Wait(1);
 
-            m_uiManager.LevelStarts(_level.Level);
+            m_uiManager.LevelStarts(m_level.Level);
 
             yield return Wait(2);
 
-            SpawnAsteroids(_level.AstroidsForLevel);
+            SpawnAsteroids(m_level.AstroidsForLevel);
         }
 
         IEnumerator LevelPlay()
         {
             m_uiManager.LevelPlay();
 
-            while (_playerShip.m_isAlive && _level.HasEnemy)
+            while (_playerShip.m_isAlive && m_level.HasEnemy)
                 yield return null;
         }
 
@@ -216,7 +188,7 @@ namespace Game.Astroids
             }
             else
             {
-                StartCoroutine(m_uiManager.LevelCleared(_level.Level));
+                StartCoroutine(m_uiManager.LevelCleared(m_level.Level));
                 AdvanceLevel();
             }
             yield return Wait(2);
@@ -224,7 +196,7 @@ namespace Game.Astroids
 
         void AdvanceLevel()
         {
-            _level.LevelAdvance();
+            m_level.LevelAdvance();
         }
 
         IEnumerator RemoveRemainingObjects()
@@ -240,23 +212,13 @@ namespace Game.Astroids
 
         #endregion
 
-        #region spawn player, astroids, enemies & powerups
-
+        #region spawn player, astroids
         PlayerShipController SpawnPlayer(GameObject spaceShip)
         {
             GameObject ship = Instantiate(spaceShip);
             ship.TryGetComponent(out PlayerShipController shipCtrl);
 
             return shipCtrl;
-        }
-
-        void SpawnUfo()
-        {
-            if (!_level.CanAddUfo)
-                return;
-
-            _ufoPool.GetFromPool();
-            _level.UfoAdd();
         }
 
         public void SpawnAsteroids(float asteroidsNum, int generation = 1, Vector3 position = default)
@@ -278,7 +240,7 @@ namespace Game.Astroids
                 var astroid = _astoidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
                 astroid.GetComponent<AsteroidController>().SetGeneration(generation);
 
-                _level.AstroidAdd();
+                m_level.AstroidAdd();
             }
         }
 
@@ -362,12 +324,12 @@ namespace Game.Astroids
 
         public void AsterodDestroyed()
         {
-            _level.AstroidRemove();
+            m_level.AstroidRemove();
         }
 
         public void UfoDestroyed()
         {
-            _level.UfoRemove();
+            m_level.UfoRemove();
         }
 
         public static WaitForSeconds Wait(float duration)
@@ -412,7 +374,7 @@ namespace Game.Astroids
 
         #region struct CurrentLevel
 
-        struct CurrentLevel
+        public struct CurrentLevel
         {
             int _level;
             int _astroidsForLevel;

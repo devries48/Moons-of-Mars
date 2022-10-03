@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat Shader ForceField Green
+  m_Name: Mat shader Forcefield green
   m_Shader: {fileID: -6465566751694194690, guid: 87718fc09d3a3ca4d90a50c11b0622a5, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []

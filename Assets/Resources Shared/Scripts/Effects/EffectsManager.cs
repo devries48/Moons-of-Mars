@@ -10,17 +10,20 @@ public class EffectsManager : MonoBehaviour
         bigExplosion,
         dustExplosion,
         greenExplosion,
+        redExplosion,
     }
 
     [SerializeField] GameObject smallExplosionPrefab;
     [SerializeField] GameObject bigExplosionPrefab;
     [SerializeField] GameObject dustExplosionPrefab;
     [SerializeField] GameObject greenExplosionPrefab;
+    [SerializeField] GameObject redExplosionPrefab;
 
     GameObjectPool _smallExplosionPool;
     GameObjectPool _bigExplosionPool;
     GameObjectPool _dustExplosionPool;
     GameObjectPool _greenExplosionPool;
+    GameObjectPool _redExplosionPool;
 
     readonly List<System.Tuple<GameObject, Effect>> _effectsPlaying = new();
 
@@ -48,6 +51,7 @@ public class EffectsManager : MonoBehaviour
                     Effect.bigExplosion => _bigExplosionPool,
                     Effect.dustExplosion => _dustExplosionPool,
                     Effect.greenExplosion => _greenExplosionPool,
+                    Effect.redExplosion => _redExplosionPool,
                     _ => null
                 };
 
@@ -64,6 +68,7 @@ public class EffectsManager : MonoBehaviour
         _bigExplosionPool = GameObjectPool.Build(bigExplosionPrefab, 1);
         _dustExplosionPool = GameObjectPool.Build(dustExplosionPrefab, 1);
         _greenExplosionPool = GameObjectPool.Build(greenExplosionPrefab, 1);
+        _redExplosionPool = GameObjectPool.Build(redExplosionPrefab, 1);
     }
 
     public void StartEffect(Effect effect, Vector3 position, float scale)
@@ -74,6 +79,7 @@ public class EffectsManager : MonoBehaviour
             Effect.bigExplosion => _bigExplosionPool.GetFromPool(),
             Effect.dustExplosion => _dustExplosionPool.GetFromPool(),
             Effect.greenExplosion => _greenExplosionPool.GetFromPool(),
+            Effect.redExplosion => _redExplosionPool.GetFromPool(),
             _ => null
         };
 

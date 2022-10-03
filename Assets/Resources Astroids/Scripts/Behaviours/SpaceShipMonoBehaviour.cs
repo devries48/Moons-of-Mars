@@ -7,14 +7,22 @@ namespace Game.Astroids
     [SelectionBase]
     public class SpaceShipMonoBehaviour : GameMonoBehaviour
     {
+        public enum ShipType
+        {
+            player,
+            allied,
+            ufoGreen,
+            ufoRed
+        }
+
         #region editor fields
         [Header("Spaceship")]
 
-        [SerializeField, Tooltip("Select model only when ship can explode")]
-        GameObject model;
+        [Tooltip("Select model only when ship can explode")]
+        public GameObject m_Model;
 
-        [SerializeField, Tooltip("Select shield gameobject")]
-        protected ShieldController shield;
+        [Tooltip("Select shield gameobject")]
+        public ShieldController m_Shield;
 
         [Header("Weapon & bullet")]
         [SerializeField, Tooltip("Select a weapon gameobject")]
@@ -43,18 +51,20 @@ namespace Game.Astroids
         }
         Rigidbody __rb;
 
-        protected bool AreShieldsUp => shield != null && shield.ShieldsUp;
+        protected bool AreShieldsUp => m_Shield != null && m_Shield.ShieldsUp;
 
+        internal bool IsEnemy => m_shipType == ShipType.ufoGreen || m_shipType == ShipType.ufoRed;
         #endregion
 
         #region fields
         internal bool m_isAlive;
-        internal bool m_isEnemy = false;
-        protected bool m_isAllied = false;
         protected bool m_canShoot = true;
+
+        internal ShipType m_shipType = ShipType.player;
 
         internal float m_pwrFireRateTime;
         internal float m_pwrShieldTime;
+        internal float m_pwrWeaponTime;
 
         GameObjectPool _bulletPool;
         #endregion
@@ -76,7 +86,7 @@ namespace Game.Astroids
             var c = other.collider;
 
             if (!AreShieldsUp)
-                if (c.CompareTag("Enemy") && !m_isEnemy)
+                if (c.CompareTag("Enemy") && !IsEnemy)
                     HitByAlienShip();
         }
 
@@ -88,7 +98,7 @@ namespace Game.Astroids
             var o = other.gameObject;
 
             if (!AreShieldsUp)
-                if (c.CompareTag("Bullet") && m_isEnemy || c.CompareTag("AlienBullet") && !m_isEnemy)
+                if (c.CompareTag("Bullet") && IsEnemy || c.CompareTag("AlienBullet") && !IsEnemy)
                     HitByBullet(o);
 
                 else if (c.CompareTag("Shield"))
@@ -147,8 +157,8 @@ namespace Game.Astroids
             else
             {
                 PlayAudioClip(SpaceShipSounds.Clip.powerupPickup);
-     
-                shield.ShieldsUp = true;
+                print("powerup shield");
+                m_Shield.ShieldsUp = true;
                 m_pwrShieldTime = GameManager.m_powerupManager.m_powerDuration;
 
                 while (m_isAlive && m_pwrShieldTime > 0)
@@ -157,6 +167,7 @@ namespace Game.Astroids
                     yield return null;
                 }
                 m_pwrShieldTime = 0;
+                m_Shield.ShieldsUp = false;
             }
         }
 
@@ -165,7 +176,7 @@ namespace Game.Astroids
         public void Explode()
         {
             m_isAlive = false;
-            StartCoroutine(ExplodeShip());
+            StartCoroutine(ExplodeShipCore());
         }
 
         protected virtual void FireWeapon() => StartCoroutine(Shoot());
@@ -174,9 +185,9 @@ namespace Game.Astroids
 
         void ShowModel(bool show = true)
         {
-            if (model != null)
+            if (m_Model != null)
             {
-                foreach (var rend in model.GetComponentsInChildren<Renderer>())
+                foreach (var rend in m_Model.GetComponentsInChildren<Renderer>())
                     rend.enabled = show;
             }
         }
@@ -186,9 +197,10 @@ namespace Game.Astroids
         /// </summary>
         protected virtual void HitByBullet(GameObject other)
         {
+            print("schip door: " + other.name);
             RemoveFromGame(other);
 
-            if (m_isEnemy)
+            if (IsEnemy)
             {
                 GameManager.UfoDestroyed();
                 Explode();
@@ -232,21 +244,32 @@ namespace Game.Astroids
             m_canShoot = false;
 
             PlayAudioClip(SpaceShipSounds.Clip.shootBullet);
-            Bullet().Fire(weapon.transform.up);
+            Bullet().Fire(weapon.transform.up, m_shipType);
 
             yield return new WaitForSeconds(fireRate);
 
             m_canShoot = true;
         }
 
-        IEnumerator ExplodeShip()
+        IEnumerator ExplodeShipCore()
         {
             HideModel();
 
-            if (m_isEnemy)
-                PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
-            else
-                PlayEffect(EffectsManager.Effect.bigExplosion, transform.position, .8f);
+            switch (m_shipType)
+            {
+                case ShipType.player:
+                    PlayEffect(EffectsManager.Effect.bigExplosion, transform.position, .8f);
+                    break;
+                case ShipType.ufoGreen:
+                    PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
+                    break;
+                case ShipType.ufoRed:
+                    PlayEffect(EffectsManager.Effect.redExplosion, transform.position, 1.2f);
+                    break;
+                case ShipType.allied:
+                default:
+                    break;
+            }
 
             PlayAudioClip(SpaceShipSounds.Clip.shipExplosion);
 

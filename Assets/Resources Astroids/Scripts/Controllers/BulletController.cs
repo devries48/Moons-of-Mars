@@ -1,4 +1,5 @@
 using UnityEngine;
+using static Game.Astroids.SpaceShipMonoBehaviour;
 
 namespace Game.Astroids
 {
@@ -12,9 +13,29 @@ namespace Game.Astroids
         [SerializeField]
         int bulletSpeed = 25;
 
-        Rigidbody _rb;
+        Rigidbody Rb
+        {
+            get
+            {
+                if (__rb == null)
+                    __rb = GetComponentInChildren<Rigidbody>();
 
-        void Awake() => _rb = GetComponent<Rigidbody>();
+                return __rb;
+            }
+        }
+        Rigidbody __rb;
+
+        public MeshRenderer Renderer
+        {
+            get
+            {
+                if (__Renderer == null)
+                    TryGetComponent(out __Renderer);
+
+                return __Renderer;
+            }
+        }
+        MeshRenderer __Renderer;
 
         void OnEnable()
         {
@@ -22,9 +43,15 @@ namespace Game.Astroids
             InvokeRemoveFromGame(bulletLifetime);
         }
 
-        public virtual void Fire(Vector3 direction)
+        public virtual void Fire(Vector3 direction, ShipType type)
         {
-            _rb.velocity = direction * bulletSpeed;
+            if (type == ShipType.ufoGreen ||
+                type == ShipType.ufoRed)
+            {
+                GameManager.m_ufoManager.SetBulletMaterial(this, type);
+            }
+
+            Rb.velocity = direction * bulletSpeed;
         }
     }
 }

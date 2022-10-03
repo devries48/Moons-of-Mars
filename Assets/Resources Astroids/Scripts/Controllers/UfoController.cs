@@ -1,42 +1,30 @@
 using System.Collections;
 using UnityEngine;
+using static Game.Astroids.UfoManager;
 
 namespace Game.Astroids
 {
     public class UfoController : SpaceShipMonoBehaviour
     {
-        enum SpawnSide
-        {
-            left,
-            right
-        }
-
         #region editor fields
-
         [Header("UFO")]
         [SerializeField] GameObject pivot;
         [SerializeField] float speed = 10f;
         [SerializeField] float rotationSpeed = 50f;
-        [SerializeField, Range(0, 200)] int destructionScore = 100;
         [SerializeField] AudioSource engineAudio;
 
         [Header("UFO Lights")]
-        [SerializeField] GameObject lightsModel;
-
+        public GameObject m_LightsModel;
         #endregion
 
         #region fields
+        internal UfoType m_ufoType = UfoType.green;
 
         Vector3 _targetPos;  // Ufo target position
         bool _isShipRemoved; // Prevent ship remove recursion
         #endregion
 
-        protected override void Awake()
-        {
-            m_isEnemy = true;
-
-            base.Awake();
-        }
+        enum SpawnSide { left, right }
 
         protected override void OnEnable()
         {
@@ -68,9 +56,10 @@ namespace Game.Astroids
 
         protected override void HitByBullet(GameObject obj)
         {
+            print("ufo hit by bullet: "+ obj.tag);
             HideLights();
             base.HitByBullet(obj);
-            Score(destructionScore);
+            Score(GameManager.m_ufoManager.GetDestructionScore(m_ufoType));
         }
 
         protected override void HideModel()
@@ -84,11 +73,16 @@ namespace Game.Astroids
 
         void SetRandomShipBehaviour()
         {
-            var side = RandomEnumUtil<SpawnSide>.Get();
+            m_ufoType = RandomEnumUtil<UfoType>.Get();
+            m_shipType = m_ufoType == UfoType.green ? ShipType.ufoGreen : ShipType.ufoRed;
+           
+            GameManager.m_ufoManager.SetUfoMaterials(this);
             pivot.transform.localRotation = Quaternion.identity;
 
-            LeanTween.rotateX(pivot, -10f, 1f).setFrom(10f)
-                .setLoopPingPong(5);
+            var side = RandomEnumUtil<SpawnSide>.Get();
+            var maxPivot = m_ufoType == UfoType.green ? 10f : 3f;
+            
+            LeanTween.rotateX(pivot, -maxPivot, 1f).setFrom(maxPivot).setLoopPingPong();
 
             Rb.transform.position = SpawnPoint(side == SpawnSide.left);
             _targetPos = SpawnPoint(side != SpawnSide.left);
@@ -123,6 +117,7 @@ namespace Game.Astroids
             if (AreShieldsUp)
                 return;
 
+            print("vuur van ufo");
             weapon.transform.Rotate(0, 0, Random.Range(0, 360));
             FireWeapon();
         }
@@ -174,7 +169,10 @@ namespace Game.Astroids
         Vector3 SpawnPoint(bool left)
         {
             if (GameManager == null)
+            {
+                Debug.Log("GameManager == null");
                 return Vector3.zero;
+            }
 
             var xPos = (left)
                  ? GameManager.m_camBounds.LeftEdge - 1
@@ -189,8 +187,8 @@ namespace Game.Astroids
 
         void ShowLights(bool show = true)
         {
-            if (lightsModel != null)
-                lightsModel.SetActive(show);
+            if (m_LightsModel != null)
+                m_LightsModel.SetActive(show);
         }
 
         void HideLights() => ShowLights(false);

@@ -3,7 +3,17 @@ guid: 009ccc6cd79f15648a4a712560077f8d
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UFO_texture
+    second: {fileID: 2100000, guid: e547ec80a7de4fd45ba68c033c30abb2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: UFO_texture2
+    second: {fileID: 2100000, guid: 90cbe9f389317d041b34d2267d39a455, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -56,7 +66,7 @@ ModelImporter:
     skinWeightsMode: 0
     maxBonesPerVertex: 4
     minBoneWeight: 0.001
-    optimizeBones: 1
+    optimizeBones: 0
     meshOptimizationFlags: -1
     indexFormat: 0
     secondaryUVAngleDistortion: 8

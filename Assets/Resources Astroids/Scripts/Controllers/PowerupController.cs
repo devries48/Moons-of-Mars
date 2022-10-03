@@ -26,7 +26,7 @@ namespace Game.Astroids
         }
         Rigidbody __rb;
 
-        Renderer Renderer
+        internal Renderer Renderer
         {
             get
             {
@@ -53,8 +53,8 @@ namespace Game.Astroids
 
         #region fields
         bool _isAlive;
-        PowerupManager.Powerup _powerup;
 
+        internal PowerupManager.Powerup m_powerup;
         internal bool m_isVisible;
         #endregion
 
@@ -101,7 +101,6 @@ namespace Game.Astroids
                 HitByShield(o);
         }
 
-
         IEnumerator KeepAliveLoop()
         {
             float timePassed = 0;
@@ -131,8 +130,8 @@ namespace Game.Astroids
             o.TryGetComponent(out SpaceShipMonoBehaviour ship);
             if (ship != null)
             {
-                Score(PwrManager.GetPickupScore(ship.m_isEnemy));
-                ship.ActivatePowerup(_powerup);
+                Score(PwrManager.GetPickupScore(ship.IsEnemy));
+                ship.ActivatePowerup(m_powerup);
             }
             RemoveFromGame();
         }
@@ -182,17 +181,8 @@ namespace Game.Astroids
 
         void SetRandomPowerUp()
         {
-            _powerup = RandomEnumUtil<PowerupManager.Powerup>.Get();
- 
-            var mat = _powerup switch
-            {
-                PowerupManager.Powerup.fireRate => PwrManager.m_fireRatePowerup,
-                PowerupManager.Powerup.shield => PwrManager.m_shieldPowerup,
-                PowerupManager.Powerup.weapon => PwrManager.m_weaponPowerup,
-                _ => null
-            };
-            if (mat != null)
-                Renderer.material = mat;
+            m_powerup = RandomEnumUtil<PowerupManager.Powerup>.Get();
+            PwrManager.SetPowerupMaterial(this);
         }
 
     }

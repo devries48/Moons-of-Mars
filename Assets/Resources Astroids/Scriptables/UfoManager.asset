@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c4fbd1c2e5293a7438fc73215c7518ec, type: 3}
+  m_Name: UfoManager
+  m_EditorClassIdentifier: 
+  minSpawnWait: 15
+  maxSpawnWait: 30
+  ufoPrefab: {fileID: 6918327620828854305, guid: a51a975308144db46b7c41e7aff0dcf8, type: 3}
+  greenCockpit: {fileID: 2100000, guid: 90cbe9f389317d041b34d2267d39a455, type: 2}
+  greenBody: {fileID: 2100000, guid: e547ec80a7de4fd45ba68c033c30abb2, type: 2}
+  greenShield: {fileID: 2100000, guid: 399dba791d7229d419d94fa4467351f9, type: 2}
+  greenBullet: {fileID: 2100000, guid: ca060674708dfc346aa82dd2b19ecebe, type: 2}
+  greenLights: {r: 0.09803922, g: 0.8392157, b: 0.078431375, a: 0}
+  greenScore: 100
+  redCockpit: {fileID: 2100000, guid: 98a690437c7f77448b15ea2508012845, type: 2}
+  redBody: {fileID: 2100000, guid: 97ed7a95de1315a41aeede47fee970b7, type: 2}
+  redShield: {fileID: 2100000, guid: 19876c132c476f44ea766f4a91bf8b0a, type: 2}
+  redBullet: {fileID: 2100000, guid: 84b8546742acb5846a769d8b64f3ae47, type: 2}
+  redLights: {r: 0.8392157, g: 0.07843143, b: 0.07843137, a: 0}
+  redScore: 150

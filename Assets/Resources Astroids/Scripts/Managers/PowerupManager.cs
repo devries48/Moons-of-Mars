@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using static Game.Astroids.PowerupManager;
 
 namespace Game.Astroids
 {
@@ -16,9 +17,9 @@ namespace Game.Astroids
         [SerializeField] GameObject powerup;
 
         [Header("Materials")]
-        public Material m_fireRatePowerup;
-        public Material m_shieldPowerup;
-        public Material m_weaponPowerup;
+        [SerializeField] Material fireRatePowerup;
+        [SerializeField] Material shieldPowerup;
+        [SerializeField] Material weaponPowerup;
 
         [Header("Duration")]
         [Range(5, 30)] public int m_showTime = 15;
@@ -45,8 +46,6 @@ namespace Game.Astroids
             }
         }
         AstroidsGameManager __gameManager;
-
-        List<PowerupController> _powerupList;
         #endregion
 
         #region fields
@@ -59,20 +58,6 @@ namespace Game.Astroids
             fireRate, // red
             shield,   // blue
             weapon    // green
-        }
-
-        void OnDisable() => _powerupList = null;
-
-        public void BuildPools()
-        {
-            _shuttlePool = GameObjectPool.Build(shuttle, 1);
-            _powerupPool = GameObjectPool.Build(powerup, 1);
-        }
-
-        public void HideAllPowerups()
-        {
-            foreach (var powerup in _powerupList)
-                powerup.RemoveFromGame();
         }
 
         public IEnumerator PowerupSpawnLoop()
@@ -100,6 +85,26 @@ namespace Game.Astroids
         {
             yield return new WaitForSeconds(delay);
             PlayAudio(clip, audioSource);
+        }
+
+        void BuildPools()
+        {
+            _shuttlePool = GameObjectPool.Build(shuttle, 1);
+            _powerupPool = GameObjectPool.Build(powerup, 1);
+        }
+
+        public void SetPowerupMaterial(PowerupController pwr)
+        {
+            var mat = pwr.m_powerup switch
+            {
+                Powerup.fireRate => fireRatePowerup,
+                Powerup.shield => shieldPowerup,
+                Powerup.weapon => weaponPowerup,
+                _ => null
+            };
+            if (mat != null)
+                pwr.Renderer.material = mat;
+
         }
     }
 }

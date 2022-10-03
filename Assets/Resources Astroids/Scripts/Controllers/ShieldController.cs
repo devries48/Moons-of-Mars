@@ -16,16 +16,12 @@ namespace Game.Astroids
         bool autoActivate = false;
 
         [Header("Impact settings")]
-        [Range(0.1f, 5f)]
-        [SerializeField] float dampenTime = 1.5f;
-
+        [SerializeField, Range(0.1f, 5f)] float dampenTime = 1.5f;
         // maximum displacement on impact
-        [Range(0.002f, 0.1f)]
-        [SerializeField] float impactRippleAmplitude = 0.005f;
-        [Range(0.05f, 0.5f)]
-        [SerializeField] float impactRippleMaxRadius = 0.35f;
+        [SerializeField, Range(0.002f, 0.1f)] float impactRippleAmplitude = 0.005f;
+        [SerializeField, Range(0.05f, 0.5f)] float impactRippleMaxRadius = 0.35f;
 
-        MeshRenderer Renderer
+        public MeshRenderer Renderer
         {
             get
             {
@@ -46,7 +42,10 @@ namespace Game.Astroids
             set
             {
                 if (Renderer != null)
+                {
+                    print("Shields up = " + value);
                     Renderer.enabled = value;
+                }
             }
         }
 
@@ -87,17 +86,16 @@ namespace Game.Astroids
             else if (c.CompareTag("Bullet"))
                 HitByBullet(o, false);
             else if (c.CompareTag("AlienBullet"))
-                HitByBullet(o,true);
+                HitByBullet(o, true);
         }
 
         void HitByAstroid(GameObject other)
         {
-            if (!autoActivate) return;
-
-            SetShieldsUp(true);
+            if (autoActivate)
+                SetShieldsUp(true);
 
             // Player shield hit destroys astroid, handled by AstroidController
-            if (!m_spaceShip.m_isEnemy)
+            if (!m_spaceShip.IsEnemy)
                 return;
 
             other.TryGetComponent<Rigidbody>(out var rb);
@@ -111,21 +109,21 @@ namespace Game.Astroids
 
         void HitByPlayer()
         {
-            SetShieldsUp(true);
+            if (autoActivate)
+                SetShieldsUp(true);
         }
 
-        void HitByBullet(GameObject bullet, bool isEnemy)
+        void HitByBullet(GameObject bullet, bool isAlien)
         {
-            if (m_spaceShip.m_isEnemy && isEnemy)
-            {
-                PoolableMonoBehaviour.RemoveFromGame(bullet);
-                SetShieldsUp(true);
-            } else if(ShieldsUp)
+            if (ShieldsUp)
                 PoolableMonoBehaviour.RemoveFromGame(bullet);
         }
 
         void SetShieldsUp(bool isAuto)
         {
+            if (ShieldsUp)
+                return;
+
             if (m_spaceShip == null)
                 return;
 
@@ -134,16 +132,15 @@ namespace Game.Astroids
             else
                 m_spaceShip.PlayAudioClip(SpaceShipSounds.Clip.shieldsUp);
 
+            ShieldsUp = true;
 
             if (autoActivate)
-                Renderer.enabled = true;
-
-            _visibleTimer = shieldVisibleTimer;
+                _visibleTimer = shieldVisibleTimer;
         }
 
         void SetShieldsDown()
         {
-            Renderer.enabled = false;
+            ShieldsUp = false;
 
             if (m_spaceShip == null)
                 Debug.LogWarning("SpaceShip on ShieldBehaviour is NULL");
