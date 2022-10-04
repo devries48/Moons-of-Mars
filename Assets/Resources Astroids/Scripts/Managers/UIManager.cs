@@ -17,6 +17,21 @@ namespace Game.Astroids
         TextMeshProUGUI announcerTextUI;
 
         [SerializeField]
+        GameObject prefabDisplayScore;
+
+        [SerializeField]
+        Color scoreColor = Color.white;
+
+        [SerializeField]
+        Color positiveColor = Color.green;
+
+        [SerializeField]
+        Color negativeColor = Color.red;
+
+        [SerializeField]
+        string scoreFormat = "{0:000000}";
+
+        [SerializeField]
         UISounds uiSounds = new();
 
         // Show mainMenu directly the first run.
@@ -33,10 +48,11 @@ namespace Game.Astroids
             }
         }
         GameAnnouncer __announce;
-
+        
         // Set window in start position & hide ui items
         public void ResetUI()
         {
+            scoreTextUI.color = scoreColor;
             scoreTextUI.gameObject.SetActive(false);
             TweenUtil.MenuWindowClose(mainMenuWindow, true);
         }
@@ -111,5 +127,39 @@ namespace Game.Astroids
             yield return new WaitForSeconds(delay);
             PlayAudio(clip);
         }
+
+        internal void ScoreEarned(int points, Vector3 pos)
+        {
+            if (points == 0)
+                return;
+
+            SetScore(Score.Earned);
+
+            LeanTween.scale(scoreTextUI.gameObject, new Vector3(1.5f, 1.5f, 1.5f), .5f).setEasePunch();
+            LeanTween.scale(scoreTextUI.gameObject, new Vector3(1f, 1f, 1f), .2f).setDelay(.5f).setEase(LeanTweenType.easeInOutCubic);
+
+            TweenColor(scoreColor, points > 0 ? positiveColor : negativeColor, .5f);
+            TweenColor(scoreTextUI.color, scoreColor, .1f, .5f);
+
+            if (points > 0)
+                PlayDelayedAudio(UISounds.Clip.scorePlus, .2f);
+            else
+                PlayDelayedAudio(UISounds.Clip.scoreMinus, .2f);
+        }
+
+        void TweenColor(Color begin, Color end, float time, float delay = default)
+        {
+            LeanTween.value(scoreTextUI.gameObject, 0.1f, 1f, time).setDelay(delay)
+                .setOnUpdate((value) =>
+                {
+                    scoreTextUI.color = Color.Lerp(begin, end, value);
+                });
+        }
+
+        void SetScore(int points)
+        {
+            scoreTextUI.text = string.Format(scoreFormat, points);
+        }
+
     }
 }

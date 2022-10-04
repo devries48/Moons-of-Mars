@@ -1,8 +1,10 @@
+using UnityEngine;
+
 namespace Game.Astroids
 {
     public static class Score
     {
-        public delegate void PointsAdded(int points);
+        public delegate void PointsAdded(int points, Vector3 pos);
 
         public static event PointsAdded OnEarn;
 
@@ -11,13 +13,15 @@ namespace Game.Astroids
         public static void Reset()
         {
             Earned = 0;
-            Invoke_onEarn(0);
+            Invoke_onEarn(0, Vector3.zero);
         }
 
-        public static void Earn(int points)
+        public static void Earn(int points, GameObject target)
         {
             Earned += points;
-            Invoke_onEarn(points);
+            var pos = (target != null) ? target.transform.position : Vector3.zero;
+
+            Invoke_onEarn(points, pos);
         }
 
         // The idea is that UI can have a way to 
@@ -27,17 +31,17 @@ namespace Game.Astroids
         // so they can display feedback to user.
         public static void Tally()
         {
-            Invoke_onEarn(0);
+            Invoke_onEarn(0, Vector3.zero);
         }
 
-        static void Invoke_onEarn(int points)
+        static void Invoke_onEarn(int points, Vector3 pos)
         {
-            OnEarn?.Invoke(points);
+            OnEarn?.Invoke(points, pos);
         }
 
         public static void LevelCleared(int level)
         {
-            Earn(level * 100);
+            Earn(level * 100, null);
         }
     }
 }

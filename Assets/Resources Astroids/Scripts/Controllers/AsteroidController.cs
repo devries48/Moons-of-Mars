@@ -179,7 +179,7 @@ namespace Game.Astroids
 
             PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, scale);
             PlayAudioClip(AstroidSounds.Clip.Explode, Generation);
-            Score(points);
+            Score(points, gameObject);
 
             while (Audio.isPlaying)
                 yield return null;

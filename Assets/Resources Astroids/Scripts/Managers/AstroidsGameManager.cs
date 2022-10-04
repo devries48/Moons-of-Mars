@@ -9,7 +9,6 @@ namespace Game.Astroids
     public class AstroidsGameManager : MonoBehaviour
     {
         #region singleton
-
         public static AstroidsGameManager Instance => __instance;
 
         static AstroidsGameManager __instance;
@@ -46,7 +45,6 @@ namespace Game.Astroids
         [SerializeField] AudioMixer audioMixer;
 
         public UIManager m_uiManager = new();
-
         #endregion
 
         #region fields
@@ -60,7 +58,6 @@ namespace Game.Astroids
         GameObjectPool _astoidPool;
         PlayerShipController _playerShip;
         EffectsManager _effects;
-
         #endregion
 
         enum Menu { none = 0, start = 1, exit = 2 }
@@ -98,8 +95,16 @@ namespace Game.Astroids
             StartCoroutine(m_powerupManager.PowerupSpawnLoop());
         }
 
-        void OnEnable() => __instance = this;
+        void OnEnable()
+        {
+            __instance = this;
+            Score.OnEarn += ScoreEarned;
+        }
 
+        void OnDisable()
+        {
+            Score.OnEarn -= ScoreEarned;
+        }
         #endregion
 
         #region game loops
@@ -245,6 +250,14 @@ namespace Game.Astroids
         }
 
         #endregion
+
+        void ScoreEarned(int points, Vector3 pos)
+        {
+            if (points == 0)
+                return;
+
+            m_uiManager.ScoreEarned(points, pos);
+        }
 
         public void MenuSelect(int i)
         {

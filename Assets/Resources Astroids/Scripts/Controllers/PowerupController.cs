@@ -130,7 +130,7 @@ namespace Game.Astroids
             o.TryGetComponent(out SpaceShipMonoBehaviour ship);
             if (ship != null)
             {
-                Score(PwrManager.GetPickupScore(ship.IsEnemy));
+                Score(PwrManager.GetPickupScore(ship.IsEnemy),gameObject);
                 ship.ActivatePowerup(m_powerup);
             }
             RemoveFromGame();
@@ -139,14 +139,14 @@ namespace Game.Astroids
         void HitByAlienBullet(GameObject alienBullet)
         {
             RemoveFromGame(alienBullet);
-            Score(PwrManager.GetDestructionScore(true));
+            Score(PwrManager.GetDestructionScore(true),gameObject);
             StartCoroutine(ExplodePowerup());
         }
 
         void HitByBullet(GameObject bullet)
         {
             RemoveFromGame(bullet);
-            Score(PwrManager.GetDestructionScore(false));
+            Score(PwrManager.GetDestructionScore(false), gameObject);
             StartCoroutine(ExplodePowerup());
         }
 

@@ -33,7 +33,7 @@ namespace Game.Astroids
 
         #endregion
 
-        protected void Score(int score) => Astroids.Score.Earn(score);
+        protected void Score(int score, GameObject target) => Astroids.Score.Earn(score, target);
 
         protected void PlaySound(AudioClip clip, AudioSource audioSource = null)
         {

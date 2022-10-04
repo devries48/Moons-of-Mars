@@ -50,7 +50,8 @@ namespace Game.Astroids
         {
             Score.OnEarn -= ScoreEarned;
         }
-        void ScoreEarned(int points)
+
+        void ScoreEarned(int points, Vector3 pos)
         {
             if (points == 0)
                 return;

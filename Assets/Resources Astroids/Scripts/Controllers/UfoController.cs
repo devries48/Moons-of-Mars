@@ -59,7 +59,7 @@ namespace Game.Astroids
             print("ufo hit by bullet: "+ obj.tag);
             HideLights();
             base.HitByBullet(obj);
-            Score(GameManager.m_ufoManager.GetDestructionScore(m_ufoType));
+            Score(GameManager.m_ufoManager.GetDestructionScore(m_ufoType), gameObject);
         }
 
         protected override void HideModel()
