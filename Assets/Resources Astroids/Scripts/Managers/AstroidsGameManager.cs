@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -30,8 +31,9 @@ namespace Game.Astroids
 
         #region editor fields
         [Header("Scriptables")]
-        public UfoManager m_ufoManager;
-        public PowerupManager m_powerupManager;
+        public UfoManager m_UfoManager;
+        public PowerupManager m_PowerupManager;
+        public UIManager m_UiManager;
 
         [Header("Prefabs")]
         [SerializeField, Tooltip("Select a spaceship prefab")]
@@ -40,11 +42,15 @@ namespace Game.Astroids
         [SerializeField, Tooltip("Select an astroid prefab")]
         GameObject asteroidPrefab;
 
+        [Header("UI Elements")]
+        public GameObject m_MainMenuWindow;
+        public TextMeshProUGUI m_ScoreTextUI;
+        public TextMeshProUGUI m_AnnouncerTextUI;
+
         [Header("Other")]
         [SerializeField] Camera gameCamera;
         [SerializeField] AudioMixer audioMixer;
-
-        public UIManager m_uiManager = new();
+        public AudioSource m_AudioSource;
         #endregion
 
         #region fields
@@ -66,19 +72,19 @@ namespace Game.Astroids
         void Awake()
         {
             SingletonInstanceGuard();
-            TryGetComponent(out _effects);
-
-            m_camBounds = new CamBounds(gameCamera);
 
             if (asteroidPrefab == null)
             {
                 Debug.LogError("Asteriod Prefab not set!");
                 return;
             }
+            
+            TryGetComponent(out _effects);
 
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
 
-            m_uiManager.ResetUI();
+            m_camBounds = new CamBounds(gameCamera);
+            m_UiManager.ResetUI();
         }
 
         void Start()
@@ -91,20 +97,11 @@ namespace Game.Astroids
             m_GamePlaying = true;
 
             StartCoroutine(GameLoop());
-            StartCoroutine(m_ufoManager.UfoSpawnLoop());
-            StartCoroutine(m_powerupManager.PowerupSpawnLoop());
+            StartCoroutine(m_UfoManager.UfoSpawnLoop());
+            StartCoroutine(m_PowerupManager.PowerupSpawnLoop());
         }
 
-        void OnEnable()
-        {
-            __instance = this;
-            Score.OnEarn += ScoreEarned;
-        }
-
-        void OnDisable()
-        {
-            Score.OnEarn -= ScoreEarned;
-        }
+        void OnEnable() => __instance = this;
         #endregion
 
         #region game loops
@@ -121,7 +118,7 @@ namespace Game.Astroids
                     _requestTitleScreen = false;
                     m_GamePaused = true;
                     string result = null;
-                    yield return Run<string>(m_uiManager.ShowMainMenu(), (output) => result = output);
+                    yield return Run<string>(m_UiManager.ShowMainMenu(), (output) => result = output);
                 }
 
                 while (m_GamePaused)
@@ -164,7 +161,7 @@ namespace Game.Astroids
 
             yield return Wait(1);
 
-            m_uiManager.LevelStarts(m_level.Level);
+            m_UiManager.LevelStarts(m_level.Level);
 
             yield return Wait(2);
 
@@ -173,7 +170,7 @@ namespace Game.Astroids
 
         IEnumerator LevelPlay()
         {
-            m_uiManager.LevelPlay();
+            m_UiManager.LevelPlay();
 
             while (_playerShip.m_isAlive && m_level.HasEnemy)
                 yield return null;
@@ -187,13 +184,13 @@ namespace Game.Astroids
             {
                 m_GamePaused = true;
 
-                StartCoroutine(m_uiManager.GameOver());
+                StartCoroutine(m_UiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
                 GameStart();
             }
             else
             {
-                StartCoroutine(m_uiManager.LevelCleared(m_level.Level));
+                StartCoroutine(m_UiManager.LevelCleared(m_level.Level));
                 AdvanceLevel();
             }
             yield return Wait(2);
@@ -251,26 +248,18 @@ namespace Game.Astroids
 
         #endregion
 
-        void ScoreEarned(int points, Vector3 pos)
-        {
-            if (points == 0)
-                return;
-
-            m_uiManager.ScoreEarned(points, pos);
-        }
-
         public void MenuSelect(int i)
         {
             var menu = (Menu)i;
             switch (menu)
             {
                 case Menu.start:
-                    m_uiManager.HideMainMenu();
+                    m_UiManager.HideMainMenu();
                     StartCoroutine(ResumeGame());
                     break;
 
                 case Menu.exit:
-                    var id = m_uiManager.HideMainMenu(false);
+                    var id = m_UiManager.HideMainMenu(false);
                     var d = LeanTween.descr(id);
 
                     d?.setOnComplete(QuitGame);

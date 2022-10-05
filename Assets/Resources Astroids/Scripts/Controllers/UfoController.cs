@@ -59,7 +59,7 @@ namespace Game.Astroids
             print("ufo hit by bullet: "+ obj.tag);
             HideLights();
             base.HitByBullet(obj);
-            Score(GameManager.m_ufoManager.GetDestructionScore(m_ufoType), gameObject);
+            Score(GameManager.m_UfoManager.GetDestructionScore(m_ufoType), gameObject);
         }
 
         protected override void HideModel()
@@ -76,7 +76,7 @@ namespace Game.Astroids
             m_ufoType = RandomEnumUtil<UfoType>.Get();
             m_shipType = m_ufoType == UfoType.green ? ShipType.ufoGreen : ShipType.ufoRed;
            
-            GameManager.m_ufoManager.SetUfoMaterials(this);
+            GameManager.m_UfoManager.SetUfoMaterials(this);
             pivot.transform.localRotation = Quaternion.identity;
 
             var side = RandomEnumUtil<SpawnSide>.Get();

@@ -22,8 +22,8 @@ namespace Game.Astroids
         [SerializeField] Material weaponPowerup;
 
         [Header("Duration")]
-        [Range(5, 30)] public int m_showTime = 15;
-        [Range(5, 30)] public int m_powerDuration = 10;
+        [Range(5, 30)] public int m_ShowTime = 15;
+        [Range(5, 30)] public int m_PowerDuration = 10;
 
         [Header("Score")]
         [SerializeField, Range(0, 200)] int pickupScore = 25;
@@ -60,11 +60,10 @@ namespace Game.Astroids
             weapon    // green
         }
 
+        void OnEnable() => BuildPools();
+
         public IEnumerator PowerupSpawnLoop()
         {
-            if (_shuttlePool == null)
-                BuildPools();
-
             while (GameManager.m_GamePlaying)
             {
                 while (GameManager.m_GamePaused)
@@ -81,16 +80,11 @@ namespace Game.Astroids
         public int GetPickupScore(bool isEnemy) => isEnemy ? enemyPickupScore : pickupScore;
         public int GetDestructionScore(bool isEnemy) => isEnemy ? enemyDestructionScore : destructionScore;
         public void PlayAudio(PowerupSounds.Clip clip, AudioSource audioSource) => m_sounds.PlayClip(clip, audioSource);
+   
         public IEnumerator PlayDelayedAudio(PowerupSounds.Clip clip, AudioSource audioSource, float delay)
         {
             yield return new WaitForSeconds(delay);
             PlayAudio(clip, audioSource);
-        }
-
-        void BuildPools()
-        {
-            _shuttlePool = GameObjectPool.Build(shuttle, 1);
-            _powerupPool = GameObjectPool.Build(powerup, 1);
         }
 
         public void SetPowerupMaterial(PowerupController pwr)
@@ -106,5 +100,12 @@ namespace Game.Astroids
                 pwr.Renderer.material = mat;
 
         }
+
+        void BuildPools()
+        {
+            _shuttlePool = GameObjectPool.Build(shuttle, 1);
+            _powerupPool = GameObjectPool.Build(powerup, 1);
+        }
+
     }
 }

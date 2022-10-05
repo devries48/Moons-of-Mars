@@ -43,7 +43,7 @@ namespace Game.Astroids
             get
             {
                 if (__pwrManager == null)
-                    __pwrManager = GameManager.m_powerupManager;
+                    __pwrManager = GameManager.m_PowerupManager;
 
                 return __pwrManager;
             }
@@ -105,7 +105,7 @@ namespace Game.Astroids
         {
             float timePassed = 0;
 
-            while (_isAlive && timePassed < PwrManager.m_showTime)
+            while (_isAlive && timePassed < PwrManager.m_ShowTime)
             {
                 timePassed += Time.deltaTime;
 

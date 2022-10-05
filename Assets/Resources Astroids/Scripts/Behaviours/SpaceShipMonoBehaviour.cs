@@ -125,7 +125,7 @@ namespace Game.Astroids
         {
             if (m_pwrFireRateTime > 0)
             {
-                m_pwrFireRateTime += GameManager.m_powerupManager.m_powerDuration;
+                m_pwrFireRateTime += GameManager.m_PowerupManager.m_PowerDuration;
                 yield return null;
             }
             else
@@ -134,7 +134,7 @@ namespace Game.Astroids
 
                 var orgVal = fireRate;
                 fireRate *= .25f;
-                m_pwrFireRateTime = GameManager.m_powerupManager.m_powerDuration;
+                m_pwrFireRateTime = GameManager.m_PowerupManager.m_PowerDuration;
 
                 while (m_isAlive && m_pwrFireRateTime > 0)
                 {
@@ -151,7 +151,7 @@ namespace Game.Astroids
         {
             if (m_pwrShieldTime > 0)
             {
-                m_pwrShieldTime += GameManager.m_powerupManager.m_powerDuration;
+                m_pwrShieldTime += GameManager.m_PowerupManager.m_PowerDuration;
                 yield return null;
             }
             else
@@ -159,7 +159,7 @@ namespace Game.Astroids
                 PlayAudioClip(SpaceShipSounds.Clip.powerupPickup);
                 print("powerup shield");
                 m_Shield.ShieldsUp = true;
-                m_pwrShieldTime = GameManager.m_powerupManager.m_powerDuration;
+                m_pwrShieldTime = GameManager.m_PowerupManager.m_PowerDuration;
 
                 while (m_isAlive && m_pwrShieldTime > 0)
                 {

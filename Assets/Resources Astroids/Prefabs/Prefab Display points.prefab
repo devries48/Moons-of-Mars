@@ -111,7 +111,7 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 1
+  m_enableVertexGradient: 0
   m_colorMode: 0
   m_fontColorGradient:
     topLeft: {r: 0.04111784, g: 0.7924528, b: 0.05138498, a: 1}
@@ -135,7 +135,7 @@ MonoBehaviour:
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 2012722828821306403}
   - component: {fileID: 7844572027607028231}
   m_Layer: 9
-  m_Name: Prefab Display score
+  m_Name: Prefab Display points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

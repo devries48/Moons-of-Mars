@@ -14,8 +14,6 @@ namespace Game.Astroids
             gameOver
         }
 
-        [SerializeField] AudioSource clipsAudioSource;
-
         [Header("Clips")]
         [SerializeField] AudioClip scorePlus;
         [SerializeField] AudioClip scoreMinus;
@@ -23,6 +21,21 @@ namespace Game.Astroids
         [SerializeField] AudioClip[] levelComplete;
         [SerializeField] AudioClip[] gameOver;
 
+        #region properties
+        AstroidsGameManager GameManager
+        {
+            get
+            {
+                if (__gameManager == null)
+                    __gameManager = AstroidsGameManager.Instance;
+
+                return __gameManager;
+            }
+        }
+        AstroidsGameManager __gameManager;
+
+        AudioSource UiAudio => GameManager.m_AudioSource;
+        #endregion
 
         public void PlayClip(Clip clip)
         {
@@ -35,14 +48,14 @@ namespace Game.Astroids
                 Clip.gameOver => RandomClip(gameOver),
                 _ => null
             };
-            PlayAudioClip(audioClip);    
+            PlayAudioClip(audioClip);
         }
 
-        public bool AudioIsPlaying => clipsAudioSource.isPlaying;
+        public bool AudioIsPlaying => UiAudio.isPlaying;
 
         AudioClip RandomClip(AudioClip[] clips)
         {
-            if (clips == null || clips.Length == 0) 
+            if (clips == null || clips.Length == 0)
                 return null;
 
             return clips[Random.Range(0, clips.Length)];
@@ -50,8 +63,8 @@ namespace Game.Astroids
 
         void PlayAudioClip(AudioClip clip)
         {
-            if (clip && clipsAudioSource)
-                clipsAudioSource.PlayOneShot(clip);
+            if (clip && UiAudio)
+                UiAudio.PlayOneShot(clip);
         }
 
     }
