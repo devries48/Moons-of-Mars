@@ -12,8 +12,7 @@ namespace Game.Astroids
             shieldsUp,
             shieldsDown,
             shieldsHit,
-            shipExplosion,
-            powerupPickup
+            shipExplosion
         }
 
         [SerializeField] AudioSource clipsAudioSource;
@@ -24,7 +23,6 @@ namespace Game.Astroids
         [SerializeField] AudioClip shieldsDown;
         [SerializeField] AudioClip shieldsHit;
         [SerializeField] AudioClip shipExplosion;
-        [SerializeField] AudioClip powerupPickup;
 
         public void PlayClip(Clip clip)
         {
@@ -35,7 +33,6 @@ namespace Game.Astroids
                 Clip.shieldsDown => shieldsDown,
                 Clip.shieldsHit => shieldsHit,
                 Clip.shipExplosion => shipExplosion,
-                Clip.powerupPickup => powerupPickup,
                 _ => null
             };
 

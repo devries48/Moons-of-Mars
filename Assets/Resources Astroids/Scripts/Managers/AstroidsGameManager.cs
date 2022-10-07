@@ -54,15 +54,15 @@ namespace Game.Astroids
         #endregion
 
         #region fields
+        internal PlayerShipController m_playerShip;
         internal CamBounds m_camBounds;
-        internal bool m_GamePlaying;
-        internal bool m_GamePaused;
+        internal bool m_gamePlaying;
+        internal bool m_gamePaused;
         internal CurrentLevel m_level;
 
         bool _requestTitleScreen;
 
         GameObjectPool _astoidPool;
-        PlayerShipController _playerShip;
         EffectsManager _effects;
         #endregion
 
@@ -94,7 +94,7 @@ namespace Game.Astroids
             if (_astoidPool == null)
                 return;
 
-            m_GamePlaying = true;
+            m_gamePlaying = true;
 
             StartCoroutine(GameLoop());
             StartCoroutine(m_UfoManager.UfoSpawnLoop());
@@ -111,17 +111,17 @@ namespace Game.Astroids
 
             GameStart();
 
-            while (m_GamePlaying)
+            while (m_gamePlaying)
             {
                 if (_requestTitleScreen)
                 {
                     _requestTitleScreen = false;
-                    m_GamePaused = true;
+                    m_gamePaused = true;
                     string result = null;
                     yield return Run<string>(m_UiManager.ShowMainMenu(), (output) => result = output);
                 }
 
-                while (m_GamePaused)
+                while (m_gamePaused)
                     yield return null;
 
                 yield return StartCoroutine(LevelStart());
@@ -134,7 +134,7 @@ namespace Game.Astroids
 
         void GameStart()
         {
-            _playerShip = SpawnPlayer(playerShipPrefab);
+            m_playerShip = SpawnPlayer(playerShipPrefab);
             _requestTitleScreen = true;
             m_level.Level1();
         }
@@ -142,7 +142,7 @@ namespace Game.Astroids
         IEnumerator ResumeGame()
         {
             yield return new WaitForSeconds(.5f);
-            m_GamePaused = false;
+            m_gamePaused = false;
         }
 
         void QuitGame()
@@ -156,8 +156,8 @@ namespace Game.Astroids
 
         IEnumerator LevelStart()
         {
-            _playerShip.Recover();
-            _playerShip.EnableControls();
+            m_playerShip.Recover();
+            m_playerShip.EnableControls();
 
             yield return Wait(1);
 
@@ -172,17 +172,17 @@ namespace Game.Astroids
         {
             m_UiManager.LevelPlay();
 
-            while (_playerShip.m_isAlive && m_level.HasEnemy)
+            while (m_playerShip.m_isAlive && m_level.HasEnemy)
                 yield return null;
         }
 
         IEnumerator LevelEnd()
         {
-            bool gameover = !_playerShip.m_isAlive;
+            bool gameover = !m_playerShip.m_isAlive;
 
             if (gameover)
             {
-                m_GamePaused = true;
+                m_gamePaused = true;
 
                 StartCoroutine(m_UiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
@@ -386,6 +386,7 @@ namespace Game.Astroids
 
             public int Level => _level;
             public int AstroidsForLevel => _astroidsForLevel;
+            public int AstroidsActive => _asteroidsActive;
             public bool HasEnemy => _asteroidsActive > 0 || _ufosActive > 0;
             public bool CanAddUfo => _ufosActive < _ufosForLevel && _asteroidsActive > 0;
 

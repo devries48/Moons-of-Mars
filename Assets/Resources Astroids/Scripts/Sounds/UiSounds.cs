@@ -39,6 +39,8 @@ namespace Game.Astroids
 
         public void PlayClip(Clip clip)
         {
+            Debug.Log("clip: " + clip); 
+
             var audioClip = clip switch
             {
                 Clip.scorePlus => scorePlus,
@@ -64,7 +66,10 @@ namespace Game.Astroids
         void PlayAudioClip(AudioClip clip)
         {
             if (clip && UiAudio)
+            {
+                Debug.Log("clip: speel vol: " + UiAudio.volume);
                 UiAudio.PlayOneShot(clip);
+            }
         }
 
     }

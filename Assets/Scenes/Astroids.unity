@@ -1503,10 +1503,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Prefab Powerup
       objectReference: {fileID: 0}
-    - target: {fileID: 8251889107635498336, guid: 96cdc47c7f989dc4198e5f408f32830e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96cdc47c7f989dc4198e5f408f32830e, type: 3}
 --- !u!4 &1278293019 stripped

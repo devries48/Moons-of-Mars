@@ -19,12 +19,14 @@ MonoBehaviour:
   fireRatePowerup: {fileID: 2100000, guid: 3c036f38b40259e45a863337e27b122a, type: 2}
   shieldPowerup: {fileID: 2100000, guid: 032e5a63a1b322342831192a5e100236, type: 2}
   weaponPowerup: {fileID: 2100000, guid: bfbe601b19435ad4ba58180f5d3a490f, type: 2}
-  m_showTime: 15
-  m_powerDuration: 10
+  m_ShowTime: 15
+  m_PowerDuration: 10
   pickupScore: 20
   destructionScore: -50
   enemyPickupScore: -50
   enemyDestructionScore: -25
   m_sounds:
-    powerupEject: {fileID: 8300000, guid: b16a54a9665f0404da32e7f4d6513953, type: 3}
-    powerupExplode: {fileID: 8300000, guid: 64ce9035394019647b51743c04632791, type: 3}
+    eject: {fileID: 8300000, guid: b16a54a9665f0404da32e7f4d6513953, type: 3}
+    explode: {fileID: 8300000, guid: 64ce9035394019647b51743c04632791, type: 3}
+    pickup: {fileID: 8300000, guid: eaa08a35249239f418043b7428b57027, type: 3}
+    pickupEnemy: {fileID: 8300000, guid: c26ed8a8000ee7543a01453d45c085d7, type: 3}

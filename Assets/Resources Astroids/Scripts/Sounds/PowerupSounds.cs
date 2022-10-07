@@ -9,19 +9,25 @@ namespace Game.Astroids
         public enum Clip
         {
             Eject,
-            Explode
+            Explode,
+            Pickup,
+            PickupEnemy
         }
 
         [Header("Clips")]
-        [SerializeField] AudioClip powerupEject;
-        [SerializeField] AudioClip powerupExplode;
+        [SerializeField] AudioClip eject;
+        [SerializeField] AudioClip explode;
+        [SerializeField] AudioClip pickup;
+        [SerializeField] AudioClip pickupEnemy;
 
         public void PlayClip(Clip clip, AudioSource audioSource)
         {
             var audioClip = clip switch
             {
-                Clip.Eject => powerupEject,
-                Clip.Explode => powerupExplode,
+                Clip.Eject => eject,
+                Clip.Explode => explode,
+                Clip.Pickup => pickup,
+                Clip.PickupEnemy => pickupEnemy,
                 _ => null
             };
 

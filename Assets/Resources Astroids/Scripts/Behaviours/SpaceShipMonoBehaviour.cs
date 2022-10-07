@@ -39,6 +39,18 @@ namespace Game.Astroids
         #endregion
 
         #region properties
+        protected PowerupManager PwrManager
+        {
+            get
+            {
+                if (__pwrManager == null)
+                    __pwrManager = GameManager.m_PowerupManager;
+
+                return __pwrManager;
+            }
+        }
+        PowerupManager __pwrManager;
+
         protected Rigidbody Rb
         {
             get
@@ -53,7 +65,7 @@ namespace Game.Astroids
 
         protected bool AreShieldsUp => m_Shield != null && m_Shield.ShieldsUp;
 
-        internal bool IsEnemy => m_shipType == ShipType.ufoGreen || m_shipType == ShipType.ufoRed;
+        internal bool IsEnemy => m_shipType is ShipType.ufoGreen or ShipType.ufoRed;
         #endregion
 
         #region fields
@@ -130,8 +142,6 @@ namespace Game.Astroids
             }
             else
             {
-                PlayAudioClip(SpaceShipSounds.Clip.powerupPickup);
-
                 var orgVal = fireRate;
                 fireRate *= .25f;
                 m_pwrFireRateTime = GameManager.m_PowerupManager.m_PowerDuration;
@@ -156,7 +166,6 @@ namespace Game.Astroids
             }
             else
             {
-                PlayAudioClip(SpaceShipSounds.Clip.powerupPickup);
                 print("powerup shield");
                 m_Shield.ShieldsUp = true;
                 m_pwrShieldTime = GameManager.m_PowerupManager.m_PowerDuration;

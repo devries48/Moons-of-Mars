@@ -41,7 +41,7 @@ namespace Game.Astroids
 
         public static void LevelCleared(int level)
         {
-            Earn(level * 100, null);
+            //Earn(level * 100, null);
         }
     }
 }

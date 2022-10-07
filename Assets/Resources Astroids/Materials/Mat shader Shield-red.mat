@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat shader Forcefield green
+  m_Name: Mat shader Shield-red
   m_Shader: {fileID: -6465566751694194690, guid: 87718fc09d3a3ca4d90a50c11b0622a5, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -83,11 +83,11 @@ Material:
     - _scanSpeed: 0.8
     m_Colors:
     - Color_63659391: {r: 0.09522808, g: 6.0628653, b: 0.22853976, a: 0}
-    - _baseColor: {r: 0, g: 0.4509804, b: 0.14117648, a: 0}
+    - _baseColor: {r: 0.48235294, g: 0.13162419, b: 0.019607853, a: 0}
     - _fillOffset: {r: 0, g: 0, b: 0, a: 0}
     - _fillTiling: {r: 8, g: 16, b: 0, a: 0}
     - _impactPoint: {r: 0, g: 0, b: 0, a: 0}
     - _impactRippleDirection: {r: 0, g: 0, b: 1, a: 0}
-    - _rimColor: {r: 0.16643162, g: 2.270603, b: 0.54684675, a: 0}
+    - _rimColor: {r: 2.270603, g: 0.16643155, b: 0.22823672, a: 0}
     - _rimPower: {r: 4, g: 4, b: 0, a: 0}
   m_BuildTextureStacks: []

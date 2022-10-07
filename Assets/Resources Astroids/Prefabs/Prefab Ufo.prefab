@@ -246,8 +246,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_PlayOnAwake: 1
-  m_Volume: 1
+  m_PlayOnAwake: 0
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -451,7 +451,6 @@ MonoBehaviour:
     shieldsDown: {fileID: 8300000, guid: fb6ea42b59abaed4091523c1b134b332, type: 3}
     shieldsHit: {fileID: 8300000, guid: 2240939744ed4a94fa1501c1edb6f844, type: 3}
     shipExplosion: {fileID: 8300000, guid: 813d3c4b45cbea74895ed1621255275e, type: 3}
-    powerupPickup: {fileID: 8300000, guid: 07467c7647c44384598633b564078d22, type: 3}
   pivot: {fileID: 4516309652685547818}
   speed: 2
   rotationSpeed: 50

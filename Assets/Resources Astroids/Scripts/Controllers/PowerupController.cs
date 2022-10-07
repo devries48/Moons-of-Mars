@@ -55,7 +55,6 @@ namespace Game.Astroids
         bool _isAlive;
 
         internal PowerupManager.Powerup m_powerup;
-        internal bool m_isVisible;
         #endregion
 
         void OnEnable()
@@ -126,20 +125,18 @@ namespace Game.Astroids
         void HitByShip(GameObject o)
         {
             _isAlive = false;
-
             o.TryGetComponent(out SpaceShipMonoBehaviour ship);
+
             if (ship != null)
-            {
-                Score(PwrManager.GetPickupScore(ship.IsEnemy),gameObject);
-                ship.ActivatePowerup(m_powerup);
-            }
-            RemoveFromGame();
+                StartCoroutine(PickupPowerup(ship));
+            else
+                RemoveFromGame();
         }
 
         void HitByAlienBullet(GameObject alienBullet)
         {
             RemoveFromGame(alienBullet);
-            Score(PwrManager.GetDestructionScore(true),gameObject);
+            Score(PwrManager.GetDestructionScore(true), gameObject);
             StartCoroutine(ExplodePowerup());
         }
 
@@ -173,6 +170,22 @@ namespace Game.Astroids
             PlayEffect(EffectsManager.Effect.smallExplosion, transform.position, .5f);
             PwrManager.PlayAudio(PowerupSounds.Clip.Explode, clipsAudioSource);
 
+            while (clipsAudioSource.isPlaying)
+                yield return null;
+
+            RemoveFromGame();
+        }
+
+        IEnumerator PickupPowerup(SpaceShipMonoBehaviour ship)
+        {
+            Renderer.enabled = false;
+
+            Score(PwrManager.GetPickupScore(ship.IsEnemy), gameObject);
+            ship.ActivatePowerup(m_powerup);
+
+            var clip = ship.IsEnemy ? PowerupSounds.Clip.PickupEnemy : PowerupSounds.Clip.Pickup;
+            PwrManager.PlayAudio(clip, clipsAudioSource);
+          
             while (clipsAudioSource.isPlaying)
                 yield return null;
 

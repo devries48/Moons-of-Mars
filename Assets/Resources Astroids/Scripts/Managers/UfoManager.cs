@@ -16,23 +16,9 @@ namespace Game.Astroids
         [SerializeField, Tooltip("Select an UFO prefab")]
         GameObject ufoPrefab;
 
-        [Header("Green UFO")]
-        [SerializeField] Material greenCockpit;
-        [SerializeField] Material greenBody;
-        [SerializeField] Material greenShield;
-        [SerializeField] Material greenBullet;
-        [SerializeField] Color greenLights;
-        [SerializeField, Range(0, 200)] int greenScore = 100;
-
-
-        [Header("Red UFO")]
-        [SerializeField] Material redCockpit;
-        [SerializeField] Material redBody;
-        [SerializeField] Material redShield;
-        [SerializeField] Material redBullet;
-
-        [SerializeField] Color redLights;
-        [SerializeField, Range(0, 200)] int redScore = 100;
+        [Header("UFO's")]
+        public UfoFields m_GreenUfo = new();
+        public UfoFields m_RedUfo = new();
         #endregion
 
         #region properties
@@ -58,14 +44,14 @@ namespace Game.Astroids
             if (_ufoPool == null)
                 BuildPools();
 
-            while (GameManager.m_GamePlaying)
+            while (GameManager.m_gamePlaying)
             {
-                while (GameManager.m_GamePaused || !GameManager.m_level.CanAddUfo)
+                while (GameManager.m_gamePaused || !GameManager.m_level.CanAddUfo)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (!GameManager.m_GamePaused)
+                if (GameManager.m_level.AstroidsActive > 1 && !GameManager.m_gamePaused)
                 {
                     _ufoPool.GetFromPool();
                     GameManager.m_level.UfoAdd();
@@ -82,22 +68,22 @@ namespace Game.Astroids
 
                 if (ufo.m_ufoType == UfoType.green && !n.Contains("green"))
                 {
-                    if (n.StartsWith(redCockpit.name))
-                        mats.Add(greenBody);
-                    else if (n.StartsWith(redBody.name))
+                    if (n.StartsWith(m_RedUfo.cockpit.name))
+                        mats.Add(m_GreenUfo.body);
+                    else if (n.StartsWith(m_RedUfo.body.name))
                     {
-                        mats.Add(greenBody);
-                        mats.Add(greenCockpit);
+                        mats.Add(m_GreenUfo.body);
+                        mats.Add(m_GreenUfo.cockpit);
                     }
                 }
                 else if (ufo.m_ufoType == UfoType.red && !n.Contains("red"))
                 {
-                    if (n.StartsWith(greenCockpit.name))
-                        mats.Add(redBody);
-                    else if (n.StartsWith(greenBody.name))
+                    if (n.StartsWith(m_GreenUfo.cockpit.name))
+                        mats.Add(m_RedUfo.body);
+                    else if (n.StartsWith(m_GreenUfo.body.name))
                     {
-                        mats.Add(redBody);
-                        mats.Add(redCockpit);
+                        mats.Add(m_RedUfo.body);
+                        mats.Add(m_RedUfo.cockpit);
                     }
                 }
 
@@ -111,7 +97,7 @@ namespace Game.Astroids
 
         void SetLightsColor(UfoController ufo)
         {
-            var color = ufo.m_ufoType == UfoType.green ? greenLights : redLights;
+            var color = ufo.m_ufoType == UfoType.green ? m_GreenUfo.lights : m_RedUfo.lights;
 
             foreach (var light in ufo.m_LightsModel.GetComponentsInChildren<Light>(false))
                 light.color = color;
@@ -124,7 +110,7 @@ namespace Game.Astroids
             if (rend)
             {
                 var n = rend.material.name;
-                var mat = ufo.m_ufoType == UfoType.green ? greenShield : redShield;
+                var mat = ufo.m_ufoType == UfoType.green ? m_GreenUfo.shield : m_RedUfo.shield;
 
                 if (ufo.m_ufoType == UfoType.green && !n.Contains("green")
                     || ufo.m_ufoType == UfoType.red && !n.Contains("red"))
@@ -143,7 +129,7 @@ namespace Game.Astroids
                 if (rend)
                 {
                     var n = rend.material.name;
-                    var mat = type == ShipType.ufoGreen ? greenBullet : redBullet;
+                    var mat = type == ShipType.ufoGreen ? m_GreenUfo.bullet : m_RedUfo.bullet;
 
                     if (type == ShipType.ufoGreen && !n.Contains("green")
                         || type == ShipType.ufoRed && !n.Contains("red"))
@@ -157,7 +143,7 @@ namespace Game.Astroids
 
         public int GetDestructionScore(UfoType type)
         {
-            return type == UfoType.green ? greenScore : redScore;
+            return type == UfoType.green ? m_GreenUfo.score : m_RedUfo.score;
         }
 
         void BuildPools()

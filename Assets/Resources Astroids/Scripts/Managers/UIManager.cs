@@ -120,9 +120,12 @@ namespace Game.Astroids
         public IEnumerator LevelCleared(int level)
         {
             Announce.LevelCleared();
+           
             PlayAudio(UISounds.Clip.levelComplete);
-
-            yield return AstroidsGameManager.Wait(1);
+            while (uiSounds.AudioIsPlaying)
+                yield return null;
+            
+            yield return null;
             Score.LevelCleared(level);
         }
 
@@ -139,21 +142,21 @@ namespace Game.Astroids
             Reset();
         }
 
-        public void Reset()
+        void Reset()
         {
             Announce.ClearAnnouncements();
             Score.Reset();
         }
 
-        public void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);
+        void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);
 
-        public IEnumerator PlayDelayedAudio(UISounds.Clip clip, float delay)
+        IEnumerator PlayDelayedAudio(UISounds.Clip clip, float delay)
         {
             yield return new WaitForSeconds(delay);
             PlayAudio(clip);
         }
 
-        internal void ScoreEarned(int points, Vector3 pos)
+        void ScoreEarned(int points, Vector3 pos)
         {
             if (points == 0)
                 return;
@@ -212,7 +215,7 @@ namespace Game.Astroids
                 });
 
             var clip = (points > 0) ? UISounds.Clip.scorePlus : UISounds.Clip.scoreMinus;
-        
+
             GameManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
         }
 

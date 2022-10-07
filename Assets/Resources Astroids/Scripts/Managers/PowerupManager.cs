@@ -64,14 +64,14 @@ namespace Game.Astroids
 
         public IEnumerator PowerupSpawnLoop()
         {
-            while (GameManager.m_GamePlaying)
+            while (GameManager.m_gamePlaying)
             {
-                while (GameManager.m_GamePaused)
+                while (GameManager.m_gamePaused)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (!GameManager.m_GamePaused)
+                if (GameManager.m_level.AstroidsActive > 2 && !GameManager.m_gamePaused)
                     _shuttlePool.GetFromPool();
             }
         }
@@ -80,7 +80,7 @@ namespace Game.Astroids
         public int GetPickupScore(bool isEnemy) => isEnemy ? enemyPickupScore : pickupScore;
         public int GetDestructionScore(bool isEnemy) => isEnemy ? enemyDestructionScore : destructionScore;
         public void PlayAudio(PowerupSounds.Clip clip, AudioSource audioSource) => m_sounds.PlayClip(clip, audioSource);
-   
+
         public IEnumerator PlayDelayedAudio(PowerupSounds.Clip clip, AudioSource audioSource, float delay)
         {
             yield return new WaitForSeconds(delay);
