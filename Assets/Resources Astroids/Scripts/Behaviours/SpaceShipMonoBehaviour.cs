@@ -270,10 +270,10 @@ namespace Game.Astroids
                     PlayEffect(EffectsManager.Effect.bigExplosion, transform.position, .8f);
                     break;
                 case ShipType.ufoGreen:
-                    PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.2f);
+                    PlayEffect(EffectsManager.Effect.greenExplosion, transform.position, 1.4f);
                     break;
                 case ShipType.ufoRed:
-                    PlayEffect(EffectsManager.Effect.redExplosion, transform.position, 1.2f);
+                    PlayEffect(EffectsManager.Effect.redExplosion, transform.position, 1.4f);
                     break;
                 case ShipType.allied:
                 default:

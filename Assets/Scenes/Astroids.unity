@@ -1841,11 +1841,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!4 &1572975150 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-  m_PrefabInstance: {fileID: 7276756532437814146}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1582158366
 GameObject:
   m_ObjectHideFlags: 0
@@ -2142,7 +2137,6 @@ Transform:
   - {fileID: 2067078417}
   - {fileID: 884542225}
   - {fileID: 1278293019}
-  - {fileID: 1572975150}
   - {fileID: 946410638}
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -3755,63 +3749,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f07f0afdf21c62c4ca4e2e531b36ddcb, type: 3}
---- !u!1001 &7276756532437814146
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1892224866}
-    m_Modifications:
-    - target: {fileID: 8395387404256592789, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_Name
-      value: Energy Explosion red variant
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_RootOrder
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8401352891002311029, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
 --- !u!224 &8846412714638308727
 RectTransform:
   m_ObjectHideFlags: 0

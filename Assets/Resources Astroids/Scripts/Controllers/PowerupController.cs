@@ -78,6 +78,8 @@ namespace Game.Astroids
 
         void OnCollisionEnter(Collision other)
         {
+            if (!_isAlive) return;
+
             var c = other.collider;
             var o = other.gameObject;
 
@@ -87,6 +89,8 @@ namespace Game.Astroids
 
         void OnTriggerEnter(Collider other)
         {
+            if (!_isAlive) return;
+
             var c = other;
             var o = other.gameObject;
 
@@ -158,7 +162,11 @@ namespace Game.Astroids
                     {
                         Renderer.material.SetFloat("_Dissolve", val);
                     })
-                .setOnComplete(RemoveFromGame)
+                .setOnComplete(() =>
+                {
+                    print("Oncomplete disolve");
+                    RemoveFromGame();
+                })
                 .setEaseInQuint();
         }
 
@@ -185,7 +193,7 @@ namespace Game.Astroids
 
             var clip = ship.IsEnemy ? PowerupSounds.Clip.PickupEnemy : PowerupSounds.Clip.Pickup;
             PwrManager.PlayAudio(clip, clipsAudioSource);
-          
+
             while (clipsAudioSource.isPlaying)
                 yield return null;
 

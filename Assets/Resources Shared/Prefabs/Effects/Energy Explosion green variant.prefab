@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
       propertyPath: m_Name
-      value: EnergyExplosion Green Variant
+      value: Energy Explosion green variant
       objectReference: {fileID: 0}
     - target: {fileID: 1329845292236604, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
       propertyPath: m_Layer
@@ -187,6 +187,14 @@ PrefabInstance:
       propertyPath: ColorModule.gradient.maxGradient.key7.r
       value: 0.032840855
       objectReference: {fileID: 0}
+    - target: {fileID: 199517807662331752, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2bd03149fc71b7d4eb059e12b02e757f, type: 2}
+    - target: {fileID: 199692936812960994, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: cef75e71ba305044487283cf37f4cb1c, type: 2}
     - target: {fileID: 199756426985724656, guid: 9bba9cf244c53c5439505dfc96fdd11c, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

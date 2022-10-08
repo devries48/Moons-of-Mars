@@ -125,7 +125,6 @@ namespace Game.Astroids
             while (uiSounds.AudioIsPlaying)
                 yield return null;
             
-            yield return null;
             Score.LevelCleared(level);
         }
 
@@ -138,7 +137,6 @@ namespace Game.Astroids
             while (uiSounds.AudioIsPlaying)
                 yield return null;
 
-            yield return null;
             Reset();
         }
 
@@ -215,8 +213,8 @@ namespace Game.Astroids
                 });
 
             var clip = (points > 0) ? UISounds.Clip.scorePlus : UISounds.Clip.scoreMinus;
-
-            GameManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
+            PlayAudio(clip);
+            //GameManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
         }
 
         void TweenColor(Color begin, Color end, float time, float delay = default)
