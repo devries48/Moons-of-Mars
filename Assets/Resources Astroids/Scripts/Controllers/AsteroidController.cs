@@ -153,7 +153,6 @@ namespace Game.Astroids
             {
                 PlayEffect(EffectsManager.Effect.dustExplosion, transform.position, smallAstroidScale);
                 PlayAudioClip(AstroidSounds.Clip.Explode, 3);
-                print("dat is een extra steentje!");
                 CreateSmallAsteriods(1, bullet.transform.position);
             }
         }

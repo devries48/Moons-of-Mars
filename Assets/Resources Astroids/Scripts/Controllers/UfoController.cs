@@ -4,6 +4,7 @@ using static Game.Astroids.UfoManager;
 
 namespace Game.Astroids
 {
+    [SelectionBase]
     public class UfoController : SpaceShipMonoBehaviour
     {
         #region editor fields

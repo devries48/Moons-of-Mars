@@ -7,20 +7,13 @@ namespace Game.Astroids
     [ExecuteAlways]
     public class ThrustController : MonoBehaviour
     {
-        [SerializeField]
-        float minThrust;
+        [SerializeField]float changePerSecondByInput;
+        [SerializeField] AudioSource engineAudio;
 
-        [SerializeField]
-        float maxThrust = 1f;
-
-        [SerializeField]
-        float changePerSecondByInput;
-
-        [SerializeField]
-        [Range(0f, 1f)]
-        float _currentThrust;
-
+        [Range(0f, 1f)]float _currentThrust;
         float _thrustInPercentageOfMax;
+        float _minThrust = 0f;
+        readonly float _maxThrust = 1f;
 
         public event Action<float> EventThrustChanged = delegate { };
 
@@ -40,21 +33,21 @@ namespace Game.Astroids
 
         void ChangeThrust(float changeBy)
         {
-            _currentThrust = Mathf.Clamp(_currentThrust + changeBy, minThrust, maxThrust);
+            _currentThrust = Mathf.Clamp(_currentThrust + changeBy, _minThrust, _maxThrust);
             RaiseThrustChangedEvent();
         }
         void RaiseThrustChangedEvent()
         {
-            _thrustInPercentageOfMax = (_currentThrust - minThrust) / (maxThrust - minThrust);
+            _thrustInPercentageOfMax = (_currentThrust - _minThrust) / (_maxThrust - _minThrust);
 
             EventThrustChanged(_thrustInPercentageOfMax);
         }
 
         [ContextMenu("SetToMinThrust")]
-        void SetToMinThrust() => EventThrustChanged(minThrust);
+        void SetToMinThrust() => EventThrustChanged(_minThrust);
 
         [ContextMenu("SetToMaxThrust")]
-        void SetToMaxThrust() => EventThrustChanged(maxThrust);
+        void SetToMaxThrust() => EventThrustChanged(_maxThrust);
 
     }
 }

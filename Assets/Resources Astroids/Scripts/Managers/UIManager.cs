@@ -162,7 +162,6 @@ namespace Game.Astroids
             var color = points > 0 ? positiveColor : negativeColor;
 
             SetScore(Score.Earned);
-
             LeanTween.scale(UiScore.gameObject, new Vector3(1.5f, 1.5f, 1.5f), .5f).setEasePunch();
             LeanTween.scale(UiScore.gameObject, new Vector3(1f, 1f, 1f), .2f).setDelay(.5f).setEase(LeanTweenType.easeInOutCubic);
 
