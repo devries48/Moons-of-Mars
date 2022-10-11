@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 441615676696831918}
   - component: {fileID: 5760451579447787605}
   m_Layer: 9
-  m_Name: Prefab Bullet alien
+  m_Name: prefab Bullet alien
   m_TagString: AlienBullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

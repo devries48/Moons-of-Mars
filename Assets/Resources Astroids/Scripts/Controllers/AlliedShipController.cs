@@ -2,35 +2,22 @@ using UnityEngine;
 
 namespace Game.Astroids
 {
-    public class AlliedShipController : SpaceShipMonoBehaviour
+    public class AlliedShipController : GameMonoBehaviour
     {
         #region editor fields
-        [Header("Allied Ship")]
-
-        [SerializeField]
-        ThrustController _thrustController;
-
-        [SerializeField]
-        AudioSource spawnAudio;
-
+        [SerializeField] ThrustController _thrustController;
+        [SerializeField] AudioSource spawnAudio;
+        [SerializeField] AudioClip[] spawnClips;
         #endregion
 
         bool _isShipRemoved;        // Prevent ship remove recursion
         bool _isPackageEjected;     // Prevent ejecing multiple packages
-                                    
+
         Vector3 _oldPos;            // used to determine direction
         Vector3 _targetPos;
 
-        protected override void Awake()
+        void OnEnable()
         {
-            m_shipType = ShipType.allied;   
-            base.Awake();
-        }
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
-
             _isShipRemoved = false;
             _isPackageEjected = false;
 
@@ -68,13 +55,22 @@ namespace Game.Astroids
                     {
                         _thrustController.SetThrust(val);
                     })
-                    .setEaseOutCubic();
+                    .setEaseInQuint();
             }
-            spawnAudio.volume = 1f;
-            spawnAudio.Play();
-            GameManager.AudioFadeOut(duration - .5f, 0f, 1f);
-            //StartCoroutine(FadeMixerGroup.StartFade(spawnAudio.outputAudioMixerGroup.audioMixer, "Vol1", duration - .5f, 0f, 1f));
+            PlaySpawnClip(duration);
         }
+
+        void PlaySpawnClip(float duration)
+        {
+            if (spawnAudio == null || spawnClips == null || spawnClips.Length == 0)
+                return;
+
+            var clip = spawnClips[Random.Range(0, spawnClips.Length)];
+            spawnAudio.volume = 1f;
+            spawnAudio.PlayOneShot(clip);
+            StartCoroutine(AudioUtil.FadeOut(spawnAudio, duration - .5f));
+        }
+
 
         void RemoveShip()
         {

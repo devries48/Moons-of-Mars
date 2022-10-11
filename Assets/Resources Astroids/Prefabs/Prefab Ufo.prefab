@@ -197,7 +197,7 @@ GameObject:
   - component: {fileID: 7963291520732870374}
   - component: {fileID: 2446603439000539247}
   m_Layer: 9
-  m_Name: Prefab Ufo
+  m_Name: prefab Ufo
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

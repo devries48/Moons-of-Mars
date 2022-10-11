@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 737061820}
   - component: {fileID: 934453153039138345}
   m_Layer: 9
-  m_Name: Prefab Astroid
+  m_Name: prefab Astroid
   m_TagString: Astroid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

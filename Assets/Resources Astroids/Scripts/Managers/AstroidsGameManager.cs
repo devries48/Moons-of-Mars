@@ -293,15 +293,6 @@ namespace Game.Astroids
         public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
 
         /// <summary>
-        /// spawnAudio.Play();
-        /// AudioFadeOut(duration, 0f, 1f);
-        /// </summary>
-        public void AudioFadeOut(float duration, float targetVol, float startVol = -1)
-        {
-            StartCoroutine(FadeMixerGroup.StartFade(audioMixer, "Vol1", duration, targetVol, startVol));
-        }
-
-        /// <summary>
         /// Destroy player with explosion
         /// </summary>
         public void PlayerDestroyed(GameObject player)

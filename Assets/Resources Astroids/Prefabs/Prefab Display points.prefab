@@ -100,7 +100,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: -123
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 37836525646a20e42b84cea79f3b0556, type: 2}
   m_sharedMaterial: {fileID: -8586564534120330943, guid: 37836525646a20e42b84cea79f3b0556, type: 2}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 2012722828821306403}
   - component: {fileID: 7844572027607028231}
   m_Layer: 9
-  m_Name: Prefab Display points
+  m_Name: prefab Display points
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

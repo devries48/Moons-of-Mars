@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8370806003469419778}
   - component: {fileID: 7199714376326587117}
   m_Layer: 11
-  m_Name: Prefab Sputnik
+  m_Name: prefab Sputnik
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

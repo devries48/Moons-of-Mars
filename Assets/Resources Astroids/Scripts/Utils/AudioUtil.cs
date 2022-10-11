@@ -1,27 +1,39 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public static class AudioUtil
 {
-    public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime)
+    //Usage: StartCoroutine(AudioUtil.FadeOut(spawnAudio, duration));
+    public static IEnumerator FadeOut(AudioSource audioSource, float FadeTime, Action action = default)
     {
-        float startVolume = audioSource.volume;
-        while (audioSource.volume > 0)
+        if (audioSource != null)
         {
-            audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
-            yield return null;
+            float startVolume = audioSource.volume;
+            while (audioSource.volume > 0)
+            {
+                audioSource.volume -= startVolume * Time.deltaTime / FadeTime;
+                yield return null;
+            }
+            audioSource.Stop();
+
+            if (action != default)
+                action();
         }
-        audioSource.Stop();
+
     }
 
     public static IEnumerator FadeIn(AudioSource audioSource, float FadeTime)
     {
-        audioSource.Play();
-        audioSource.volume = 0f;
-        while (audioSource.volume < 1)
+        if (audioSource != null)
         {
-            audioSource.volume += Time.deltaTime / FadeTime;
-            yield return null;
+            audioSource.Play();
+            audioSource.volume = 0f;
+            while (audioSource.volume < 1)
+            {
+                audioSource.volume += Time.deltaTime / FadeTime;
+                yield return null;
+            }
         }
     }
 

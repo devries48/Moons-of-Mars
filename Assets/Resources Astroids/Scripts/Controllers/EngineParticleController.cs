@@ -8,20 +8,12 @@ namespace Game.Astroids
     [ExecuteAlways]
     public class EngineParticleController : MonoBehaviour
     {
-        [SerializeField]
-        ParticleSystem sys;
-
-        [SerializeField]
-        ThrustController thrustController;
-
-        [SerializeField]
-        float minStartSpeed, maxStartSpeed;
-
-        [SerializeField]
-        float minEmission, maxEmission;
-
-        [SerializeField]
-        Vector3 minPosition, maxPosition;
+        [SerializeField] ParticleSystem sys;
+        [SerializeField] ThrustController thrustController;
+        [SerializeField] float minStartSpeed, maxStartSpeed;
+        [SerializeField] float minEmission, maxEmission;
+        [SerializeField] bool useBurstEmission;
+        [SerializeField] Vector3 minPosition, maxPosition;
 
         ParticleSystem.MainModule _sysMain;
         ParticleSystem.EmissionModule _sysEmission;
@@ -75,14 +67,22 @@ namespace Game.Astroids
         void SetEmission(float thrustInPercent)
         {
             var rate = thrustInPercent * maxEmission + (1f - thrustInPercent) * minEmission;
-            _sysEmission.rateOverTime = rate;
+            if (useBurstEmission)
+            {
+                for (int i = 0; i < _sysEmission.burstCount; i++)
+                {
+                    var burst = _sysEmission.GetBurst(i);
+                    burst.maxCount = (short)rate;
+                }
+            }
+            else
+                _sysEmission.rateOverTime = rate;
         }
 
-        [ContextMenu("SetMinPosition")]
-        void SetMinPosition() => minPosition = sys.transform.localPosition;
+        [ContextMenu("SetMinEmission")]
+        void SetMinEmission() => SetEmission(minEmission);
 
-        [ContextMenu("SetMaxPosition")]
-        void SetMaxPosition() => maxPosition = sys.transform.localPosition;
-
+        [ContextMenu("SetMaxEmission")]
+        void SetMaxEmission() => SetEmission(maxEmission);
     }
 }

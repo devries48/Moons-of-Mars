@@ -261,7 +261,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8866089840357548713}
   m_Layer: 0
-  m_Name: Prefab Alien
+  m_Name: prefab Alien
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -19,7 +19,7 @@ MonoBehaviour:
   scoreFormat: '{0:000000}'
   uiSounds:
     scorePlus: {fileID: 8300000, guid: ce1c62c08fa57294a977f8c898c6f1fa, type: 3}
-    scoreMinus: {fileID: 8300000, guid: fb42e3d705cb52a489d7bb53d64f306f, type: 3}
+    scoreMinus: {fileID: 8300000, guid: 6cd96bf26a05f2f4189fb3ec4fb75616, type: 3}
     gameStart:
     - {fileID: 8300000, guid: c2671193f62733140bdc052f86eb3382, type: 3}
     - {fileID: 8300000, guid: dddad25e68f08ea428d2d4d214790208, type: 3}

@@ -10,7 +10,6 @@ namespace Game.Astroids
         public enum ShipType
         {
             player,
-            allied,
             ufoGreen,
             ufoRed
         }
@@ -275,7 +274,6 @@ namespace Game.Astroids
                 case ShipType.ufoRed:
                     PlayEffect(EffectsManager.Effect.redExplosion, transform.position, 1.4f);
                     break;
-                case ShipType.allied:
                 default:
                     break;
             }

@@ -212,8 +212,8 @@ namespace Game.Astroids
                 });
 
             var clip = (points > 0) ? UISounds.Clip.scorePlus : UISounds.Clip.scoreMinus;
-            PlayAudio(clip);
-            //GameManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
+            //PlayAudio(clip);
+            GameManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
         }
 
         void TweenColor(Color begin, Color end, float time, float delay = default)

@@ -1,4 +1,5 @@
 using System;
+using UnityEditor.Media;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -12,7 +13,7 @@ namespace Game.Astroids
 
         [Range(0f, 1f)]float _currentThrust;
         float _thrustInPercentageOfMax;
-        float _minThrust = 0f;
+        readonly float _minThrust = 0f;
         readonly float _maxThrust = 1f;
 
         public event Action<float> EventThrustChanged = delegate { };
@@ -39,12 +40,22 @@ namespace Game.Astroids
         void RaiseThrustChangedEvent()
         {
             _thrustInPercentageOfMax = (_currentThrust - _minThrust) / (_maxThrust - _minThrust);
-
+            SetVolume(_thrustInPercentageOfMax);
             EventThrustChanged(_thrustInPercentageOfMax);
         }
 
+        void SetVolume(float vol)
+        {
+            if (engineAudio)
+                engineAudio.volume = vol;
+        }
+
         [ContextMenu("SetToMinThrust")]
-        void SetToMinThrust() => EventThrustChanged(_minThrust);
+        private void SetToMinThrust()
+        {
+            SetVolume(0);
+            EventThrustChanged(_minThrust);
+        }
 
         [ContextMenu("SetToMaxThrust")]
         void SetToMaxThrust() => EventThrustChanged(_maxThrust);

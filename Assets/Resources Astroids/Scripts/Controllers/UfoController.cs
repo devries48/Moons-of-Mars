@@ -45,9 +45,7 @@ namespace Game.Astroids
         {
             _isShipRemoved = false;
 
-            if (engineAudio != null)
-                FadeInEngine(.5f);
-
+            StartCoroutine(AudioUtil.FadeIn(engineAudio, .5f));
             SetRandomShipBehaviour();
             ShowLights();
 
@@ -56,7 +54,6 @@ namespace Game.Astroids
 
         protected override void OnDisable()
         {
-            CancelInvoke(nameof(FireRandomDirection));
             LeanTween.cancel(pivot, true);
             base.OnDisable();
         }
@@ -71,8 +68,8 @@ namespace Game.Astroids
 
         protected override void HitByBullet(GameObject obj)
         {
-            print("ufo hit by bullet: " + obj.tag);
             HideLights();
+            CancelFire();
             base.HitByBullet(obj);
             Score(UfoManager.GetDestructionScore(m_ufoType), gameObject);
         }
@@ -89,12 +86,12 @@ namespace Game.Astroids
         void SetRandomShipBehaviour()
         {
             m_ufoType = RandomEnumUtil<UfoType>.Get();
-            m_shipType = m_ufoType == UfoType.green 
-                ? ShipType.ufoGreen 
+            m_shipType = m_ufoType == UfoType.green
+                ? ShipType.ufoGreen
                 : ShipType.ufoRed;
 
-            engineAudio.clip = m_ufoType == UfoType.green 
-                ? UfoManager.m_GreenUfo.engineSound 
+            engineAudio.clip = m_ufoType == UfoType.green
+                ? UfoManager.m_GreenUfo.engineSound
                 : UfoManager.m_RedUfo.engineSound;
 
             engineAudio.Play();
@@ -107,7 +104,7 @@ namespace Game.Astroids
 
             LeanTween.rotateX(pivot, -maxPivot, 1f).setFrom(maxPivot).setLoopPingPong();
 
-            Rb.transform.position = SpawnPoint(side == SpawnSide.left);
+            transform.position = SpawnPoint(side == SpawnSide.left);
             _targetPos = SpawnPoint(side != SpawnSide.left);
 
             InvokeRepeating(nameof(FireRandomDirection), fireRate, fireRate);
@@ -119,24 +116,28 @@ namespace Game.Astroids
                 _targetPos = GameManager.m_playerShip.transform.position;
 
             var step = speed * Time.fixedDeltaTime;
-            Rb.transform.position = Vector3.MoveTowards(Rb.transform.position, _targetPos, step);
+            transform.position = Vector3.MoveTowards(transform.position, _targetPos, step);
 
             if (m_ufoType == UfoType.green)
             {
-                if (Vector3.Distance(Rb.transform.position, _targetPos) < 0.1f)
+                if (Vector3.Distance(transform.position, _targetPos) < 0.1f)
                     RemoveShip();
+                else
+                    print("target: " + _targetPos + "  -  " + transform.position + " dist: " + Vector3.Distance(transform.position, _targetPos));
             }
         }
 
         void SpinUfo()
         {
-            Rb.transform.Rotate(new Vector3(0, rotationSpeed * speed * Time.fixedDeltaTime, 0));
+            transform.Rotate(new Vector3(0, rotationSpeed * speed * Time.fixedDeltaTime, 0));
         }
 
         void RemoveShip()
         {
+            CancelFire();
+            GameManager.UfoDestroyed();
             _isShipRemoved = true;
-            FadeOutEngine(1f);
+            StartCoroutine(AudioUtil.FadeOut(engineAudio, 1, () => { RemoveFromGame(); }));
         }
 
         void FireRandomDirection()
@@ -148,48 +149,9 @@ namespace Game.Astroids
             FireWeapon();
         }
 
-        void FadeInEngine(float FadeTime)
+        void CancelFire()
         {
-            StartCoroutine(FadeInCore(FadeTime));
-        }
-
-        void FadeOutEngine(float FadeTime)
-        {
-            StartCoroutine(FadeOutCore(FadeTime));
-        }
-
-        IEnumerator FadeInCore(float fadeTime)
-        {
-            float finalVolume = engineAudio.volume;
-            float deltaVolume = 0.1f;
-
-            engineAudio.volume = 0;
-            engineAudio.Play();
-
-            while (engineAudio.volume < finalVolume)
-            {
-                engineAudio.volume += deltaVolume * Time.deltaTime / fadeTime;
-                yield return null;
-            }
-            engineAudio.volume = finalVolume;
-        }
-
-        IEnumerator FadeOutCore(float fadeTime)
-        {
-            float startVolume = engineAudio.volume;
-
-            while (engineAudio.volume > 0f)
-            {
-                var tmp = engineAudio.volume;
-                engineAudio.volume = tmp - (startVolume * Time.deltaTime / fadeTime);
-                yield return new WaitForEndOfFrame();
-            }
-
-            engineAudio.Stop();
-            engineAudio.volume = startVolume;
-
-            GameManager.UfoDestroyed();
-            RemoveFromGame();
+            CancelInvoke(nameof(FireRandomDirection));
         }
 
         Vector3 SpawnPoint(bool left)

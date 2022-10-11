@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat shader Dissolve green
+  m_Name: mat shader Dissolve green
   m_Shader: {fileID: -6465566751694194690, guid: e5447624500612b4087553fd22d4299e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
