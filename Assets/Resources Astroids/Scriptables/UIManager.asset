@@ -24,9 +24,25 @@ MonoBehaviour:
     - {fileID: 8300000, guid: c2671193f62733140bdc052f86eb3382, type: 3}
     - {fileID: 8300000, guid: dddad25e68f08ea428d2d4d214790208, type: 3}
     - {fileID: 8300000, guid: e95aa1e3c0a6b4343828bb35581f6ffa, type: 3}
+    - {fileID: 8300000, guid: 8a7d88e6515f20548a34776d8afad0ba, type: 3}
+    - {fileID: 8300000, guid: 9c79e7f4998e445428fd67894d14a703, type: 3}
+    - {fileID: 8300000, guid: 18f4146eca3febd4293c863a0056574f, type: 3}
+    - {fileID: 8300000, guid: a410d52c4a313f948becb5e690744df3, type: 3}
+    - {fileID: 8300000, guid: 58cfe99e11113754ab24aa9cc00ed373, type: 3}
+    - {fileID: 8300000, guid: 54065fe859a5a0a499cfb4b9cea280c0, type: 3}
     levelComplete:
     - {fileID: 8300000, guid: a42be2a2dfc2f1247bd86b358110d0f2, type: 3}
     - {fileID: 8300000, guid: 1c3fc0a6330595743bd61b1583676eb0, type: 3}
+    - {fileID: 8300000, guid: abf6308f5ff04d64c9d190a74e79c206, type: 3}
+    - {fileID: 8300000, guid: fc9c04113c356f041beaf675bd260b17, type: 3}
+    - {fileID: 8300000, guid: 7a268f26bd4a9f04bbc634eeb882b676, type: 3}
+    - {fileID: 8300000, guid: 20dfd5450a5881643a3e2faf4b7d43be, type: 3}
+    - {fileID: 8300000, guid: b7d3c34a90dcdf0449999ae5dd158ff2, type: 3}
+    - {fileID: 8300000, guid: b347a3df2173f1949bdc8b1e961648b8, type: 3}
+    - {fileID: 8300000, guid: 9960c263ed62af94f8c8dbcb2d4813c1, type: 3}
+    - {fileID: 8300000, guid: 5340100a8b531cb4b8488befe3ec2f65, type: 3}
+    - {fileID: 8300000, guid: 843128c6528df4d44a9680c843332624, type: 3}
+    - {fileID: 8300000, guid: 65bff2b6618011b4ca88b0b6fa38d026, type: 3}
     gameOver:
     - {fileID: 8300000, guid: cf837b939e8eae0419ccc3d4ba6f78b7, type: 3}
     - {fileID: 8300000, guid: 5688d879c9e22c6468f8440423a26d86, type: 3}

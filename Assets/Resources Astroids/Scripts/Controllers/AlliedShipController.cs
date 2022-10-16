@@ -5,7 +5,7 @@ namespace Game.Astroids
     public class AlliedShipController : GameMonoBehaviour
     {
         #region editor fields
-        [SerializeField] ThrustController _thrustController;
+        [SerializeField] ThrustController thrustController;
         [SerializeField] AudioSource spawnAudio;
         [SerializeField] AudioClip[] spawnClips;
         #endregion
@@ -49,11 +49,11 @@ namespace Game.Astroids
                 .setEaseOutQuad()
                 .setOrientToPath(true);
 
-            if (_thrustController != null)
+            if (thrustController != null)
             {
                 LeanTween.value(gameObject, 1f, 0f, duration).setOnUpdate((float val) =>
                     {
-                        _thrustController.SetThrust(val);
+                        thrustController.SetThrust(val);
                     })
                     .setEaseInQuint();
             }

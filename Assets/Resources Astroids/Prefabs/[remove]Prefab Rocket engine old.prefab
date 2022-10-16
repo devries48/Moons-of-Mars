@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1450266432842764625}
   - component: {fileID: 2406467257917120092}
   m_Layer: 9
-  m_Name: Prefab Rocket engine old
+  m_Name: '[remove]Prefab Rocket engine old'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

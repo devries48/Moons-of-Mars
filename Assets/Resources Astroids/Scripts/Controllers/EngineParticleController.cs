@@ -73,6 +73,7 @@ namespace Game.Astroids
                 {
                     var burst = _sysEmission.GetBurst(i);
                     burst.maxCount = (short)rate;
+                    _sysEmission.SetBurst(i, burst);
                 }
             }
             else
@@ -80,9 +81,9 @@ namespace Game.Astroids
         }
 
         [ContextMenu("SetMinEmission")]
-        void SetMinEmission() => SetEmission(minEmission);
+        void SetMinEmission() => SetEmission(0);
 
         [ContextMenu("SetMaxEmission")]
-        void SetMaxEmission() => SetEmission(maxEmission);
+        void SetMaxEmission() => SetEmission(1);
     }
 }

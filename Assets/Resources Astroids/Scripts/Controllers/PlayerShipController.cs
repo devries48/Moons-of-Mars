@@ -6,6 +6,7 @@ namespace Game.Astroids
     {
         #region editor fields
         [Header("Player")]
+        [SerializeField] ThrustController thrustController;
         [SerializeField] float thrust = 500f;
         [SerializeField] float rotationSpeed = 180f;
         [SerializeField] float maxSpeed = 4.5f;
@@ -34,6 +35,14 @@ namespace Game.Astroids
             _turnInput = ShipInput.GetTurnAxis();
             _thrustInput = ShipInput.GetForwardThrust();
 
+            if (thrustController)
+            {
+                if (_thrustInput > 0)
+                    thrustController.IncreaseThrust();
+                else
+                    thrustController.DecreaseThrust();
+            }
+
             if (!m_canShoot)
                 return;
 
@@ -55,6 +64,7 @@ namespace Game.Astroids
         // Magnitude based on the input, speed and the time between frames.
         void Move()
         {
+
             var thrustForce = _thrustInput * thrust * Time.deltaTime * transform.up;
             Rb.AddForce(thrustForce);
         }

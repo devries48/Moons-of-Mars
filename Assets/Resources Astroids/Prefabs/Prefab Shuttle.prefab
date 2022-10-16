@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5911007f8211b164e8c02b0d76cf4544, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _thrustController: {fileID: 4113227348599134181}
+  thrustController: {fileID: 4113227348599134181}
   spawnAudio: {fileID: 4207595557771450402}
   spawnClips:
   - {fileID: 8300000, guid: 578e9fd3b00421540a6fdbb4b3408329, type: 3}

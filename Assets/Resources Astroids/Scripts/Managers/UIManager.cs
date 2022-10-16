@@ -46,8 +46,8 @@ namespace Game.Astroids
         }
         GameAnnouncer __announce;
 
-        GameObject UiMenu => GameManager.m_MainMenuWindow;
-        TextMeshProUGUI UiScore => GameManager.m_ScoreTextUI;
+        GameObject UiMenu => GameManager?.m_MainMenuWindow;
+        TextMeshProUGUI UiScore => GameManager?.m_ScoreTextUI;
         #endregion
 
         #region fields
