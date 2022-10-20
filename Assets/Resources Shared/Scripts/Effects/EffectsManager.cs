@@ -11,6 +11,7 @@ public class EffectsManager : MonoBehaviour
         dustExplosion,
         greenExplosion,
         redExplosion,
+        spawn
     }
 
     [SerializeField] GameObject smallExplosionPrefab;
@@ -18,12 +19,14 @@ public class EffectsManager : MonoBehaviour
     [SerializeField] GameObject dustExplosionPrefab;
     [SerializeField] GameObject greenExplosionPrefab;
     [SerializeField] GameObject redExplosionPrefab;
+    [SerializeField] GameObject spawnPrefab;
 
     GameObjectPool _smallExplosionPool;
     GameObjectPool _bigExplosionPool;
     GameObjectPool _dustExplosionPool;
     GameObjectPool _greenExplosionPool;
     GameObjectPool _redExplosionPool;
+    GameObjectPool _spawnPool;
 
     readonly List<System.Tuple<GameObject, Effect>> _effectsPlaying = new();
 
@@ -52,6 +55,7 @@ public class EffectsManager : MonoBehaviour
                     Effect.dustExplosion => _dustExplosionPool,
                     Effect.greenExplosion => _greenExplosionPool,
                     Effect.redExplosion => _redExplosionPool,
+                    Effect.spawn => _spawnPool,
                     _ => null
                 };
 
@@ -69,6 +73,7 @@ public class EffectsManager : MonoBehaviour
         _dustExplosionPool = GameObjectPool.Build(dustExplosionPrefab, 1);
         _greenExplosionPool = GameObjectPool.Build(greenExplosionPrefab, 1);
         _redExplosionPool = GameObjectPool.Build(redExplosionPrefab, 1);
+        _spawnPool = GameObjectPool.Build(spawnPrefab, 1);
     }
 
     public void StartEffect(Effect effect, Vector3 position, float scale)
@@ -80,6 +85,7 @@ public class EffectsManager : MonoBehaviour
             Effect.dustExplosion => _dustExplosionPool.GetFromPool(),
             Effect.greenExplosion => _greenExplosionPool.GetFromPool(),
             Effect.redExplosion => _redExplosionPool.GetFromPool(),
+            Effect.spawn => _spawnPool.GetFromPool(),
             _ => null
         };
 
@@ -91,7 +97,8 @@ public class EffectsManager : MonoBehaviour
 
         trans.localScale = new Vector3(scale, scale, scale);
         trans.localPosition = position;
-        trans.Rotate(eulerZ);
+        if (effect != Effect.spawn)
+            trans.Rotate(eulerZ);
 
         _effectsPlaying.Add(System.Tuple.Create(effectObj, effect));
     }

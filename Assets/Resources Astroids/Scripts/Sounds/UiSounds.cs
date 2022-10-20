@@ -34,7 +34,7 @@ namespace Game.Astroids
         }
         AstroidsGameManager __gameManager;
 
-        AudioSource UiAudio => GameManager.m_AudioSource;
+        public AudioSource UiAudio => GameManager.m_AudioSource;
         #endregion
 
         public void PlayClip(Clip clip)
@@ -50,8 +50,6 @@ namespace Game.Astroids
             };
             PlayAudioClip(audioClip);
         }
-
-        public bool AudioIsPlaying => UiAudio.isPlaying;
 
         AudioClip RandomClip(AudioClip[] clips)
         {

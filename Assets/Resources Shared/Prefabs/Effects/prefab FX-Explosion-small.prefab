@@ -9696,7 +9696,7 @@ GameObject:
   - component: {fileID: 199514137936353666}
   - component: {fileID: 159229350314300897}
   m_Layer: 9
-  m_Name: Smal lExplosion
+  m_Name: prefab FX-Explosion-small
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

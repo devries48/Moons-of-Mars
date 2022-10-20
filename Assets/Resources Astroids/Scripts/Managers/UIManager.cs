@@ -48,6 +48,9 @@ namespace Game.Astroids
 
         GameObject UiMenu => GameManager?.m_MainMenuWindow;
         TextMeshProUGUI UiScore => GameManager?.m_ScoreTextUI;
+
+        public bool AudioPlaying => uiSounds.UiAudio.isPlaying;
+
         #endregion
 
         #region fields
@@ -122,9 +125,9 @@ namespace Game.Astroids
             Announce.LevelCleared();
            
             PlayAudio(UISounds.Clip.levelComplete);
-            while (uiSounds.AudioIsPlaying)
+            while (AudioPlaying)
                 yield return null;
-            
+
             Score.LevelCleared(level);
         }
 
@@ -134,7 +137,7 @@ namespace Game.Astroids
             yield return AstroidsGameManager.Wait(2);
 
             PlayAudio(UISounds.Clip.gameOver);
-            while (uiSounds.AudioIsPlaying)
+            while (AudioPlaying)
                 yield return null;
 
             Reset();
@@ -227,7 +230,8 @@ namespace Game.Astroids
 
         void SetScore(int points)
         {
-            UiScore.text = string.Format(scoreFormat, points);
+            if (UiScore)
+                UiScore.text = string.Format(scoreFormat, points);
         }
 
         void BuildPools()

@@ -16,6 +16,7 @@ namespace Game.Astroids
         bool _canMove = true;
         float _thrustInput;
         float _turnInput;
+        MaterialFader _spawnFader;
 
         Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
         #endregion
@@ -24,6 +25,9 @@ namespace Game.Astroids
         {
             _thrustInput = 0f;
             _turnInput = 0f;
+
+            _spawnFader ??= new MaterialFader(m_Model);
+            SpawnIn();
 
             base.OnEnable();
         }
@@ -60,11 +64,16 @@ namespace Game.Astroids
             ClampSpeed();
         }
 
+        void SpawnIn()
+        {
+            StartCoroutine(_spawnFader.FadeIn(true, 0));
+            StartCoroutine(_spawnFader.FadeIn(false, 0));
+        }
+
         // Create a vector in the direction the ship is facing.
         // Magnitude based on the input, speed and the time between frames.
         void Move()
         {
-
             var thrustForce = _thrustInput * thrust * Time.deltaTime * transform.up;
             Rb.AddForce(thrustForce);
         }
@@ -81,7 +90,13 @@ namespace Game.Astroids
                 Mathf.Clamp(Rb.velocity.y, -maxSpeed, maxSpeed));
         }
 
-        public void Recover()
+        public void Spawn()
+        {
+            PlayEffect(EffectsManager.Effect.spawn, transform.position, .7f);
+            Recover();
+        }
+
+        void Recover()
         {
             if (!m_isAlive)
             {

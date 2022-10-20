@@ -78,7 +78,7 @@ namespace Game.Astroids
                 Debug.LogError("Asteriod Prefab not set!");
                 return;
             }
-            
+
             TryGetComponent(out _effects);
 
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
@@ -156,14 +156,19 @@ namespace Game.Astroids
 
         IEnumerator LevelStart()
         {
-            m_playerShip.Recover();
-            m_playerShip.EnableControls();
-
-            yield return Wait(1);
-
             m_UiManager.LevelStarts(m_level.Level);
 
-            yield return Wait(2);
+            if (m_level.Level == 1)
+            {
+                while (m_UiManager.AudioPlaying)
+                    yield return null;
+
+                m_playerShip.Spawn();
+                yield return Wait(2);
+
+                m_playerShip.EnableControls();
+            }
+            yield return Wait(1.5f);
 
             SpawnAsteroids(m_level.AstroidsForLevel);
         }
@@ -186,19 +191,25 @@ namespace Game.Astroids
 
                 StartCoroutine(m_UiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
+        
+                while (m_UiManager.AudioPlaying)
+                    yield return null;
+
+                yield return Wait(1f);
+
                 GameStart();
             }
             else
             {
                 StartCoroutine(m_UiManager.LevelCleared(m_level.Level));
-                AdvanceLevel();
+                while (m_UiManager.AudioPlaying)
+                    yield return null;
+
+                yield return Wait(1f);
+
+                m_level.LevelAdvance();
             }
             yield return Wait(2);
-        }
-
-        void AdvanceLevel()
-        {
-            m_level.LevelAdvance();
         }
 
         IEnumerator RemoveRemainingObjects()

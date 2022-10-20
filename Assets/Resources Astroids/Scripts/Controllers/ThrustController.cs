@@ -8,10 +8,10 @@ namespace Game.Astroids
     [ExecuteAlways]
     public class ThrustController : MonoBehaviour
     {
-        [SerializeField]float changePerSecondByInput;
+        [SerializeField] float changePerSecondByInput;
         [SerializeField] AudioSource engineAudio;
 
-        [Range(0f, 1f)]float _currentThrust;
+        [Range(0f, 1f)] float _currentThrust;
         float _thrustInPercentageOfMax;
         readonly float _minThrust = 0f;
         readonly float _maxThrust = 1f;
@@ -51,7 +51,7 @@ namespace Game.Astroids
         }
 
         [ContextMenu("SetToMinThrust")]
-        private void SetToMinThrust()
+        void SetToMinThrust()
         {
             SetVolume(0);
             EventThrustChanged(_minThrust);

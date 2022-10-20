@@ -43,8 +43,8 @@ GameObject:
   - component: {fileID: 2874880245280111032}
   - component: {fileID: 2874880245280111033}
   - component: {fileID: 2874880245280111034}
-  - component: {fileID: 2874880245280111039}
   - component: {fileID: 4622462081951471734}
+  - component: {fileID: 2874880245280111039}
   m_Layer: 8
   m_Name: prefab Rocket
   m_TagString: Player
@@ -143,34 +143,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2874880245280111039
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2874880245280111037}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7246517b0236f7d46ace6b0ca05fd1e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Model: {fileID: 2874880244354272700}
-  m_Shield: {fileID: 0}
-  weapon: {fileID: 2874880243799144278}
-  bulletPrefab: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
-  fireRate: 0.6
-  sounds:
-    clipsAudioSource: {fileID: 4622462081951471734}
-    shootBullet: {fileID: 8300000, guid: 5fa25b0052f7ad549896c493765b1e7d, type: 3}
-    shieldsUp: {fileID: 0}
-    shieldsDown: {fileID: 0}
-    shieldsHit: {fileID: 0}
-    shipExplosion: {fileID: 8300000, guid: 52a1f7212f9e8aa4aa1595355508a0b6, type: 3}
-  thrustController: {fileID: 3574155173224500789}
-  thrust: 500
-  rotationSpeed: 180
-  maxSpeed: 4.5
 --- !u!82 &4622462081951471734
 AudioSource:
   m_ObjectHideFlags: 0
@@ -267,6 +239,34 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &2874880245280111039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2874880245280111037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7246517b0236f7d46ace6b0ca05fd1e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Model: {fileID: 2874880244354272700}
+  m_Shield: {fileID: 0}
+  weapon: {fileID: 2874880243799144278}
+  bulletPrefab: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
+  fireRate: 0.6
+  sounds:
+    clipsAudioSource: {fileID: 4622462081951471734}
+    shootBullet: {fileID: 8300000, guid: 5fa25b0052f7ad549896c493765b1e7d, type: 3}
+    shieldsUp: {fileID: 0}
+    shieldsDown: {fileID: 0}
+    shieldsHit: {fileID: 0}
+    shipExplosion: {fileID: 8300000, guid: 52a1f7212f9e8aa4aa1595355508a0b6, type: 3}
+  thrustController: {fileID: 3574155173224500789}
+  thrust: 500
+  rotationSpeed: 180
+  maxSpeed: 4.5
 --- !u!1 &8456049621475996351
 GameObject:
   m_ObjectHideFlags: 0
@@ -492,6 +492,14 @@ PrefabInstance:
       propertyPath: minPosition.y
       value: -0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 5937630825679121680, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630825679121680, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: f6158760c378e874baa50e901562d928, type: 3}
     - target: {fileID: 5937630825679121681, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_RootOrder
       value: 3

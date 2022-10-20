@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198748979371217952}
   - component: {fileID: 199183317042074402}
   m_Layer: 0
-  m_Name: GroundFog
+  m_Name: prefab FX-Fog
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

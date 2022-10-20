@@ -122,8 +122,6 @@ namespace Game.Astroids
             {
                 if (Vector3.Distance(transform.position, _targetPos) < 0.1f)
                     RemoveShip();
-                else
-                    print("target: " + _targetPos + "  -  " + transform.position + " dist: " + Vector3.Distance(transform.position, _targetPos));
             }
         }
 

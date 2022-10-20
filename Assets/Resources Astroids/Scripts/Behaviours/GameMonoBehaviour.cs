@@ -26,6 +26,9 @@ namespace Game.Astroids
                 if (__gameManager == null)
                     __gameManager = AstroidsGameManager.Instance;
 
+                if (__gameManager == null)
+                    Debug.LogWarning("GameManager is null");
+
                 return __gameManager;
             }
         }
