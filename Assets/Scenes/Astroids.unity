@@ -3567,13 +3567,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: prefab FX-Spawn
       objectReference: {fileID: 0}
-    - target: {fileID: 4271578057717866504, guid: 145ac813ef7981d44a30f70e7d442ee4, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4275231969989659252, guid: 145ac813ef7981d44a30f70e7d442ee4, type: 3}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4275231969989659252, guid: 145ac813ef7981d44a30f70e7d442ee4, type: 3}
       propertyPath: m_LocalPosition.x

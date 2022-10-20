@@ -205,11 +205,11 @@ namespace Game.Astroids
                 while (m_UiManager.AudioPlaying)
                     yield return null;
 
-                yield return Wait(1f);
+                yield return Wait(2f);
 
                 m_level.LevelAdvance();
             }
-            yield return Wait(2);
+            yield return Wait(1);
         }
 
         IEnumerator RemoveRemainingObjects()
