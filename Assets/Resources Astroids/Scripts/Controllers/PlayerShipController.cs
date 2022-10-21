@@ -66,6 +66,7 @@ namespace Game.Astroids
 
         void SpawnIn()
         {
+            PlayAudioClip(SpaceShipSounds.Clip.spawn);
             StartCoroutine(_spawnFader.FadeIn(true, 0));
             StartCoroutine(_spawnFader.FadeIn(false, 0));
         }
