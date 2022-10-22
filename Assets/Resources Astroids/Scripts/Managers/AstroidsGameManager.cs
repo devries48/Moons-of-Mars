@@ -202,8 +202,6 @@ namespace Game.Astroids
             else
             {
                 StartCoroutine(m_UiManager.LevelCleared(m_level.Level));
-                while (m_UiManager.AudioPlaying)
-                    yield return null;
 
                 yield return Wait(2f);
 

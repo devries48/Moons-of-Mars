@@ -169,6 +169,7 @@ namespace Game.Astroids
             LeanTween.scale(UiScore.gameObject, new Vector3(1f, 1f, 1f), .2f).setDelay(.5f).setEase(LeanTweenType.easeInOutCubic);
 
             TweenColor(scoreColor, color, .5f);
+            TweenColor(scoreColor, color, .5f);
             TweenColor(UiScore.color, scoreColor, .1f, .5f);
 
             DisplayPoints(points, pos, color);
