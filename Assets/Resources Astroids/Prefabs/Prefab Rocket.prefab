@@ -264,7 +264,7 @@ MonoBehaviour:
     shieldsHit: {fileID: 0}
     shipExplosion: {fileID: 8300000, guid: 52a1f7212f9e8aa4aa1595355508a0b6, type: 3}
     spawn: {fileID: 8300000, guid: eaa97151378228143b14a018f4bd7e98, type: 3}
-  thrustController: {fileID: 3574155173224500789}
+  m_ThrustController: {fileID: 3574155173224500789}
   thrust: 500
   rotationSpeed: 180
   maxSpeed: 4.5

@@ -29,13 +29,13 @@ namespace Game.Astroids
             if (thrustController == null)
                 return;
 
-            thrustController.EventThrustChanged += SetStartSpeed;
+            thrustController.ThrustChangedEvent += SetStartSpeed;
 
             if (minPosition != maxPosition)
-                thrustController.EventThrustChanged += SetPosition;
+                thrustController.ThrustChangedEvent += SetPosition;
 
             if (minEmission != maxEmission)
-                thrustController.EventThrustChanged += SetEmission;
+                thrustController.ThrustChangedEvent += SetEmission;
         }
 
         void OnDisable()
@@ -43,13 +43,13 @@ namespace Game.Astroids
             if (thrustController == null)
                 return;
 
-            thrustController.EventThrustChanged -= SetStartSpeed;
+            thrustController.ThrustChangedEvent -= SetStartSpeed;
 
             if (minPosition != maxPosition)
-                thrustController.EventThrustChanged -= SetPosition;
+                thrustController.ThrustChangedEvent -= SetPosition;
 
             if (minEmission != maxEmission)
-                thrustController.EventThrustChanged -= SetEmission;
+                thrustController.ThrustChangedEvent -= SetEmission;
         }
 
         void SetStartSpeed(float thrustInPercent)

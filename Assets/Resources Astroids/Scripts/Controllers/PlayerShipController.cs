@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -6,7 +7,7 @@ namespace Game.Astroids
     {
         #region editor fields
         [Header("Player")]
-        [SerializeField] ThrustController thrustController;
+        public ThrustController m_ThrustController;
         [SerializeField] float thrust = 500f;
         [SerializeField] float rotationSpeed = 180f;
         [SerializeField] float maxSpeed = 4.5f;
@@ -16,19 +17,23 @@ namespace Game.Astroids
         bool _canMove = true;
         float _thrustInput;
         float _turnInput;
+        float _speedInPercentage;
+        float _prevSpeed;
+
         MaterialFader _spawnFader;
 
         Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
         #endregion
 
+        public event Action<float> SpeedChangedEvent = delegate { };
+
         protected override void OnEnable()
         {
             _thrustInput = 0f;
             _turnInput = 0f;
-
             _spawnFader ??= new MaterialFader(m_Model);
-            SpawnIn();
 
+            SpawnIn();
             base.OnEnable();
         }
 
@@ -39,12 +44,12 @@ namespace Game.Astroids
             _turnInput = ShipInput.GetTurnAxis();
             _thrustInput = ShipInput.GetForwardThrust();
 
-            if (thrustController)
+            if (m_ThrustController)
             {
                 if (_thrustInput > 0)
-                    thrustController.IncreaseThrust();
+                    m_ThrustController.IncreaseThrust();
                 else
-                    thrustController.DecreaseThrust();
+                    m_ThrustController.DecreaseThrust();
             }
 
             if (!m_canShoot)
@@ -89,6 +94,8 @@ namespace Game.Astroids
             Rb.velocity = new Vector2(
                 Mathf.Clamp(Rb.velocity.x, -maxSpeed, maxSpeed),
                 Mathf.Clamp(Rb.velocity.y, -maxSpeed, maxSpeed));
+
+            RaiseSpeedChangedEvent();
         }
 
         public void Spawn()
@@ -105,6 +112,26 @@ namespace Game.Astroids
                 ResetTransform();
                 gameObject.SetActive(true);
             }
+        }
+
+        void RaiseSpeedChangedEvent()
+        {
+            var max =  Math.Sqrt(maxSpeed * maxSpeed + maxSpeed * maxSpeed);
+            
+            if (Rb.velocity.magnitude > max)
+            {
+                print("speed: " + Rb.velocity.magnitude);
+                print("norm: " + Rb.velocity.normalized.magnitude);
+            }
+
+            _speedInPercentage = Rb.velocity.magnitude / (maxSpeed * 1.1f);
+
+            if (_speedInPercentage == _prevSpeed)
+                return;
+
+            _prevSpeed = _speedInPercentage;
+
+            SpeedChangedEvent(_speedInPercentage);
         }
 
         public void EnableControls()

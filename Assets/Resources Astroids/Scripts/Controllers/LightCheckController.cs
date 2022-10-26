@@ -9,14 +9,22 @@ namespace Game.Astroids
     {
         [SerializeField] RenderTexture lightCheckTexture;
 
+        float _nextActionTime = 0.0f;
+        readonly float _period = 1f;
+       
+        //TODO: public event Action<int> EventThrustChanged = delegate { };
         public delegate void LightLevelChanged(int level);
-
         public event LightLevelChanged OnLevelChanged;
 
         readonly System.Func<Color, float> luminance = c => 0.2126f * c.r + 0.7152f * c.g + 0.0722f * c.b;
 
         void Update()
         {
+            if (Time.time <= _nextActionTime)
+                return;
+
+            _nextActionTime += _period;
+
             var tmpTexture = RenderTexture.GetTemporary(lightCheckTexture.width, lightCheckTexture.height, 0);
             Graphics.Blit(lightCheckTexture, tmpTexture);
             var prev = RenderTexture.active;
@@ -35,7 +43,6 @@ namespace Game.Astroids
             for (int i = 0; i < colors.Length; i++)
                 LightLevel += luminance(colors[i]);
 
-            Debug.Log(LightLevel);
             OnLevelChanged?.Invoke((int)LightLevel);
         }
     }

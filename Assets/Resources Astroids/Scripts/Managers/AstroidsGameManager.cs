@@ -30,6 +30,8 @@ namespace Game.Astroids
         #endregion
 
         #region editor fields
+        [SerializeField] HudManager m_HudManager;
+
         [Header("Scriptables")]
         public UfoManager m_UfoManager;
         public PowerupManager m_PowerupManager;
@@ -51,6 +53,19 @@ namespace Game.Astroids
         [SerializeField] Camera gameCamera;
         [SerializeField] AudioMixer audioMixer;
         public AudioSource m_AudioSource;
+        #endregion
+
+        #region properties
+        public bool IsDay
+        {
+            get => __isDay;
+            set
+            {
+                __isDay = value;
+                m_HudManager.SetHudCycle(value);
+            }
+        }
+        bool __isDay = true;
         #endregion
 
         #region fields
@@ -191,7 +206,7 @@ namespace Game.Astroids
 
                 StartCoroutine(m_UiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
-        
+
                 while (m_UiManager.AudioPlaying)
                     yield return null;
 
@@ -228,6 +243,8 @@ namespace Game.Astroids
         {
             GameObject ship = Instantiate(spaceShip);
             ship.TryGetComponent(out PlayerShipController shipCtrl);
+            if (ship)
+                m_HudManager.ConnectToShip(shipCtrl, IsDay);
 
             return shipCtrl;
         }

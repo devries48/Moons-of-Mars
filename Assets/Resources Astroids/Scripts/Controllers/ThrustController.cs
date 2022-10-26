@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Media;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -12,11 +11,12 @@ namespace Game.Astroids
         [SerializeField] AudioSource engineAudio;
 
         [Range(0f, 1f)] float _currentThrust;
-        float _thrustInPercentageOfMax;
-        readonly float _minThrust = 0f;
+        float _thrustInPercentage;
+        float _prevThrust;
+
         readonly float _maxThrust = 1f;
 
-        public event Action<float> EventThrustChanged = delegate { };
+        public event Action<float> ThrustChangedEvent = delegate { };
 
         void OnEnable() => SetToMinThrust();
 
@@ -34,14 +34,20 @@ namespace Game.Astroids
 
         void ChangeThrust(float changeBy)
         {
-            _currentThrust = Mathf.Clamp(_currentThrust + changeBy, _minThrust, _maxThrust);
+            _currentThrust = Mathf.Clamp(_currentThrust + changeBy, 0, _maxThrust);
             RaiseThrustChangedEvent();
         }
         void RaiseThrustChangedEvent()
         {
-            _thrustInPercentageOfMax = (_currentThrust - _minThrust) / (_maxThrust - _minThrust);
-            SetVolume(_thrustInPercentageOfMax);
-            EventThrustChanged(_thrustInPercentageOfMax);
+            _thrustInPercentage = _currentThrust / _maxThrust;
+            
+            if (_thrustInPercentage == _prevThrust)
+                return;
+
+            _prevThrust = _thrustInPercentage;
+
+            SetVolume(_thrustInPercentage);
+            ThrustChangedEvent(_thrustInPercentage);
         }
 
         void SetVolume(float vol)
@@ -54,11 +60,11 @@ namespace Game.Astroids
         void SetToMinThrust()
         {
             SetVolume(0);
-            EventThrustChanged(_minThrust);
+            ThrustChangedEvent(0);
         }
 
         [ContextMenu("SetToMaxThrust")]
-        void SetToMaxThrust() => EventThrustChanged(_maxThrust);
+        void SetToMaxThrust() => ThrustChangedEvent(_maxThrust);
 
     }
 }
