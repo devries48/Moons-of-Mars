@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
@@ -68,17 +69,20 @@ namespace Game.Astroids
         #endregion
 
         #region fields
-        internal bool m_isAlive;
-        protected bool m_canShoot = true;
 
         internal ShipType m_shipType = ShipType.player;
 
-        internal float m_pwrFireRateTime;
+        protected bool m_canShoot = true;
+        internal bool m_isAlive;
+
+        internal float m_pwrJumpTime;
         internal float m_pwrShieldTime;
         internal float m_pwrWeaponTime;
 
         GameObjectPool _bulletPool;
         #endregion
+
+        public event Action<float, PowerupManager.Powerup> PowerUpActivatedEvent = delegate { };
 
         #region unity events
         protected virtual void Awake() => BuilPool();
@@ -117,12 +121,13 @@ namespace Game.Astroids
         }
         #endregion
 
+        #region Powerups
         public void ActivatePowerup(PowerupManager.Powerup powerup)
         {
             switch (powerup)
             {
-                case PowerupManager.Powerup.fireRate:
-                    StartCoroutine(PowerupFireRateLoop());
+                case PowerupManager.Powerup.weapon:
+                    StartCoroutine(PowerupWeaponLoop());
                     break;
                 case PowerupManager.Powerup.shield:
                     StartCoroutine(PowerupShieldLoop());
@@ -132,27 +137,30 @@ namespace Game.Astroids
             }
         }
 
-        IEnumerator PowerupFireRateLoop()
+        IEnumerator PowerupWeaponLoop()
         {
-            if (m_pwrFireRateTime > 0)
+            if (m_pwrWeaponTime > 0)
             {
-                m_pwrFireRateTime += GameManager.m_PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime += GameManager.m_PowerupManager.m_PowerDuration;
+                RaisePowerUpWeapon();
+
                 yield return null;
             }
             else
             {
                 var orgVal = fireRate;
                 fireRate *= .25f;
-                m_pwrFireRateTime = GameManager.m_PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime = GameManager.m_PowerupManager.m_PowerDuration;
+                RaisePowerUpWeapon();
 
-                while (m_isAlive && m_pwrFireRateTime > 0)
+                while (m_isAlive && m_pwrWeaponTime > 0)
                 {
-                    m_pwrFireRateTime -= Time.deltaTime;
+                    m_pwrWeaponTime -= Time.deltaTime;
                     yield return null;
                 }
 
                 fireRate = orgVal;
-                m_pwrFireRateTime = 0;
+                m_pwrWeaponTime = 0;
             }
         }
 
@@ -161,6 +169,8 @@ namespace Game.Astroids
             if (m_pwrShieldTime > 0)
             {
                 m_pwrShieldTime += GameManager.m_PowerupManager.m_PowerDuration;
+                RaisePowerUpShield();
+
                 yield return null;
             }
             else
@@ -168,6 +178,7 @@ namespace Game.Astroids
                 print("powerup shield");
                 m_Shield.ShieldsUp = true;
                 m_pwrShieldTime = GameManager.m_PowerupManager.m_PowerDuration;
+                RaisePowerUpShield();
 
                 while (m_isAlive && m_pwrShieldTime > 0)
                 {
@@ -178,6 +189,18 @@ namespace Game.Astroids
                 m_Shield.ShieldsUp = false;
             }
         }
+
+        void RaisePowerUpShield()
+        {
+            PowerUpActivatedEvent(m_pwrShieldTime, PowerupManager.Powerup.shield);
+        }
+
+        void RaisePowerUpWeapon()
+        {
+            PowerUpActivatedEvent(m_pwrWeaponTime, PowerupManager.Powerup.weapon);
+        }
+
+        #endregion
 
         public void PlayAudioClip(SpaceShipSounds.Clip clip) => sounds?.PlayClip(clip);
 
@@ -214,7 +237,7 @@ namespace Game.Astroids
                 Explode();
             }
             else
-                GameManager.PlayerDestroyed(gameObject);
+                GameManager.PlayerDestroyed();
         }
 
         /// <summary>
@@ -228,12 +251,12 @@ namespace Game.Astroids
             if (otherShield == null)
                 return;
 
-            GameManager.PlayerDestroyed(gameObject);
+            GameManager.PlayerDestroyed();
         }
 
         void HitByAlienShip()
         {
-            GameManager.PlayerDestroyed(gameObject);
+            GameManager.PlayerDestroyed();
         }
 
         void BuilPool()

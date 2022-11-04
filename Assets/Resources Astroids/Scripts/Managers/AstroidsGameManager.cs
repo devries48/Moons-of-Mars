@@ -62,7 +62,7 @@ namespace Game.Astroids
             set
             {
                 __isDay = value;
-                m_HudManager.SetHudCycle(value);
+                m_HudManager.IsDay=value;
             }
         }
         bool __isDay = true;
@@ -149,7 +149,7 @@ namespace Game.Astroids
 
         void GameStart()
         {
-            m_playerShip = SpawnPlayer(playerShipPrefab);
+            m_playerShip = CreatePlayer(playerShipPrefab);
             _requestTitleScreen = true;
             m_level.Level1();
         }
@@ -181,6 +181,7 @@ namespace Game.Astroids
                 m_playerShip.Spawn();
                 yield return Wait(2);
 
+                m_HudManager.HudShow();
                 m_playerShip.EnableControls();
             }
             yield return Wait(1.5f);
@@ -239,12 +240,12 @@ namespace Game.Astroids
         #endregion
 
         #region spawn player, astroids
-        PlayerShipController SpawnPlayer(GameObject spaceShip)
+        PlayerShipController CreatePlayer(GameObject spaceShip)
         {
             GameObject ship = Instantiate(spaceShip);
             ship.TryGetComponent(out PlayerShipController shipCtrl);
             if (ship)
-                m_HudManager.ConnectToShip(shipCtrl, IsDay);
+                m_HudManager.ConnectToShip(shipCtrl);
 
             return shipCtrl;
         }
@@ -321,24 +322,18 @@ namespace Game.Astroids
         /// <summary>
         /// Destroy player with explosion
         /// </summary>
-        public void PlayerDestroyed(GameObject player)
-        {
-            var ship = player.GetComponent<SpaceShipMonoBehaviour>();
-            if (ship.m_isAlive)
-            {
-                ship.Explode();
-
-                PlayerDestroyed();
-            }
-        }
-
-        /// <summary>
-        /// Destroy player without explosion
-        /// </summary>
         public void PlayerDestroyed()
         {
-            Cursor.visible = true;
-            print("GAME OVER");
+            m_HudManager.HudHide();
+
+            if (m_playerShip.m_isAlive)
+            {
+                m_playerShip.DisableControls();
+                m_playerShip.Explode();
+
+                Cursor.visible = true;
+                print("GAME OVER");
+            }
         }
 
         public void AsterodDestroyed()

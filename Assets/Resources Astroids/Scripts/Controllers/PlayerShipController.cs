@@ -26,13 +26,15 @@ namespace Game.Astroids
         #endregion
 
         public event Action<float> SpeedChangedEvent = delegate { };
+        public event Action<float> FuelChangedEvent = delegate { };
 
         protected override void OnEnable()
         {
             _thrustInput = 0f;
             _turnInput = 0f;
             _spawnFader ??= new MaterialFader(m_Model);
-
+            
+            RaiseFuelChangedEvent();
             SpawnIn();
             base.OnEnable();
         }
@@ -124,7 +126,7 @@ namespace Game.Astroids
                 print("norm: " + Rb.velocity.normalized.magnitude);
             }
 
-            _speedInPercentage = Rb.velocity.magnitude / (maxSpeed * 1.1f);
+            _speedInPercentage = (Rb.velocity.magnitude / (maxSpeed * 1.1f));
 
             if (_speedInPercentage == _prevSpeed)
                 return;
@@ -132,6 +134,11 @@ namespace Game.Astroids
             _prevSpeed = _speedInPercentage;
 
             SpeedChangedEvent(_speedInPercentage);
+        }
+
+        void RaiseFuelChangedEvent()
+        {
+            FuelChangedEvent(100);
         }
 
         public void EnableControls()

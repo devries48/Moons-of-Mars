@@ -15,7 +15,7 @@ namespace Game.Astroids
         [SerializeField] GameObject powerup;
 
         [Header("Materials")]
-        [SerializeField] Material fireRatePowerup;
+        [SerializeField] Material jumpPowerup;
         [SerializeField] Material shieldPowerup;
         [SerializeField] Material weaponPowerup;
 
@@ -53,9 +53,15 @@ namespace Game.Astroids
 
         public enum Powerup
         {
-            fireRate, // red
+            jump, // green
             shield,   // blue
-            weapon    // green
+            weapon    // red
+        }
+
+        public enum PowerupWeapon
+        {
+            firerate,
+            bulletSpread
         }
 
         void OnEnable() => BuildPools();
@@ -89,7 +95,7 @@ namespace Game.Astroids
         {
             var mat = pwr.m_powerup switch
             {
-                Powerup.fireRate => fireRatePowerup,
+                Powerup.jump => jumpPowerup,
                 Powerup.shield => shieldPowerup,
                 Powerup.weapon => weaponPowerup,
                 _ => null

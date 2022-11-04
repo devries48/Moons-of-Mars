@@ -162,11 +162,7 @@ namespace Game.Astroids
                     {
                         Renderer.material.SetFloat("_Dissolve", val);
                     })
-                .setOnComplete(() =>
-                {
-                    print("Oncomplete disolve");
-                    RemoveFromGame();
-                })
+                .setOnComplete(() => RemoveFromGame())
                 .setEaseInQuint();
         }
 

@@ -102,7 +102,7 @@ namespace Game.Astroids
 
             // TODO constant tag names shared static method: CompareTag(other, Tags.Player)
             if (c.CompareTag("Player"))
-                GameManager.PlayerDestroyed(o);
+                GameManager.PlayerDestroyed();
 
             else if (c.CompareTag("Astroid"))
                 HitByAstroid(o);
