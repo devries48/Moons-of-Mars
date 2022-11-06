@@ -185,7 +185,20 @@ namespace Game.Astroids
             Renderer.enabled = false;
 
             Score(PwrManager.GetPickupScore(ship.IsEnemy), gameObject);
-            ship.ActivatePowerup(m_powerup);
+            switch (m_powerup)
+            {
+                case PowerupManager.Powerup.jump:
+                    break;
+                case PowerupManager.Powerup.shield:
+                    ship.ActivateShield();
+                    break;
+                case PowerupManager.Powerup.weapon:
+                    var pwr = RandomEnumUtil<PowerupManager.PowerupWeapon>.Get();
+                    ship.ActivateWeaponPowerup(pwr);
+                    break;
+                default:
+                    break;
+            }
 
             var clip = ship.IsEnemy ? PowerupSounds.Clip.PickupEnemy : PowerupSounds.Clip.Pickup;
             PwrManager.PlayAudio(clip, clipsAudioSource);

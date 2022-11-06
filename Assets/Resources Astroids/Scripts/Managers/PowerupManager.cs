@@ -53,7 +53,7 @@ namespace Game.Astroids
 
         public enum Powerup
         {
-            jump, // green
+            jump,     // green
             shield,   // blue
             weapon    // red
         }
@@ -61,7 +61,7 @@ namespace Game.Astroids
         public enum PowerupWeapon
         {
             firerate,
-            bulletSpread
+            shotSpread
         }
 
         void OnEnable() => BuildPools();
@@ -76,10 +76,11 @@ namespace Game.Astroids
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
                 if (GameManager.m_level.AstroidsActive > 2 && !GameManager.m_gamePaused)
-                    _shuttlePool.GetFromPool();
+                    ShuttleLaunch();
             }
         }
 
+        public void ShuttleLaunch() => _shuttlePool.GetFromPool();
         public void SpawnPowerup(Vector3 pos) => _powerupPool.GetFromPool(pos);
         public int GetPickupScore(bool isEnemy) => isEnemy ? enemyPickupScore : pickupScore;
         public int GetDestructionScore(bool isEnemy) => isEnemy ? enemyDestructionScore : destructionScore;

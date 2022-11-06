@@ -82,7 +82,7 @@ namespace Game.Astroids
         GameObjectPool _bulletPool;
         #endregion
 
-        public event Action<float, PowerupManager.Powerup> PowerUpActivatedEvent = delegate { };
+        public event Action<float, PowerupManager.Powerup, PowerupManager.PowerupWeapon?> PowerUpActivatedEvent = delegate { };
 
         #region unity events
         protected virtual void Awake() => BuilPool();
@@ -122,27 +122,22 @@ namespace Game.Astroids
         #endregion
 
         #region Powerups
-        public void ActivatePowerup(PowerupManager.Powerup powerup)
+        public void ActivateShield()
         {
-            switch (powerup)
-            {
-                case PowerupManager.Powerup.weapon:
-                    StartCoroutine(PowerupWeaponLoop());
-                    break;
-                case PowerupManager.Powerup.shield:
-                    StartCoroutine(PowerupShieldLoop());
-                    break;
-                default:
-                    break;
-            }
+            StartCoroutine(PowerupShieldLoop());
         }
 
-        IEnumerator PowerupWeaponLoop()
+        public void ActivateWeaponPowerup(PowerupManager.PowerupWeapon weapon)
+        {
+            StartCoroutine(PowerupWeaponLoop(weapon));
+        }
+
+        IEnumerator PowerupWeaponLoop(PowerupManager.PowerupWeapon weapon)
         {
             if (m_pwrWeaponTime > 0)
             {
                 m_pwrWeaponTime += GameManager.m_PowerupManager.m_PowerDuration;
-                RaisePowerUpWeapon();
+                RaisePowerUpWeapon(weapon);
 
                 yield return null;
             }
@@ -151,7 +146,7 @@ namespace Game.Astroids
                 var orgVal = fireRate;
                 fireRate *= .25f;
                 m_pwrWeaponTime = GameManager.m_PowerupManager.m_PowerDuration;
-                RaisePowerUpWeapon();
+                RaisePowerUpWeapon(weapon);
 
                 while (m_isAlive && m_pwrWeaponTime > 0)
                 {
@@ -192,12 +187,12 @@ namespace Game.Astroids
 
         void RaisePowerUpShield()
         {
-            PowerUpActivatedEvent(m_pwrShieldTime, PowerupManager.Powerup.shield);
+            PowerUpActivatedEvent(m_pwrShieldTime, PowerupManager.Powerup.shield, null);
         }
 
-        void RaisePowerUpWeapon()
+        void RaisePowerUpWeapon(PowerupManager.PowerupWeapon weapon)
         {
-            PowerUpActivatedEvent(m_pwrWeaponTime, PowerupManager.Powerup.weapon);
+            PowerUpActivatedEvent(m_pwrWeaponTime, PowerupManager.Powerup.weapon, weapon);
         }
 
         #endregion

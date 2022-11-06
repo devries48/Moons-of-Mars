@@ -11,6 +11,9 @@ namespace Game.Astroids
         #region constants
         const float TRANSITION_DEFAULT = 1f;
         const float TRANSITION_CYCLE = 3f;
+
+        const string POWERUP_FIRERATE = "FIRE-RATE";
+        const string POWERUP_SHOTSPREAD = "SHOT-SPREAD";
         #endregion
 
         #region editor
@@ -27,6 +30,7 @@ namespace Game.Astroids
         [Header("Hud elements")]
         [SerializeField] Image shieldRing;
         [SerializeField] Image weaponRing;
+        [SerializeField] TMPro.TextMeshProUGUI weaponText;
         [SerializeField] Image fuelImage;
 
         [Header("Day Colors")]
@@ -177,7 +181,7 @@ namespace Game.Astroids
             hudSounds.PlayClip(HudSounds.Clip.shieldActivated);
         }
 
-        public void ActivateWeapon(float t)
+        public void ActivateWeapon(float t, PowerupManager.PowerupWeapon weapon)
         {
             if (_pwrWeaponTime > 0)
             {
@@ -192,10 +196,30 @@ namespace Game.Astroids
             _totWeaponTime = t;
             _colorTransitionTime = TRANSITION_DEFAULT;
 
+            HudSounds.Clip? clip = null;
+            var text = string.Empty;
+
+            switch (weapon)
+            {
+                case PowerupManager.PowerupWeapon.firerate:
+                    clip = HudSounds.Clip.firerateIncreased;
+                    text = POWERUP_FIRERATE;
+                    break;
+                case PowerupManager.PowerupWeapon.shotSpread:
+                    clip = HudSounds.Clip.shotSpreadActivated;
+                    text = POWERUP_SHOTSPREAD;
+                    break;
+                default:
+                    break;
+            }
+
+            weaponText.text = text;
+
             SetWeaponColor();
             StartCoroutine(WeaponCountDown());
 
-            hudSounds.PlayClip(HudSounds.Clip.weaponActivated);
+            if (clip.HasValue)
+                hudSounds.PlayClip(clip.Value);
         }
 
         void ThrustChanged(float perc) => hudController.SetThrustPercentage(perc * 100f);
@@ -204,12 +228,12 @@ namespace Game.Astroids
 
         void FuelChanged(float perc) => hudController.SetFuelPercentage(perc * 100f);
 
-        void PowerupActivated(float time, PowerupManager.Powerup powerup)
+        void PowerupActivated(float time, PowerupManager.Powerup powerup, PowerupManager.PowerupWeapon? weapon = null)
         {
             if (powerup == PowerupManager.Powerup.shield)
                 ActivateShield(time);
             else if (powerup == PowerupManager.Powerup.weapon)
-                ActivateWeapon(time);
+                ActivateWeapon(time, weapon.Value);
         }
 
         IEnumerator ShieldCountDown()

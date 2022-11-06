@@ -73,6 +73,7 @@ namespace Game.Astroids
         internal CamBounds m_camBounds;
         internal bool m_gamePlaying;
         internal bool m_gamePaused;
+        internal bool m_godMode;
         internal CurrentLevel m_level;
 
         bool _requestTitleScreen;
@@ -324,6 +325,9 @@ namespace Game.Astroids
         /// </summary>
         public void PlayerDestroyed()
         {
+            if (m_godMode)
+                return;
+
             m_HudManager.HudHide();
 
             if (m_playerShip.m_isAlive)
@@ -399,40 +403,16 @@ namespace Game.Astroids
             public int Level => _level;
             public int AstroidsForLevel => _astroidsForLevel;
             public int AstroidsActive => _asteroidsActive;
+            public int UfosActive => _ufosActive;
             public bool HasEnemy => _asteroidsActive > 0 || _ufosActive > 0;
             public bool CanAddUfo => _ufosActive < _ufosForLevel && _asteroidsActive > 0;
 
-            public void AstroidAdd()
-            {
-                _asteroidsActive++;
-                Log();
-            }
-
-            public void AstroidRemove()
-            {
-                _asteroidsActive--;
-                Log();
-            }
-
-            public void UfoAdd()
-            {
-                _ufosActive++;
-                Log();
-            }
-
-            public void UfoRemove()
-            {
-                _ufosActive--;
-                Log();
-            }
-
+            public void AstroidAdd() => _asteroidsActive++;
+            public void AstroidRemove() => _asteroidsActive--;
+            public void UfoAdd() => _ufosActive++;
+            public void UfoRemove() => _ufosActive--;
             public void Level1() => SetLevel(1);
             public void LevelAdvance() => _level++;
-
-            void Log()
-            {
-                print("Active Astroids: " + _asteroidsActive + " - Ufo's: " + _ufosActive);
-            }
 
             void SetLevel(int level)
             {

@@ -10,7 +10,8 @@ namespace Game.Astroids
 
         [Header("Clips")]
         [SerializeField] AudioClip shieldActivated;
-        [SerializeField] AudioClip weaponActivated;
+        [SerializeField] AudioClip firerateIncreased;
+        [SerializeField] AudioClip shotSpreadActivated;
         [SerializeField] AudioClip jumpActivated;
         [SerializeField] AudioClip fuelLow;
         [SerializeField] AudioClip fuelEmpty;
@@ -19,7 +20,8 @@ namespace Game.Astroids
         public enum Clip
         {
             shieldActivated,
-            weaponActivated,
+            firerateIncreased,
+            shotSpreadActivated,
             jumpActivated,
             fuelLow,
             fuelEmpty,
@@ -31,7 +33,8 @@ namespace Game.Astroids
             var audioClip = clip switch
             {
                 Clip.shieldActivated => shieldActivated,
-                Clip.weaponActivated => weaponActivated,
+                Clip.firerateIncreased => firerateIncreased,
+                Clip.shotSpreadActivated => shotSpreadActivated,
                 Clip.jumpActivated => jumpActivated,
                 Clip.fuelLow => fuelLow,
                 Clip.fuelEmpty => fuelEmpty,
