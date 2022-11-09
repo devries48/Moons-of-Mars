@@ -166,8 +166,11 @@ namespace Game.Astroids
                     })
                 .setOnComplete(() =>
                 {
-                    _isAlive = false;
-                    RemoveFromGame();
+                    if (_isAlive)
+                    {
+                        _isAlive = false;
+                        RemoveFromGame();
+                    }
                 })
                 .setEaseInQuint();
         }

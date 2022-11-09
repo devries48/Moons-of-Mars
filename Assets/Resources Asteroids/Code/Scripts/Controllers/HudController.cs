@@ -23,8 +23,8 @@ namespace Game.Astroids
         [SerializeField] Transform fuelNeedle;
         [SerializeField] float lowOnFuelPercentage = 10;
 
-        public bool IsFuelLow => _fuel < lowOnFuelPercentage && _fuel != 0;
-        public bool IsFuelEmpty => _fuel == 0;
+        public bool IsFuelLow => _fuel < lowOnFuelPercentage && _fuel > 0;
+        public bool IsFuelEmpty => _fuel <= 0;
 
         float _thurst = 0;
         float _speed = 0;
@@ -52,20 +52,9 @@ namespace Game.Astroids
             fuelNeedle.eulerAngles = new Vector3(0, 0, GetFuelRotation(_fuel));
         }
 
-        public void SetThrustPercentage(float perc)
-        {
-            _thurst = perc;
-        }
-
-        public void SetSpeedPercentage(float perc)
-        {
-            _speed = perc;
-        }
-
-        public void SetFuelPercentage(float perc)
-        {
-            _fuel = perc;
-        }
+        public void SetThrustPercentage(float perc) => _thurst = perc;
+        public void SetSpeedPercentage(float perc) => _speed = perc;
+        public void SetFuelPercentage(float perc) => _fuel = perc;
 
         void CreateLabels()
         {

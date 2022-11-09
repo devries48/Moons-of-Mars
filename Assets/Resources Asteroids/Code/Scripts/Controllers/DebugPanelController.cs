@@ -83,6 +83,11 @@ namespace Game.Astroids
             GameManager.m_PowerupManager.ShuttleLaunch();
         }
 
+        public void SpawnUfoClick()
+        {
+            GameManager.m_UfoManager.UfoLaunch();
+        }
+
         public void ToggleUfoChanged()
         {
             GameManager.m_debug_no_ufos = !_toggleSpawnUfos.isOn;

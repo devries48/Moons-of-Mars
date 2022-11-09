@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Model: {fileID: 2874880244354272700}
-  m_Shield: {fileID: 0}
+  m_Shield: {fileID: 1525731017988237746}
   weapon: {fileID: 2874880243799144278}
   bulletPrefab: {fileID: 8148460054002388969, guid: 1dc44039c7367224e9cfbb2ab05c9186, type: 3}
   fireRate: 0.6
@@ -268,6 +268,7 @@ MonoBehaviour:
   thrust: 500
   rotationSpeed: 180
   maxSpeed: 4.5
+  fuelPerSecond: 2
 --- !u!1 &8456049621475996351
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,7 +288,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4500159951001864856
 Transform:
   m_ObjectHideFlags: 0
@@ -318,7 +319,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8456049621475996351}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1

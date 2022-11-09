@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
 using static Game.Astroids.SpaceShipMonoBehaviour;
 
 namespace Game.Astroids
@@ -52,11 +53,14 @@ namespace Game.Astroids
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
                 if (GameManager.m_level.AstroidsActive > 1 && !GameManager.m_gamePaused)
-                {
-                    _ufoPool.GetFromPool();
-                    GameManager.m_level.UfoAdd();
-                }
+                    UfoLaunch();
             }
+        }
+
+        public void UfoLaunch()
+        {
+            _ufoPool.GetFromPool();
+            GameManager.m_level.UfoAdd();
         }
 
         public void SetUfoMaterials(UfoController ufo)
@@ -122,7 +126,7 @@ namespace Game.Astroids
 
         public void SetBulletMaterial(BulletController bullet, ShipType type)
         {
-            if (type ==ShipType.ufoGreen || type == ShipType.ufoRed)
+            if (type == ShipType.ufoGreen || type == ShipType.ufoRed)
             {
                 var rend = bullet.Renderer;
 

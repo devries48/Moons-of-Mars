@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+
 using static Game.Astroids.UfoManager;
 
 namespace Game.Astroids
@@ -81,6 +81,11 @@ namespace Game.Astroids
 
             LeanTween.cancel(pivot, true);
             base.HideModel();
+        }
+
+        protected override void RaisePowerUpShield()
+        {
+            m_Shield.AutoShieldUp(m_pwrShieldTime);
         }
 
         void SetRandomShipBehaviour()

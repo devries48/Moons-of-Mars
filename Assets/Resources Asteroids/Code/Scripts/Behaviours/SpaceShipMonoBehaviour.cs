@@ -131,7 +131,10 @@ namespace Game.Astroids
         #region Powerups
         public void ActivateShield()
         {
-            StartCoroutine(PowerupShieldLoop());
+            if (m_shipType == ShipType.player)
+                StartCoroutine(PowerupShieldLoop());
+            else
+                RaisePowerUpShield();
         }
 
         public void ActivateWeaponPowerup(PowerupWeapon weapon)
@@ -151,7 +154,7 @@ namespace Game.Astroids
             {
                 m_pwrWeaponTime += GameManager.m_PowerupManager.m_PowerDuration;
                 RaisePowerUpWeapon();
-               
+
                 yield return null;
             }
             else
@@ -188,8 +191,7 @@ namespace Game.Astroids
             }
             else
             {
-                print("powerup shield");
-                //m_Shield.ShieldsUp = true;
+                m_Shield.ShieldsUp = true;
                 m_pwrShieldTime = GameManager.m_PowerupManager.m_PowerDuration;
                 RaisePowerUpShield();
 
@@ -199,13 +201,12 @@ namespace Game.Astroids
                     yield return null;
                 }
                 m_pwrShieldTime = 0;
-                //m_Shield.ShieldsUp = false;
+                m_Shield.ShieldsUp = false;
             }
         }
 
-        void RaisePowerUpShield()
+        protected virtual void RaisePowerUpShield()
         {
-            print("RaisePowerup");
             PowerUpActivatedEvent(m_pwrShieldTime, Powerup.shield, null);
         }
 

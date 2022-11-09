@@ -89,6 +89,12 @@ namespace Game.Astroids
                 HitByBullet(o, true);
         }
 
+        public void AutoShieldUp(float time)
+        {
+            if (autoActivate)
+                _visibleTimer += time;
+        }
+
         void HitByAstroid(GameObject other)
         {
             if (autoActivate)

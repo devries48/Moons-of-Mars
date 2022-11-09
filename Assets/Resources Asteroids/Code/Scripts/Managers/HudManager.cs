@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,7 +6,6 @@ namespace Game.Astroids
 {
     public class HudManager : MonoBehaviour
     {
-
         #region constants
         const float TRANSITION_DEFAULT = 1f;
         const float TRANSITION_FAST = 3f;
