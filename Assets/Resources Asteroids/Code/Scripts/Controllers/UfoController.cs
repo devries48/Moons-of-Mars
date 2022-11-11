@@ -54,6 +54,7 @@ namespace Game.Astroids
 
         protected override void OnDisable()
         {
+            CancelFire();
             LeanTween.cancel(pivot, true);
             base.OnDisable();
         }
@@ -117,6 +118,9 @@ namespace Game.Astroids
 
         void MoveUfo()
         {
+            if (GameManager.m_playerShip == null)
+                return;
+
             if (m_ufoType == UfoType.red)
                 _targetPos = GameManager.m_playerShip.transform.position;
 

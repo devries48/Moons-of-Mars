@@ -61,6 +61,7 @@ namespace Game.Astroids
             }
         }
         Renderer __renderer;
+     
         public int Generation { get; private set; }
         #endregion
 
@@ -97,13 +98,15 @@ namespace Game.Astroids
 
         void OnCollisionEnter(Collision other)
         {
+            if (!Renderer.enabled)
+                return;
+
             var c = other.collider;
             var o = other.gameObject;
 
             // TODO constant tag names shared static method: CompareTag(other, Tags.Player)
             if (c.CompareTag("Player"))
                 GameManager.PlayerDestroyed();
-
             else if (c.CompareTag("Astroid"))
                 HitByAstroid(o);
         }

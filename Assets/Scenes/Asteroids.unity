@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 934970957}
-  m_IndirectSpecularColor: {r: 0.01439118, g: 0.012922827, b: 0.0154053895, a: 1}
+  m_IndirectSpecularColor: {r: 0.014420782, g: 0.012933425, b: 0.015415927, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1916,11 +1916,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: m_Name
-      value: Prefab Astroid
-      objectReference: {fileID: 0}
-    - target: {fileID: 100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      value: Prefab Asteroid
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
       propertyPath: m_RootOrder
@@ -3227,6 +3223,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1892224866}
     m_Modifications:
+    - target: {fileID: 2874880245280111032, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
+      propertyPath: m_Constraints
+      value: 120
+      objectReference: {fileID: 0}
     - target: {fileID: 2874880245280111037, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
       propertyPath: m_Name
       value: Prefab Rocket
@@ -6907,9 +6907,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugOn: 1
-  godModeOn: 0
-  spawnAstroids: 0
-  spawnUfos: 0
+  godModeOn: 1
+  spawnAstroids: 1
+  spawnUfos: 1
   debugPanel: {fileID: 1432180108}
   godModeToggle: {fileID: 1087939096}
   astroidToggle: {fileID: 1604769518}

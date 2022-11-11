@@ -30,6 +30,7 @@ namespace Game.Astroids
         public event Action<float> SpeedChangedEvent = delegate { };
         public event Action<float> FuelChangedEvent = delegate { };
 
+        #region unity events
         protected override void OnEnable()
         {
             _thrustInput = 0f;
@@ -76,6 +77,31 @@ namespace Game.Astroids
             ClampSpeed();
         }
 
+        #endregion
+
+        public void Spawn()
+        {
+            PlayEffect(EffectsManager.Effect.spawn, transform.position, .7f);
+            Recover();
+        }
+
+        public void Refuel()
+        {
+            _fuelUsed = 0f;
+        }
+
+        public void EnableControls()
+        {
+            _canMove = true;
+            m_canShoot = true;
+        }
+
+        public void DisableControls()
+        {
+            _canMove = false;
+            m_canShoot = false;
+        }
+
         void SpawnIn()
         {
             PlayAudioClip(SpaceShipSounds.Clip.spawn);
@@ -114,12 +140,6 @@ namespace Game.Astroids
             RaiseSpeedChangedEvent();
         }
 
-        public void Spawn()
-        {
-            PlayEffect(EffectsManager.Effect.spawn, transform.position, .7f);
-            Recover();
-        }
-
         void Recover()
         {
             if (!m_isAlive)
@@ -153,18 +173,6 @@ namespace Game.Astroids
 
                 FuelChangedEvent((100 - _fuelUsed) * .01f);
             }
-        }
-
-        public void EnableControls()
-        {
-            _canMove = true;
-            m_canShoot = true;
-        }
-
-        public void DisableControls()
-        {
-            _canMove = false;
-            m_canShoot = false;
         }
 
         void ResetTransform() => transform.SetPositionAndRotation(Vector3.zero, _initialRotation);

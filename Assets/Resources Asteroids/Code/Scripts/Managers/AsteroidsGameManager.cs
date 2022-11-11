@@ -133,6 +133,8 @@ namespace Game.Astroids
             {
                 if (_requestTitleScreen)
                 {
+                    Score.Reset();  
+
                     _requestTitleScreen = false;
                     m_gamePaused = true;
                     string result = null;
@@ -190,6 +192,7 @@ namespace Game.Astroids
             }
             yield return Wait(1.5f);
 
+            m_playerShip.Refuel();
             SpawnAsteroids(m_level.AstroidsForLevel);
         }
 

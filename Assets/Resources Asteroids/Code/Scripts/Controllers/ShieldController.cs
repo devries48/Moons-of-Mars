@@ -35,17 +35,11 @@ namespace Game.Astroids
 
         public bool ShieldsUp
         {
-            get
-            {
-                return Renderer != null && Renderer.enabled;
-            }
+            get => Renderer != null && Renderer.enabled;
             set
             {
                 if (Renderer != null)
-                {
-                    print("Shields up = " + value);
                     Renderer.enabled = value;
-                }
             }
         }
 
@@ -122,7 +116,10 @@ namespace Game.Astroids
         void HitByBullet(GameObject bullet, bool isAlien)
         {
             if (ShieldsUp)
-                PoolableMonoBehaviour.RemoveFromGame(bullet);
+            {
+                if (isAlien || m_spaceShip.m_shipType != SpaceShipMonoBehaviour.ShipType.player)
+                    PoolableMonoBehaviour.RemoveFromGame(bullet);
+            }
         }
 
         void SetShieldsUp(bool isAuto)

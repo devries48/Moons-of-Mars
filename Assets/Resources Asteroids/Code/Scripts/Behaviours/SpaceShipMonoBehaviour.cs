@@ -109,7 +109,11 @@ namespace Game.Astroids
 
             if (!AreShieldsUp)
                 if (c.CompareTag("Enemy") && !IsEnemy)
-                    HitByAlienShip();
+                {
+                    var ctrl = c.GetComponent<SpaceShipMonoBehaviour>();
+                    if (ctrl.m_isAlive)
+                        HitByAlienShip();
+                }
         }
 
         protected virtual void OnTriggerEnter(Collider other)

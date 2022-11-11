@@ -125,7 +125,7 @@ namespace Game.Astroids
         {
             SetHudDisabled(TRANSITION_DEFAULT);
             hudShield.transform.parent.gameObject.SetActive(false);
-
+            _pwrHyperspaceCount = 0;
             HudActive = false;
         }
 

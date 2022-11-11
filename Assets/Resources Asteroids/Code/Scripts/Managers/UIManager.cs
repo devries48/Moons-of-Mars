@@ -178,6 +178,7 @@ namespace Game.Astroids
         void DisplayGameScore(bool show)
         {
             GameManager.m_ScoreTextUI.gameObject.SetActive(show);
+            SetScore(Score.Earned);
         }
 
         void DisplayPoints(int points, Vector3 pos, Color color)
