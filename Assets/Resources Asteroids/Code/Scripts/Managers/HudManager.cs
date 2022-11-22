@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,25 +26,28 @@ namespace Game.Astroids
         [SerializeField] GameObject hudWeapon;
         [SerializeField] GameObject hudHyperJump;
 
+        //TODO: Scriptable object?
         [Header("Hud elements")]
         [SerializeField] Image shieldRing;
         [SerializeField] Image weaponRing;
         [SerializeField] TMPro.TextMeshProUGUI weaponText;
         [SerializeField] Image fuelImage;
+        [SerializeField] Image jumpImage;
 
         [Header("Day Colors")]
         [SerializeField] Color dayDefaultColor;
         [SerializeField] Color dayBrightColor;
         [SerializeField] Color dayHighlightColor;
+        [SerializeField] Color dayJumpCrosshairColor;
 
         [Header("Night Colors")]
         [SerializeField] Color nightDefaultColor;
         [SerializeField] Color nightBrightColor;
         [SerializeField] Color nightHighlightColor;
+        [SerializeField] Color nightJumpCrosshairColor;
 
         [Header("Sounds")]
         [SerializeField] HudSounds hudSounds = new();
-
         #endregion
 
         #region properties
@@ -54,6 +58,11 @@ namespace Game.Astroids
             {
                 __isDay = value;
                 SetHudColors(TRANSITION_FAST);
+                if (value != _lightsOn)
+                {
+                    _lightsOn = value;
+                    PlayClip(value ? HudSounds.Clip.lightsOn : HudSounds.Clip.lightsOff);
+                }
             }
         }
         bool __isDay = true;
@@ -79,12 +88,13 @@ namespace Game.Astroids
         }
         bool __hudActive;
 
-        Color ColorDefault => IsDay ? dayDefaultColor : nightDefaultColor;
+        public Color ColorDefault => IsDay ? dayDefaultColor : nightDefaultColor;
         Color ColorBright => IsDay ? dayBrightColor : nightBrightColor;
-        Color ColorHighlight => IsDay ? dayHighlightColor : nightHighlightColor;
-        Color ColorDisabled => IsDay
-            ? new Color(dayDefaultColor.r, dayDefaultColor.g, dayDefaultColor.b, .1f)
-            : new Color(nightDefaultColor.r, nightDefaultColor.g, nightDefaultColor.b, .1f);
+        Color ColorDisabled => new(ColorDefault.r, ColorDefault.g, ColorDefault.b, .1f);
+        public Color ColorHighlight => IsDay ? dayHighlightColor : nightHighlightColor;
+
+        public Color ColorJumpCrosshair => IsDay ? dayJumpCrosshairColor : nightJumpCrosshairColor;
+        //public Color ColorJumpCountdown => new(ColorJumpCrosshair.r, ColorJumpCrosshair.g, dayDefaultColor.b, .5f);
 
         #endregion
 
@@ -93,22 +103,37 @@ namespace Game.Astroids
         float _totShieldTime, _totWeaponTime;
         int _pwrHyperspaceCount;
 
-        bool _blinkOn, _alarmOn;
-        float _blinkTime = 0;
+        bool _lightsOn;
         readonly float _blinkInterval = .8f;
+        bool _blinkFuelOn, _blinkJumpOn, _alarmFuelOn;
+        float _blinkFuelTime, _blinkJumpTime;
+
+        HudAction _currentAction;
 
         PlayerShipController _shipCtrl;
         #endregion
+
+        public enum HudAction
+        {
+            none,
+            hyperjumpStart,
+            hyperjumpSelect
+        }
 
         void OnEnable() => HudActive = false;
 
         void OnDisable() => DisconnectShip();
 
-        void Update() => CheckFuel();
+        void Update()
+        {
+            CheckFuel();
+            CheckJump();
+        }
 
         public void ConnectToShip(PlayerShipController ship)
         {
             _shipCtrl = ship;
+            _lightsOn = false;
 
             shieldRing.fillAmount = 0;
             weaponRing.fillAmount = 0;
@@ -116,6 +141,7 @@ namespace Game.Astroids
             _shipCtrl.m_ThrustController.ThrustChangedEvent += ThrustChanged;
             _shipCtrl.SpeedChangedEvent += SpeedChanged;
             _shipCtrl.FuelChangedEvent += FuelChanged;
+            _shipCtrl.HudActionEvent += SetHudAction;
             _shipCtrl.PowerUpActivatedEvent += PowerupActivated;
         }
 
@@ -149,7 +175,7 @@ namespace Game.Astroids
 
             SetHyperspaceColor();
             if (_pwrHyperspaceCount == 1)
-                hudSounds.PlayClip(HudSounds.Clip.jumpActivated);
+                PlayClip(HudSounds.Clip.jumpActivate);
         }
 
         public void RemoveHyperJump()
@@ -175,14 +201,11 @@ namespace Game.Astroids
 
             SetShieldColor();
             StartCoroutine(ShieldCountDown());
-            print("sfx: shieldActivated");
-            hudSounds.PlayClip(HudSounds.Clip.shieldActivated);
+            PlayClip(HudSounds.Clip.shieldActivated);
         }
 
         public void ActivateWeapon(float t, PowerupManager.PowerupWeapon weapon)
         {
-            print("Weapon time:" + _pwrWeaponTime);
-            print("Weapon:" + weapon);
             if (_pwrWeaponTime > 0)
             {
                 _pwrWeaponTime += t;
@@ -202,12 +225,10 @@ namespace Game.Astroids
             switch (weapon)
             {
                 case PowerupManager.PowerupWeapon.firerate:
-                    print("sfx: firerateIncreased");
                     clip = HudSounds.Clip.firerateIncreased;
                     text = POWERUP_FIRERATE;
                     break;
                 case PowerupManager.PowerupWeapon.shotSpread:
-                    print("sfx: shotSpread");
                     clip = HudSounds.Clip.shotSpreadActivated;
                     text = POWERUP_SHOTSPREAD;
                     break;
@@ -221,7 +242,12 @@ namespace Game.Astroids
             StartCoroutine(WeaponCountDown());
 
             if (clip.HasValue)
-                hudSounds.PlayClip(clip.Value);
+                PlayClip(clip.Value);
+        }
+
+        public void PlayClip(HudSounds.Clip clip)
+        {
+            hudSounds.PlayClip(clip);
         }
 
         void ThrustChanged(float perc) => hudController.SetThrustPercentage(perc * 100f);
@@ -239,8 +265,29 @@ namespace Game.Astroids
             else if (powerup == PowerupManager.Powerup.jump)
                 if (time > 0)
                     AddHyperJump();
-                else 
+                else
                     RemoveHyperJump();
+        }
+
+        void SetHudAction(HudAction action)
+        {
+            _currentAction = action;
+
+            if (action == HudAction.none)
+            {
+                SetHudColors(TRANSITION_DEFAULT);
+                PlayClip(HudSounds.Clip.deactivate);
+            }
+            else if (action == HudAction.hyperjumpStart)
+            {
+                hudController.ActivateHyperJump(true);
+                PlayClip(HudSounds.Clip.hyperJumpActivated);
+            }
+            else if (action == HudAction.hyperjumpSelect)
+            {
+                hudController.ActivateHyperJump(false);
+                SetHudDisabled(TRANSITION_DEFAULT);
+            }
         }
 
         IEnumerator ShieldCountDown()
@@ -255,7 +302,7 @@ namespace Game.Astroids
             _pwrShieldTime = 0;
 
             SetShieldColor();
-            hudSounds.PlayClip(HudSounds.Clip.deactivate);
+            PlayClip(HudSounds.Clip.deactivate);
         }
 
         IEnumerator WeaponCountDown()
@@ -270,7 +317,7 @@ namespace Game.Astroids
             _pwrWeaponTime = 0;
 
             SetWeaponColor();
-            hudSounds.PlayClip(HudSounds.Clip.deactivate);
+            PlayClip(HudSounds.Clip.deactivate);
         }
 
         #region colors
@@ -317,15 +364,9 @@ namespace Game.Astroids
             SetTextColor(powerup, isActive ? ColorBright : ColorDisabled);
         }
 
-        void SetShieldColor()
-        {
-            SetPowerupColor(hudShield, _pwrShieldTime > 0);
-        }
+        void SetShieldColor() => SetPowerupColor(hudShield, _pwrShieldTime > 0);
 
-        void SetWeaponColor()
-        {
-            SetPowerupColor(hudWeapon, _pwrWeaponTime > 0);
-        }
+        void SetWeaponColor() => SetPowerupColor(hudWeapon, _pwrWeaponTime > 0);
 
         void SetHyperspaceColor()
         {
@@ -385,53 +426,71 @@ namespace Game.Astroids
         }
 
         #endregion
+
+        #region hyperspace
+        void CheckJump()
+        {
+            if (_currentAction == HudAction.hyperjumpStart)
+            {
+                if (_blinkJumpTime == 0)
+                {
+                    _blinkJumpOn = !_blinkJumpOn;
+                    BlinkImage(jumpImage, _blinkJumpOn);
+                    _blinkJumpTime += Time.deltaTime;
+                }
+                else if (_blinkJumpTime > _blinkInterval)
+                    _blinkJumpTime = 0;
+                else
+                    _blinkJumpTime += Time.deltaTime;
+            }
+            else if (_blinkJumpTime > 0)
+            {
+                _blinkJumpTime = 0;
+                _blinkJumpOn = false;
+                SetHyperspaceColor();
+            }
+        }
+        #endregion
+
         #region fuel
         void CheckFuel()
         {
             if (hudController.IsFuelLow)
             {
-                if (!_alarmOn)
+                if (!_alarmFuelOn)
                     StartCoroutine(AlarmLoop());
 
-                if (_blinkTime > _blinkInterval)
+                if (_blinkFuelTime > _blinkInterval)
                 {
-                    BlinkFuelImage(_blinkOn);
-                    _blinkTime = 0;
-                    _blinkOn = !_blinkOn;
+                    BlinkImage(fuelImage, _blinkFuelOn);
+                    _blinkFuelTime = 0;
+                    _blinkFuelOn = !_blinkFuelOn;
                 }
-                _blinkTime += Time.deltaTime;
+                _blinkFuelTime += Time.deltaTime;
             }
-            else if (_blinkTime > 0)
+            else if (_blinkFuelTime > 0)
             {
-                if (_blinkOn && !hudController.IsFuelEmpty || !_blinkOn && hudController.IsFuelEmpty)
-                    BlinkFuelImage(!hudController.IsFuelEmpty);
+                if (_blinkFuelOn && !hudController.IsFuelEmpty || !_blinkFuelOn && hudController.IsFuelEmpty)
+                    BlinkImage(fuelImage, !hudController.IsFuelEmpty);
 
-                _blinkTime = 0;
-                _blinkOn = hudController.IsFuelEmpty;
+                _blinkFuelTime = 0;
+                _blinkFuelOn = hudController.IsFuelEmpty;
             }
-            else if (_blinkOn && !hudController.IsFuelEmpty)
+            else if (_blinkFuelOn && !hudController.IsFuelEmpty)
             {
-                BlinkFuelImage(true);
-                _blinkOn = false;
+                BlinkImage(fuelImage, true);
+                _blinkFuelOn = false;
             }
-            else if (!_blinkOn && hudController.IsFuelEmpty)
+            else if (!_blinkFuelOn && hudController.IsFuelEmpty)
             {
-                BlinkFuelImage(false);
-                _blinkOn = true;
+                BlinkImage(fuelImage, false);
+                _blinkFuelOn = true;
             }
-        }
-
-        void BlinkFuelImage(bool on)
-        {
-            if (on)
-                TweenColor(gameObject, ColorHighlight, ColorDefault, _blinkInterval / 2, fuelImage);
-            else
-                TweenColor(gameObject, ColorDefault, ColorHighlight, _blinkInterval / 2, fuelImage);
         }
 
         IEnumerator AlarmLoop()
         {
-            _alarmOn = true;
+            _alarmFuelOn = true;
 
             while (hudController.IsFuelLow)
             {
@@ -439,12 +498,28 @@ namespace Game.Astroids
                 yield return new WaitForSeconds(_blinkInterval * 3);
             }
             if (hudController.IsFuelEmpty)
-                hudSounds.PlayClip(HudSounds.Clip.fuelEmpty);
+                PlayClip(HudSounds.Clip.fuelEmpty);
 
-            _alarmOn = false;
+            _alarmFuelOn = false;
+        }
+        #endregion
+
+        void BlinkImage(Image image, bool on)
+        {
+            if (on)
+                TweenColor(gameObject, ColorHighlight, ColorDefault, _blinkInterval / 2, image);
+            else
+                TweenColor(gameObject, ColorDefault, ColorHighlight, _blinkInterval / 2, image);
         }
 
-        #endregion
+        public void BlinkText(TMPro.TextMeshProUGUI text, float interval, bool on)
+        {
+            if (on)
+                TweenColor(gameObject, ColorHighlight, ColorDefault, interval / 2, text);
+            else
+                TweenColor(gameObject, ColorDefault, ColorHighlight, interval / 2, text);
+        }
+
 
         //TODO: replace tween util with these
         void TweenColor(GameObject gameObject, Color begin, Color end, float time, Image item)

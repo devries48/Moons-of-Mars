@@ -12,19 +12,27 @@ namespace Game.Astroids
         [SerializeField] AudioClip shieldActivated;
         [SerializeField] AudioClip firerateIncreased;
         [SerializeField] AudioClip shotSpreadActivated;
-        [SerializeField] AudioClip jumpActivated;
+        [SerializeField] AudioClip hyperJumpActivated;
+        [SerializeField] AudioClip hyperJumpComplete;
+        [SerializeField] AudioClip jumpActivate;
         [SerializeField] AudioClip fuelLow;
         [SerializeField] AudioClip fuelEmpty;
         [SerializeField] AudioClip deactivate;
+        [SerializeField] AudioClip lighsOn;
+        [SerializeField] AudioClip lighsOff;
 
         public enum Clip
         {
             shieldActivated,
             firerateIncreased,
             shotSpreadActivated,
-            jumpActivated,
+            hyperJumpActivated,
+            hyperJumpComplete,
+            jumpActivate,
             fuelLow,
             fuelEmpty,
+            lightsOn,
+            lightsOff,
             deactivate
         }
 
@@ -35,10 +43,13 @@ namespace Game.Astroids
                 Clip.shieldActivated => shieldActivated,
                 Clip.firerateIncreased => firerateIncreased,
                 Clip.shotSpreadActivated => shotSpreadActivated,
-                Clip.jumpActivated => jumpActivated,
+                Clip.hyperJumpActivated => hyperJumpActivated,
+                Clip.hyperJumpComplete => hyperJumpComplete,
+                Clip.jumpActivate => jumpActivate,
                 Clip.fuelLow => fuelLow,
                 Clip.fuelEmpty => fuelEmpty,
-                Clip.deactivate => deactivate,
+                Clip.lightsOn => lighsOn,
+                Clip.lightsOff => lighsOff,
                 _ => null
             };
 

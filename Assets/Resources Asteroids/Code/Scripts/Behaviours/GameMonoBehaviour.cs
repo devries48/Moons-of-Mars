@@ -36,6 +36,31 @@ namespace Game.Astroids
 
         #endregion
 
+        internal bool m_ScreenWrap;
+
+        protected virtual void FixedUpdate()
+        {
+            if (!m_ScreenWrap)
+                return;
+
+            var pos = transform.position;
+            var offset = transform.localScale / 2;
+            var bounds = GameManager.m_camBounds;
+
+            if (pos.x > bounds.RightEdge + offset.x)
+                transform.position = new Vector2(bounds.LeftEdge - offset.x, pos.y);
+
+            if (pos.x < bounds.LeftEdge - offset.x)
+                transform.position = new Vector2(bounds.RightEdge + offset.x, pos.y);
+
+            if (pos.y > bounds.TopEdge + offset.y)
+                transform.position = new Vector2(pos.x, bounds.BottomEdge - offset.y);
+
+            if (pos.y < bounds.BottomEdge - offset.y)
+                transform.position = new Vector2(pos.x, bounds.TopEdge + offset.y);
+
+        }
+
         protected void Score(int score, GameObject target) => Astroids.Score.Earn(score, target);
 
         protected void PlaySound(AudioClip clip, AudioSource audioSource = null)

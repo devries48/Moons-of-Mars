@@ -83,9 +83,10 @@ namespace Game.Astroids
             _rotationZ = Random.Range(-_maxRotation, _maxRotation);
 
             Renderer.enabled = true;
+            m_ScreenWrap= true;
         }
 
-        void Update()
+        protected override void FixedUpdate()
         {
             transform.Rotate(new Vector3(_rotationX, _rotationY, _rotationZ) * Time.deltaTime);
 
@@ -93,7 +94,7 @@ namespace Game.Astroids
                 Mathf.Clamp(Rb.velocity.x, -maxSpeed, maxSpeed),
                 Mathf.Clamp(Rb.velocity.y, -maxSpeed, maxSpeed));
 
-            GameManager.ScreenWrapObject(gameObject);
+            base.FixedUpdate();
         }
 
         void OnCollisionEnter(Collision other)

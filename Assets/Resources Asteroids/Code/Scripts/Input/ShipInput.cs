@@ -11,7 +11,7 @@ namespace Game.Astroids
 
         public static bool IsHyperspacing()
         {
-            return Input.GetButtonDown("Fire2");
+            return Input.GetButtonDown("Jump");
         }
 
         public static float GetTurnAxis()

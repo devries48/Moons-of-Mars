@@ -11,7 +11,8 @@ public class EffectsManager : MonoBehaviour
         dustExplosion,
         greenExplosion,
         redExplosion,
-        spawn
+        spawn,
+        portal
     }
 
     [SerializeField] GameObject smallExplosionPrefab;
@@ -20,6 +21,7 @@ public class EffectsManager : MonoBehaviour
     [SerializeField] GameObject greenExplosionPrefab;
     [SerializeField] GameObject redExplosionPrefab;
     [SerializeField] GameObject spawnPrefab;
+    [SerializeField] GameObject portalPrefab;
 
     GameObjectPool _smallExplosionPool;
     GameObjectPool _bigExplosionPool;
@@ -27,8 +29,9 @@ public class EffectsManager : MonoBehaviour
     GameObjectPool _greenExplosionPool;
     GameObjectPool _redExplosionPool;
     GameObjectPool _spawnPool;
+    GameObjectPool _portalPool;
 
-    readonly List<System.Tuple<GameObject, Effect>> _effectsPlaying = new();
+    readonly List<EffectController> _effectsPlaying = new();
 
     void Awake() => BuildPools();
 
@@ -38,30 +41,27 @@ public class EffectsManager : MonoBehaviour
 
         while (i < _effectsPlaying.Count)
         {
-            _effectsPlaying[i].Item1.TryGetComponent(out ParticleSystem ps);
+            var ctrl = _effectsPlaying[i];
 
-            if (ps)
+            if (ctrl.IsAlive())
             {
-                if (ps.IsAlive())
-                {
-                    i++;
-                    continue;
-                }
-
-                var pool = _effectsPlaying[i].Item2 switch
-                {
-                    Effect.smallExplosion => _smallExplosionPool,
-                    Effect.bigExplosion => _bigExplosionPool,
-                    Effect.dustExplosion => _dustExplosionPool,
-                    Effect.greenExplosion => _greenExplosionPool,
-                    Effect.redExplosion => _redExplosionPool,
-                    Effect.spawn => _spawnPool,
-                    _ => null
-                };
-
-                pool?.ReturnToPool(_effectsPlaying[i].Item1);
+                i++;
+                continue;
             }
 
+            var pool = ctrl.m_effect switch
+            {
+                Effect.smallExplosion => _smallExplosionPool,
+                Effect.bigExplosion => _bigExplosionPool,
+                Effect.dustExplosion => _dustExplosionPool,
+                Effect.greenExplosion => _greenExplosionPool,
+                Effect.redExplosion => _redExplosionPool,
+                Effect.spawn => _spawnPool,
+                Effect.portal => _portalPool,
+                _ => null
+            };
+
+            pool?.ReturnToPool(ctrl.gameObject);
             _effectsPlaying.RemoveAt(i);
         }
     }
@@ -74,6 +74,7 @@ public class EffectsManager : MonoBehaviour
         _greenExplosionPool = GameObjectPool.Build(greenExplosionPrefab, 1);
         _redExplosionPool = GameObjectPool.Build(redExplosionPrefab, 1);
         _spawnPool = GameObjectPool.Build(spawnPrefab, 1);
+        _portalPool = GameObjectPool.Build(portalPrefab, 1);
     }
 
     public void StartEffect(Effect effect, Vector3 position, float scale)
@@ -86,21 +87,25 @@ public class EffectsManager : MonoBehaviour
             Effect.greenExplosion => _greenExplosionPool.GetFromPool(),
             Effect.redExplosion => _redExplosionPool.GetFromPool(),
             Effect.spawn => _spawnPool.GetFromPool(),
+            Effect.portal => _portalPool.GetFromPool(),
             _ => null
         };
 
         if (effectObj == null)
             return;
 
+        var ctrl = effectObj.GetComponent<EffectController>();
         var trans = effectObj.transform;
         var eulerZ = new Vector3(0f, 0f, Random.Range(0, 360));
 
+        ctrl.m_effect = effect;
         trans.localScale = new Vector3(scale, scale, scale);
         trans.localPosition = position;
+
         if (effect != Effect.spawn)
             trans.Rotate(eulerZ);
 
-        _effectsPlaying.Add(System.Tuple.Create(effectObj, effect));
+        _effectsPlaying.Add(ctrl);
     }
 
 }

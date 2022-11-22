@@ -247,7 +247,7 @@ namespace Game.Astroids
 
         protected virtual void HideModel() => ShowModel(false);
 
-        void ShowModel(bool show = true)
+        protected void ShowModel(bool show = true)
         {
             if (m_Model != null)
             {

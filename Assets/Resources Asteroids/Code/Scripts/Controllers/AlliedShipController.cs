@@ -5,6 +5,8 @@ namespace Game.Astroids
     public class AlliedShipController : GameMonoBehaviour
     {
         #region editor fields
+        [SerializeField] bool isPlayer;
+        [SerializeField] float duration = 5f;
         [SerializeField] ThrustController thrustController;
         [SerializeField] AudioSource spawnAudio;
         [SerializeField] AudioClip[] spawnClips;
@@ -22,40 +24,66 @@ namespace Game.Astroids
             _isPackageEjected = false;
 
             _oldPos = new();
-            MoveShip();
+            if (!isPlayer) MoveShipIn(duration);
         }
 
-        void Update()
+        protected override void FixedUpdate()
         {
+
             Vector3 direction = (transform.position - _oldPos).normalized;
 
             if (direction != Vector3.zero || _oldPos == Vector3.zero)
+            {
+                print(direction);
                 transform.rotation = Quaternion.LookRotation(direction);
+            }
+
+            if (isPlayer) return;
 
             if (!_isPackageEjected && transform.position.z > -.5f && transform.position.z < .5f)
                 EjectPackage();
 
             if (!_isShipRemoved && Vector3.Distance(transform.position, _targetPos) < .1f)
-                RemoveShip();
+                RemoveShip(duration);
         }
 
         void LateUpdate() => _oldPos = transform.position;
 
-        void MoveShip()
-        {
-            var duration = 5f;
+        public void PlayerShipJumpOut(float duration) => MoveShipIn(duration);
 
+        public void PlayerShipJumpIn(float duration)
+        {
+            _oldPos = Vector3.zero;
+            var pos = GameManager.GetWorldJumpPosition();
+            pos.z = -1;
+            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+
+            LeanTween.move(gameObject, pos, duration)
+                .setEaseInQuad()
+                .setOnComplete(() => RemoveShip());
+
+            AnimateThrust(duration, LeanTweenType.easeInQuint);
+        }
+
+        void MoveShipIn(float duration)
+        {
             LeanTween.move(gameObject, CreatePath(), duration)
                 .setEaseOutQuad()
                 .setOrientToPath(true);
 
+            AnimateThrust(duration);
+        }
+
+        void AnimateThrust(float duration, LeanTweenType type = default)
+        {
+            if (type == default)
+                type = isPlayer ? LeanTweenType.easeInOutQuint : LeanTweenType.easeInQuint;
+
             if (thrustController != null)
             {
-                LeanTween.value(gameObject, 1f, 0f, duration).setOnUpdate((float val) =>
-                    {
-                        thrustController.SetThrust(val);
-                    })
-                    .setEaseInQuint();
+                LeanTween.value(gameObject, 1f, 0f, duration)
+                    .setOnUpdate((float val) => thrustController.SetThrust(val))
+                    .setEase(type);
             }
             PlaySpawnClip(duration);
         }
@@ -71,11 +99,10 @@ namespace Game.Astroids
             StartCoroutine(AudioUtil.FadeOut(spawnAudio, duration - .5f));
         }
 
-
-        void RemoveShip()
+        void RemoveShip(float duration = 0)
         {
             _isShipRemoved = true;
-            RemoveFromGame(5f);
+            RemoveFromGame(duration);
         }
 
         void EjectPackage()

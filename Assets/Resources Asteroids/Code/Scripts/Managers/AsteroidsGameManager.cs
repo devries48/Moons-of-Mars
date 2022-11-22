@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -30,7 +31,7 @@ namespace Game.Astroids
         #endregion
 
         #region editor fields
-        [SerializeField] HudManager m_HudManager;
+        public HudManager m_HudManager;
 
         [Header("Scriptables")]
         public UfoManager m_UfoManager;
@@ -49,8 +50,12 @@ namespace Game.Astroids
         public TextMeshProUGUI m_ScoreTextUI;
         public TextMeshProUGUI m_AnnouncerTextUI;
 
-        [Header("Other")]
+        [Header("Camera's")]
+        [SerializeField] Camera mainCamera;
         [SerializeField] Camera gameCamera;
+
+        [Header("Other")]
+        [SerializeField] JumpController jumpController;
         [SerializeField] AudioMixer audioMixer;
         public AudioSource m_AudioSource;
         #endregion
@@ -62,7 +67,7 @@ namespace Game.Astroids
             set
             {
                 __isDay = value;
-                m_HudManager.IsDay=value;
+                m_HudManager.IsDay = value;
             }
         }
         bool __isDay = true;
@@ -133,12 +138,12 @@ namespace Game.Astroids
             {
                 if (_requestTitleScreen)
                 {
-                    Score.Reset();  
+                    Score.Reset();
 
                     _requestTitleScreen = false;
                     m_gamePaused = true;
                     string result = null;
-                    
+
                     yield return Run<string>(m_UiManager.ShowMainMenu(), (output) => result = output);
                 }
 
@@ -153,7 +158,7 @@ namespace Game.Astroids
             }
         }
 
-        void GameStart()
+        public void GameStart()
         {
             m_playerShip = CreatePlayer(playerShipPrefab);
             _requestTitleScreen = true;
@@ -233,7 +238,7 @@ namespace Game.Astroids
             yield return Wait(1);
         }
 
-        IEnumerator RemoveRemainingObjects()
+        public IEnumerator RemoveRemainingObjects()
         {
             foreach (var obj in FindObjectsOfType<GameMonoBehaviour>())
             {
@@ -249,7 +254,7 @@ namespace Game.Astroids
         #region spawn player, astroids
         PlayerShipController CreatePlayer(GameObject spaceShip)
         {
-            GameObject ship = Instantiate(spaceShip);
+            var ship = Instantiate(spaceShip);
             ship.TryGetComponent(out PlayerShipController shipCtrl);
             if (ship)
                 m_HudManager.ConnectToShip(shipCtrl);
@@ -282,7 +287,6 @@ namespace Game.Astroids
                 m_level.AstroidAdd();
             }
         }
-
         #endregion
 
         public void MenuSelect(int i)
@@ -308,26 +312,42 @@ namespace Game.Astroids
             }
         }
 
-        // TODO: Move to gamebaseclass? 
-        public void ScreenWrapObject(GameObject obj)
+        public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
+
+        /// <summary>
+        /// Activate jump-crosshair
+        /// </summary>
+        public void JumpSelect(Vector3 pos, float timer)
         {
-            var pos = obj.transform.position;
-            var offset = obj.transform.localScale / 2;
-
-            if (pos.x > m_camBounds.RightEdge + offset.x)
-                obj.transform.position = new Vector2(m_camBounds.LeftEdge - offset.x, pos.y);
-
-            if (pos.x < m_camBounds.LeftEdge - offset.x)
-                obj.transform.position = new Vector2(m_camBounds.RightEdge + offset.x, pos.y);
-
-            if (pos.y > m_camBounds.TopEdge + offset.y)
-                obj.transform.position = new Vector2(pos.x, m_camBounds.BottomEdge - offset.y);
-
-            if (pos.y < m_camBounds.BottomEdge - offset.y)
-                obj.transform.position = new Vector2(pos.x, m_camBounds.TopEdge + offset.y);
+            jumpController.gameObject.SetActive(true);
+            jumpController.StartCountdown(pos, timer);
         }
 
-        public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
+        /// <summary>
+        /// Deactivate jump-crosshair
+        /// </summary>
+        public void JumpDeactivate() => jumpController.gameObject.SetActive(false);
+
+        /// <summary>
+        /// Return selected jump-position
+        /// </summary>
+        public Vector3 JumpPosition() => jumpController.m_JumpPosition;
+
+        public bool JumpLaunched() => jumpController.m_Launched;
+
+        public Vector3 GetWorldJumpPosition()
+        {
+            var pos = JumpPosition();
+            pos.z = 0;
+
+            var gameToWorld = gameCamera.ViewportToScreenPoint(pos);
+            gameToWorld.z = 0;
+            gameToWorld.x *= 1.85f;
+            gameToWorld.y *= 2;
+
+            return mainCamera.ScreenToViewportPoint(gameToWorld);
+        }
+
 
         /// <summary>
         /// Destroy player with explosion
@@ -349,20 +369,11 @@ namespace Game.Astroids
             }
         }
 
-        public void AsterodDestroyed()
-        {
-            m_level.AstroidRemove();
-        }
+        public void AsterodDestroyed() => m_level.AstroidRemove();
 
-        public void UfoDestroyed()
-        {
-            m_level.UfoRemove();
-        }
+        public void UfoDestroyed() => m_level.UfoRemove();
 
-        public static WaitForSeconds Wait(float duration)
-        {
-            return new WaitForSeconds(duration);
-        }
+        public static WaitForSeconds Wait(float duration) => new(duration);
 
         static IEnumerator Run<T>(IEnumerator target, System.Action<T> output)
         {
@@ -377,7 +388,7 @@ namespace Game.Astroids
 
         #region struct CamBounds
 
-        public struct CamBounds
+        public readonly struct CamBounds
         {
             public CamBounds(Camera cam)
             {

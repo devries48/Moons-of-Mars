@@ -13,6 +13,7 @@ namespace Game.Astroids
         [SerializeField] bool godModeOn;
         [SerializeField] bool spawnAstroids = true;
         [SerializeField] bool spawnUfos = true;
+        [SerializeField] bool spawnPowerups = true;
 
         [Header("UI Elements")]
         [SerializeField] GameObject debugPanel;
@@ -42,6 +43,7 @@ namespace Game.Astroids
         Toggle _toggleGodMode;
         Toggle _toggleSpawnAstroids;
         Toggle _toggleSpawnUfos;
+        Toggle _toggleSpawnPowerup;
 
         void Awake()
         {
@@ -55,10 +57,12 @@ namespace Game.Astroids
 
             _toggleSpawnAstroids = astroidToggle.GetComponent<Toggle>();
             _toggleSpawnUfos = ufoToggle.GetComponent<Toggle>();
+            _toggleSpawnPowerup = powerupToggle.GetComponent<Toggle>();
             _toggleGodMode = godModeToggle.GetComponent<Toggle>();
 
             _toggleSpawnAstroids.isOn = spawnAstroids;
             _toggleSpawnUfos.isOn = spawnUfos;
+            _toggleSpawnPowerup.isOn = spawnPowerups;
             _toggleGodMode.isOn = godModeOn;
 
             GameManager.m_debug_godMode = _toggleGodMode.isOn;
@@ -86,6 +90,12 @@ namespace Game.Astroids
         public void SpawnUfoClick()
         {
             GameManager.m_UfoManager.UfoLaunch();
+        }
+
+        public void ResetClick()
+        {
+            StartCoroutine(GameManager.RemoveRemainingObjects());
+            GameManager.GameStart();
         }
 
         public void ToggleUfoChanged()

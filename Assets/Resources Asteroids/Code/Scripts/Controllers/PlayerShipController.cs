@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using UnityEngine;
+using static Game.Astroids.HudManager;
 
 namespace Game.Astroids
 {
@@ -8,14 +10,30 @@ namespace Game.Astroids
         #region editor fields
         [Header("Player")]
         public ThrustController m_ThrustController;
+
         [SerializeField] float thrust = 500f;
         [SerializeField] float rotationSpeed = 180f;
         [SerializeField] float maxSpeed = 4.5f;
         [SerializeField] float fuelPerSecond = 1f;
         #endregion
 
+        #region properties
+        protected Collider Cl
+        {
+            get
+            {
+                if (__cl == null)
+                    __cl = GetComponentInChildren<Collider>();
+
+                return __cl;
+            }
+        }
+        Collider __cl;
+        #endregion
+
         #region fields
         bool _canMove = true;
+        bool _isJumping = false;
         float _thrustInput;
         float _turnInput;
         float _speedInPercentage;
@@ -27,12 +45,19 @@ namespace Game.Astroids
         Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
         #endregion
 
+        const float JUMP_MOVE_OUT_ANIMATION_TIME = 3;
+        const float JUMP_SELECT_TIME = 5;
+        const float JUMP_MOVE_IN_ANIMATION_TIME = 1.5f;
+
         public event Action<float> SpeedChangedEvent = delegate { };
         public event Action<float> FuelChangedEvent = delegate { };
+        public event Action<HudAction> HudActionEvent = delegate { };
 
         #region unity events
         protected override void OnEnable()
         {
+            m_ScreenWrap = true;
+
             _thrustInput = 0f;
             _turnInput = 0f;
             _fuelUsed = 0f;
@@ -45,8 +70,6 @@ namespace Game.Astroids
 
         void Update()
         {
-            GameManager.ScreenWrapObject(gameObject);
-
             _turnInput = ShipInput.GetTurnAxis();
             _thrustInput = ShipInput.GetForwardThrust();
 
@@ -65,18 +88,28 @@ namespace Game.Astroids
 
             if (ShipInput.IsShooting())
                 FireWeapon();
+
+            if (ShipInput.IsHyperspacing())
+                Jump();
         }
 
-        void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            // Hyperjump, set speed to max
+            if (_isJumping)
+            {
+                SpeedChangedEvent(100f);
+                return;
+            }
+
             if (!_canMove)
                 return;
 
             Move();
             Turn();
             ClampSpeed();
+            base.FixedUpdate();
         }
-
         #endregion
 
         public void Spawn()
@@ -85,9 +118,70 @@ namespace Game.Astroids
             Recover();
         }
 
-        public void Refuel()
+        public void Refuel() => _fuelUsed = 0f;
+
+        public void Jump()
         {
-            _fuelUsed = 0f;
+            _isJumping = true;
+            m_ScreenWrap = false;
+            Cl.enabled = false;
+
+            DisableControls();
+            RaiseHudActionEvent(HudAction.hyperjumpStart);
+
+            transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+            var target = new Vector3(transform.position.x, GameManager.m_camBounds.TopEdge + 1f, 0);
+            var currentPos = transform.position;
+
+            LeanTween.move(gameObject, target, 1f)
+                .setOnComplete(() =>
+                {
+                    transform.eulerAngles = new Vector3(-90, 182, 0);
+                    HideModel();
+                })
+                .setEaseOutQuad()
+                .setOnComplete(() => StartCoroutine(HyperJump(currentPos)));
+
+            if (m_ThrustController != null)
+                LeanTween.value(gameObject, 1f, 0f, 1f).setOnUpdate((float val)
+                    => m_ThrustController.SetThrust(val)).setEaseInQuint();
+        }
+
+        IEnumerator HyperJump(Vector3 currentPos)
+        {
+            // Rocket moves towards camera out-of-view
+            var ctrl = GameManager.m_PowerupManager.HyperJump(JUMP_MOVE_OUT_ANIMATION_TIME);
+            yield return new WaitForSeconds(JUMP_MOVE_OUT_ANIMATION_TIME);
+
+            // Cursor selects new position of rocket
+            RaiseHudActionEvent(HudAction.hyperjumpSelect);
+            GameManager.JumpSelect(currentPos, JUMP_SELECT_TIME);
+
+            while (!GameManager.JumpLaunched())
+                yield return null;
+
+            var jumpPos = GameManager.JumpPosition();
+            print(jumpPos);
+
+            // Rocket move to new position in a straight line
+            RaiseHudActionEvent(HudAction.none);
+            ctrl.transform.position = new Vector3(jumpPos.x, jumpPos.y, ctrl.transform.position.z);
+            ctrl.PlayerShipJumpIn(JUMP_MOVE_IN_ANIMATION_TIME);
+            yield return new WaitForSeconds(JUMP_MOVE_IN_ANIMATION_TIME * .2f);
+
+            GameManager.PlayEffect(EffectsManager.Effect.portal, jumpPos, .5f);
+            yield return new WaitForSeconds(JUMP_MOVE_IN_ANIMATION_TIME * .8f);
+
+            // Activate rocket at new position
+            GameManager.JumpDeactivate();
+            transform.position = jumpPos;
+
+            _isJumping = false;
+            m_ScreenWrap = true;
+            Cl.enabled = true;
+            EnableControls();
+
+            GameManager.m_HudManager.PlayClip(HudSounds.Clip.hyperJumpComplete);
         }
 
         public void EnableControls()
@@ -173,6 +267,11 @@ namespace Game.Astroids
 
                 FuelChangedEvent((100 - _fuelUsed) * .01f);
             }
+        }
+
+        void RaiseHudActionEvent(HudAction action)
+        {
+            HudActionEvent(action);
         }
 
         void ResetTransform() => transform.SetPositionAndRotation(Vector3.zero, _initialRotation);

@@ -12,6 +12,7 @@ namespace Game.Astroids
 
         [Header("Prefabs")]
         [SerializeField, Tooltip("Shuttle delivering the power-up")] GameObject shuttle;
+        [SerializeField, Tooltip("Rocket hyperjump animation")] GameObject rocketJump;
         [SerializeField] GameObject powerup;
 
         [Header("Materials")]
@@ -48,6 +49,7 @@ namespace Game.Astroids
 
         #region fields
         GameObjectPool _shuttlePool;
+        GameObjectPool _jumpPool;
         GameObjectPool _powerupPool;
         #endregion
 
@@ -81,6 +83,15 @@ namespace Game.Astroids
             }
         }
 
+        public AlliedShipController HyperJump(float duration)
+        {
+            var ship = _jumpPool.GetFromPool();
+            ship.TryGetComponent(out AlliedShipController ctrl);
+            ctrl.PlayerShipJumpOut(duration);
+
+            return ctrl;
+        }
+
         public void ShuttleLaunch() => _shuttlePool.GetFromPool();
         public void SpawnPowerup(Vector3 pos) => _powerupPool.GetFromPool(pos);
         public int GetPickupScore(bool isEnemy) => isEnemy ? enemyPickupScore : pickupScore;
@@ -110,6 +121,7 @@ namespace Game.Astroids
         void BuildPools()
         {
             _shuttlePool = GameObjectPool.Build(shuttle, 1);
+            _jumpPool = GameObjectPool.Build(rocketJump, 1);
             _powerupPool = GameObjectPool.Build(powerup, 1);
         }
 

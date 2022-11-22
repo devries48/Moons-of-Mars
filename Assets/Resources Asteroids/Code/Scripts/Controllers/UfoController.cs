@@ -59,12 +59,13 @@ namespace Game.Astroids
             base.OnDisable();
         }
 
-        void FixedUpdate()
+        protected override void FixedUpdate()
         {
             if (!m_isAlive || _isShipRemoved) return;
 
             SpinUfo();
             MoveUfo();
+            base.FixedUpdate();
         }
 
         protected override void HitByBullet(GameObject obj)

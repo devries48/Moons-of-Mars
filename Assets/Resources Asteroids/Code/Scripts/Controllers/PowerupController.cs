@@ -59,6 +59,7 @@ namespace Game.Astroids
 
         void OnEnable()
         {
+            m_ScreenWrap= true;
             _isAlive = true;
             Renderer.enabled = true;
             Renderer.material.SetFloat("_Dissolve", 0);
@@ -69,11 +70,6 @@ namespace Game.Astroids
             SetRandomPowerUp();
             StartCoroutine(PwrManager.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
             StartCoroutine(KeepAliveLoop());
-        }
-
-        void Update()
-        {
-            GameManager.ScreenWrapObject(gameObject);
         }
 
         void OnCollisionEnter(Collision other)

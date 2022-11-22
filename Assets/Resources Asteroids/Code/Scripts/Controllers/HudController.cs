@@ -29,6 +29,7 @@ namespace Game.Astroids
         float _thurst = 0;
         float _speed = 0;
         float _fuel = 100;
+        bool _hyperJumpActive;
 
         void Awake()
         {
@@ -38,6 +39,12 @@ namespace Game.Astroids
 
         void Update()
         {
+            if (_hyperJumpActive)
+            {
+                _thurst = MAX_VALUE;
+                _speed = MAX_VALUE;
+            }
+
             if (_thurst > MAX_VALUE)
                 _thurst = MAX_VALUE;
 
@@ -55,6 +62,15 @@ namespace Game.Astroids
         public void SetThrustPercentage(float perc) => _thurst = perc;
         public void SetSpeedPercentage(float perc) => _speed = perc;
         public void SetFuelPercentage(float perc) => _fuel = perc;
+        public void ActivateHyperJump(bool active)
+        {
+            _hyperJumpActive = active;
+            if (!active)
+            {
+                _thurst = 0;
+                _speed = 0;
+            }
+        }
 
         void CreateLabels()
         {
