@@ -29,6 +29,7 @@ namespace Game.Astroids
 
         protected override void FixedUpdate()
         {
+            if (isPlayer) return;
 
             Vector3 direction = (transform.position - _oldPos).normalized;
 
@@ -37,8 +38,6 @@ namespace Game.Astroids
                 print(direction);
                 transform.rotation = Quaternion.LookRotation(direction);
             }
-
-            if (isPlayer) return;
 
             if (!_isPackageEjected && transform.position.z > -.5f && transform.position.z < .5f)
                 EjectPackage();
@@ -56,7 +55,10 @@ namespace Game.Astroids
             _oldPos = Vector3.zero;
             var pos = GameManager.GetWorldJumpPosition();
             pos.z = -1;
-            transform.position = new Vector3(pos.x, pos.y, transform.position.z);
+
+            transform.SetPositionAndRotation(
+                new Vector3(pos.x, pos.y, transform.position.z),
+                Quaternion.Euler(0, 0, 0));
 
             LeanTween.move(gameObject, pos, duration)
                 .setEaseInQuad()
@@ -92,8 +94,9 @@ namespace Game.Astroids
         {
             if (spawnAudio == null || spawnClips == null || spawnClips.Length == 0)
                 return;
-
             var clip = spawnClips[Random.Range(0, spawnClips.Length)];
+            print("Allied spawn: " + clip);
+
             spawnAudio.volume = 1f;
             spawnAudio.PlayOneShot(clip);
             StartCoroutine(AudioUtil.FadeOut(spawnAudio, duration - .5f));

@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using static Game.Astroids.PowerupManager;
+using static Game.Astroids.PowerupManagerData;
 
 namespace Game.Astroids
 {
@@ -40,7 +40,7 @@ namespace Game.Astroids
         #endregion
 
         #region properties
-        protected PowerupManager PwrManager
+        protected PowerupManagerData PwrManager
         {
             get
             {
@@ -50,7 +50,7 @@ namespace Game.Astroids
                 return __pwrManager;
             }
         }
-        PowerupManager __pwrManager;
+        PowerupManagerData __pwrManager;
 
         protected Rigidbody Rb
         {
@@ -240,6 +240,11 @@ namespace Game.Astroids
         public void Explode()
         {
             m_isAlive = false;
+            m_pwrShieldTime = 0;
+            m_pwrWeaponTime = 0;
+
+            _weaponPowerup = PowerupWeapon.normal;
+            _hyperJumps = 0;
             StartCoroutine(ExplodeShipCore());
         }
 
@@ -265,8 +270,14 @@ namespace Game.Astroids
 
             if (IsEnemy)
             {
-                GameManager.UfoDestroyed();
-                Explode();
+                TryGetComponent(out UfoController ufo);
+                if (ufo != null)
+                {
+                    GameManager.UfoDestroyed(ufo.m_ufoType);
+                    Explode();
+                }
+                else
+                    Debug.LogWarning("UFO Controller not found!");
             }
             else
                 GameManager.PlayerDestroyed();

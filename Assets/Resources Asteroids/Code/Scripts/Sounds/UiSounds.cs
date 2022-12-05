@@ -34,8 +34,9 @@ namespace Game.Astroids
         }
         AsteroidsGameManager __gameManager;
 
-        public AudioSource UiAudio => GameManager.m_AudioSource;
         #endregion
+
+        public AudioSource m_UiAudio;
 
         public void PlayClip(Clip clip)
         {
@@ -51,6 +52,8 @@ namespace Game.Astroids
             PlayAudioClip(audioClip);
         }
 
+        public bool IsPlaying() => m_UiAudio.isPlaying;
+
         AudioClip RandomClip(AudioClip[] clips)
         {
             if (clips == null || clips.Length == 0)
@@ -61,8 +64,8 @@ namespace Game.Astroids
 
         void PlayAudioClip(AudioClip clip)
         {
-            if (clip && UiAudio)
-                UiAudio.PlayOneShot(clip);
+            if (clip && m_UiAudio)
+                m_UiAudio.PlayOneShot(clip);
         }
 
     }

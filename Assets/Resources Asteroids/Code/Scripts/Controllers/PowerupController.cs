@@ -38,7 +38,7 @@ namespace Game.Astroids
         }
         Renderer __renderer;
 
-        PowerupManager PwrManager
+        PowerupManagerData PwrManager
         {
             get
             {
@@ -48,13 +48,13 @@ namespace Game.Astroids
                 return __pwrManager;
             }
         }
-        PowerupManager __pwrManager;
+        PowerupManagerData __pwrManager;
         #endregion
 
         #region fields
         bool _isAlive;
 
-        internal PowerupManager.Powerup m_powerup;
+        internal PowerupManagerData.Powerup m_powerup;
         #endregion
 
         void OnEnable()
@@ -193,14 +193,14 @@ namespace Game.Astroids
 
             switch (m_powerup)
             {
-                case PowerupManager.Powerup.jump:
+                case PowerupManagerData.Powerup.jump:
                     ship.AddHyperJump();
                     break;
-                case PowerupManager.Powerup.shield:
+                case PowerupManagerData.Powerup.shield:
                     ship.ActivateShield();
                     break;
-                case PowerupManager.Powerup.weapon:
-                    var pwr = RandomEnumUtil<PowerupManager.PowerupWeapon>.Get(1);
+                case PowerupManagerData.Powerup.weapon:
+                    var pwr = RandomEnumUtil<PowerupManagerData.PowerupWeapon>.Get(1);
                     ship.ActivateWeaponPowerup(pwr);
                     break;
                 default:
@@ -220,7 +220,7 @@ namespace Game.Astroids
 
         void SetRandomPowerUp()
         {
-            m_powerup = RandomEnumUtil<PowerupManager.Powerup>.Get();
+            m_powerup = RandomEnumUtil<PowerupManagerData.Powerup>.Get();
             PwrManager.SetPowerupMaterial(this);
         }
 

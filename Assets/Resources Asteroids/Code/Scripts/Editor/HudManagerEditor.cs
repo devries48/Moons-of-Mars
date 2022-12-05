@@ -31,9 +31,9 @@ namespace Game.Astroids
             if (GUILayout.Button("Shield"))
                 (target as HudManager).ActivateShield(10f);
             if (GUILayout.Button("fire-rate"))
-                (target as HudManager).ActivateWeapon(10f, PowerupManager.PowerupWeapon.firerate);
+                (target as HudManager).ActivateWeapon(10f, PowerupManagerData.PowerupWeapon.firerate);
             if (GUILayout.Button("shot-spread"))
-                (target as HudManager).ActivateWeapon(10f, PowerupManager.PowerupWeapon.shotSpread);
+                (target as HudManager).ActivateWeapon(10f, PowerupManagerData.PowerupWeapon.shotSpread);
 
         }
     }

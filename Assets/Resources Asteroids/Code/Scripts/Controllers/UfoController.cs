@@ -1,6 +1,6 @@
 using UnityEngine;
 
-using static Game.Astroids.UfoManager;
+using static Game.Astroids.UfoManagerData;
 
 namespace Game.Astroids
 {
@@ -19,7 +19,7 @@ namespace Game.Astroids
         #endregion
 
         #region properties
-        protected UfoManager UfoManager
+        protected UfoManagerData UfoManager
         {
             get
             {
@@ -29,7 +29,7 @@ namespace Game.Astroids
                 return __ufoManager;
             }
         }
-        UfoManager __ufoManager;
+        UfoManagerData __ufoManager;
         #endregion
 
         #region fields
@@ -48,6 +48,7 @@ namespace Game.Astroids
             StartCoroutine(AudioUtil.FadeIn(engineAudio, .5f));
             SetRandomShipBehaviour();
             ShowLights();
+            GameManager.m_level.UfoAdd(m_ufoType);
 
             base.OnEnable();
         }
@@ -70,6 +71,7 @@ namespace Game.Astroids
 
         protected override void HitByBullet(GameObject obj)
         {
+            print("UFOController: kogel");
             HideLights();
             CancelFire();
             base.HitByBullet(obj);
@@ -143,7 +145,7 @@ namespace Game.Astroids
         void RemoveShip()
         {
             CancelFire();
-            GameManager.UfoDestroyed();
+            GameManager.UfoDestroyed(m_ufoType);
             _isShipRemoved = true;
             StartCoroutine(AudioUtil.FadeOut(engineAudio, 1, () => { RemoveFromGame(); }));
         }

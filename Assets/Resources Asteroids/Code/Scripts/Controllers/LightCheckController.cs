@@ -10,9 +10,9 @@ namespace Game.Astroids
         [SerializeField] RenderTexture lightCheckTexture;
 
         float _nextActionTime = 0.0f;
-        readonly float _period = 1f;
+        readonly float _checkPeriod = 1f;
        
-        //TODO: public event Action<int> EventThrustChanged = delegate { };
+        //TODO: public event like Action<int> EventThrustChanged = delegate { };
         public delegate void LightLevelChanged(int level);
         public event LightLevelChanged OnLevelChanged;
 
@@ -23,7 +23,7 @@ namespace Game.Astroids
             if (Time.time <= _nextActionTime)
                 return;
 
-            _nextActionTime += _period;
+            _nextActionTime += _checkPeriod;
 
             var tmpTexture = RenderTexture.GetTemporary(lightCheckTexture.width, lightCheckTexture.height, 0);
             Graphics.Blit(lightCheckTexture, tmpTexture);

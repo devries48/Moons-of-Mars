@@ -7,6 +7,12 @@ namespace Game.Astroids
 {
     public class PlayerShipController : SpaceShipMonoBehaviour
     {
+        #region constants
+        const float JUMP_MOVE_OUT_ANIMATION_TIME = 3;
+        const float JUMP_SELECT_TIME = 5;
+        const float JUMP_MOVE_IN_ANIMATION_TIME = 1.5f;
+        #endregion
+
         #region editor fields
         [Header("Player")]
         public ThrustController m_ThrustController;
@@ -29,6 +35,8 @@ namespace Game.Astroids
             }
         }
         Collider __cl;
+
+        HudManager HudManager => GameManager.m_HudManager;
         #endregion
 
         #region fields
@@ -44,10 +52,6 @@ namespace Game.Astroids
 
         Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
         #endregion
-
-        const float JUMP_MOVE_OUT_ANIMATION_TIME = 3;
-        const float JUMP_SELECT_TIME = 5;
-        const float JUMP_MOVE_IN_ANIMATION_TIME = 1.5f;
 
         public event Action<float> SpeedChangedEvent = delegate { };
         public event Action<float> FuelChangedEvent = delegate { };
@@ -89,7 +93,7 @@ namespace Game.Astroids
             if (ShipInput.IsShooting())
                 FireWeapon();
 
-            if (ShipInput.IsHyperspacing())
+            if (ShipInput.IsHyperspacing() && HudManager.HyperJumps > 0)
                 Jump();
         }
 
@@ -130,6 +134,7 @@ namespace Game.Astroids
             RaiseHudActionEvent(HudAction.hyperjumpStart);
 
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
+
             var target = new Vector3(transform.position.x, GameManager.m_camBounds.TopEdge + 1f, 0);
             var currentPos = transform.position;
 
@@ -145,6 +150,7 @@ namespace Game.Astroids
             if (m_ThrustController != null)
                 LeanTween.value(gameObject, 1f, 0f, 1f).setOnUpdate((float val)
                     => m_ThrustController.SetThrust(val)).setEaseInQuint();
+
         }
 
         IEnumerator HyperJump(Vector3 currentPos)
@@ -161,7 +167,6 @@ namespace Game.Astroids
                 yield return null;
 
             var jumpPos = GameManager.JumpPosition();
-            print(jumpPos);
 
             // Rocket move to new position in a straight line
             RaiseHudActionEvent(HudAction.none);
@@ -181,7 +186,7 @@ namespace Game.Astroids
             Cl.enabled = true;
             EnableControls();
 
-            GameManager.m_HudManager.PlayClip(HudSounds.Clip.hyperJumpComplete);
+            HudManager.PlayClip(HudSounds.Clip.hyperJumpComplete);
         }
 
         public void EnableControls()
@@ -220,10 +225,7 @@ namespace Game.Astroids
             Rb.AddForce(thrustForce);
         }
 
-        void Turn()
-        {
-            transform.Rotate(0, 0, _turnInput * rotationSpeed * Time.deltaTime);
-        }
+        void Turn() => transform.Rotate(0, 0, _turnInput * rotationSpeed * Time.deltaTime);
 
         void ClampSpeed()
         {
@@ -269,10 +271,7 @@ namespace Game.Astroids
             }
         }
 
-        void RaiseHudActionEvent(HudAction action)
-        {
-            HudActionEvent(action);
-        }
+        void RaiseHudActionEvent(HudAction action) => HudActionEvent(action);
 
         void ResetTransform() => transform.SetPositionAndRotation(Vector3.zero, _initialRotation);
 

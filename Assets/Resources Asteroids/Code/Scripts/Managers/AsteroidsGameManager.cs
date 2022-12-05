@@ -1,8 +1,7 @@
 using System.Collections;
-using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
+using static Game.Astroids.UfoManagerData;
 
 namespace Game.Astroids
 {
@@ -30,13 +29,16 @@ namespace Game.Astroids
         }
         #endregion
 
+        enum Menu { none = 0, start = 1, exit = 2 }
+        public enum AudioType { UI, Hud = 1 }
+
         #region editor fields
         public HudManager m_HudManager;
 
-        [Header("Scriptables")]
-        public UfoManager m_UfoManager;
-        public PowerupManager m_PowerupManager;
-        public UIManager m_UiManager;
+        [Header("Data")]
+        public UfoManagerData m_UfoManager;
+        public PowerupManagerData m_PowerupManager;
+        public UIManagerData m_UiManager;
 
         [Header("Prefabs")]
         [SerializeField, Tooltip("Select a spaceship prefab")]
@@ -55,9 +57,8 @@ namespace Game.Astroids
         [SerializeField] Camera gameCamera;
 
         [Header("Other")]
+        [SerializeField] AudioSource uiAudioSource;
         [SerializeField] JumpController jumpController;
-        [SerializeField] AudioMixer audioMixer;
-        public AudioSource m_AudioSource;
         #endregion
 
         #region properties
@@ -89,7 +90,6 @@ namespace Game.Astroids
         EffectsManager _effects;
         #endregion
 
-        enum Menu { none = 0, start = 1, exit = 2 }
 
         #region unity events
         void Awake()
@@ -107,7 +107,7 @@ namespace Game.Astroids
             _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
 
             m_camBounds = new CamBounds(gameCamera);
-            m_UiManager.ResetUI();
+            m_UiManager.InitUI(uiAudioSource);
         }
 
         void Start()
@@ -117,11 +117,7 @@ namespace Game.Astroids
             if (_astoidPool == null)
                 return;
 
-            m_gamePlaying = true;
-
             StartCoroutine(GameLoop());
-            StartCoroutine(m_UfoManager.UfoSpawnLoop());
-            StartCoroutine(m_PowerupManager.PowerupSpawnLoop());
         }
 
         void OnEnable() => __instance = this;
@@ -130,7 +126,7 @@ namespace Game.Astroids
         #region game loops
         IEnumerator GameLoop()
         {
-            yield return Wait(1);
+            yield return Wait(.5f);
 
             GameStart();
 
@@ -161,8 +157,13 @@ namespace Game.Astroids
         public void GameStart()
         {
             m_playerShip = CreatePlayer(playerShipPrefab);
-            _requestTitleScreen = true;
             m_level.Level1();
+            m_gamePlaying = true;
+
+            _requestTitleScreen = true;
+
+            StartCoroutine(m_UfoManager.UfoSpawnLoop());
+            StartCoroutine(m_PowerupManager.PowerupSpawnLoop());
         }
 
         IEnumerator ResumeGame()
@@ -371,7 +372,7 @@ namespace Game.Astroids
 
         public void AsterodDestroyed() => m_level.AstroidRemove();
 
-        public void UfoDestroyed() => m_level.UfoRemove();
+        public void UfoDestroyed(UfoType type) => m_level.UfoRemove(type);
 
         public static WaitForSeconds Wait(float duration) => new(duration);
 
@@ -417,20 +418,36 @@ namespace Game.Astroids
             int _level;
             int _astroidsForLevel;
             int _asteroidsActive;
-            int _ufosActive;
+            int _ufosGreenActive;
+            int _ufosRedActive;
             int _ufosForLevel;
+            int TotalUfosActive => _ufosGreenActive + _ufosRedActive;
 
             public int Level => _level;
             public int AstroidsForLevel => _astroidsForLevel;
             public int AstroidsActive => _asteroidsActive;
-            public int UfosActive => _ufosActive;
-            public bool HasEnemy => _asteroidsActive > 0 || _ufosActive > 0;
-            public bool CanAddUfo => _ufosActive < _ufosForLevel && _asteroidsActive > 0;
+            public int UfosActive => TotalUfosActive;
+            public bool HasEnemy => _asteroidsActive > 0 || TotalUfosActive > 0;
+            public bool CanAddUfo => UfosActive < _ufosForLevel && _asteroidsActive > 0;
 
             public void AstroidAdd() => _asteroidsActive++;
             public void AstroidRemove() => _asteroidsActive--;
-            public void UfoAdd() => _ufosActive++;
-            public void UfoRemove() => _ufosActive--;
+            public void UfoAdd(UfoType type)
+            {
+                if (type == UfoType.green)
+                    _ufosGreenActive++;
+                else
+                    _ufosRedActive++;
+            }
+
+            public void UfoRemove(UfoType type)
+            {
+                if (type == UfoType.green)
+                    _ufosGreenActive--;
+                else
+                    _ufosRedActive--;
+            }
+
             public void Level1() => SetLevel(1);
             public void LevelAdvance() => _level++;
 
@@ -441,7 +458,8 @@ namespace Game.Astroids
                 _ufosForLevel = level;
 
                 _asteroidsActive = 0;
-                _ufosActive = 0;
+                _ufosGreenActive = 0;
+                _ufosRedActive = 0;
             }
         }
         #endregion

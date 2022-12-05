@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +13,8 @@ namespace Game.Astroids
         const string POWERUP_FIRERATE = "FIRE-RATE";
         const string POWERUP_SHOTSPREAD = "SHOT-SPREAD";
         #endregion
+
+        public enum HudAction { none, hyperjumpStart, hyperjumpSelect }
 
         #region editor
         public HudController hudController;
@@ -46,7 +47,7 @@ namespace Game.Astroids
         [SerializeField] Color nightHighlightColor;
         [SerializeField] Color nightJumpCrosshairColor;
 
-        [Header("Sounds")]
+        [Header("Audio")]
         [SerializeField] HudSounds hudSounds = new();
         #endregion
 
@@ -88,14 +89,12 @@ namespace Game.Astroids
         }
         bool __hudActive;
 
+        public int HyperJumps => _pwrHyperspaceCount;
         public Color ColorDefault => IsDay ? dayDefaultColor : nightDefaultColor;
         Color ColorBright => IsDay ? dayBrightColor : nightBrightColor;
         Color ColorDisabled => new(ColorDefault.r, ColorDefault.g, ColorDefault.b, .1f);
         public Color ColorHighlight => IsDay ? dayHighlightColor : nightHighlightColor;
-
         public Color ColorJumpCrosshair => IsDay ? dayJumpCrosshairColor : nightJumpCrosshairColor;
-        //public Color ColorJumpCountdown => new(ColorJumpCrosshair.r, ColorJumpCrosshair.g, dayDefaultColor.b, .5f);
-
         #endregion
 
         #region fields
@@ -113,12 +112,6 @@ namespace Game.Astroids
         PlayerShipController _shipCtrl;
         #endregion
 
-        public enum HudAction
-        {
-            none,
-            hyperjumpStart,
-            hyperjumpSelect
-        }
 
         void OnEnable() => HudActive = false;
 
@@ -204,7 +197,7 @@ namespace Game.Astroids
             PlayClip(HudSounds.Clip.shieldActivated);
         }
 
-        public void ActivateWeapon(float t, PowerupManager.PowerupWeapon weapon)
+        public void ActivateWeapon(float t, PowerupManagerData.PowerupWeapon weapon)
         {
             if (_pwrWeaponTime > 0)
             {
@@ -224,11 +217,11 @@ namespace Game.Astroids
 
             switch (weapon)
             {
-                case PowerupManager.PowerupWeapon.firerate:
+                case PowerupManagerData.PowerupWeapon.firerate:
                     clip = HudSounds.Clip.firerateIncreased;
                     text = POWERUP_FIRERATE;
                     break;
-                case PowerupManager.PowerupWeapon.shotSpread:
+                case PowerupManagerData.PowerupWeapon.shotSpread:
                     clip = HudSounds.Clip.shotSpreadActivated;
                     text = POWERUP_SHOTSPREAD;
                     break;
@@ -256,13 +249,13 @@ namespace Game.Astroids
 
         void FuelChanged(float perc) => hudController.SetFuelPercentage(perc * 100f);
 
-        void PowerupActivated(float time, PowerupManager.Powerup powerup, PowerupManager.PowerupWeapon? weapon = null)
+        void PowerupActivated(float time, PowerupManagerData.Powerup powerup, PowerupManagerData.PowerupWeapon? weapon = null)
         {
-            if (powerup == PowerupManager.Powerup.shield)
+            if (powerup == PowerupManagerData.Powerup.shield)
                 ActivateShield(time);
-            else if (powerup == PowerupManager.Powerup.weapon)
+            else if (powerup == PowerupManagerData.Powerup.weapon)
                 ActivateWeapon(time, weapon.Value);
-            else if (powerup == PowerupManager.Powerup.jump)
+            else if (powerup == PowerupManagerData.Powerup.jump)
                 if (time > 0)
                     AddHyperJump();
                 else

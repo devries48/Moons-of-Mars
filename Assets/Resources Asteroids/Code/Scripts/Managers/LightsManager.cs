@@ -62,15 +62,12 @@ namespace Game.Astroids
             {
                 TweenColor(_dayColor, nightColor, 1);
                 TweenIntensity(_dayLightIntensity, nightLightIntensity, 1);
-                print("nacht");
                 GameManager.IsDay = false;
             }
             else if (level > lightLevelThreshold && lightDefault.color == nightColor)
             {
                 TweenColor(nightColor, _dayColor, 1);
                 TweenIntensity(nightLightIntensity, _dayLightIntensity, 1);
-                print("dag");
-
                 GameManager.IsDay = true;
             }
         }
