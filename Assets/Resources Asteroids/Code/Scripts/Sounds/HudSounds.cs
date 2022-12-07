@@ -16,6 +16,7 @@ namespace Game.Astroids
         [SerializeField] AudioClip hyperJumpComplete;
         [SerializeField] AudioClip jumpActivate;
         [SerializeField] AudioClip fuelLow;
+        [SerializeField] AudioClip fuelHalf;
         [SerializeField] AudioClip fuelEmpty;
         [SerializeField] AudioClip deactivate;
         [SerializeField] AudioClip lighsOn;
@@ -30,6 +31,7 @@ namespace Game.Astroids
             hyperJumpComplete,
             jumpActivate,
             fuelLow,
+            fuelHalf,
             fuelEmpty,
             lightsOn,
             lightsOff,
@@ -47,6 +49,7 @@ namespace Game.Astroids
                 Clip.hyperJumpComplete => hyperJumpComplete,
                 Clip.jumpActivate => jumpActivate,
                 Clip.fuelLow => fuelLow,
+                Clip.fuelHalf => fuelHalf,
                 Clip.fuelEmpty => fuelEmpty,
                 Clip.lightsOn => lighsOn,
                 Clip.lightsOff => lighsOff,
@@ -61,15 +64,17 @@ namespace Game.Astroids
 
         void PlayAudioClip(AudioClip clip)
         {
-            if (clip && hudAudioSource)
+            if (CanPlayClip(clip))
                 hudAudioSource.PlayOneShot(clip);
         }
 
         void PlayAlarmClip(AudioClip clip)
         {
-            if (clip && alarmAudioSource)
+            if (CanPlayClip(clip))
                 alarmAudioSource.PlayOneShot(clip);
         }
+
+        bool CanPlayClip(AudioClip clip) => clip && hudAudioSource && hudAudioSource.isActiveAndEnabled;
 
     }
 }

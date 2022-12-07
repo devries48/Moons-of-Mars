@@ -55,6 +55,7 @@ namespace Game.Astroids
         List<MusicTrack> _musicTracks;
         MusicLevel _currentLevel = MusicLevel.none;
         MusicTrack _currentTrack;
+        int _prevIntensity;
 
         #endregion
 
@@ -67,37 +68,62 @@ namespace Game.Astroids
 
             _nextActionTime += _checkPeriod;
 
-            if (GameManager.m_gamePlaying)
-            {
-                if (_currentLevel != MusicLevel.menu)
-                {
-                    PlayMusic(MusicLevel.menu);
-                }
-            }
+            if (GameManager.m_gamePlaying && _currentLevel == MusicLevel.none) // Initial music
+                PlayMusic(MusicLevel.menu);
+            else
+                CheckGameIntensity();
 
-            if (_currentTrack != null && _currentTrack.IsTrackEnding())
+            if (_currentTrack == null) return;
+
+            if (_currentTrack.IsTrackEnding())
                 PlayMusic(_currentLevel);
-
-            ////else if (_currentTrack != MusicTrack.low && IsLowIntensity)
-            //{
-
-            //}
-
-
-
         }
 
-        //bool IsLowIntensity => GameManager.m_level.AstroidsActive + ;
+        void CheckGameIntensity()
+        {
+            var newLevel = MusicLevel.low;
+            var intensity = GetCurrentIntensity();
+
+            print("Current Intensity: " + intensity + " - prev: " + _prevIntensity);
+
+            if (intensity == _prevIntensity)
+                return;
+
+            if (_currentLevel == MusicLevel.low && intensity >= mediumIntensityStart)
+                newLevel = MusicLevel.medium;
+
+            if (_currentLevel == MusicLevel.medium)
+            {
+                if (intensity <= mediumIntensityStop) newLevel = MusicLevel.low;
+                if (intensity <= highIntensityStart) newLevel = MusicLevel.high;
+            }
+
+            if (_currentLevel == MusicLevel.high && intensity <= highIntensityStop)
+                newLevel = MusicLevel.low;
+
+            print("Current Level: " + _currentLevel + " - new: " + newLevel);
+
+            if (_currentLevel != newLevel)
+                PlayMusic(newLevel);
+
+            _prevIntensity = intensity;
+        }
+
+        int GetCurrentIntensity()
+        {
+            var lvl = GameManager.m_level;
+            return lvl.AstroidsActive + (ufoGreen * lvl.UfosGreenActive) + (ufoGreen * lvl.UfosGreenActive);
+        }
+
         void PlayMusic(MusicLevel level)
         {
-            StopAllCoroutines();
-
+            _isPlayingFirstAudioSource = !_isPlayingFirstAudioSource;
             var timeToFade = _currentLevel == MusicLevel.none ? startGameFade : inGameFade;
 
+            StopAllCoroutines();
             StartCoroutine(FadeClip(level, timeToFade));
 
             _currentLevel = level;
-            _isPlayingFirstAudioSource = !_isPlayingFirstAudioSource;
         }
 
         IEnumerator FadeClip(MusicLevel level, float timeToFade)
@@ -200,7 +226,7 @@ namespace Game.Astroids
 
             public bool IsTrackEnding()
             {
-                return _activeAudio != null && _clip.length - _activeAudio.time - 1 < 0;
+                return _activeAudio != null && _clip.length - _activeAudio.time - _manager.inGameFade - 1 < 0;
             }
 
             void SetClip() => _clip = _manager.musicData.GetMusicClip(Level);

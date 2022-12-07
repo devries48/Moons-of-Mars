@@ -37,7 +37,6 @@ public class EffectController : PoolableMonoBehaviour
     [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
     void AnimationCompleteHandler(string name)
     {
-        Debug.Log($"{name} animation complete.");
         _animAlive= false;
     }
 }

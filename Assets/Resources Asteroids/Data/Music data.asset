@@ -14,9 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuMusic:
   - {fileID: 8300000, guid: 3411b7af76a2b954ab25a5fa46a1cd57, type: 3}
-  - {fileID: 8300000, guid: 084e3a5c105246c45860c50aca8cc7e1, type: 3}
   lowIntenseMusic:
   - {fileID: 8300000, guid: 3a0447082aca8934ab224715a04c6a3a, type: 3}
   - {fileID: 8300000, guid: ffd19757767964942b932c1c59d1b0d0, type: 3}
-  mediunIntenseMusic: []
-  highIntenseMusic: []
+  mediunIntenseMusic:
+  - {fileID: 8300000, guid: 39840a173b9861e4cbe8445f6e4e65e7, type: 3}
+  - {fileID: 8300000, guid: 443ca8031f5ef114ca3e6149dc3dce66, type: 3}
+  highIntenseMusic:
+  - {fileID: 8300000, guid: fd454aa969e88ec4e946bddd09385374, type: 3}

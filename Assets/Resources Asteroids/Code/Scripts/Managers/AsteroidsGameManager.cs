@@ -421,14 +421,15 @@ namespace Game.Astroids
             int _ufosGreenActive;
             int _ufosRedActive;
             int _ufosForLevel;
-            int TotalUfosActive => _ufosGreenActive + _ufosRedActive;
 
             public int Level => _level;
             public int AstroidsForLevel => _astroidsForLevel;
             public int AstroidsActive => _asteroidsActive;
-            public int UfosActive => TotalUfosActive;
+            public int TotalUfosActive => _ufosGreenActive + _ufosRedActive;
+            public int UfosGreenActive => _ufosGreenActive;
+            public int UfosRedActive => _ufosRedActive;
             public bool HasEnemy => _asteroidsActive > 0 || TotalUfosActive > 0;
-            public bool CanAddUfo => UfosActive < _ufosForLevel && _asteroidsActive > 0;
+            public bool CanAddUfo => TotalUfosActive < _ufosForLevel && _asteroidsActive > 0;
 
             public void AstroidAdd() => _asteroidsActive++;
             public void AstroidRemove() => _asteroidsActive--;

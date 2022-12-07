@@ -116,7 +116,7 @@ namespace Game.Astroids
         void UpdatePanel()
         {
             astroidsCount.text = GameManager.m_level.AstroidsActive.ToString();
-            ufoCount.text = GameManager.m_level.UfosActive.ToString();
+            ufoCount.text = GameManager.m_level.TotalUfosActive.ToString();
         }
 
     }

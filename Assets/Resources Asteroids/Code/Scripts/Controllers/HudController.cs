@@ -16,6 +16,8 @@ namespace Game.Astroids
         const float MAX_VALUE = 100;
         const int LABEL_COUNT = 8;
 
+        const float NEEDLESPEED = 50;
+
         [SerializeField] Transform hudThrustMeter;
         [SerializeField] Transform labelTemplate;
         [SerializeField] Transform thrustNeedle;
@@ -25,13 +27,16 @@ namespace Game.Astroids
 
         public bool IsFuelLow => _fuel < lowOnFuelPercentage && _fuel > 0;
         public bool IsFuelEmpty => _fuel <= 0;
+        public bool IsFuelHalf => _fuel > 49 && _fuel < 51;
 
         float _thurst = 0;
         float _speed = 0;
         float _fuel = 100;
+        float _cur_speed = -1;
+
         bool _hyperJumpActive;
 
-        void Awake()
+        void Start()
         {
             labelTemplate.gameObject.SetActive(false);
             CreateLabels();
@@ -45,23 +50,33 @@ namespace Game.Astroids
                 _speed = MAX_VALUE;
             }
 
-            if (_thurst > MAX_VALUE)
-                _thurst = MAX_VALUE;
+            if (_thurst > MAX_VALUE) _thurst = MAX_VALUE;
+            if (_speed > MAX_VALUE) _speed = MAX_VALUE;
+            if (_fuel > MAX_VALUE) _fuel = MAX_VALUE;
 
-            if (_speed > MAX_VALUE)
-                _speed = MAX_VALUE;
-
-            if (_fuel > MAX_VALUE)
-                _fuel = MAX_VALUE;
+            if (_speed != _cur_speed)
+            {
+                if (_speed > _cur_speed)
+                {
+                    _cur_speed += Time.deltaTime * NEEDLESPEED;
+                    _cur_speed = Mathf.Clamp(_cur_speed, 0, _speed);
+                }
+                else if (_speed < _cur_speed)
+                {
+                    _cur_speed -= Time.deltaTime * NEEDLESPEED;
+                    _cur_speed = Mathf.Clamp(_cur_speed, _speed, MAX_VALUE);
+                }
+                speedNeedle.eulerAngles = new Vector3(0, 0, GetRotation(_cur_speed));
+            }
 
             thrustNeedle.eulerAngles = new Vector3(0, 0, GetRotation(_thurst));
-            speedNeedle.eulerAngles = new Vector3(0, 0, GetRotation(_speed));
             fuelNeedle.eulerAngles = new Vector3(0, 0, GetFuelRotation(_fuel));
         }
 
         public void SetThrustPercentage(float perc) => _thurst = perc;
         public void SetSpeedPercentage(float perc) => _speed = perc;
         public void SetFuelPercentage(float perc) => _fuel = perc;
+
         public void ActivateHyperJump(bool active)
         {
             _hyperJumpActive = active;

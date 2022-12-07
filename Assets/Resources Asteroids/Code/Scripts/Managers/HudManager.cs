@@ -104,14 +104,13 @@ namespace Game.Astroids
 
         bool _lightsOn;
         readonly float _blinkInterval = .8f;
-        bool _blinkFuelOn, _blinkJumpOn, _alarmFuelOn;
+        bool _blinkFuelOn, _blinkJumpOn, _alarmFuelOn, _fuelHalf;
         float _blinkFuelTime, _blinkJumpTime;
 
         HudAction _currentAction;
 
         PlayerShipController _shipCtrl;
         #endregion
-
 
         void OnEnable() => HudActive = false;
 
@@ -131,11 +130,11 @@ namespace Game.Astroids
             shieldRing.fillAmount = 0;
             weaponRing.fillAmount = 0;
 
-            _shipCtrl.m_ThrustController.ThrustChangedEvent += ThrustChanged;
-            _shipCtrl.SpeedChangedEvent += SpeedChanged;
-            _shipCtrl.FuelChangedEvent += FuelChanged;
-            _shipCtrl.HudActionEvent += SetHudAction;
-            _shipCtrl.PowerUpActivatedEvent += PowerupActivated;
+            _shipCtrl.m_ThrustController.ThrustChangedEvent += HandleThrustChanged;
+            _shipCtrl.SpeedChangedEvent += HandleSpeedChanged;
+            _shipCtrl.FuelChangedEvent += HandleFuelChanged;
+            _shipCtrl.HudActionEvent += HandleHudAction;
+            _shipCtrl.PowerUpActivatedEvent += HandlePowerupActivated;
         }
 
         public void HudShow() => HudActive = true;
@@ -152,12 +151,12 @@ namespace Game.Astroids
         {
             if (_shipCtrl)
             {
-                _shipCtrl.SpeedChangedEvent -= SpeedChanged;
-                _shipCtrl.FuelChangedEvent -= FuelChanged;
-                _shipCtrl.PowerUpActivatedEvent -= PowerupActivated;
+                _shipCtrl.SpeedChangedEvent -= HandleSpeedChanged;
+                _shipCtrl.FuelChangedEvent -= HandleFuelChanged;
+                _shipCtrl.PowerUpActivatedEvent -= HandlePowerupActivated;
 
                 if (_shipCtrl.m_ThrustController)
-                    _shipCtrl.m_ThrustController.ThrustChangedEvent -= ThrustChanged;
+                    _shipCtrl.m_ThrustController.ThrustChangedEvent -= HandleThrustChanged;
             }
         }
 
@@ -243,26 +242,23 @@ namespace Game.Astroids
             hudSounds.PlayClip(clip);
         }
 
-        void ThrustChanged(float perc) => hudController.SetThrustPercentage(perc * 100f);
+        void HandleThrustChanged(float perc) => hudController.SetThrustPercentage(perc * 100f);
 
-        void SpeedChanged(float perc) => hudController.SetSpeedPercentage(perc * 100f);
+        void HandleSpeedChanged(float perc) => hudController.SetSpeedPercentage(perc * 100f);
 
-        void FuelChanged(float perc) => hudController.SetFuelPercentage(perc * 100f);
+        void HandleFuelChanged(float perc) => hudController.SetFuelPercentage(perc * 100f);
 
-        void PowerupActivated(float time, PowerupManagerData.Powerup powerup, PowerupManagerData.PowerupWeapon? weapon = null)
+        void HandlePowerupActivated(float time, PowerupManagerData.Powerup powerup, PowerupManagerData.PowerupWeapon? weapon = null)
         {
             if (powerup == PowerupManagerData.Powerup.shield)
                 ActivateShield(time);
             else if (powerup == PowerupManagerData.Powerup.weapon)
                 ActivateWeapon(time, weapon.Value);
             else if (powerup == PowerupManagerData.Powerup.jump)
-                if (time > 0)
-                    AddHyperJump();
-                else
-                    RemoveHyperJump();
+                AddHyperJump();
         }
 
-        void SetHudAction(HudAction action)
+        void HandleHudAction(HudAction action)
         {
             _currentAction = action;
 
@@ -273,6 +269,8 @@ namespace Game.Astroids
             }
             else if (action == HudAction.hyperjumpStart)
             {
+                HandleSpeedChanged(1);
+                RemoveHyperJump();
                 hudController.ActivateHyperJump(true);
                 PlayClip(HudSounds.Clip.hyperJumpActivated);
             }
@@ -479,6 +477,15 @@ namespace Game.Astroids
                 BlinkImage(fuelImage, false);
                 _blinkFuelOn = true;
             }
+
+            if (hudController.IsFuelHalf && !_fuelHalf)
+            {
+                _fuelHalf = true;
+                PlayClip(HudSounds.Clip.fuelHalf);
+            }
+            else if (!hudController.IsFuelHalf && _fuelHalf)
+                _fuelHalf = false;
+
         }
 
         IEnumerator AlarmLoop()

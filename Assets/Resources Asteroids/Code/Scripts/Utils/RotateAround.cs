@@ -4,19 +4,16 @@ namespace Game.Astroids
 {
     public class RotateAround : MonoBehaviour
     {
-        [SerializeField]
-        GameObject target;
+        [SerializeField] GameObject target;
+        [SerializeField]Vector3 targetVector = new();
+        [SerializeField]float degreesPerSecond;
+        [SerializeField] Vector3 pivot = Vector3.down;
 
-        [SerializeField]
-        Vector3 targetVector = new();
-
-        [SerializeField]
-        float degreesPerSecond = 20;
 
         void Update()
         {
             var vector = target != null ? target.transform.position : targetVector;
-            transform.RotateAround(vector, Vector3.down, degreesPerSecond * Time.deltaTime);
+            transform.RotateAround(vector, pivot, degreesPerSecond * Time.deltaTime);
         }
     }
 }

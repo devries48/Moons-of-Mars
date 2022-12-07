@@ -99,12 +99,8 @@ namespace Game.Astroids
 
         protected override void FixedUpdate()
         {
-            // Hyperjump, set speed to max
             if (_isJumping)
-            {
-                SpeedChangedEvent(100f);
                 return;
-            }
 
             if (!_canMove)
                 return;
