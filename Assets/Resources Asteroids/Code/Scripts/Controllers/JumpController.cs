@@ -91,8 +91,6 @@ namespace Game.Astroids
             }
             m_JumpPosition = transform.position;
 
-            print("m_JumpPosition: " + m_JumpPosition);
-
             countDownText.text = string.Empty;
             launchText.gameObject.SetActive(true);
             m_Launched = true;

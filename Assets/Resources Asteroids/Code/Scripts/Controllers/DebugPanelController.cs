@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -65,10 +64,9 @@ namespace Game.Astroids
             _toggleSpawnPowerup.isOn = spawnPowerups;
             _toggleGodMode.isOn = godModeOn;
 
-            GameManager.m_debug_godMode = _toggleGodMode.isOn;
-
             if (debugOn)
             {
+                GameManager.m_debug.IsActive = true;
                 debugPanel.SetActive(true);
                 InvokeRepeating(nameof(UpdatePanel), REFRESH_TIME, REFRESH_TIME);
             }
@@ -100,17 +98,27 @@ namespace Game.Astroids
 
         public void ToggleUfoChanged()
         {
-            GameManager.m_debug_no_ufos = !_toggleSpawnUfos.isOn;
+            GameManager.m_debug.NoUfos= !_toggleSpawnUfos.isOn;
         }
 
         public void ToggleAstroidChanged()
         {
-            GameManager.m_debug_no_astroids = !_toggleSpawnAstroids.isOn;
+            GameManager.m_debug.NoAstroids = !_toggleSpawnAstroids.isOn;
+        }
+
+        public void TogglePowerupChanged()
+        {
+            GameManager.m_debug.NoPowerups = !_toggleSpawnPowerup.isOn;
         }
 
         public void ToggleGodModeChanged()
         {
-            GameManager.m_debug_godMode = _toggleGodMode.isOn;
+            GameManager.m_debug.IsGodMode = _toggleGodMode.isOn;
+        }
+
+        public void MusicDropdown(int value)
+        {
+
         }
 
         void UpdatePanel()

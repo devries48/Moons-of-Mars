@@ -47,7 +47,7 @@ namespace Game.Astroids
 
             while (GameManager.m_gamePlaying)
             {
-                while (GameManager.m_gamePaused || !GameManager.m_level.CanAddUfo || GameManager.m_debug_no_astroids)
+                while (GameManager.m_gamePaused || !GameManager.m_level.CanAddUfo || GameManager.m_debug.NoUfos)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));

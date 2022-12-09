@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using static Game.Astroids.UfoManagerData;
+using static MusicData;
 
 namespace Game.Astroids
 {
@@ -79,10 +80,8 @@ namespace Game.Astroids
         internal CamBounds m_camBounds;
         internal bool m_gamePlaying;
         internal bool m_gamePaused;
-        internal bool m_debug_godMode;
-        internal bool m_debug_no_astroids;
-        internal bool m_debug_no_ufos;
         internal CurrentLevel m_level;
+        internal DebugSettings m_debug = new();
 
         bool _requestTitleScreen;
 
@@ -206,7 +205,7 @@ namespace Game.Astroids
         {
             m_UiManager.LevelPlay();
 
-            while (m_playerShip.m_isAlive && m_level.HasEnemy || m_debug_no_astroids)
+            while (m_playerShip.m_isAlive && m_level.HasEnemy || m_debug.NoAstroids)
                 yield return null;
         }
 
@@ -265,7 +264,7 @@ namespace Game.Astroids
 
         public void SpawnAsteroids(float asteroidsNum, int generation = 1, Vector3 position = default)
         {
-            if (m_debug_no_astroids)
+            if (m_debug.NoAstroids)
                 return;
 
             var isRandom = position == default;
@@ -301,6 +300,7 @@ namespace Game.Astroids
                     break;
 
                 case Menu.exit:
+                    m_gamePlaying = false;
                     var id = m_UiManager.HideMainMenu(false);
                     var d = LeanTween.descr(id);
 
@@ -355,7 +355,7 @@ namespace Game.Astroids
         /// </summary>
         public void PlayerDestroyed()
         {
-            if (m_debug_godMode)
+            if (m_debug.IsGodMode)
                 return;
 
             m_HudManager.HudHide();
@@ -464,5 +464,53 @@ namespace Game.Astroids
             }
         }
         #endregion
+
+        internal class DebugSettings
+        {
+            internal bool IsGodMode
+            {
+                get => (__isGodMode ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+                set => __isGodMode = value;
+            }
+            bool __isGodMode;
+
+            internal bool NoAstroids
+            {
+                get => (__noAstroids ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+                set => __noAstroids = value;
+            }
+            bool __noAstroids;
+
+            internal bool NoUfos
+            {
+                get => (__noUfos ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+                set => __noUfos = value;
+            }
+            bool __noUfos;
+
+            internal bool NoPowerups
+            {
+                get => (__noPowerups ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+                set => __noPowerups = value;
+            }
+            bool __noPowerups;
+
+            internal bool OverrideMusic;
+            internal MusicLevel Level;
+
+            internal bool IsActive { get; set; }
+
+            internal void SetMusic(int value)
+            {
+                print("SetMusic: "+ value);
+                if (value == 0)
+                    OverrideMusic = false;
+                else
+                {
+                    OverrideMusic = true;
+                    Level = (MusicLevel)value - 1;
+                }
+            }
+        }
     }
 }

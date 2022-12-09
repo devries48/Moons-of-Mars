@@ -17,18 +17,12 @@ namespace Game.Astroids
         [Header("Time to Fade")]
         [SerializeField] int startGameFade = 8;
         [SerializeField] int inGameFade = 4;
-        [SerializeField] int endGameFade = 2;
 
         [Header("Enemy count triggers")]
         [SerializeField, Tooltip("raise to medium at"), Range(1, 100)] int mediumIntensityStart = 5;
         [SerializeField, Tooltip("raise lower at"), Range(1, 100)] int mediumIntensityStop = 4;
         [SerializeField, Tooltip("raise higher at"), Range(1, 100)] int highIntensityStart = 10;
         [SerializeField, Tooltip("lower medium at"), Range(1, 100)] int highIntensityStop = 9;
-
-        [Header("Ufo enemy value")]
-        [SerializeField] int ufoGreen = 2;
-        [SerializeField] int ufoRed = 3;
-
         #endregion
 
         #region properties
@@ -47,6 +41,7 @@ namespace Game.Astroids
 
         #region fields
         readonly float _checkPeriod = .5f;
+        float _endGameFade;
 
         bool _isPlayingFirstAudioSource;
         float _nextActionTime = 0.0f;
@@ -56,7 +51,6 @@ namespace Game.Astroids
         MusicLevel _currentLevel = MusicLevel.none;
         MusicTrack _currentTrack;
         int _prevIntensity;
-
         #endregion
 
         void Awake() => CreateAudioSources();
@@ -68,10 +62,17 @@ namespace Game.Astroids
 
             _nextActionTime += _checkPeriod;
 
-            if (GameManager.m_gamePlaying && _currentLevel == MusicLevel.none) // Initial music
+            // Set initial music
+            if (GameManager.m_gamePlaying && _currentLevel == MusicLevel.none)
+            {
                 PlayMusic(MusicLevel.menu);
-            else
+                return;
+            }
+
+            if (GameManager.m_gamePlaying)
                 CheckGameIntensity();
+            else
+                StopMusic();
 
             if (_currentTrack == null) return;
 
@@ -81,10 +82,19 @@ namespace Game.Astroids
 
         void CheckGameIntensity()
         {
+            if (GameManager.m_debug.OverrideMusic)
+            {
+                print("OverrideMusic");
+                if (GameManager.m_debug.Level != _currentLevel)
+                {
+                    print("Current Level (debug): " + _currentLevel + " - new: " + GameManager.m_debug.Level);
+                    PlayMusic(GameManager.m_debug.Level);
+                }
+                return;
+            }
+
             var newLevel = MusicLevel.low;
             var intensity = GetCurrentIntensity();
-
-            print("Current Intensity: " + intensity + " - prev: " + _prevIntensity);
 
             if (intensity == _prevIntensity)
                 return;
@@ -101,10 +111,11 @@ namespace Game.Astroids
             if (_currentLevel == MusicLevel.high && intensity <= highIntensityStop)
                 newLevel = MusicLevel.low;
 
-            print("Current Level: " + _currentLevel + " - new: " + newLevel);
-
             if (_currentLevel != newLevel)
+            {
+                print("Current Level: " + _currentLevel + " - new: " + newLevel);
                 PlayMusic(newLevel);
+            }
 
             _prevIntensity = intensity;
         }
@@ -112,7 +123,7 @@ namespace Game.Astroids
         int GetCurrentIntensity()
         {
             var lvl = GameManager.m_level;
-            return lvl.AstroidsActive + (ufoGreen * lvl.UfosGreenActive) + (ufoGreen * lvl.UfosGreenActive);
+            return lvl.AstroidsActive + lvl.TotalUfosActive;
         }
 
         void PlayMusic(MusicLevel level)
@@ -125,6 +136,8 @@ namespace Game.Astroids
 
             _currentLevel = level;
         }
+
+        void StopMusic() => StartCoroutine(StopClip(_currentLevel, _endGameFade));
 
         IEnumerator FadeClip(MusicLevel level, float timeToFade)
         {
@@ -152,8 +165,32 @@ namespace Game.Astroids
             yield return null;
         }
 
+        IEnumerator StopClip(MusicLevel level, float timeToFade)
+        {
+            _currentTrack = GetMusicTrack(level);
+
+            var timeElapsed = 0f;
+            var fadeOutSource = GetAudioSource(_isPlayingFirstAudioSource);
+
+            if (fadeOutSource.clip != null)
+            {
+                while (timeElapsed < timeToFade)
+                {
+                    fadeOutSource.volume = 1 - (1 * (timeElapsed / timeToFade));
+                    //print("vol: " + fadeOutSource.volume + "time: " + timeElapsed);
+                    timeElapsed += Time.deltaTime;
+                    yield return null;
+                }
+
+                _currentTrack.Stop(fadeOutSource);
+                print("stoptrack");
+            }
+            yield return null;
+        }
+
         void CreateAudioSources()
         {
+            _endGameFade = TweenUtil.m_timeMenuOpenClose - _checkPeriod;
             _audioSources = new List<AudioSource>();
             _musicTracks = new List<MusicTrack>();
 
@@ -224,10 +261,7 @@ namespace Game.Astroids
                 print("Play music: " + _clip.name + " time: " + _time);
             }
 
-            public bool IsTrackEnding()
-            {
-                return _activeAudio != null && _clip.length - _activeAudio.time - _manager.inGameFade - 1 < 0;
-            }
+            public bool IsTrackEnding() => _activeAudio != null && _clip.length - _activeAudio.time - _manager.inGameFade - 1 < 0;
 
             void SetClip() => _clip = _manager.musicData.GetMusicClip(Level);
         }

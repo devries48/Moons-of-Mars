@@ -73,7 +73,7 @@ namespace Game.Astroids
         {
             while (GameManager.m_gamePlaying)
             {
-                while (GameManager.m_gamePaused)
+                while (GameManager.m_gamePaused || GameManager.m_debug.NoPowerups)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));

@@ -11,9 +11,9 @@ public class MusicData : ScriptableObject
 
     public enum MusicLevel {none, menu, low, medium, high }
 
-    public AudioClip GetMusicClip(MusicLevel track)
+    public AudioClip GetMusicClip(MusicLevel level)
     {
-        var clip = track switch
+        var clip = level switch
         {
             MusicLevel.menu => RandomClip(menuMusic),
             MusicLevel.low => RandomClip(lowIntenseMusic),
