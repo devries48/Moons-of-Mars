@@ -45,7 +45,7 @@ namespace Game.Astroids
             get
             {
                 if (__pwrManager == null)
-                    __pwrManager = GameManager.m_PowerupManager;
+                    __pwrManager = GameManager.PowerupManager;
 
                 return __pwrManager;
             }
@@ -156,7 +156,7 @@ namespace Game.Astroids
         {
             if (m_pwrWeaponTime > 0)
             {
-                m_pwrWeaponTime += GameManager.m_PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime += GameManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpWeapon();
 
                 yield return null;
@@ -167,7 +167,7 @@ namespace Game.Astroids
                 if (_weaponPowerup == PowerupWeapon.firerate)
                     fireRate *= .25f;
 
-                m_pwrWeaponTime = GameManager.m_PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime = GameManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpWeapon();
 
                 while (m_isAlive && m_pwrWeaponTime > 0)
@@ -188,7 +188,7 @@ namespace Game.Astroids
         {
             if (m_pwrShieldTime > 0)
             {
-                m_pwrShieldTime += GameManager.m_PowerupManager.m_PowerDuration;
+                m_pwrShieldTime += GameManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpShield();
 
                 yield return null;
@@ -196,7 +196,7 @@ namespace Game.Astroids
             else
             {
                 m_Shield.ShieldsUp = true;
-                m_pwrShieldTime = GameManager.m_PowerupManager.m_PowerDuration;
+                m_pwrShieldTime = GameManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpShield();
 
                 while (m_isAlive && m_pwrShieldTime > 0)
@@ -251,8 +251,9 @@ namespace Game.Astroids
         protected virtual void FireWeapon() => StartCoroutine(Shoot());
 
         protected virtual void HideModel() => ShowModel(false);
+        protected void ShowModel() => ShowModel(true);
 
-        protected void ShowModel(bool show = true)
+        void ShowModel(bool show = true)
         {
             if (m_Model != null)
             {

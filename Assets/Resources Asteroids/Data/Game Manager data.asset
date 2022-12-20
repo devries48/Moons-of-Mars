@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0c45a718b1680ff4b8d6e0cc104b2662, type: 3}
+  m_Name: Game Manager data
+  m_EditorClassIdentifier: 
+  m_UfoManager: {fileID: 11400000, guid: db13a9c1a6ef3e94fb803dc018bbf7ef, type: 2}
+  m_PowerupManager: {fileID: 11400000, guid: 013d6d2dbe74d1e4bbc6333f38a0e058, type: 2}
+  m_UiManager: {fileID: 11400000, guid: 5fb9dd2638d13184e9d8cb7b9f6f6e92, type: 2}
+  RocketPrefab: {fileID: 2874880245280111037, guid: 35b2e930dff868543b026ca3481f0a76, type: 3}
+  asteroidPrefab: {fileID: 100000, guid: e2abe2db222fa9c49a111c088001ebcf, type: 3}
+  rocketAnimations: {fileID: 8396360231570522921, guid: 8126a13e5e2d2d045bb17f355d336a38, type: 3}

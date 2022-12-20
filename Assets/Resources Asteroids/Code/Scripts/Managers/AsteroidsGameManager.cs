@@ -1,8 +1,13 @@
+using Cinemachine;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using static Cinemachine.CinemachineBrain;
+using static EffectsManager;
 using static Game.Astroids.UfoManagerData;
 using static MusicData;
+using static Utils;
 
 namespace Game.Astroids
 {
@@ -31,22 +36,13 @@ namespace Game.Astroids
         #endregion
 
         enum Menu { none = 0, start = 1, exit = 2 }
+        public enum StageCamera { start, background, end }
         public enum AudioType { UI, Hud = 1 }
 
         #region editor fields
+        public GameManagerData m_GameManagerData;
         public HudManager m_HudManager;
-
-        [Header("Data")]
-        public UfoManagerData m_UfoManager;
-        public PowerupManagerData m_PowerupManager;
-        public UIManagerData m_UiManager;
-
-        [Header("Prefabs")]
-        [SerializeField, Tooltip("Select a spaceship prefab")]
-        GameObject playerShipPrefab;
-
-        [SerializeField, Tooltip("Select an astroid prefab")]
-        GameObject asteroidPrefab;
+        public LevelManager m_LevelManager;
 
         [Header("UI Elements")]
         public GameObject m_MainMenuWindow;
@@ -56,6 +52,10 @@ namespace Game.Astroids
         [Header("Camera's")]
         [SerializeField] Camera mainCamera;
         [SerializeField] Camera gameCamera;
+        public CinemachineVirtualCamera m_StageStartCamera;
+        public CinemachineVirtualCamera m_BackgroundCamera;
+        public CinemachineVirtualCamera m_StageEndCamera;
+
 
         [Header("Other")]
         [SerializeField] AudioSource uiAudioSource;
@@ -73,6 +73,11 @@ namespace Game.Astroids
             }
         }
         bool __isDay = true;
+
+        public UfoManagerData UfoManager => m_GameManagerData.m_UfoManager;
+        public PowerupManagerData PowerupManager => m_GameManagerData.m_PowerupManager;
+        public UIManagerData UiManager => m_GameManagerData.m_UiManager;
+
         #endregion
 
         #region fields
@@ -82,10 +87,10 @@ namespace Game.Astroids
         internal bool m_gamePaused;
         internal CurrentLevel m_level;
         internal DebugSettings m_debug = new();
+        internal bool m_StageStartCameraActive;
 
         bool _requestTitleScreen;
 
-        GameObjectPool _astoidPool;
         EffectsManager _effects;
         #endregion
 
@@ -95,26 +100,16 @@ namespace Game.Astroids
         {
             SingletonInstanceGuard();
 
-            if (asteroidPrefab == null)
-            {
-                Debug.LogError("Asteriod Prefab not set!");
-                return;
-            }
-
             TryGetComponent(out _effects);
-
-            _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
-
             m_camBounds = new CamBounds(gameCamera);
-            m_UiManager.InitUI(uiAudioSource);
+            UiManager.InitUI(uiAudioSource);
+
+            m_StageStartCamera.m_Transitions.m_OnCameraLive.AddListener(OnCameraActivatedEventHandler);
         }
 
         void Start()
         {
             Camera.SetupCurrent(gameCamera);
-
-            if (_astoidPool == null)
-                return;
 
             StartCoroutine(GameLoop());
         }
@@ -139,7 +134,7 @@ namespace Game.Astroids
                     m_gamePaused = true;
                     string result = null;
 
-                    yield return Run<string>(m_UiManager.ShowMainMenu(), (output) => result = output);
+                    yield return Run<string>(UiManager.ShowMainMenu(), (output) => result = output);
                 }
 
                 while (m_gamePaused)
@@ -155,14 +150,14 @@ namespace Game.Astroids
 
         public void GameStart()
         {
-            m_playerShip = CreatePlayer(playerShipPrefab);
+            m_playerShip = m_GameManagerData.CreatePlayer();
             m_level.Level1();
             m_gamePlaying = true;
 
             _requestTitleScreen = true;
 
-            StartCoroutine(m_UfoManager.UfoSpawnLoop());
-            StartCoroutine(m_PowerupManager.PowerupSpawnLoop());
+            StartCoroutine(UfoManager.UfoSpawnLoop());
+            StartCoroutine(PowerupManager.PowerupSpawnLoop());
         }
 
         IEnumerator ResumeGame()
@@ -182,11 +177,11 @@ namespace Game.Astroids
 
         IEnumerator LevelStart()
         {
-            m_UiManager.LevelStarts(m_level.Level);
+            UiManager.LevelStarts(m_level.Level);
 
             if (m_level.Level == 1)
             {
-                while (m_UiManager.AudioPlaying)
+                while (UiManager.AudioPlaying)
                     yield return null;
 
                 m_playerShip.Spawn();
@@ -198,12 +193,12 @@ namespace Game.Astroids
             yield return Wait(1.5f);
 
             m_playerShip.Refuel();
-            SpawnAsteroids(m_level.AstroidsForLevel);
+            m_GameManagerData.SpawnAsteroids(m_level.AstroidsForLevel);
         }
 
         IEnumerator LevelPlay()
         {
-            m_UiManager.LevelPlay();
+            UiManager.LevelPlay();
 
             while (m_playerShip.m_isAlive && m_level.HasEnemy || m_debug.NoAstroids)
                 yield return null;
@@ -217,10 +212,10 @@ namespace Game.Astroids
             {
                 m_gamePaused = true;
 
-                StartCoroutine(m_UiManager.GameOver());
+                StartCoroutine(UiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
 
-                while (m_UiManager.AudioPlaying)
+                while (UiManager.AudioPlaying)
                     yield return null;
 
                 yield return Wait(1f);
@@ -229,7 +224,7 @@ namespace Game.Astroids
             }
             else
             {
-                StartCoroutine(m_UiManager.LevelCleared(m_level.Level));
+                StartCoroutine(UiManager.LevelCleared(m_level.Level));
 
                 yield return Wait(2f);
 
@@ -251,57 +246,19 @@ namespace Game.Astroids
 
         #endregion
 
-        #region spawn player, astroids
-        PlayerShipController CreatePlayer(GameObject spaceShip)
-        {
-            var ship = Instantiate(spaceShip);
-            ship.TryGetComponent(out PlayerShipController shipCtrl);
-            if (ship)
-                m_HudManager.ConnectToShip(shipCtrl);
-
-            return shipCtrl;
-        }
-
-        public void SpawnAsteroids(float asteroidsNum, int generation = 1, Vector3 position = default)
-        {
-            if (m_debug.NoAstroids)
-                return;
-
-            var isRandom = position == default;
-
-            for (int i = 1; i <= asteroidsNum; i++)
-            {
-                if (isRandom)
-                    position = new Vector3(Random.Range(-20, 20), 10f);
-
-                var scale = generation switch
-                {
-                    1 => 1f,
-                    2 => .5f,
-                    _ => .25f
-                };
-
-                var astroid = _astoidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
-                astroid.GetComponent<AsteroidController>().SetGeneration(generation);
-
-                m_level.AstroidAdd();
-            }
-        }
-        #endregion
-
         public void MenuSelect(int i)
         {
             var menu = (Menu)i;
             switch (menu)
             {
                 case Menu.start:
-                    m_UiManager.HideMainMenu();
+                    UiManager.HideMainMenu();
                     StartCoroutine(ResumeGame());
                     break;
 
                 case Menu.exit:
                     m_gamePlaying = false;
-                    var id = m_UiManager.HideMainMenu(false);
+                    var id = UiManager.HideMainMenu(false);
                     var d = LeanTween.descr(id);
 
                     d?.setOnComplete(QuitGame);
@@ -313,12 +270,16 @@ namespace Game.Astroids
             }
         }
 
-        public void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => _effects.StartEffect(effect, position, scale);
+        public void PlayEffect(Effect effect, Vector3 position, float scale = 1f, OjectLayer layer = OjectLayer.Game)
+            => _effects.StartEffect(effect, position, scale, layer);
+
+        #region Hyperjump
+        internal AlliedShipController HyperJump(float duration) => m_GameManagerData.HyperJump(duration);
 
         /// <summary>
         /// Activate jump-crosshair
         /// </summary>
-        public void JumpSelect(Vector3 pos, float timer)
+        internal void JumpSelect(Vector3 pos, float timer)
         {
             jumpController.gameObject.SetActive(true);
             jumpController.StartCountdown(pos, timer);
@@ -327,16 +288,16 @@ namespace Game.Astroids
         /// <summary>
         /// Deactivate jump-crosshair
         /// </summary>
-        public void JumpDeactivate() => jumpController.gameObject.SetActive(false);
+        internal void JumpDeactivate() => jumpController.gameObject.SetActive(false);
 
         /// <summary>
         /// Return selected jump-position
         /// </summary>
-        public Vector3 JumpPosition() => jumpController.m_JumpPosition;
+        internal Vector3 JumpPosition() => jumpController.m_JumpPosition;
 
-        public bool JumpLaunched() => jumpController.m_Launched;
+        internal bool JumpLaunched() => jumpController.m_Launched;
 
-        public Vector3 GetWorldJumpPosition()
+        internal Vector3 GetWorldJumpPosition()
         {
             var pos = JumpPosition();
             pos.z = 0;
@@ -349,6 +310,34 @@ namespace Game.Astroids
             return mainCamera.ScreenToViewportPoint(gameToWorld);
         }
 
+        #endregion
+
+        public void SwitchStageCam(StageCamera camera)
+        {
+            switch (camera)
+            {
+                case StageCamera.start:
+                    m_StageStartCamera.Priority = 100;
+                    m_BackgroundCamera.Priority = 1;
+                    m_StageEndCamera.Priority = 1;
+                    break;
+                case StageCamera.background:
+                    m_BackgroundCamera.Priority = 100;
+                    m_StageStartCamera.Priority = 1;
+                    m_StageEndCamera.Priority = 1;
+                    break;
+                case StageCamera.end:
+                    m_StageEndCamera.Priority = 100;
+                    m_StageStartCamera.Priority = 1;
+                    m_BackgroundCamera.Priority = 1;
+                    break;
+            }
+        }
+
+        void OnCameraActivatedEventHandler(ICinemachineCamera toCamera, ICinemachineCamera fromCamera)
+        {
+            m_StageStartCameraActive = toCamera.Equals(m_StageStartCamera);
+        }
 
         /// <summary>
         /// Destroy player with explosion
@@ -502,7 +491,7 @@ namespace Game.Astroids
 
             internal void SetMusic(int value)
             {
-                print("SetMusic: "+ value);
+                print("SetMusic: " + value);
                 if (value == 0)
                     OverrideMusic = false;
                 else

@@ -41,10 +41,7 @@ namespace Game.Astroids
             return GetFromPool(position, rotation).GetComponent<T>();
         }
 
-        public void ReturnToPool(GameObject obj)
-        {
-            _pool.Release(obj);
-        }
+        public void ReturnToPool(GameObject obj) => _pool.Release(obj);
 
         GameObject CreatePooledItem()
         {

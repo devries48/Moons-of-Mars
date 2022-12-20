@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,7 +25,6 @@ namespace Game.Astroids
         [SerializeField] TMPro.TextMeshProUGUI version;
         [SerializeField] TMPro.TextMeshProUGUI astroidsCount;
         [SerializeField] TMPro.TextMeshProUGUI ufoCount;
-        [SerializeField] Button closeButton;
 
         AsteroidsGameManager GameManager
         {
@@ -67,6 +68,11 @@ namespace Game.Astroids
             if (debugOn)
             {
                 GameManager.m_debug.IsActive = true;
+                GameManager.m_debug.IsGodMode = godModeOn;
+                GameManager.m_debug.NoAstroids = !spawnAstroids;
+                GameManager.m_debug.NoUfos = !spawnUfos;
+                GameManager.m_debug.NoPowerups = !spawnPowerups;
+
                 debugPanel.SetActive(true);
                 InvokeRepeating(nameof(UpdatePanel), REFRESH_TIME, REFRESH_TIME);
             }
@@ -82,12 +88,12 @@ namespace Game.Astroids
 
         public void SpawnPowerupClick()
         {
-            GameManager.m_PowerupManager.ShuttleLaunch();
+            GameManager.PowerupManager.ShuttleLaunch();
         }
 
         public void SpawnUfoClick()
         {
-            GameManager.m_UfoManager.UfoLaunch();
+            GameManager.UfoManager.UfoLaunch();
         }
 
         public void ResetClick()
@@ -98,7 +104,7 @@ namespace Game.Astroids
 
         public void ToggleUfoChanged()
         {
-            GameManager.m_debug.NoUfos= !_toggleSpawnUfos.isOn;
+            GameManager.m_debug.NoUfos = !_toggleSpawnUfos.isOn;
         }
 
         public void ToggleAstroidChanged()
@@ -119,6 +125,16 @@ namespace Game.Astroids
         public void MusicDropdown(int value)
         {
 
+        }
+
+        public void JumpClick()
+        {
+            GameManager.m_playerShip.Jump();
+        }
+
+        public void StageEndClick()
+        {
+            GameManager.m_GameManagerData.StageEnd();
         }
 
         void UpdatePanel()

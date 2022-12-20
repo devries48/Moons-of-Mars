@@ -24,7 +24,7 @@ namespace Game.Astroids
             get
             {
                 if (__ufoManager == null)
-                    __ufoManager = GameManager.m_UfoManager;
+                    __ufoManager = GameManager.UfoManager;
 
                 return __ufoManager;
             }

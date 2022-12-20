@@ -43,7 +43,7 @@ namespace Game.Astroids
             get
             {
                 if (__pwrManager == null)
-                    __pwrManager = GameManager.m_PowerupManager;
+                    __pwrManager = GameManager.PowerupManager;
 
                 return __pwrManager;
             }

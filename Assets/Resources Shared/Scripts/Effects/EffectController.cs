@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 public class EffectController : PoolableMonoBehaviour
 {
-    ParticleSystem _ps;
+    internal ParticleSystem _ps;
     Animator _animator;
 
     internal EffectsManager.Effect m_effect;
@@ -32,11 +32,25 @@ public class EffectController : PoolableMonoBehaviour
         }
     }
 
-    public bool IsAlive() => _isAnimation ? _animAlive : _ps.IsAlive();
+    public bool IsAlive()
+    {
+        if (_isAnimation)
+            return _animAlive;
+        else
+        {
+            if (_ps == null)
+            {
+                TryGetComponent(out _ps);
+                print("Particle system was null");
+            }
+
+            return _ps.IsAlive();
+        }
+    }
 
     [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
     void AnimationCompleteHandler(string name)
     {
-        _animAlive= false;
+        _animAlive = false;
     }
 }

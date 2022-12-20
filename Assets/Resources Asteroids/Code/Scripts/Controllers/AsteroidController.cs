@@ -203,7 +203,7 @@ namespace Game.Astroids
             else
                 newGeneration = 3;
 
-            GameManager.SpawnAsteroids(asteroidsNum, newGeneration, position);
+            GameManager.m_GameManagerData.SpawnAsteroids(asteroidsNum, newGeneration, position);
         }
 
         void PlayAudioClip(AsteroidSounds.Clip clip, float generation)

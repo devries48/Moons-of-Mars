@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace Game.Astroids
@@ -5,13 +6,17 @@ namespace Game.Astroids
     public class AlliedShipController : GameMonoBehaviour
     {
         #region editor fields
-        [SerializeField] bool isPlayer;
-        [SerializeField] float duration = 5f;
         [SerializeField] ThrustController thrustController;
         [SerializeField] AudioSource spawnAudio;
         [SerializeField] AudioClip[] spawnClips;
+        [Header("Animation")] //TODO: Separate to RocketAnimationsController
+        [SerializeField] bool isPlayer;
+        [SerializeField] float duration = 5f;
+        [SerializeField] AudioClip endStageClip;
+        [SerializeField] GameObject model;
         #endregion
 
+        bool _skipUpdate;
         bool _isShipRemoved;        // Prevent ship remove recursion
         bool _isPackageEjected;     // Prevent ejecing multiple packages
 
@@ -20,6 +25,9 @@ namespace Game.Astroids
 
         void OnEnable()
         {
+            ShowModel();
+
+            _skipUpdate = false;
             _isShipRemoved = false;
             _isPackageEjected = false;
 
@@ -29,15 +37,14 @@ namespace Game.Astroids
 
         protected override void FixedUpdate()
         {
-            if (isPlayer) return;
+            if (_skipUpdate) return;
 
             Vector3 direction = (transform.position - _oldPos).normalized;
 
             if (direction != Vector3.zero || _oldPos == Vector3.zero)
-            {
-                print(direction);
                 transform.rotation = Quaternion.LookRotation(direction);
-            }
+
+            if (isPlayer) return;
 
             if (!_isPackageEjected && transform.position.z > -.5f && transform.position.z < .5f)
                 EjectPackage();
@@ -48,10 +55,15 @@ namespace Game.Astroids
 
         void LateUpdate() => _oldPos = transform.position;
 
-        public void PlayerShipJumpOut(float duration) => MoveShipIn(duration);
+        public void PlayerShipJumpOut(float duration)
+        {
+            _skipUpdate = true;
+            MoveShipIn(duration);
+        }
 
         public void PlayerShipJumpIn(float duration)
         {
+            _skipUpdate = true;
             _oldPos = Vector3.zero;
             var pos = GameManager.GetWorldJumpPosition();
             pos.z = -1;
@@ -64,7 +76,74 @@ namespace Game.Astroids
                 .setEaseInQuad()
                 .setOnComplete(() => RemoveShip());
 
-            AnimateThrust(duration, LeanTweenType.easeInQuint);
+            AnimateThrust(duration, false, LeanTweenType.easeInQuint);
+            PlaySpawnClip(duration);
+        }
+
+        public void PlayerShipEndStage()
+        {
+            duration = 5;
+            transform.localScale = transform.localScale * .1f;
+            transform.localPosition = GameManager.m_BackgroundCamera.transform.position;
+
+            GameManager.SwitchStageCam(AsteroidsGameManager.StageCamera.end);
+            StartCoroutine(FollowPath(duration));
+        }
+
+        IEnumerator FollowPath(float duration)
+        {
+            float t = 0;
+            float speedModifier = 1 / duration;
+            var path = GameManager.m_LevelManager.m_EarthPath;
+
+            GameManager.PlayEffect(EffectsManager.Effect.hit4, path[0], .1f, Utils.OjectLayer.Background);
+            PlaySpawnClip(duration);
+            StartCoroutine(IncreaseThrust(.1f));
+
+            while (t < 1)
+            {
+                t += Time.deltaTime * speedModifier;
+
+                transform.position = Mathf.Pow(1 - t, 3) * path[0] + 3 * Mathf.Pow(1 - t, 2) * t * path[1] + 3 * (1 - t) * Mathf.Pow(t, 2) * path[2] + Mathf.Pow(t, 3) * path[3];
+                yield return new WaitForEndOfFrame();
+            }
+
+            GameManager.SwitchStageCam(AsteroidsGameManager.StageCamera.start);
+            while (!GameManager.m_StageStartCameraActive)
+                yield return null;
+
+            AnimateThrust(3, false, LeanTweenType.easeInCubic);
+            yield return new WaitForSeconds(.5f); // Custom blend time cinemachine brain
+
+            // Move ship from bottom left to upper right (duraion: 2 seconds)
+            var p = GameManager.m_StageStartCamera.transform.position;
+            var startPos = new Vector3(p.x + 4, p.y - 2, p.z + 3);
+            var endPos = new Vector3(p.x - 3f, p.y + 1.5f, p.z - 7);
+
+            transform.position = startPos;
+            LeanTween.move(gameObject, endPos, 2).setOnComplete(() =>
+            {
+                StartCoroutine(PlayerShipEndStageComplete(endPos));
+            });
+            //GameManager.SwitchStageCam(AsteroidsGameManager.StageCamera.background);
+        }
+
+        IEnumerator PlayerShipEndStageComplete(Vector3 pos)
+        {
+            HideModel();
+            PlayStageEndClip();
+            GameManager.PlayEffect(EffectsManager.Effect.hit2, pos, 1, Utils.OjectLayer.Background);
+            while (spawnAudio.isPlaying)
+                yield return null;
+
+            RemoveFromGame();
+            transform.localScale = transform.localScale * 10f;
+        }
+
+        IEnumerator IncreaseThrust(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            AnimateThrust(1, true);
         }
 
         void MoveShipIn(float duration)
@@ -73,33 +152,41 @@ namespace Game.Astroids
                 .setEaseOutQuad()
                 .setOrientToPath(true);
 
-            AnimateThrust(duration);
+            AnimateThrust(duration, false);
         }
 
-        void AnimateThrust(float duration, LeanTweenType type = default)
+        void AnimateThrust(float duration, bool increase = true, LeanTweenType type = default)
         {
             if (type == default)
                 type = isPlayer ? LeanTweenType.easeInOutQuint : LeanTweenType.easeInQuint;
 
+            float start = increase ? 0 : 1;
+            float end = increase ? 1 : 0;
+
             if (thrustController != null)
             {
-                LeanTween.value(gameObject, 1f, 0f, duration)
+                LeanTween.value(gameObject, start, end, duration)
                     .setOnUpdate((float val) => thrustController.SetThrust(val))
                     .setEase(type);
             }
-            PlaySpawnClip(duration);
         }
 
         void PlaySpawnClip(float duration)
         {
             if (spawnAudio == null || spawnClips == null || spawnClips.Length == 0)
                 return;
+
             var clip = spawnClips[Random.Range(0, spawnClips.Length)];
-            print("Allied spawn: " + clip);
 
             spawnAudio.volume = 1f;
             spawnAudio.PlayOneShot(clip);
             StartCoroutine(AudioUtil.FadeOut(spawnAudio, duration - .5f));
+        }
+
+        void PlayStageEndClip()
+        {
+            spawnAudio.volume = .8f;
+            spawnAudio.PlayOneShot(endStageClip);
         }
 
         void RemoveShip(float duration = 0)
@@ -111,7 +198,7 @@ namespace Game.Astroids
         void EjectPackage()
         {
             _isPackageEjected = true;
-            GameManager.m_PowerupManager.SpawnPowerup(transform.position);
+            GameManager.PowerupManager.SpawnPowerup(transform.position);
         }
 
         LTBezierPath CreatePath(int increments = 4)
@@ -141,5 +228,17 @@ namespace Game.Astroids
 
             return new LTBezierPath(path);
         }
+
+        void HideModel() => ShowModel(false);
+
+        void ShowModel(bool show = true)
+        {
+            if (model != null)
+            {
+                foreach (var rend in model.GetComponentsInChildren<Renderer>())
+                    rend.enabled = show;
+            }
+        }
+
     }
 }

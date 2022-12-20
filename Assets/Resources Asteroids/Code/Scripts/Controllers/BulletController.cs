@@ -48,7 +48,7 @@ namespace Game.Astroids
             if (type == ShipType.ufoGreen ||
                 type == ShipType.ufoRed)
             {
-                GameManager.m_UfoManager.SetBulletMaterial(this, type);
+                GameManager.UfoManager.SetBulletMaterial(this, type);
             }
 
             Rb.velocity = direction * bulletSpeed;

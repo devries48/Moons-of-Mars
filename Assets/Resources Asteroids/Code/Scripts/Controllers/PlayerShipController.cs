@@ -120,6 +120,9 @@ namespace Game.Astroids
 
         public void Refuel() => _fuelUsed = 0f;
 
+        /// <summary>
+        /// Move ship to top, out of view.
+        /// </summary>
         public void Jump()
         {
             _isJumping = true;
@@ -137,22 +140,29 @@ namespace Game.Astroids
             LeanTween.move(gameObject, target, 1f)
                 .setOnComplete(() =>
                 {
-                    transform.eulerAngles = new Vector3(-90, 182, 0);
+                    StartCoroutine(HyperJump(currentPos));
                     HideModel();
                 })
-                .setEaseOutQuad()
-                .setOnComplete(() => StartCoroutine(HyperJump(currentPos)));
+                .setEaseOutQuad();
 
             if (m_ThrustController != null)
                 LeanTween.value(gameObject, 1f, 0f, 1f).setOnUpdate((float val)
                     => m_ThrustController.SetThrust(val)).setEaseInQuint();
+        }
 
+        /// <summary>
+        /// Stage end, hide ship with teleport animation
+        /// </summary>
+        public void Teleport()
+        {
+            HideModel();
+            DisableControls();
         }
 
         IEnumerator HyperJump(Vector3 currentPos)
         {
             // Rocket moves towards camera out-of-view
-            var ctrl = GameManager.m_PowerupManager.HyperJump(JUMP_MOVE_OUT_ANIMATION_TIME);
+            var ctrl = GameManager.HyperJump(JUMP_MOVE_OUT_ANIMATION_TIME);
             yield return new WaitForSeconds(JUMP_MOVE_OUT_ANIMATION_TIME);
 
             // Cursor selects new position of rocket
@@ -180,6 +190,7 @@ namespace Game.Astroids
             _isJumping = false;
             m_ScreenWrap = true;
             Cl.enabled = true;
+            ShowModel();
             EnableControls();
 
             HudManager.PlayClip(HudSounds.Clip.hyperJumpComplete);

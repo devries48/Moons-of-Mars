@@ -1,6 +1,7 @@
 using Game.Astroids;
 using System.Collections.Generic;
 using UnityEngine;
+using static Utils;
 
 public class EffectsManager : MonoBehaviour
 {
@@ -12,7 +13,9 @@ public class EffectsManager : MonoBehaviour
         greenExplosion,
         redExplosion,
         spawn,
-        portal
+        portal,
+        hit2,
+        hit4
     }
 
     [SerializeField] GameObject smallExplosionPrefab;
@@ -22,6 +25,8 @@ public class EffectsManager : MonoBehaviour
     [SerializeField] GameObject redExplosionPrefab;
     [SerializeField] GameObject spawnPrefab;
     [SerializeField] GameObject portalPrefab;
+    [SerializeField] GameObject hit2Prefab;
+    [SerializeField] GameObject hit4Prefab;
 
     GameObjectPool _smallExplosionPool;
     GameObjectPool _bigExplosionPool;
@@ -30,6 +35,8 @@ public class EffectsManager : MonoBehaviour
     GameObjectPool _redExplosionPool;
     GameObjectPool _spawnPool;
     GameObjectPool _portalPool;
+    GameObjectPool _hit2Pool;
+    GameObjectPool _hit4Pool;
 
     readonly List<EffectController> _effectsPlaying = new();
 
@@ -42,7 +49,6 @@ public class EffectsManager : MonoBehaviour
         while (i < _effectsPlaying.Count)
         {
             var ctrl = _effectsPlaying[i];
-
             if (ctrl.IsAlive())
             {
                 i++;
@@ -58,6 +64,8 @@ public class EffectsManager : MonoBehaviour
                 Effect.redExplosion => _redExplosionPool,
                 Effect.spawn => _spawnPool,
                 Effect.portal => _portalPool,
+                Effect.hit2 => _hit2Pool,
+                Effect.hit4 => _hit4Pool,
                 _ => null
             };
 
@@ -75,9 +83,11 @@ public class EffectsManager : MonoBehaviour
         _redExplosionPool = GameObjectPool.Build(redExplosionPrefab, 1);
         _spawnPool = GameObjectPool.Build(spawnPrefab, 1);
         _portalPool = GameObjectPool.Build(portalPrefab, 1);
+        _hit2Pool = GameObjectPool.Build(hit2Prefab, 1);
+        _hit4Pool = GameObjectPool.Build(hit4Prefab, 1);
     }
 
-    public void StartEffect(Effect effect, Vector3 position, float scale)
+    public void StartEffect(Effect effect, Vector3 position, float scale, OjectLayer layer)
     {
         var effectObj = effect switch
         {
@@ -88,11 +98,15 @@ public class EffectsManager : MonoBehaviour
             Effect.redExplosion => _redExplosionPool.GetFromPool(),
             Effect.spawn => _spawnPool.GetFromPool(),
             Effect.portal => _portalPool.GetFromPool(),
+            Effect.hit2 => _hit2Pool.GetFromPool(),
+            Effect.hit4 => _hit4Pool.GetFromPool(),
             _ => null
         };
 
         if (effectObj == null)
             return;
+
+        SetGameObjectLayer(effectObj, layer);
 
         var ctrl = effectObj.GetComponent<EffectController>();
         var trans = effectObj.transform;
