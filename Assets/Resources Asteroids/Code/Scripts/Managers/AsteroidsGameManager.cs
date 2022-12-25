@@ -1,9 +1,8 @@
 using Cinemachine;
-using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using static Cinemachine.CinemachineBrain;
+
 using static EffectsManager;
 using static Game.Astroids.UfoManagerData;
 using static MusicData;
@@ -36,8 +35,8 @@ namespace Game.Astroids
         #endregion
 
         enum Menu { none = 0, start = 1, exit = 2 }
-        public enum StageCamera { start, background, end }
-        public enum AudioType { UI, Hud = 1 }
+        public enum GameStatus { none, menu, playing, paused, stage, gameover, quit }
+        public enum StageCamera { start, far, background, end }
 
         #region editor fields
         public GameManagerData m_GameManagerData;
@@ -53,9 +52,9 @@ namespace Game.Astroids
         [SerializeField] Camera mainCamera;
         [SerializeField] Camera gameCamera;
         public CinemachineVirtualCamera m_StageStartCamera;
-        public CinemachineVirtualCamera m_BackgroundCamera;
         public CinemachineVirtualCamera m_StageEndCamera;
-
+        public CinemachineVirtualCamera m_BackgroundCamera;
+        [SerializeField] CinemachineVirtualCamera backgroundFarCamera;
 
         [Header("Other")]
         [SerializeField] AudioSource uiAudioSource;
@@ -74,6 +73,9 @@ namespace Game.Astroids
         }
         bool __isDay = true;
 
+        public bool IsGameActive => _gameStatus != GameStatus.gameover;
+        public bool IsGamePlaying => _gameStatus == GameStatus.playing;
+
         public UfoManagerData UfoManager => m_GameManagerData.m_UfoManager;
         public PowerupManagerData PowerupManager => m_GameManagerData.m_PowerupManager;
         public UIManagerData UiManager => m_GameManagerData.m_UiManager;
@@ -83,34 +85,32 @@ namespace Game.Astroids
         #region fields
         internal PlayerShipController m_playerShip;
         internal CamBounds m_camBounds;
-        internal bool m_gamePlaying;
-        internal bool m_gamePaused;
         internal CurrentLevel m_level;
         internal DebugSettings m_debug = new();
-        internal bool m_StageStartCameraActive;
+        //internal bool m_StageStartCameraActive;
 
-        bool _requestTitleScreen;
-
+        CinemachineBrain _cinemachineBrain;
+        GameStatus _gameStatus;
         EffectsManager _effects;
         #endregion
-
 
         #region unity events
         void Awake()
         {
             SingletonInstanceGuard();
 
+            _cinemachineBrain = mainCamera.GetComponentInChildren<CinemachineBrain>();
+
+            SwitchStageCam(StageCamera.start);
             TryGetComponent(out _effects);
-            m_camBounds = new CamBounds(gameCamera);
             UiManager.InitUI(uiAudioSource);
 
-            m_StageStartCamera.m_Transitions.m_OnCameraLive.AddListener(OnCameraActivatedEventHandler);
+            m_camBounds = new CamBounds(gameCamera);
         }
 
         void Start()
         {
             Camera.SetupCurrent(gameCamera);
-
             StartCoroutine(GameLoop());
         }
 
@@ -120,24 +120,37 @@ namespace Game.Astroids
         #region game loops
         IEnumerator GameLoop()
         {
+            // Load first stage
+            m_LevelManager.m_StageLoaded = true;
+
+            var t = 0f;
+            while (!m_LevelManager.m_StageLoaded)
+            {
+                t += Time.deltaTime;
+                yield return null;
+            }
+            yield return Wait(3 - t);
+            m_LevelManager.HideGameIntro();
             yield return Wait(.5f);
+            SwitchStageCam(StageCamera.far);
+            yield return Wait(.1f);
+            SwitchStageCam(StageCamera.background);
+            yield return Wait(2f);
 
             GameStart();
 
-            while (m_gamePlaying)
+            while (_gameStatus != GameStatus.quit)
             {
-                if (_requestTitleScreen)
+                if (_gameStatus == GameStatus.none)
                 {
                     Score.Reset();
-
-                    _requestTitleScreen = false;
-                    m_gamePaused = true;
+                    SetGameStatus(GameStatus.menu);
                     string result = null;
 
                     yield return Run<string>(UiManager.ShowMainMenu(), (output) => result = output);
                 }
 
-                while (m_gamePaused)
+                while (_gameStatus != GameStatus.playing)
                     yield return null;
 
                 yield return StartCoroutine(LevelStart());
@@ -152,18 +165,26 @@ namespace Game.Astroids
         {
             m_playerShip = m_GameManagerData.CreatePlayer();
             m_level.Level1();
-            m_gamePlaying = true;
-
-            _requestTitleScreen = true;
+            SetGameStatus(GameStatus.none);
 
             StartCoroutine(UfoManager.UfoSpawnLoop());
             StartCoroutine(PowerupManager.PowerupSpawnLoop());
         }
 
-        IEnumerator ResumeGame()
+        public void NewStageStart(float delay) => StartCoroutine(StartStage(delay));
+
+        IEnumerator StartStage(float delay)
         {
-            yield return new WaitForSeconds(.5f);
-            m_gamePaused = false;
+            SwitchStageCam(StageCamera.far);
+            yield return Wait(.1f);
+            SwitchStageCam(StageCamera.background);
+            StartCoroutine(PlayGame(delay));
+        }
+
+        IEnumerator PlayGame(float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            SetGameStatus(GameStatus.playing);
         }
 
         void QuitGame()
@@ -210,8 +231,7 @@ namespace Game.Astroids
 
             if (gameover)
             {
-                m_gamePaused = true;
-
+                SetGameStatus(GameStatus.gameover);
                 StartCoroutine(UiManager.GameOver());
                 StartCoroutine(RemoveRemainingObjects());
 
@@ -225,7 +245,6 @@ namespace Game.Astroids
             else
             {
                 StartCoroutine(UiManager.LevelCleared(m_level.Level));
-
                 yield return Wait(2f);
 
                 m_level.LevelAdvance();
@@ -253,11 +272,12 @@ namespace Game.Astroids
             {
                 case Menu.start:
                     UiManager.HideMainMenu();
-                    StartCoroutine(ResumeGame());
+                    StartCoroutine(PlayGame(.5f));
                     break;
 
                 case Menu.exit:
-                    m_gamePlaying = false;
+                    SetGameStatus(GameStatus.quit);
+
                     var id = UiManager.HideMainMenu(false);
                     var d = LeanTween.descr(id);
 
@@ -270,16 +290,23 @@ namespace Game.Astroids
             }
         }
 
+        public bool IsStageStartCameraActive()
+        {
+            return _cinemachineBrain.ActiveVirtualCamera.Name == m_StageStartCamera.name;
+        }
+
+        public void SetGameStatus(GameStatus status) => _gameStatus = status;
+
         public void PlayEffect(Effect effect, Vector3 position, float scale = 1f, OjectLayer layer = OjectLayer.Game)
             => _effects.StartEffect(effect, position, scale, layer);
 
         #region Hyperjump
-        internal AlliedShipController HyperJump(float duration) => m_GameManagerData.HyperJump(duration);
+        public AlliedShipController HyperJump(float duration) => m_GameManagerData.HyperJump(duration);
 
         /// <summary>
         /// Activate jump-crosshair
         /// </summary>
-        internal void JumpSelect(Vector3 pos, float timer)
+        public void JumpSelect(Vector3 pos, float timer)
         {
             jumpController.gameObject.SetActive(true);
             jumpController.StartCountdown(pos, timer);
@@ -288,16 +315,16 @@ namespace Game.Astroids
         /// <summary>
         /// Deactivate jump-crosshair
         /// </summary>
-        internal void JumpDeactivate() => jumpController.gameObject.SetActive(false);
+        public void JumpDeactivate() => jumpController.gameObject.SetActive(false);
 
         /// <summary>
         /// Return selected jump-position
         /// </summary>
-        internal Vector3 JumpPosition() => jumpController.m_JumpPosition;
+        public Vector3 JumpPosition() => jumpController.m_JumpPosition;
 
-        internal bool JumpLaunched() => jumpController.m_Launched;
+        public bool JumpLaunched() => jumpController.m_Launched;
 
-        internal Vector3 GetWorldJumpPosition()
+        public Vector3 GetWorldJumpPosition()
         {
             var pos = JumpPosition();
             pos.z = 0;
@@ -314,12 +341,19 @@ namespace Game.Astroids
 
         public void SwitchStageCam(StageCamera camera)
         {
+            backgroundFarCamera.Priority = 1;
+
+            print("Cam: " + camera);
             switch (camera)
             {
                 case StageCamera.start:
                     m_StageStartCamera.Priority = 100;
                     m_BackgroundCamera.Priority = 1;
                     m_StageEndCamera.Priority = 1;
+                    break;
+                case StageCamera.far:
+                    backgroundFarCamera.Priority = 100;
+                    m_StageStartCamera.Priority = 1;
                     break;
                 case StageCamera.background:
                     m_BackgroundCamera.Priority = 100;
@@ -332,11 +366,6 @@ namespace Game.Astroids
                     m_BackgroundCamera.Priority = 1;
                     break;
             }
-        }
-
-        void OnCameraActivatedEventHandler(ICinemachineCamera toCamera, ICinemachineCamera fromCamera)
-        {
-            m_StageStartCameraActive = toCamera.Equals(m_StageStartCamera);
         }
 
         /// <summary>

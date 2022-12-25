@@ -40,7 +40,6 @@ namespace Game.Astroids
         #endregion
 
         #region fields
-        bool _canMove = true;
         bool _isJumping = false;
         float _thrustInput;
         float _turnInput;
@@ -87,7 +86,7 @@ namespace Game.Astroids
                     m_ThrustController.DecreaseThrust();
             }
 
-            if (!m_canShoot)
+            if (!m_disableControls)
                 return;
 
             if (ShipInput.IsShooting())
@@ -102,7 +101,7 @@ namespace Game.Astroids
             if (_isJumping)
                 return;
 
-            if (!_canMove)
+            if (!m_disableControls)
                 return;
 
             Move();
@@ -196,17 +195,9 @@ namespace Game.Astroids
             HudManager.PlayClip(HudSounds.Clip.hyperJumpComplete);
         }
 
-        public void EnableControls()
-        {
-            _canMove = true;
-            m_canShoot = true;
-        }
+        public void EnableControls() => m_disableControls = true;
 
-        public void DisableControls()
-        {
-            _canMove = false;
-            m_canShoot = false;
-        }
+        public void DisableControls() => m_disableControls = false;
 
         void SpawnIn()
         {

@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 public class Utils
@@ -17,7 +19,8 @@ public class Utils
         SetGameObjectLayerRecursive(obj, val);
     }
 
-    static void SetGameObjectLayerRecursive(GameObject obj, int layer) { 
+    static void SetGameObjectLayerRecursive(GameObject obj, int layer)
+    {
 
         foreach (Transform child in obj.transform)
         {
@@ -27,5 +30,13 @@ public class Utils
             if (hasChild != null)
                 SetGameObjectLayerRecursive(child.gameObject, layer);
         }
-}
+    }
+
+    public static IEnumerator WaitUntilTrue(Func<bool> checkMethod)
+    {
+        while (checkMethod() == false)
+        {
+            yield return null;
+        }
+    }
 }

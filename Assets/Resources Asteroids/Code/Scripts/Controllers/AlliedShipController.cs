@@ -109,7 +109,7 @@ namespace Game.Astroids
             }
 
             GameManager.SwitchStageCam(AsteroidsGameManager.StageCamera.start);
-            while (!GameManager.m_StageStartCameraActive)
+            while (!GameManager.IsStageStartCameraActive())
                 yield return null;
 
             AnimateThrust(3, false, LeanTweenType.easeInCubic);

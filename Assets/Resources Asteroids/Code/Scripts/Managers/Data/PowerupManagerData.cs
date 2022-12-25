@@ -69,14 +69,14 @@ namespace Game.Astroids
 
         public IEnumerator PowerupSpawnLoop()
         {
-            while (GameManager.m_gamePlaying)
+            while (GameManager.IsGameActive)
             {
-                while (GameManager.m_gamePaused || GameManager.m_debug.NoPowerups)
+                while (!GameManager.IsGamePlaying || GameManager.m_debug.NoPowerups)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (GameManager.m_level.AstroidsActive > 2 && !GameManager.m_gamePaused)
+                if (GameManager.m_level.AstroidsActive > 2 && GameManager.IsGamePlaying)
                     ShuttleLaunch();
             }
         }

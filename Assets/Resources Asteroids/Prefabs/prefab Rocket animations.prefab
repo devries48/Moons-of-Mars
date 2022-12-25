@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8396360231570522926}
   - component: {fileID: 1388856604599853794}
   - component: {fileID: 8396360231570522923}
-  m_Layer: 11
+  m_Layer: 0
   m_Name: prefab Rocket animations
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -251,7 +251,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937630824893127722, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5937630824893127726, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: scalingMode
@@ -287,7 +287,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825657902549, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825657902569, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: cullingMode
@@ -322,9 +322,25 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825679121680, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: MaxDistance
+      value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630825679121680, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: MinDistance
+      value: 28
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630825679121680, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_audioClip
       value: 
       objectReference: {fileID: 8300000, guid: f6158760c378e874baa50e901562d928, type: 3}
+    - target: {fileID: 5937630825679121680, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 485715982883318943, guid: ab1bd020727659345a310a8a133db8b8, type: 2}
+    - target: {fileID: 5937630825679121680, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5937630825679121681, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -375,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825679121682, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825679121682, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_IsActive
@@ -383,7 +399,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825843991800, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825843991804, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: maxPosition.y
@@ -464,27 +480,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100010, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100012, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Name
@@ -492,15 +508,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100012, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100014, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 100016, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_Layer
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400012, guid: add1d5ea65b47174dbb5a9ddb4535708, type: 3}
       propertyPath: m_RootOrder

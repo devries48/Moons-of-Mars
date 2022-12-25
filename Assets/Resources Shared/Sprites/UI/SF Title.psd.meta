@@ -1,12 +1,12 @@
 fileFormatVersion: 2
-guid: 1f1d5baae1d26404a8a639a07e5c7766
+guid: 966be606197166640a108ef53355eddf
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: 21300000
-    second: SF Generic_0
+    second: SF Title
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -66,6 +66,7 @@ TextureImporter:
   textureFormatSet: 0
   ignorePngGamma: 0
   applyGammaDecoding: 1
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -151,20 +152,32 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 4096
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SF Generic_0
+      name: SF Title
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 32
-        height: 32
+        width: 256
+        height: 64
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 10, y: 10, z: 10, w: 10}
+      border: {x: 125, y: 30, z: 125, w: 30}
       outline: []
       physicsShape: []
       tessellationDetail: -1
@@ -186,7 +199,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      SF Generic_0: 21300000
+      SF Title: 21300000
   spritePackingTag: SF
   pSDRemoveMatte: 1
   pSDShowRemoveMatteOption: 1

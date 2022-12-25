@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.VFX;
 
 namespace Game.Astroids
 {
@@ -93,6 +94,9 @@ namespace Game.Astroids
 
         public void StageEnd()
         {
+            GameManager.SetGameStatus(AsteroidsGameManager.GameStatus.stage);
+            GameManager.m_LevelManager.ShowStageResults();
+
             if (GameManager.m_playerShip)
                 GameManager.m_playerShip.Teleport();
 

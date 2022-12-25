@@ -73,7 +73,7 @@ namespace Game.Astroids
 
         internal ShipType m_shipType = ShipType.player;
 
-        protected bool m_canShoot = true;
+        protected bool m_disableControls = true;
         internal bool m_isAlive;
 
         internal float m_pwrShieldTime;
@@ -82,6 +82,7 @@ namespace Game.Astroids
         GameObjectPool _bulletPool;
         PowerupWeapon _weaponPowerup;
         int _hyperJumps;
+        bool _canShoot = true;
         #endregion
 
         public event Action<float, Powerup, PowerupWeapon?> PowerUpActivatedEvent = delegate { };
@@ -313,10 +314,10 @@ namespace Game.Astroids
 
         IEnumerator Shoot()
         {
-            if (!bulletPrefab || !m_isAlive)
+            if (!bulletPrefab || !m_isAlive || !m_disableControls || !_canShoot)
                 yield break;
 
-            m_canShoot = false;
+            _canShoot = false;
 
             PlayAudioClip(SpaceShipSounds.Clip.shootBullet);
 
@@ -327,7 +328,7 @@ namespace Game.Astroids
 
             yield return new WaitForSeconds(fireRate);
 
-            m_canShoot = true;
+            _canShoot = true;
         }
 
         void ShootDefault()

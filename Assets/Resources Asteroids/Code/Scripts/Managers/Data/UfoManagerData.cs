@@ -45,14 +45,14 @@ namespace Game.Astroids
             if (_ufoPool == null)
                 BuildPools();
 
-            while (GameManager.m_gamePlaying)
+            while (GameManager.IsGameActive)
             {
-                while (GameManager.m_gamePaused || !GameManager.m_level.CanAddUfo || GameManager.m_debug.NoUfos)
+                while (!GameManager.IsGamePlaying || !GameManager.m_level.CanAddUfo || GameManager.m_debug.NoUfos)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (GameManager.m_level.AstroidsActive > 1 && !GameManager.m_gamePaused)
+                if (GameManager.m_level.AstroidsActive > 1 && GameManager.IsGamePlaying)
                     UfoLaunch();
             }
         }

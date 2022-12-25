@@ -63,15 +63,15 @@ namespace Game.Astroids
             _nextActionTime += _checkPeriod;
 
             // Set initial music
-            if (GameManager.m_gamePlaying && _currentLevel == MusicLevel.none)
+            if (GameManager.IsGameActive && _currentLevel == MusicLevel.none)
             {
                 PlayMusic(MusicLevel.menu);
                 return;
             }
 
-            if (GameManager.m_gamePlaying)
+            if (GameManager.IsGamePlaying)
                 CheckGameIntensity();
-            else
+            else if (!GameManager.IsGameActive)
                 StopMusic();
 
             if (_currentTrack == null) return;
