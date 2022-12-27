@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 
@@ -13,7 +12,10 @@ namespace Game.Astroids
 
         public Transform[] controlPoints;
         public Vector3[] m_EarthPath;
-        public bool m_StageLoaded;
+
+        internal bool m_StageLoaded;
+
+        float _moveToCam = 8;
 
         AsteroidsGameManager GameManager
         {
@@ -42,22 +44,32 @@ namespace Game.Astroids
         public void ShowStageResults()
         {
             stageResults.SetActive(true);
+            stageContinue.SetActive(false);
             StartCoroutine(WaitForStageToLoad());
         }
 
-        public void HideGameIntro() => HideGroup(gameIntro);
-
-        public void HideStageResuls() => HideGroup(stageResults);
-
-        void HideGroup(GameObject group)
+        public void HideGameIntro()
         {
-            LeanTween.value(group, 1f, 0f, .5f)
-            .setOnUpdate((value) =>
-            {
-                group.transform.localScale = new Vector3(value, value, 1);
-            })
-            .setOnComplete(() => group.SetActive(false));
+            HideGroup(gameIntro);
         }
+
+        public void HideStageResuls()
+        {
+            HideGroup(stageResults);
+        }
+
+        public void HideGroup(GameObject group)
+        {
+            var p = group.transform.position;
+            var to = new Vector3(p.x, p.y, p.z + _moveToCam);
+            LeanTween.move(group, to, .5f)
+                .setOnComplete(() =>
+                {
+                    group.SetActive(false);
+                    group.transform.position = p;
+                });
+        }
+
 
         IEnumerator WaitForStageToLoad()
         {
@@ -68,13 +80,11 @@ namespace Game.Astroids
             stageContinue.SetActive(true);
             yield return Utils.WaitUntilTrue(IsAnyKeyPressed);
             HideGroup(stageResults);
-            GameManager.NewStageStart(2f);
+            yield return new WaitForSeconds(.5f);
+            GameManager.StageStartNew(2f);
         }
 
-        bool IsAnyKeyPressed()
-        {
-            return Input.anyKey;
-        }
+        bool IsAnyKeyPressed() => Input.anyKey;
 
         void OnDrawGizmos()
         {

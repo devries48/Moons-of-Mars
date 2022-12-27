@@ -80,7 +80,7 @@ namespace Game.Astroids
             PlaySpawnClip(duration);
         }
 
-        public void PlayerShipEndStage()
+        public void PlayerShipStageCompleteAnimation()
         {
             duration = 5;
             transform.localScale = transform.localScale * .1f;

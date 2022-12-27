@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 934970957}
-  m_IndirectSpecularColor: {r: 0.014470763, g: 0.012955785, b: 0.015467941, a: 1}
+  m_IndirectSpecularColor: {r: 0.01445807, g: 0.012945865, b: 0.015461994, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2205,7 +2205,6 @@ MonoBehaviour:
   - {x: -1.18, y: 1.369, z: -24.8}
   - {x: 3.843, y: -0.517, z: -25.94}
   - {x: 2.77, y: 0, z: -30.39}
-  m_StageLoaded: 0
 --- !u!1 &302447571
 GameObject:
   m_ObjectHideFlags: 0
@@ -2944,7 +2943,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 438808940}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -4842,7 +4841,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 750159080}
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -40}
+  m_LocalPosition: {x: 0, y: 0, z: -46}
   m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -5490,7 +5489,6 @@ GameObject:
   - component: {fileID: 824918096}
   - component: {fileID: 824918099}
   - component: {fileID: 824918101}
-  - component: {fileID: 824918102}
   m_Layer: 11
   m_Name: cm
   m_TagString: Untagged
@@ -5542,18 +5540,6 @@ MonoBehaviour:
   m_AmplitudeGain: 0.5
   m_FrequencyGain: 0.5
   mNoiseOffsets: {x: 90.51953, y: 227.9545, z: 643.1582}
---- !u!114 &824918102
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 824918095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e8b78ac948f05a46a6d8339a503172b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &844266926
 GameObject:
   m_ObjectHideFlags: 0
@@ -9298,7 +9284,7 @@ GameObject:
   - component: {fileID: 1222560185}
   - component: {fileID: 1222560184}
   m_Layer: 11
-  m_Name: astroids text
+  m_Name: asteroids text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9324,7 +9310,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Astroids
+  m_text: Asteroids
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 93af645c29473e348ba058c674d7bd1c, type: 2}
@@ -13170,7 +13156,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659905871}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: -33}
+  m_LocalPosition: {x: 0, y: 0, z: -40}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

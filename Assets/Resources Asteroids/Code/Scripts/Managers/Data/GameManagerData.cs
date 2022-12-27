@@ -6,6 +6,7 @@ namespace Game.Astroids
     [CreateAssetMenu(fileName = "Game Manager data", menuName = "Astroids/Game Manager Data")]
     public class GameManagerData : ScriptableObject
     {
+        #region editor fields
         [Header("Managers")]
         public UfoManagerData m_UfoManager;
         public PowerupManagerData m_PowerupManager;
@@ -20,6 +21,7 @@ namespace Game.Astroids
 
         [SerializeField, Tooltip("Select rocket-animations prefab")]
         GameObject rocketAnimations;
+        #endregion
 
         #region properties
         protected AsteroidsGameManager GameManager
@@ -35,8 +37,10 @@ namespace Game.Astroids
         AsteroidsGameManager __gameManager;
         #endregion
 
+        #region fields
         GameObjectPool _astoidPool;
         GameObjectPool _rocketAnimationPool;
+        #endregion
 
         void OnEnable() => BuildPools();
 
@@ -82,7 +86,7 @@ namespace Game.Astroids
             }
         }
 
-        public AlliedShipController HyperJump(float duration)
+        public AlliedShipController HyperJumpAnimation(float duration)
         {
             var ship = _rocketAnimationPool.GetFromPool();
             Utils.SetGameObjectLayer(ship, Utils.OjectLayer.Default);
@@ -92,9 +96,10 @@ namespace Game.Astroids
             return ctrl;
         }
 
-        public void StageEnd()
+        public void StageCompleteAnimation()
         {
             GameManager.SetGameStatus(AsteroidsGameManager.GameStatus.stage);
+            GameManager.m_HudManager.HudHide();
             GameManager.m_LevelManager.ShowStageResults();
 
             if (GameManager.m_playerShip)
@@ -105,7 +110,7 @@ namespace Game.Astroids
             GameManager.m_StageEndCamera.Follow = ship.transform;
 
             ship.TryGetComponent(out AlliedShipController ctrl);
-            ctrl.PlayerShipEndStage();
+            ctrl.PlayerShipStageCompleteAnimation();
         }
     }
 }

@@ -117,7 +117,7 @@ namespace Game.Astroids
         void OnEnable() => __instance = this;
         #endregion
 
-        #region game loops
+        #region game loop
         IEnumerator GameLoop()
         {
             // Load first stage
@@ -161,7 +161,7 @@ namespace Game.Astroids
             }
         }
 
-        public void GameStart()
+        internal void GameStart()
         {
             m_playerShip = m_GameManagerData.CreatePlayer();
             m_level.Level1();
@@ -171,23 +171,34 @@ namespace Game.Astroids
             StartCoroutine(PowerupManager.PowerupSpawnLoop());
         }
 
-        public void NewStageStart(float delay) => StartCoroutine(StartStage(delay));
+        public void StageStartNew(float delay) => StartCoroutine(StageStart(delay));
 
-        IEnumerator StartStage(float delay)
+        IEnumerator StageStart(float delay)
         {
             SwitchStageCam(StageCamera.far);
             yield return Wait(.1f);
+
             SwitchStageCam(StageCamera.background);
-            StartCoroutine(PlayGame(delay));
+            yield return Wait(.5f);
+
+            PlayEffect(Effect.hit4, m_playerShip.transform.position, 1f, OjectLayer.Game);
+            yield return Wait(.5f);
+
+            m_playerShip.ResetPosition();
+            m_playerShip.Teleport(true);
+
+            m_HudManager.HudShow();
+
+            SetGameStatus(GameStatus.playing);
         }
 
-        IEnumerator PlayGame(float delay)
+        IEnumerator GamePlay(float delay)
         {
             yield return new WaitForSeconds(delay);
             SetGameStatus(GameStatus.playing);
         }
 
-        void QuitGame()
+        void GameQuit()
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -196,6 +207,9 @@ namespace Game.Astroids
 #endif
         }
 
+        #endregion
+
+        #region level
         IEnumerator LevelStart()
         {
             UiManager.LevelStarts(m_level.Level);
@@ -272,7 +286,7 @@ namespace Game.Astroids
             {
                 case Menu.start:
                     UiManager.HideMainMenu();
-                    StartCoroutine(PlayGame(.5f));
+                    StartCoroutine(GamePlay(.5f));
                     break;
 
                 case Menu.exit:
@@ -281,7 +295,7 @@ namespace Game.Astroids
                     var id = UiManager.HideMainMenu(false);
                     var d = LeanTween.descr(id);
 
-                    d?.setOnComplete(QuitGame);
+                    d?.setOnComplete(GameQuit);
                     break;
 
                 case Menu.none:
@@ -290,10 +304,8 @@ namespace Game.Astroids
             }
         }
 
-        public bool IsStageStartCameraActive()
-        {
-            return _cinemachineBrain.ActiveVirtualCamera.Name == m_StageStartCamera.name;
-        }
+        public bool IsStageStartCameraActive() 
+            => _cinemachineBrain.ActiveVirtualCamera.Name == m_StageStartCamera.name;
 
         public void SetGameStatus(GameStatus status) => _gameStatus = status;
 
@@ -301,7 +313,7 @@ namespace Game.Astroids
             => _effects.StartEffect(effect, position, scale, layer);
 
         #region Hyperjump
-        public AlliedShipController HyperJump(float duration) => m_GameManagerData.HyperJump(duration);
+        public AlliedShipController HyperJump(float duration) => m_GameManagerData.HyperJumpAnimation(duration);
 
         /// <summary>
         /// Activate jump-crosshair

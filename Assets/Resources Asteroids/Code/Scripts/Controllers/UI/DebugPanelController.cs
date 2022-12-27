@@ -134,7 +134,7 @@ namespace Game.Astroids
 
         public void StageEndClick()
         {
-            GameManager.m_GameManagerData.StageEnd();
+            GameManager.m_GameManagerData.StageCompleteAnimation();
         }
 
         void UpdatePanel()

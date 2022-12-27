@@ -16,6 +16,7 @@ public class Utils
         int val = (int)layer;
         if (val == obj.layer) return;
 
+        obj.layer = val;
         SetGameObjectLayerRecursive(obj, val);
     }
 

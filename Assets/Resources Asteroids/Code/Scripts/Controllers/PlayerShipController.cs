@@ -149,15 +149,6 @@ namespace Game.Astroids
                     => m_ThrustController.SetThrust(val)).setEaseInQuint();
         }
 
-        /// <summary>
-        /// Stage end, hide ship with teleport animation
-        /// </summary>
-        public void Teleport()
-        {
-            HideModel();
-            DisableControls();
-        }
-
         IEnumerator HyperJump(Vector3 currentPos)
         {
             // Rocket moves towards camera out-of-view
@@ -195,9 +186,31 @@ namespace Game.Astroids
             HudManager.PlayClip(HudSounds.Clip.hyperJumpComplete);
         }
 
+        /// <summary>
+        /// Stage complete, hide or show ship
+        /// </summary>
+        public void Teleport(bool show = false)
+        {
+            if (show)
+            {
+                ShowModel();
+                EnableControls();
+            }
+            else
+            {
+                HideModel();
+                DisableControls();
+            }
+        }
+
         public void EnableControls() => m_disableControls = true;
 
         public void DisableControls() => m_disableControls = false;
+
+        public void ResetPosition()
+        {
+            ResetTransform();
+        }
 
         void SpawnIn()
         {
