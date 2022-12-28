@@ -40,6 +40,8 @@ namespace Game.Astroids
 
         #region editor fields
         public GameManagerData m_GameManagerData;
+        [Header("Managers")]
+        public AudioManager m_AudioManager;
         public HudManager m_HudManager;
         public LevelManager m_LevelManager;
 
@@ -75,6 +77,7 @@ namespace Game.Astroids
 
         public bool IsGameActive => _gameStatus != GameStatus.gameover;
         public bool IsGamePlaying => _gameStatus == GameStatus.playing;
+        public bool IsGameStageComplete => _gameStatus == GameStatus.stage;
 
         public UfoManagerData UfoManager => m_GameManagerData.m_UfoManager;
         public PowerupManagerData PowerupManager => m_GameManagerData.m_PowerupManager;
@@ -171,9 +174,9 @@ namespace Game.Astroids
             StartCoroutine(PowerupManager.PowerupSpawnLoop());
         }
 
-        public void StageStartNew(float delay) => StartCoroutine(StageStart(delay));
+        public void StageStartNew() => StartCoroutine(StageStart());
 
-        IEnumerator StageStart(float delay)
+        IEnumerator StageStart()
         {
             SwitchStageCam(StageCamera.far);
             yield return Wait(.1f);
@@ -186,8 +189,8 @@ namespace Game.Astroids
 
             m_playerShip.ResetPosition();
             m_playerShip.Teleport(true);
-
             m_HudManager.HudShow();
+            m_AudioManager.FadeInBackgroundSfx();
 
             SetGameStatus(GameStatus.playing);
         }
@@ -307,7 +310,11 @@ namespace Game.Astroids
         public bool IsStageStartCameraActive() 
             => _cinemachineBrain.ActiveVirtualCamera.Name == m_StageStartCamera.name;
 
-        public void SetGameStatus(GameStatus status) => _gameStatus = status;
+        public void SetGameStatus(GameStatus status)
+        {
+            print("Game status: " + status.ToString());
+            _gameStatus = status;
+        }
 
         public void PlayEffect(Effect effect, Vector3 position, float scale = 1f, OjectLayer layer = OjectLayer.Game)
             => _effects.StartEffect(effect, position, scale, layer);
@@ -355,7 +362,7 @@ namespace Game.Astroids
         {
             backgroundFarCamera.Priority = 1;
 
-            print("Cam: " + camera);
+            print("Camera: " + camera);
             switch (camera)
             {
                 case StageCamera.start:

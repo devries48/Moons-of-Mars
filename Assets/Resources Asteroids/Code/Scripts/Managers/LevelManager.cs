@@ -48,15 +48,9 @@ namespace Game.Astroids
             StartCoroutine(WaitForStageToLoad());
         }
 
-        public void HideGameIntro()
-        {
-            HideGroup(gameIntro);
-        }
+        public void HideGameIntro() => HideGroup(gameIntro);
 
-        public void HideStageResuls()
-        {
-            HideGroup(stageResults);
-        }
+        public void HideStageResuls() => HideGroup(stageResults);
 
         public void HideGroup(GameObject group)
         {
@@ -73,15 +67,22 @@ namespace Game.Astroids
 
         IEnumerator WaitForStageToLoad()
         {
+            yield return new WaitForSeconds(1); // wait for music change (checks every .5 seconds). It interrupted the mixer group fade.
+            GameManager.m_AudioManager.FadeOutBackgroundSfx();
+
             while (!m_StageLoaded)
                 yield return null;
 
-            yield return new WaitForSeconds(10);
+            yield return new WaitForSeconds(8);
+
             stageContinue.SetActive(true);
             yield return Utils.WaitUntilTrue(IsAnyKeyPressed);
+
             HideGroup(stageResults);
             yield return new WaitForSeconds(.5f);
-            GameManager.StageStartNew(2f);
+
+            GameManager.StageStartNew();
+            GameManager.m_AudioManager.FadeInBackgroundSfx();
         }
 
         bool IsAnyKeyPressed() => Input.anyKey;

@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuMusic:
   - {fileID: 8300000, guid: 3411b7af76a2b954ab25a5fa46a1cd57, type: 3}
+  stageCompleteMusic:
+  - {fileID: 8300000, guid: dcf4e961f51c95c439ab1ce0888f273c, type: 3}
+  - {fileID: 8300000, guid: 9b1e0da2856122b4892e689fcf23999c, type: 3}
+  - {fileID: 8300000, guid: 6a3ba152b72c7574388e620bf90bd207, type: 3}
+  - {fileID: 8300000, guid: 697e86908f736654aadbc9dbdb6bc240, type: 3}
   lowIntenseMusic:
   - {fileID: 8300000, guid: 3a0447082aca8934ab224715a04c6a3a, type: 3}
   - {fileID: 8300000, guid: ffd19757767964942b932c1c59d1b0d0, type: 3}
@@ -22,3 +27,4 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 443ca8031f5ef114ca3e6149dc3dce66, type: 3}
   highIntenseMusic:
   - {fileID: 8300000, guid: fd454aa969e88ec4e946bddd09385374, type: 3}
+  - {fileID: 8300000, guid: 18434733965c95d46ac81366fa7c1795, type: 3}

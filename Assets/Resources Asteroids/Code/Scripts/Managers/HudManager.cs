@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ namespace Game.Astroids
     {
         #region constants
         const float TRANSITION_DEFAULT = 1f;
-        const float TRANSITION_FAST = 3f;
+        const float TRANSITION_LONG = 3f;
 
         const string POWERUP_FIRERATE = "FIRE-RATE";
         const string POWERUP_SHOTSPREAD = "SHOT-SPREAD";
@@ -58,7 +59,7 @@ namespace Game.Astroids
             set
             {
                 __isDay = value;
-                SetHudColors(TRANSITION_FAST);
+                SetHudColors(TRANSITION_LONG);
                 if (value != _lightsOn)
                 {
                     _lightsOn = value;
@@ -78,7 +79,7 @@ namespace Game.Astroids
                 if (value)
                 {
                     hudShield.transform.parent.gameObject.SetActive(true);
-                    SetHudColors(TRANSITION_FAST);
+                    SetHudColors(TRANSITION_LONG);
                 }
                 else
                 {
@@ -126,6 +127,7 @@ namespace Game.Astroids
         {
             _shipCtrl = ship;
             _lightsOn = false;
+            _pwrHyperspaceCount = 0;
 
             shieldRing.fillAmount = 0;
             weaponRing.fillAmount = 0;
@@ -141,10 +143,17 @@ namespace Game.Astroids
 
         public void HudHide()
         {
+            StartCoroutine(HudHideCore());
+        }
+
+        IEnumerator HudHideCore()
+        {
             SetHudDisabled(TRANSITION_DEFAULT);
+            yield return new WaitForSeconds(TRANSITION_DEFAULT);
+
             hudShield.transform.parent.gameObject.SetActive(false);
-            _pwrHyperspaceCount = 0;
             HudActive = false;
+
         }
 
         void DisconnectShip()

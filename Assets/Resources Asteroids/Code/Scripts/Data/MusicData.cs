@@ -5,17 +5,19 @@ using UnityEngine;
 public class MusicData : ScriptableObject
 {
     public AudioClip[] menuMusic;
+    public AudioClip[] stageCompleteMusic;
     public AudioClip[] lowIntenseMusic;
     public AudioClip[] mediunIntenseMusic;
     public AudioClip[] highIntenseMusic;
 
-    public enum MusicLevel {none, menu, low, medium, high }
+    public enum MusicLevel {none, menu, stage, low, medium, high }
 
     public AudioClip GetMusicClip(MusicLevel level)
     {
         var clip = level switch
         {
             MusicLevel.menu => RandomClip(menuMusic),
+            MusicLevel.stage => RandomClip(stageCompleteMusic),
             MusicLevel.low => RandomClip(lowIntenseMusic),
             MusicLevel.medium => RandomClip(mediunIntenseMusic),
             MusicLevel.high => RandomClip(highIntenseMusic),

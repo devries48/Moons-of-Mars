@@ -13,6 +13,7 @@ namespace Game.Astroids
         #region editor fields
         [SerializeField] MusicData musicData;
         [SerializeField] AudioMixerGroup musicMixerGroup;
+        [SerializeField] AudioMixerGroup backgroundFxMixerGroup;
 
         [Header("Time to Fade")]
         [SerializeField] int startGameFade = 8;
@@ -51,6 +52,7 @@ namespace Game.Astroids
         MusicLevel _currentLevel = MusicLevel.none;
         MusicTrack _currentTrack;
         int _prevIntensity;
+        float _CurrentBackgroundSfxVolume;
         #endregion
 
         void Awake() => CreateAudioSources();
@@ -68,8 +70,9 @@ namespace Game.Astroids
                 PlayMusic(MusicLevel.menu);
                 return;
             }
-
-            if (GameManager.IsGamePlaying)
+            if (GameManager.IsGameStageComplete && _currentLevel != MusicLevel.stage)
+                PlayMusic(MusicLevel.stage);
+            else if (GameManager.IsGamePlaying)
                 CheckGameIntensity();
             else if (!GameManager.IsGameActive)
                 StopMusic();
@@ -78,6 +81,17 @@ namespace Game.Astroids
 
             if (_currentTrack.IsTrackEnding())
                 PlayMusic(_currentLevel);
+        }
+
+        public void FadeOutBackgroundSfx()
+        {
+            _CurrentBackgroundSfxVolume = FadeMixerGroup.GetCurrentVolume(backgroundFxMixerGroup.audioMixer, FadeMixerGroup.s_BACKGROUND_VOL);
+            StartCoroutine(FadeMixerGroup.StartFade(backgroundFxMixerGroup.audioMixer, FadeMixerGroup.s_BACKGROUND_VOL, 1, 0));
+        }
+
+        public void FadeInBackgroundSfx()
+        {
+            StartCoroutine(FadeMixerGroup.StartFade(backgroundFxMixerGroup.audioMixer, FadeMixerGroup.s_BACKGROUND_VOL, 1, _CurrentBackgroundSfxVolume));
         }
 
         void CheckGameIntensity()
@@ -128,6 +142,9 @@ namespace Game.Astroids
 
         void PlayMusic(MusicLevel level)
         {
+            if (level != MusicLevel.low && level != MusicLevel.medium && level != MusicLevel.high)
+                _prevIntensity = -1;
+
             _isPlayingFirstAudioSource = !_isPlayingFirstAudioSource;
             var timeToFade = _currentLevel == MusicLevel.none ? startGameFade : inGameFade;
 

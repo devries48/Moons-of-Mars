@@ -121,11 +121,11 @@ namespace Game.Astroids
             var endPos = new Vector3(p.x - 3f, p.y + 1.5f, p.z - 7);
 
             transform.position = startPos;
-            LeanTween.move(gameObject, endPos, 2).setOnComplete(() =>
-            {
-                StartCoroutine(PlayerShipEndStageComplete(endPos));
-            });
-            //GameManager.SwitchStageCam(AsteroidsGameManager.StageCamera.background);
+            LeanTween.move(gameObject, endPos, 2)
+                .setOnComplete(() =>
+                {
+                    StartCoroutine(PlayerShipEndStageComplete(endPos));
+                });
         }
 
         IEnumerator PlayerShipEndStageComplete(Vector3 pos)

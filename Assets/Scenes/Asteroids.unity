@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 934970957}
-  m_IndirectSpecularColor: {r: 0.01445807, g: 0.012945865, b: 0.015461994, a: 1}
+  m_IndirectSpecularColor: {r: 0.014454615, g: 0.012939791, b: 0.01544608, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10767,8 +10767,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicData: {fileID: 11400000, guid: 99f5d6b62f046bf4089a9d06579a8573, type: 2}
   musicMixerGroup: {fileID: 7847922092003765503, guid: f0ee2cafe93b4944ea453c31432902d0, type: 2}
-  startGameFade: 10
-  inGameFade: 5
+  backgroundFxMixerGroup: {fileID: 8703520674495269211, guid: ab1bd020727659345a310a8a133db8b8, type: 2}
+  startGameFade: 8
+  inGameFade: 2
   mediumIntensityStart: 10
   mediumIntensityStop: 5
   highIntensityStart: 20
@@ -12376,6 +12377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_GameManagerData: {fileID: 11400000, guid: 96e75fb90e583784c977abc69fb93dd2, type: 2}
+  m_AudioManager: {fileID: 1411462131}
   m_HudManager: {fileID: 1129248845}
   m_LevelManager: {fileID: 294564720}
   m_MainMenuWindow: {fileID: 30138596914342828}
