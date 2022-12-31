@@ -1,21 +1,28 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
+using static SceneLoader;
 
 namespace Game.Astroids
 {
     [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour
     {
+        [Header("Elements")]
         [SerializeField] GameObject gameIntro;
         [SerializeField] GameObject stageResults;
         [SerializeField] GameObject stageContinue;
+        [SerializeField] Transform stageCompleteStart;
+        [SerializeField] Transform stageCompleteEnd;
 
-        public Transform[] controlPoints;
-        public Vector3[] m_EarthPath;
+        [SerializeField] Stage[] stages;
 
-        internal bool m_StageLoaded;
+        Vector3 _gizmoPosition;
+        [HideInInspector] public int _gizmoStageIndex;
 
-        float _moveToCam = 8;
+        internal bool m_stageLoaded;
+        int _currentStageIndex;
+        readonly float _moveToCam = 8;
 
         AsteroidsGameManager GameManager
         {
@@ -32,10 +39,10 @@ namespace Game.Astroids
         }
         AsteroidsGameManager __gameManager;
 
-        Vector3 _gizmosPosition;
-
         void Start()
         {
+            _currentStageIndex = 0;
+
             gameIntro.SetActive(true);
             stageResults.SetActive(false);
             stageContinue.SetActive(false);
@@ -49,10 +56,32 @@ namespace Game.Astroids
         }
 
         public void HideGameIntro() => HideGroup(gameIntro);
-
         public void HideStageResuls() => HideGroup(stageResults);
+        public SceneName GetFirstStage() => GetStage(0).SceneName;
+        public SceneName GetNextStage() => GetStage(_currentStageIndex + 1).SceneName;
 
-        public void HideGroup(GameObject group)
+        public Vector3[] GetStageCompletePath() => GetStagePath(_currentStageIndex);
+
+        Stage GetStage(int index)
+        {
+            _currentStageIndex = index;
+            return stages[index];
+        }
+
+        Vector3[] GetStagePath(int index)
+        {
+            var stage = GetStage(index);
+
+            return new Vector3[]
+            {
+                stageCompleteStart.position,
+                stage.pathStartPoint.position,
+                stage.pathEndPoint.position,
+                stageCompleteEnd.position
+            };
+        }
+
+        void HideGroup(GameObject group)
         {
             var p = group.transform.position;
             var to = new Vector3(p.x, p.y, p.z + _moveToCam);
@@ -64,13 +93,12 @@ namespace Game.Astroids
                 });
         }
 
-
         IEnumerator WaitForStageToLoad()
         {
             yield return new WaitForSeconds(1); // wait for music change (checks every .5 seconds). It interrupted the mixer group fade.
             GameManager.m_AudioManager.FadeOutBackgroundSfx();
 
-            while (!m_StageLoaded)
+            while (!m_stageLoaded)
                 yield return null;
 
             yield return new WaitForSeconds(8);
@@ -89,20 +117,42 @@ namespace Game.Astroids
 
         void OnDrawGizmos()
         {
-            if (controlPoints.Length != 4)
+            if (_gizmoStageIndex >= stages.Length)
                 return;
+
+            var points = new Vector3[4];
+            points[0] = stageCompleteStart.position;
+            points[3] = stageCompleteEnd.position;
+
+            var trans = stages[_gizmoStageIndex].pathStartPoint;
+            if (trans != null)
+                points[1] = trans.position;
+
+            trans = stages[_gizmoStageIndex].pathEndPoint;
+            if (trans != null)
+                points[2] = trans.position;
+
+            foreach (var p in points)
+                if (p == null)
+                    return;
 
             for (float t = 0; t <= 1; t += 0.05f)
             {
-                _gizmosPosition = Mathf.Pow(1 - t, 3) * controlPoints[0].position + 3 * Mathf.Pow(1 - t, 2) * t * controlPoints[1].position + 3 * (1 - t) * Mathf.Pow(t, 2) * controlPoints[2].position + Mathf.Pow(t, 3) * controlPoints[3].position;
+                _gizmoPosition = Mathf.Pow(1 - t, 3) * points[0] + 3 * Mathf.Pow(1 - t, 2) * t * points[1] + 3 * (1 - t) * Mathf.Pow(t, 2) * points[2] + Mathf.Pow(t, 3) * points[3];
 
-                Gizmos.DrawSphere(_gizmosPosition, 0.05f);
+                Gizmos.DrawSphere(_gizmoPosition, 0.05f);
             }
 
-            Gizmos.DrawLine(new Vector3(controlPoints[0].position.x, controlPoints[0].position.y, controlPoints[0].position.z), new Vector3(controlPoints[1].position.x, controlPoints[1].position.y, controlPoints[1].position.z));
-            Gizmos.DrawLine(new Vector3(controlPoints[2].position.x, controlPoints[2].position.y, controlPoints[2].position.z), new Vector3(controlPoints[3].position.x, controlPoints[3].position.y, controlPoints[3].position.z));
-
+            Gizmos.DrawLine(new Vector3(points[0].x, points[0].y, points[0].z), new Vector3(points[1].x, points[1].y, points[1].z));
+            Gizmos.DrawLine(new Vector3(points[2].x, points[2].y, points[2].z), new Vector3(points[3].x, points[3].y, points[3].z));
         }
+    }
 
+    [System.Serializable]
+    public class Stage
+    {
+        public SceneName SceneName;
+        public Transform pathStartPoint;
+        public Transform pathEndPoint;
     }
 }

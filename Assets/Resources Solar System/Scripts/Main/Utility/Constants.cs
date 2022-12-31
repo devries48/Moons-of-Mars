@@ -1,10 +1,5 @@
 public static class Constants
 {
-
-    // The id's of the scenes can be obtained in File/Build Settings...
-    internal const int SceneMain = 0;
-    internal const int SceneAstroids = 1;
-
     internal const string SpaceDebri = "SPACE DEBRI";
     internal const string SolarSystemMain = "SOLAR SYSTEM";
 

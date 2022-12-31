@@ -41,6 +41,7 @@ namespace Game.Astroids
         #region editor fields
         public GameManagerData m_GameManagerData;
         [Header("Managers")]
+        [SerializeField] SceneLoader sceneManager;
         public AudioManager m_AudioManager;
         public HudManager m_HudManager;
         public LevelManager m_LevelManager;
@@ -90,7 +91,6 @@ namespace Game.Astroids
         internal CamBounds m_camBounds;
         internal CurrentLevel m_level;
         internal DebugSettings m_debug = new();
-        //internal bool m_StageStartCameraActive;
 
         CinemachineBrain _cinemachineBrain;
         GameStatus _gameStatus;
@@ -124,15 +124,15 @@ namespace Game.Astroids
         IEnumerator GameLoop()
         {
             // Load first stage
-            m_LevelManager.m_StageLoaded = true;
-
             var t = 0f;
-            while (!m_LevelManager.m_StageLoaded)
+            sceneManager.LoadSceneAsync(m_LevelManager.GetFirstStage());
+            while (!sceneManager.m_stageLoaded)
             {
                 t += Time.deltaTime;
                 yield return null;
             }
-            yield return Wait(3 - t);
+
+            yield return Wait(4 - t);
             m_LevelManager.HideGameIntro();
             yield return Wait(.5f);
             SwitchStageCam(StageCamera.far);

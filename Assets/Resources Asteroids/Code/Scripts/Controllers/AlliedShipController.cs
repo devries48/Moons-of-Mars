@@ -94,7 +94,7 @@ namespace Game.Astroids
         {
             float t = 0;
             float speedModifier = 1 / duration;
-            var path = GameManager.m_LevelManager.m_EarthPath;
+            var path = GameManager.m_LevelManager.GetStageCompletePath();
 
             GameManager.PlayEffect(EffectsManager.Effect.hit4, path[0], .1f, Utils.OjectLayer.Background);
             PlaySpawnClip(duration);
