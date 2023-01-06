@@ -11,7 +11,8 @@ namespace Game.Astroids
             scoreMinus,
             gameStart,
             levelComplete,
-            gameOver
+            stageComplete,
+            gameOver,
         }
 
         [Header("Clips")]
@@ -19,6 +20,7 @@ namespace Game.Astroids
         [SerializeField] AudioClip scoreMinus;
         [SerializeField] AudioClip[] gameStart;
         [SerializeField] AudioClip[] levelComplete;
+        [SerializeField] AudioClip[] stageComplete;
         [SerializeField] AudioClip[] gameOver;
 
         #region properties
@@ -46,6 +48,7 @@ namespace Game.Astroids
                 Clip.scoreMinus => scoreMinus,
                 Clip.gameStart => RandomClip(gameStart),
                 Clip.levelComplete => RandomClip(levelComplete),
+                Clip.stageComplete => RandomClip(stageComplete),
                 Clip.gameOver => RandomClip(gameOver),
                 _ => null
             };

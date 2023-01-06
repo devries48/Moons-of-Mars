@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.VFX;
 
 namespace Game.Astroids
 {
@@ -82,7 +81,7 @@ namespace Game.Astroids
                 var astroid = _astoidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
                 astroid.GetComponent<AsteroidController>().SetGeneration(generation);
 
-                GameManager.m_level.AstroidAdd();
+                GameManager.m_LevelManager.AddAstroid();
             }
         }
 

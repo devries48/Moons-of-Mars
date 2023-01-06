@@ -136,8 +136,8 @@ namespace Game.Astroids
 
         int GetCurrentIntensity()
         {
-            var lvl = GameManager.m_level;
-            return lvl.AstroidsActive + lvl.TotalUfosActive;
+            var lvl = GameManager.m_LevelManager;
+            return lvl.AstroidsActive + lvl.UfosActive;
         }
 
         void PlayMusic(MusicLevel level)

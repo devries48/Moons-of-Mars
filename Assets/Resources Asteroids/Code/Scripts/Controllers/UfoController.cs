@@ -48,7 +48,7 @@ namespace Game.Astroids
             StartCoroutine(AudioUtil.FadeIn(engineAudio, .5f));
             SetRandomShipBehaviour();
             ShowLights();
-            GameManager.m_level.UfoAdd(m_ufoType);
+            GameManager.m_LevelManager.AddUfo(m_ufoType);
 
             base.OnEnable();
         }

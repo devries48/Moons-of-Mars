@@ -1,5 +1,3 @@
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -134,13 +132,14 @@ namespace Game.Astroids
 
         public void StageEndClick()
         {
+
             GameManager.m_GameManagerData.StageCompleteAnimation();
         }
 
         void UpdatePanel()
         {
-            astroidsCount.text = GameManager.m_level.AstroidsActive.ToString();
-            ufoCount.text = GameManager.m_level.TotalUfosActive.ToString();
+            astroidsCount.text = GameManager.m_LevelManager.AstroidsActive.ToString();
+            ufoCount.text = GameManager.m_LevelManager.UfosActive.ToString();
         }
 
     }

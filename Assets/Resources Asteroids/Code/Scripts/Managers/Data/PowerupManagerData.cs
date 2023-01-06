@@ -76,7 +76,7 @@ namespace Game.Astroids
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (GameManager.m_level.AstroidsActive > 2 && GameManager.IsGamePlaying)
+                if (GameManager.m_LevelManager.AstroidsActive > 2 && GameManager.IsGamePlaying)
                     ShuttleLaunch();
             }
         }

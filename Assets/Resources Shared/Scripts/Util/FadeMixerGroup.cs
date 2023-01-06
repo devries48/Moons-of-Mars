@@ -21,7 +21,6 @@ public static class FadeMixerGroup
         {
             currentTime += Time.deltaTime;
             float newVol = Mathf.Lerp(currentVol, targetValue, currentTime / duration);
-            Debug.Log("Time: " + currentTime + " Vol: "+ newVol);
             audioMixer.SetFloat(exposedParam, Mathf.Log10(newVol) * 20);
             yield return null;
         }

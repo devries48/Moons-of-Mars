@@ -2,6 +2,8 @@ using UnityEngine;
 using System.Collections;
 using TMPro;
 using Announcers;
+using System;
+using static Cinemachine.DocumentationSortingAttribute;
 
 namespace Game.Astroids
 {
@@ -70,10 +72,7 @@ namespace Game.Astroids
             Score.OnEarn += ScoreEarned;
         }
 
-        void OnDisable()
-        {
-            Score.OnEarn -= ScoreEarned;
-        }
+        void OnDisable() => Score.OnEarn -= ScoreEarned;
 
         /// <summary>
         /// Set window in start position & hide ui items
@@ -117,10 +116,7 @@ namespace Game.Astroids
                 Announce.LevelStarts(level);
         }
 
-        public void LevelPlay()
-        {
-            Announce.LevelPlaying();
-        }
+        public void LevelPlay() => Announce.LevelPlaying();
 
         public IEnumerator LevelCleared(int level)
         {
@@ -131,6 +127,15 @@ namespace Game.Astroids
                 yield return null;
 
             Score.LevelCleared(level);
+        }
+
+        public IEnumerator StageCleared(int stage)
+        {
+            Announce.StageCleared();
+
+            PlayAudio(UISounds.Clip.stageComplete);
+            while (AudioPlaying)
+                yield return null;
         }
 
         public IEnumerator GameOver()
@@ -145,9 +150,11 @@ namespace Game.Astroids
             Reset();
         }
 
+        public void ClearAnnouncements() => Announce.ClearAnnouncements();
+
         void Reset()
         {
-            Announce.ClearAnnouncements();
+            ClearAnnouncements();
             Score.Reset();
         }
 
@@ -213,23 +220,16 @@ namespace Game.Astroids
                     pointsText.color = color;
                 })
                 .setEaseOutCubic()
-                .setOnComplete(() =>
-                {
-                    _displayPointsPool.ReturnToPool(pointsObj);
-                });
+                .setOnComplete(() => _displayPointsPool.ReturnToPool(pointsObj));
 
             var clip = (points > 0) ? UISounds.Clip.scorePlus : UISounds.Clip.scoreMinus;
-            //PlayAudio(clip);
             GameManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
         }
 
         void TweenColor(Color begin, Color end, float time, float delay = default)
         {
             LeanTween.value(UiScore.gameObject, 0.1f, 1f, time).setDelay(delay)
-                .setOnUpdate((value) =>
-                {
-                    UiScore.color = Color.Lerp(begin, end, value);
-                });
+                .setOnUpdate((value) => UiScore.color = Color.Lerp(begin, end, value));
         }
 
         void SetScore(int points)
@@ -238,10 +238,7 @@ namespace Game.Astroids
                 UiScore.text = string.Format(scoreFormat, points);
         }
 
-        void BuildPools()
-        {
-            _displayPointsPool = GameObjectPool.Build(prefabDisplayPoints, 1);
-        }
+        void BuildPools() => _displayPointsPool = GameObjectPool.Build(prefabDisplayPoints, 1);
 
     }
 }

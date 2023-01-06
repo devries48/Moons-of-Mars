@@ -32,7 +32,11 @@ namespace Game.Astroids
             _isPackageEjected = false;
 
             _oldPos = new();
-            if (!isPlayer) MoveShipIn(duration);
+            if (!isPlayer)
+            {
+                PlaySpawnClip(duration);
+                MoveShipIn(duration);
+            }
         }
 
         protected override void FixedUpdate()
@@ -122,10 +126,7 @@ namespace Game.Astroids
 
             transform.position = startPos;
             LeanTween.move(gameObject, endPos, 2)
-                .setOnComplete(() =>
-                {
-                    StartCoroutine(PlayerShipEndStageComplete(endPos));
-                });
+                .setOnComplete(() => StartCoroutine(PlayerShipEndStageComplete(endPos)));
         }
 
         IEnumerator PlayerShipEndStageComplete(Vector3 pos)
@@ -138,6 +139,9 @@ namespace Game.Astroids
 
             RemoveFromGame();
             transform.localScale = transform.localScale * 10f;
+
+            // Start loading new stage
+            GameManager.m_LevelManager.LoadNewStage();
         }
 
         IEnumerator IncreaseThrust(float delay)

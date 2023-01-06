@@ -34,7 +34,21 @@ namespace Game.Astroids
             }
         }
         AsteroidsGameManager __gameManager;
+
+         LevelManager LevelManager
+        {
+            get
+            {
+                if (__levelManager == null)
+                    __levelManager = GameManager.m_LevelManager;
+
+                return __levelManager;
+            }
+        }
+       LevelManager __levelManager;
+
         #endregion
+
 
         GameObjectPool _ufoPool;
 
@@ -47,12 +61,12 @@ namespace Game.Astroids
 
             while (GameManager.IsGameActive)
             {
-                while (!GameManager.IsGamePlaying || !GameManager.m_level.CanAddUfo || GameManager.m_debug.NoUfos)
+                while (!GameManager.IsGamePlaying || !LevelManager.CanAddUfo || GameManager.m_debug.NoUfos)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (GameManager.m_level.AstroidsActive > 1 && GameManager.IsGamePlaying)
+                if (LevelManager.AstroidsActive > 1 && GameManager.IsGamePlaying)
                     UfoLaunch();
             }
         }

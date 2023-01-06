@@ -35,13 +35,12 @@ namespace Game.Astroids
         #endregion
 
         enum Menu { none = 0, start = 1, exit = 2 }
-        public enum GameStatus { none, menu, playing, paused, stage, gameover, quit }
+        public enum GameStatus { intro, start, menu, playing, paused, stage, gameover, quit }
         public enum StageCamera { start, far, background, end }
 
         #region editor fields
         public GameManagerData m_GameManagerData;
         [Header("Managers")]
-        [SerializeField] SceneLoader sceneManager;
         public AudioManager m_AudioManager;
         public HudManager m_HudManager;
         public LevelManager m_LevelManager;
@@ -89,7 +88,6 @@ namespace Game.Astroids
         #region fields
         internal PlayerShipController m_playerShip;
         internal CamBounds m_camBounds;
-        internal CurrentLevel m_level;
         internal DebugSettings m_debug = new();
 
         CinemachineBrain _cinemachineBrain;
@@ -123,55 +121,47 @@ namespace Game.Astroids
         #region game loop
         IEnumerator GameLoop()
         {
-            // Load first stage
-            var t = 0f;
-            sceneManager.LoadSceneAsync(m_LevelManager.GetFirstStage());
-            while (!sceneManager.m_stageLoaded)
-            {
-                t += Time.deltaTime;
-                yield return null;
-            }
-
-            yield return Wait(4 - t);
-            m_LevelManager.HideGameIntro();
-            yield return Wait(.5f);
-            SwitchStageCam(StageCamera.far);
-            yield return Wait(.1f);
-            SwitchStageCam(StageCamera.background);
-            yield return Wait(2f);
-
-            GameStart();
+            m_LevelManager.ShowGameIntro();
 
             while (_gameStatus != GameStatus.quit)
             {
-                if (_gameStatus == GameStatus.none)
+                while (_gameStatus != GameStatus.playing)
                 {
-                    Score.Reset();
-                    SetGameStatus(GameStatus.menu);
-                    string result = null;
+                    if (_gameStatus == GameStatus.start)
+                    {
+                        Score.Reset();
+                        SetGameStatus(GameStatus.menu);
+                        string result = null;
 
-                    yield return Run<string>(UiManager.ShowMainMenu(), (output) => result = output);
+                        yield return Run<string>(UiManager.ShowMainMenu(), (output) => result = output);
+                    }
+                    yield return null;
                 }
 
-                while (_gameStatus != GameStatus.playing)
-                    yield return null;
-
-                yield return StartCoroutine(LevelStart());
-                yield return StartCoroutine(LevelPlay());
-                yield return StartCoroutine(LevelEnd());
+                yield return StartCoroutine(m_LevelManager.LevelStartLoop());
+                yield return StartCoroutine(m_LevelManager.LevelPlayLoop());
+                yield return StartCoroutine(m_LevelManager.LevelEndLoop());
 
                 System.GC.Collect();
             }
         }
 
-        internal void GameStart()
+        public void GameStart()
         {
             m_playerShip = m_GameManagerData.CreatePlayer();
-            m_level.Level1();
-            SetGameStatus(GameStatus.none);
+            m_LevelManager.StartLevel1();
+            SetGameStatus(GameStatus.start);
 
             StartCoroutine(UfoManager.UfoSpawnLoop());
             StartCoroutine(PowerupManager.PowerupSpawnLoop());
+        }
+
+        public void GameOver()
+        {
+            SetGameStatus(GameStatus.gameover);
+            StartCoroutine(UiManager.GameOver());
+            StartCoroutine(RemoveRemainingObjects());
+            StartCoroutine(StartNewGame());
         }
 
         public void StageStartNew() => StartCoroutine(StageStart());
@@ -212,62 +202,6 @@ namespace Game.Astroids
 
         #endregion
 
-        #region level
-        IEnumerator LevelStart()
-        {
-            UiManager.LevelStarts(m_level.Level);
-
-            if (m_level.Level == 1)
-            {
-                while (UiManager.AudioPlaying)
-                    yield return null;
-
-                m_playerShip.Spawn();
-                yield return Wait(2);
-
-                m_HudManager.HudShow();
-                m_playerShip.EnableControls();
-            }
-            yield return Wait(1.5f);
-
-            m_playerShip.Refuel();
-            m_GameManagerData.SpawnAsteroids(m_level.AstroidsForLevel);
-        }
-
-        IEnumerator LevelPlay()
-        {
-            UiManager.LevelPlay();
-
-            while (m_playerShip.m_isAlive && m_level.HasEnemy || m_debug.NoAstroids)
-                yield return null;
-        }
-
-        IEnumerator LevelEnd()
-        {
-            bool gameover = !m_playerShip.m_isAlive;
-
-            if (gameover)
-            {
-                SetGameStatus(GameStatus.gameover);
-                StartCoroutine(UiManager.GameOver());
-                StartCoroutine(RemoveRemainingObjects());
-
-                while (UiManager.AudioPlaying)
-                    yield return null;
-
-                yield return Wait(1f);
-
-                GameStart();
-            }
-            else
-            {
-                StartCoroutine(UiManager.LevelCleared(m_level.Level));
-                yield return Wait(2f);
-
-                m_level.LevelAdvance();
-            }
-            yield return Wait(1);
-        }
 
         public IEnumerator RemoveRemainingObjects()
         {
@@ -279,8 +213,6 @@ namespace Game.Astroids
 
             yield return null;
         }
-
-        #endregion
 
         public void MenuSelect(int i)
         {
@@ -307,7 +239,7 @@ namespace Game.Astroids
             }
         }
 
-        public bool IsStageStartCameraActive() 
+        public bool IsStageStartCameraActive()
             => _cinemachineBrain.ActiveVirtualCamera.Name == m_StageStartCamera.name;
 
         public void SetGameStatus(GameStatus status)
@@ -407,9 +339,19 @@ namespace Game.Astroids
             }
         }
 
-        public void AsterodDestroyed() => m_level.AstroidRemove();
+        public void AsterodDestroyed() => m_LevelManager.RemoveAstroid();
 
-        public void UfoDestroyed(UfoType type) => m_level.UfoRemove(type);
+        public void UfoDestroyed(UfoType type) => m_LevelManager.RemoveUfo(type);
+
+        IEnumerator StartNewGame()
+        {
+            while (UiManager.AudioPlaying)
+                yield return null;
+
+            yield return Wait(1f);
+
+            GameStart();
+        }
 
         public static WaitForSeconds Wait(float duration) => new(duration);
 
@@ -423,7 +365,7 @@ namespace Game.Astroids
             }
             output((T)result);
         }
-
+ 
         #region struct CamBounds
 
         public readonly struct CamBounds
@@ -448,59 +390,6 @@ namespace Game.Astroids
         }
         #endregion
 
-        #region struct CurrentLevel
-
-        public struct CurrentLevel
-        {
-            int _level;
-            int _astroidsForLevel;
-            int _asteroidsActive;
-            int _ufosGreenActive;
-            int _ufosRedActive;
-            int _ufosForLevel;
-
-            public int Level => _level;
-            public int AstroidsForLevel => _astroidsForLevel;
-            public int AstroidsActive => _asteroidsActive;
-            public int TotalUfosActive => _ufosGreenActive + _ufosRedActive;
-            public int UfosGreenActive => _ufosGreenActive;
-            public int UfosRedActive => _ufosRedActive;
-            public bool HasEnemy => _asteroidsActive > 0 || TotalUfosActive > 0;
-            public bool CanAddUfo => TotalUfosActive < _ufosForLevel && _asteroidsActive > 0;
-
-            public void AstroidAdd() => _asteroidsActive++;
-            public void AstroidRemove() => _asteroidsActive--;
-            public void UfoAdd(UfoType type)
-            {
-                if (type == UfoType.green)
-                    _ufosGreenActive++;
-                else
-                    _ufosRedActive++;
-            }
-
-            public void UfoRemove(UfoType type)
-            {
-                if (type == UfoType.green)
-                    _ufosGreenActive--;
-                else
-                    _ufosRedActive--;
-            }
-
-            public void Level1() => SetLevel(1);
-            public void LevelAdvance() => _level++;
-
-            void SetLevel(int level)
-            {
-                _level = level;
-                _astroidsForLevel = level + 1;
-                _ufosForLevel = level;
-
-                _asteroidsActive = 0;
-                _ufosGreenActive = 0;
-                _ufosRedActive = 0;
-            }
-        }
-        #endregion
 
         internal class DebugSettings
         {

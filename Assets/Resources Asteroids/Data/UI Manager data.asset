@@ -31,16 +31,17 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 58cfe99e11113754ab24aa9cc00ed373, type: 3}
     - {fileID: 8300000, guid: 54065fe859a5a0a499cfb4b9cea280c0, type: 3}
     levelComplete:
-    - {fileID: 8300000, guid: a42be2a2dfc2f1247bd86b358110d0f2, type: 3}
     - {fileID: 8300000, guid: 1c3fc0a6330595743bd61b1583676eb0, type: 3}
-    - {fileID: 8300000, guid: abf6308f5ff04d64c9d190a74e79c206, type: 3}
-    - {fileID: 8300000, guid: fc9c04113c356f041beaf675bd260b17, type: 3}
     - {fileID: 8300000, guid: 7a268f26bd4a9f04bbc634eeb882b676, type: 3}
-    - {fileID: 8300000, guid: 20dfd5450a5881643a3e2faf4b7d43be, type: 3}
     - {fileID: 8300000, guid: b7d3c34a90dcdf0449999ae5dd158ff2, type: 3}
     - {fileID: 8300000, guid: b347a3df2173f1949bdc8b1e961648b8, type: 3}
     - {fileID: 8300000, guid: 9960c263ed62af94f8c8dbcb2d4813c1, type: 3}
     - {fileID: 8300000, guid: 5340100a8b531cb4b8488befe3ec2f65, type: 3}
+    stageComplete:
+    - {fileID: 8300000, guid: a42be2a2dfc2f1247bd86b358110d0f2, type: 3}
+    - {fileID: 8300000, guid: abf6308f5ff04d64c9d190a74e79c206, type: 3}
+    - {fileID: 8300000, guid: fc9c04113c356f041beaf675bd260b17, type: 3}
+    - {fileID: 8300000, guid: 20dfd5450a5881643a3e2faf4b7d43be, type: 3}
     - {fileID: 8300000, guid: 843128c6528df4d44a9680c843332624, type: 3}
     - {fileID: 8300000, guid: 65bff2b6618011b4ca88b0b6fa38d026, type: 3}
     gameOver:
@@ -79,3 +80,4 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 068cc3291fd399048b0926591a35443c, type: 3}
     - {fileID: 8300000, guid: 52fc07685c4be14429ef35552e317756, type: 3}
     - {fileID: 8300000, guid: 00a7dbac8bab3354bb67cecdda369f30, type: 3}
+    m_UiAudio: {fileID: 0}
