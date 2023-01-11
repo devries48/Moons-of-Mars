@@ -37,18 +37,6 @@ namespace Game.Astroids
         }
         AsteroidsGameManager __gameManager;
 
-        GameAnnouncer Announce
-        {
-            get
-            {
-                if (__announce == null)
-                    __announce = GameAnnouncer.AnnounceTo(TextAnnouncerBase.TextComponent(GameManager.m_AnnouncerTextUI));
-
-                return __announce;
-            }
-        }
-        GameAnnouncer __announce;
-
         GameObject UiMenu => GameManager != null ? GameManager.m_MainMenuWindow : null;
         TextMeshProUGUI UiScore => GameManager != null ? GameManager.m_ScoreTextUI : null;
 
@@ -105,60 +93,12 @@ namespace Game.Astroids
             return TweenUtil.MenuWindowClose(UiMenu);
         }
 
-        public void LevelStarts(int level)
-        {
-            if (level == 1)
-            {
-                Announce.GameStart();
-                PlayAudio(UISounds.Clip.gameStart);
-            }
-            else
-                Announce.LevelStarts(level);
-        }
 
-        public void LevelPlay() => Announce.LevelPlaying();
 
-        public IEnumerator LevelCleared(int level)
-        {
-            Announce.LevelCleared();
+        //public void ClearAnnouncements() => Announce.ClearAnnouncements();
 
-            PlayAudio(UISounds.Clip.levelComplete);
-            while (AudioPlaying)
-                yield return null;
 
-            Score.LevelCleared(level);
-        }
-
-        public IEnumerator StageCleared(int stage)
-        {
-            Announce.StageCleared();
-
-            PlayAudio(UISounds.Clip.stageComplete);
-            while (AudioPlaying)
-                yield return null;
-        }
-
-        public IEnumerator GameOver()
-        {
-            Announce.GameOver();
-            yield return AsteroidsGameManager.Wait(2);
-
-            PlayAudio(UISounds.Clip.gameOver);
-            while (AudioPlaying)
-                yield return null;
-
-            Reset();
-        }
-
-        public void ClearAnnouncements() => Announce.ClearAnnouncements();
-
-        void Reset()
-        {
-            ClearAnnouncements();
-            Score.Reset();
-        }
-
-        void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);
+        public void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);
 
         IEnumerator PlayDelayedAudio(UISounds.Clip clip, float delay)
         {

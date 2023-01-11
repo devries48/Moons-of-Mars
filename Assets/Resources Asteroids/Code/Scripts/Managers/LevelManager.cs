@@ -1,4 +1,7 @@
+using Announcers;
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 using static Game.Astroids.AsteroidsGameManager;
@@ -20,6 +23,12 @@ namespace Game.Astroids
         [SerializeField] GameObject stageContinue;
         [SerializeField] Transform stageCompleteStart;
         [SerializeField] Transform stageCompleteEnd;
+
+        [Header("Bonus")]
+        [Range(0, 200)] public int timeBonus = 100;
+        [Range(0, 200)] public int efficiencyBonus = 100;
+        [Range(0, 200)] public int destructionBonus = 100;
+        [Range(0, 200)] public int pickupBonus = 100;
 
         [SerializeField] Level[] levels;
         [SerializeField] Stage[] stages;
@@ -50,6 +59,20 @@ namespace Game.Astroids
         }
         AsteroidsGameManager __gameManager;
 
+        GameAnnouncer Announce
+        {
+            get
+            {
+                if (__announce == null)
+                    __announce = GameAnnouncer.AnnounceTo(TextAnnouncerBase.TextComponent(GameManager.m_AnnouncerTextUI));
+
+                return __announce;
+            }
+        }
+        GameAnnouncer __announce;
+
+        bool UIAudioPlaying => GameManager.UiManager.AudioPlaying;
+
         public int AstroidsActive
         {
             get
@@ -74,9 +97,22 @@ namespace Game.Astroids
 
         public bool CanAddUfo => _currentLevel.CanAddUfo;
 
+        public bool CanActivate(LevelAction action)
+        {
+            return action switch
+            {
+                LevelAction.powerUp => _currentLevel.CanAddPowerup,
+                LevelAction.greenUfo => _currentLevel.CanAddGreenUfo,
+                LevelAction.redUfo => _currentLevel.CanAddRedUfo,
+                _ => true
+            };
+        }
+
         public bool IsStageLoaded => sceneLoader.m_stageLoaded;
 
         #endregion
+
+        public enum Statistic { powerupSpawn, powerupDestroyed, powerupPickup, shotFired, shotHit }
 
         void Start()
         {
@@ -90,9 +126,10 @@ namespace Game.Astroids
 
         public void ShowGameIntro() => StartCoroutine(ShowGameIntroCore());
 
+
         public IEnumerator LevelStartLoop()
         {
-            GameManager.UiManager.LevelStarts(_currentLevel.Level);
+            AnnounceLevelStart(_currentLevel.Level);
 
             if (_currentLevel.Level == 1)
             {
@@ -113,10 +150,11 @@ namespace Game.Astroids
 
         public IEnumerator LevelPlayLoop()
         {
-            GameManager.UiManager.LevelPlay();
-
             while (GameManager.m_playerShip.m_isAlive && _currentLevel.HasEnemy || GameManager.m_debug.NoAstroids)
+            {
+                _currentLevel.StagePlaytime += Time.deltaTime;
                 yield return null;
+            }
         }
 
         public IEnumerator LevelEndLoop()
@@ -129,23 +167,77 @@ namespace Game.Astroids
             {
                 if (_currentLevel.IsStageComplete())
                 {
-                    StartCoroutine(GameManager.UiManager.StageCleared(_currentLevel.Stage));
+                    StartCoroutine(AnnounceStageCleared(_currentLevel.Stage));
                     yield return Wait(2f);
-                    GameManager.UiManager.ClearAnnouncements();
-                    GameManager.m_GameManagerData.StageCompleteAnimation();
 
+                    GameManager.m_GameManagerData.StageCompleteAnimation();
                     while (!GameManager.IsGamePlaying)
                         yield return null;
                 }
                 else
                 {
-                    StartCoroutine(GameManager.UiManager.LevelCleared(_currentLevel.Level));
+                    StartCoroutine(AnnounceLevelCleared(_currentLevel.Level));
                     yield return Wait(2f);
                 }
 
                 _currentLevel.LevelAdvance();
             }
             yield return Wait(1);
+        }
+
+
+        void AnnounceLevelStart(int level)
+        {
+            if (level == 1)
+            {
+                Announce.GameStart();
+                UIAudio(UISounds.Clip.gameStart);
+            }
+            else
+                Announce.LevelStarts(level);
+
+            StartCoroutine(AnnounceClear());
+        }
+
+        IEnumerator AnnounceLevelCleared(int level)
+        {
+            Announce.LevelCleared();
+            StartCoroutine(AnnounceClear());
+
+            Score.LevelCleared(level);
+
+            UIAudio(UISounds.Clip.levelComplete);
+            while (UIAudioPlaying)
+                yield return null;
+
+        }
+
+        IEnumerator AnnounceStageCleared(int stage)
+        {
+            Announce.StageCleared();
+            StartCoroutine(AnnounceClear());
+
+            UIAudio(UISounds.Clip.stageComplete);
+            while (UIAudioPlaying)
+                yield return null;
+        }
+
+        IEnumerator AnnounceClear()
+        {
+            yield return Wait(1);
+            Announce.ClearAnnouncements();
+        }
+
+        public IEnumerator AnnounceGameOver()
+        {
+            Announce.GameOver();
+            yield return Wait(2);
+
+            UIAudio(UISounds.Clip.gameOver);
+            while (UIAudioPlaying)
+                yield return null;
+
+            Announce.ClearAnnouncements();
         }
 
         public void StartLevel1() => _currentLevel.Level1();
@@ -160,7 +252,8 @@ namespace Game.Astroids
         public void AddAstroid() => _currentLevel.AstroidAdd();
         public void RemoveAstroid() => _currentLevel.AstroidRemove();
         public void AddUfo(UfoType m_ufoType) => _currentLevel.UfoAdd(m_ufoType);
-        public void RemoveUfo(UfoType type) => _currentLevel.UfoRemove(type);
+        public void RemoveUfo(UfoType type, bool destroyed) => _currentLevel.UfoRemove(type, destroyed);
+        public void AddStatistic(Statistic stat) => _currentLevel.AddStat(stat);
 
         public void ShowStageResults()
         {
@@ -174,6 +267,7 @@ namespace Game.Astroids
         public SceneName GetCurrentStage() => GetStage(_currentStageIndex).SceneName;
         public Vector3[] GetStageCompletePath() => GetStagePath(_currentStageIndex);
         public void LoadNewStage() => StartCoroutine(WaitForStageToLoad());
+        public StageStatistics GetStageResults() => _currentLevel.GetStageResults();
 
         void HideGameIntro() => HideGroup(gameIntro);
 
@@ -250,8 +344,9 @@ namespace Game.Astroids
             yield return Wait(2f);
 
             GameManager.GameStart();
-
         }
+
+        void UIAudio(UISounds.Clip clip) => GameManager.UiManager.PlayAudio(clip);
 
         void OnDrawGizmos()
         {
@@ -295,10 +390,77 @@ namespace Game.Astroids
     [System.Serializable]
     public class Stage
     {
+        public string Name;
+        public int SecondsToComplete;
         public SceneName SceneName;
         public Transform PathStartPoint;
         public Transform PathEndPoint;
         public LevelAction[] actions;
+    }
+
+    public class StageStatistics
+    {
+        public StageStatistics(int nr, Stage stage)
+        {
+            StageNr = nr;
+            _stage = stage;
+            _lvlManager = Instance.m_LevelManager;
+        }
+
+        public readonly int StageNr;
+        public string Name => _stage.Name;
+
+        public int TotalBonus { get; internal set; }
+
+        public float ShotsFired;
+        public float ShotsHit;
+        public int UfosSpawned;
+        public int UfosDestroyed;
+        public int PowerupsSpawned;
+        public int PowerupsPickedUp;
+        public int PowerupsDestroyed;
+        public int AstroidsDestroyed;
+
+        public float Playtime;
+
+        public int EfficiencyBonus;
+        public int TimeBonus;
+        public int DestrucionBonus;
+        public int PickupBonus;
+
+        readonly Stage _stage;
+        readonly LevelManager _lvlManager;
+
+
+        public void CalculateBonus()
+        {
+            if (ShotsFired > 0)
+                EfficiencyBonus = (int)Mathf.Round(ShotsHit / ShotsFired * _lvlManager.efficiencyBonus);
+
+            TimeBonus = CalcTimeBonus();
+
+            if (UfosSpawned> 0)
+                DestrucionBonus = (int)Mathf.Round(UfosDestroyed / UfosSpawned * _lvlManager.destructionBonus);
+            
+            if (PowerupsPickedUp> 0)
+                PickupBonus = (int)Mathf.Round((PowerupsSpawned + PowerupsDestroyed) / PowerupsPickedUp * _lvlManager.pickupBonus);
+            
+            TotalBonus = EfficiencyBonus + TimeBonus + DestrucionBonus + PickupBonus;
+        }
+
+        int CalcTimeBonus()
+        {
+            if (Playtime <= _stage.SecondsToComplete)
+                return _lvlManager.timeBonus;
+            else
+            {
+                var t = Playtime - (2 * _stage.SecondsToComplete);
+                if (t < 0)
+                    return (int)(Mathf.Abs(t) * .01f * _lvlManager.timeBonus);
+
+                return 0;
+            }
+        }
     }
 
     #region CurrentLevel
@@ -309,53 +471,76 @@ namespace Game.Astroids
         {
             _levels = levels;
             _stages = stages;
+            _stageStats = new List<StageStatistics>();
         }
 
         readonly Level[] _levels;
         readonly Stage[] _stages;
+        readonly List<StageStatistics> _stageStats;
 
         int _level;
         int _stage;
         int _stageLevel;
-        int _asteroidsForLevel;
-        int _ufosForLevel;
+        int _levelAsteriods;
+        int _levelUfos;
+        bool _levelUfoGreen;
+        bool _levelUfoRed;
+        bool _levelPowerup;
 
         int _asteroidsActive;
         int _ufosGreenActive;
         int _ufosRedActive;
 
+        StageStatistics _stats;
+
         public int Level => _level;
         public int Stage => _stage;
-        public int AsteroidsForLevel => _asteroidsForLevel;
+        public int AsteroidsForLevel => _levelAsteriods;
         public int AsteroidsActive => _asteroidsActive;
         public int TotalUfosActive => _ufosGreenActive + _ufosRedActive;
         int UfosGreenActive => _ufosGreenActive;
         int UfosRedActive => _ufosRedActive;
         public bool HasEnemy => _asteroidsActive > 0 || TotalUfosActive > 0;
-        public bool CanAddUfo => TotalUfosActive < _ufosForLevel && _asteroidsActive > 0;
+        public bool CanAddUfo => TotalUfosActive < _levelUfos && _asteroidsActive > 0;
+        public bool CanAddGreenUfo => _levelUfoGreen;
+        public bool CanAddRedUfo => _levelUfoRed;
+        public bool CanAddPowerup => _levelPowerup;
+
+        public float StagePlaytime
+        {
+            get { return _stats.Playtime; }
+            set { _stats.Playtime = value; }
+        }
 
         public void AstroidAdd() => _asteroidsActive++;
-        public void AstroidRemove() => _asteroidsActive--;
+        public void AstroidRemove()
+        {
+            _stats.AstroidsDestroyed++;
+            _asteroidsActive--;
+        }
+
         public void UfoAdd(UfoType type)
         {
             if (type == UfoType.green)
                 _ufosGreenActive++;
             else
                 _ufosRedActive++;
+
+            _stats.UfosSpawned++;
         }
 
-        public void UfoRemove(UfoType type)
+        public void UfoRemove(UfoType type, bool destroyed)
         {
             if (type == UfoType.green)
                 _ufosGreenActive--;
             else
                 _ufosRedActive--;
+
+            if (destroyed)
+                _stats.UfosDestroyed++;
         }
 
-        public void Level1()
-        {
-            SetLevel(1);
-        }
+        public void Level1() => SetLevel(1);
 
         public void LevelAdvance()
         {
@@ -365,46 +550,62 @@ namespace Game.Astroids
 
         public bool IsStageComplete() => _stageLevel == _levels.Length;
 
+        public StageStatistics GetStageResults() => _stats;
+
         void SetLevel(int level)
         {
+            bool loadStageActions = false;
+
             _level = level;
 
             if (_level == 1)
             {
                 _stage = 1;
-                _stageLevel = 1;
+                _levelAsteriods = 0;
+                _levelUfos = 0;
+                _levelUfoGreen = false;
+                _levelUfoRed = false;
+                _levelPowerup = false;
+
+                loadStageActions = true;
+            }
+            else if (_stageLevel > _levels.Length)
+            {
+                _stage++;
+                loadStageActions = true;
             }
 
-            if (_stageLevel > _levels.Length)
+            if (loadStageActions)
             {
                 _stageLevel = 1;
-                _stage++;
-                SetAstroidsForLevel(true);
-                SetUfosForLevel(true);
+                SetActionsForLevel(true);
             }
 
-            SetAstroidsForLevel();
-            SetUfosForLevel();
+            SetActionsForLevel();
+
+            _stats = new StageStatistics(_stage, _stages[_stage - 1]);
+            _stageStats.Add(_stats);
 
             _asteroidsActive = 0;
             _ufosGreenActive = 0;
             _ufosRedActive = 0;
         }
 
-        void SetAstroidsForLevel(bool isStage = false)
+        void SetActionsForLevel(bool isStage = false)
         {
-            Debug.Log("Stage: " + _stage);
-            Debug.Log("Level: " + _level);
+            _levelAsteriods += CountAction(LevelAction.asteroidAdd, isStage);
+            _levelAsteriods -= CountAction(LevelAction.asteroidRemove, isStage);
 
-            _asteroidsForLevel += CountAction(LevelAction.asteroidAdd, isStage);
-            _asteroidsForLevel -= CountAction(LevelAction.asteroidRemove, isStage);
-            Debug.Log("Asteroids: " + _asteroidsForLevel);
-        }
+            var greenUfo = CountAction(LevelAction.greenUfo, isStage);
+            var redUfo = CountAction(LevelAction.redUfo, isStage);
+            var powerup = CountAction(LevelAction.powerUp, isStage);
 
-        void SetUfosForLevel(bool isStage = false)
-        {
-            _ufosForLevel += CountAction(LevelAction.greenUfo, isStage);
-            _ufosForLevel += CountAction(LevelAction.redUfo, isStage);
+            if (greenUfo > 0) _levelUfoGreen = true;
+            if (redUfo > 0) _levelUfoRed = true;
+            if (powerup > 0) _levelPowerup = true;
+
+            _levelUfos += greenUfo + redUfo;
+
         }
 
         int CountAction(LevelAction action, bool isStage = false)
@@ -420,6 +621,30 @@ namespace Game.Astroids
                     c++;
 
             return c;
+        }
+
+        public void AddStat(LevelManager.Statistic stat)
+        {
+            switch (stat)
+            {
+                case LevelManager.Statistic.powerupSpawn:
+                    _stats.PowerupsSpawned++;
+                    break;
+                case LevelManager.Statistic.powerupDestroyed:
+                    _stats.PowerupsDestroyed++;
+                    break;
+                case LevelManager.Statistic.powerupPickup:
+                    _stats.PowerupsPickedUp++;
+                    break;
+                case LevelManager.Statistic.shotFired:
+                    _stats.ShotsFired++;
+                    break;
+                case LevelManager.Statistic.shotHit:
+                    _stats.ShotsHit++;
+                    break;
+                default:
+                    break;
+            }
         }
     }
     #endregion

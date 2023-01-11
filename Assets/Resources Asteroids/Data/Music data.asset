@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuMusic:
   - {fileID: 8300000, guid: 3411b7af76a2b954ab25a5fa46a1cd57, type: 3}
+  pauseMusic:
+  - {fileID: 8300000, guid: 48a10b14082292647ab39721277e04ca, type: 3}
   stageCompleteMusic:
   - {fileID: 8300000, guid: dcf4e961f51c95c439ab1ce0888f273c, type: 3}
   - {fileID: 8300000, guid: 9b1e0da2856122b4892e689fcf23999c, type: 3}

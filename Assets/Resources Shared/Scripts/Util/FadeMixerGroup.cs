@@ -12,7 +12,6 @@ public static class FadeMixerGroup
     {
         audioMixer.GetFloat(exposedParam, out float currentVol);
         currentVol = Mathf.Pow(10, currentVol / 20);
-        Debug.Log("current vol: " + currentVol +" target vol: "+ targetVolume) ;
 
         float targetValue = Mathf.Clamp(targetVolume, 0.0001f, 1);
         float currentTime = 0;
@@ -24,7 +23,6 @@ public static class FadeMixerGroup
             audioMixer.SetFloat(exposedParam, Mathf.Log10(newVol) * 20);
             yield return null;
         }
-        Debug.Log("new vol: " + currentVol);
 
         yield break;
     }

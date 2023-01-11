@@ -140,7 +140,8 @@ namespace Game.Astroids
 
         void HitByBullet(GameObject bullet)
         {
-            GameManager.AsterodDestroyed();
+            GameManager.m_LevelManager.RemoveAstroid();
+            GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
 
             RemoveFromGame(bullet);
             StartCoroutine(ExplodeAstroid());

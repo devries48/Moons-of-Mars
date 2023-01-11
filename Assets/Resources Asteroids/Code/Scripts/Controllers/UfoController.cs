@@ -71,7 +71,6 @@ namespace Game.Astroids
 
         protected override void HitByBullet(GameObject obj)
         {
-            print("UFOController: kogel");
             HideLights();
             CancelFire();
             base.HitByBullet(obj);
@@ -95,9 +94,11 @@ namespace Game.Astroids
         void SetRandomShipBehaviour()
         {
             m_ufoType = RandomEnumUtil<UfoType>.Get();
-            m_shipType = m_ufoType == UfoType.green
-                ? ShipType.ufoGreen
-                : ShipType.ufoRed;
+
+            if (!LevelAllowsUfo(m_ufoType))
+                m_ufoType = m_ufoType == UfoType.red ? UfoType.green : UfoType.red;
+
+            m_shipType = m_ufoType == UfoType.green ? ShipType.ufoGreen : ShipType.ufoRed;
 
             engineAudio.clip = m_ufoType == UfoType.green
                 ? UfoManager.m_GreenUfo.engineSound
@@ -117,6 +118,12 @@ namespace Game.Astroids
             _targetPos = SpawnPoint(side != SpawnSide.left);
 
             InvokeRepeating(nameof(FireRandomDirection), fireRate, fireRate);
+        }
+
+        bool LevelAllowsUfo(UfoType type)
+        {
+            var acion = type == UfoType.green ? Level.LevelAction.greenUfo : Level.LevelAction.redUfo;
+            return GameManager.m_LevelManager.CanActivate(acion);
         }
 
         void MoveUfo()
@@ -145,7 +152,7 @@ namespace Game.Astroids
         void RemoveShip()
         {
             CancelFire();
-            GameManager.UfoDestroyed(m_ufoType);
+            GameManager.m_LevelManager.RemoveUfo(m_ufoType, false);
             _isShipRemoved = true;
             StartCoroutine(AudioUtil.FadeOut(engineAudio, 1, () => { RemoveFromGame(); }));
         }

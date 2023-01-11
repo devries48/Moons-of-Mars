@@ -71,7 +71,6 @@ public class SceneLoader : MonoBehaviour
 
     IEnumerator LoadAsync(int scene)
     {
-        print("SceneID: "+ scene);
         var operation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
 
         while (!operation.isDone)

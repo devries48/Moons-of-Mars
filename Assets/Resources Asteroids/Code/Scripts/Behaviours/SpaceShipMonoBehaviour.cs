@@ -148,10 +148,7 @@ namespace Game.Astroids
             StartCoroutine(PowerupWeaponLoop());
         }
 
-        public void AddHyperJump()
-        {
-            RaisePowerUpJump();
-        }
+        public void AddHyperJump() => RaisePowerUpJump();
 
         IEnumerator PowerupWeaponLoop()
         {
@@ -210,10 +207,7 @@ namespace Game.Astroids
             }
         }
 
-        protected virtual void RaisePowerUpShield()
-        {
-            PowerUpActivatedEvent(m_pwrShieldTime, Powerup.shield, null);
-        }
+        protected virtual void RaisePowerUpShield() => PowerUpActivatedEvent(m_pwrShieldTime, Powerup.shield, null);
 
         void RaisePowerUpWeapon()
         {
@@ -250,7 +244,6 @@ namespace Game.Astroids
         }
 
         protected virtual void FireWeapon() => StartCoroutine(Shoot());
-
         protected virtual void HideModel() => ShowModel(false);
         protected void ShowModel() => ShowModel(true);
 
@@ -275,7 +268,8 @@ namespace Game.Astroids
                 TryGetComponent(out UfoController ufo);
                 if (ufo != null)
                 {
-                    GameManager.UfoDestroyed(ufo.m_ufoType);
+                    GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
+                    GameManager.m_LevelManager.RemoveUfo(ufo.m_ufoType, true);
                     Explode();
                 }
                 else
@@ -299,10 +293,7 @@ namespace Game.Astroids
             GameManager.PlayerDestroyed();
         }
 
-        void HitByAlienShip()
-        {
-            GameManager.PlayerDestroyed();
-        }
+        void HitByAlienShip() => GameManager.PlayerDestroyed();
 
         void BuilPool()
         {
@@ -319,6 +310,9 @@ namespace Game.Astroids
 
             _canShoot = false;
 
+            if (m_shipType == ShipType.player)
+                GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotFired);
+
             PlayAudioClip(SpaceShipSounds.Clip.shootBullet);
 
             if (_weaponPowerup == PowerupWeapon.shotSpread)
@@ -331,10 +325,7 @@ namespace Game.Astroids
             _canShoot = true;
         }
 
-        void ShootDefault()
-        {
-            Bullet().Fire(weapon.transform.up, m_shipType);
-        }
+        void ShootDefault() => Bullet().Fire(weapon.transform.up, m_shipType);
 
         void ShootSpread()
         {

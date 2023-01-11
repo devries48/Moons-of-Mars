@@ -71,7 +71,7 @@ namespace Game.Astroids
         {
             while (GameManager.IsGameActive)
             {
-                while (!GameManager.IsGamePlaying || GameManager.m_debug.NoPowerups)
+                while (!GameManager.IsGamePlaying || !GameManager.m_LevelManager.CanActivate(Level.LevelAction.powerUp) || GameManager.m_debug.NoPowerups)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
@@ -104,7 +104,6 @@ namespace Game.Astroids
             };
             if (mat != null)
                 pwr.Renderer.material = mat;
-
         }
 
         void BuildPools()

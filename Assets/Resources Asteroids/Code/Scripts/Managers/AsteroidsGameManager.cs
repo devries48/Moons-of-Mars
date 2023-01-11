@@ -75,6 +75,7 @@ namespace Game.Astroids
         }
         bool __isDay = true;
 
+        public bool IsGameQuit => _gameStatus == GameStatus.quit;
         public bool IsGameActive => _gameStatus != GameStatus.gameover;
         public bool IsGamePlaying => _gameStatus == GameStatus.playing;
         public bool IsGameStageComplete => _gameStatus == GameStatus.stage;
@@ -159,9 +160,10 @@ namespace Game.Astroids
         public void GameOver()
         {
             SetGameStatus(GameStatus.gameover);
-            StartCoroutine(UiManager.GameOver());
+            StartCoroutine(m_LevelManager.AnnounceGameOver());
             StartCoroutine(RemoveRemainingObjects());
             StartCoroutine(StartNewGame());
+            Score.Reset();
         }
 
         public void StageStartNew() => StartCoroutine(StageStart());
@@ -174,10 +176,11 @@ namespace Game.Astroids
             SwitchStageCam(StageCamera.background);
             yield return Wait(.5f);
 
+            m_playerShip.ResetPosition();
+
             PlayEffect(Effect.hit4, m_playerShip.transform.position, 1f, OjectLayer.Game);
             yield return Wait(.5f);
 
-            m_playerShip.ResetPosition();
             m_playerShip.Teleport(true);
             m_HudManager.HudShow();
             m_AudioManager.FadeInBackgroundSfx();
@@ -294,7 +297,6 @@ namespace Game.Astroids
         {
             backgroundFarCamera.Priority = 1;
 
-            print("Camera: " + camera);
             switch (camera)
             {
                 case StageCamera.start:
@@ -339,10 +341,6 @@ namespace Game.Astroids
             }
         }
 
-        public void AsterodDestroyed() => m_LevelManager.RemoveAstroid();
-
-        public void UfoDestroyed(UfoType type) => m_LevelManager.RemoveUfo(type);
-
         IEnumerator StartNewGame()
         {
             while (UiManager.AudioPlaying)
@@ -365,7 +363,7 @@ namespace Game.Astroids
             }
             output((T)result);
         }
- 
+
         #region struct CamBounds
 
         public readonly struct CamBounds

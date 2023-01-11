@@ -35,7 +35,7 @@ namespace Game.Astroids
         }
         AsteroidsGameManager __gameManager;
 
-         LevelManager LevelManager
+        LevelManager LevelManager
         {
             get
             {
@@ -45,7 +45,7 @@ namespace Game.Astroids
                 return __levelManager;
             }
         }
-       LevelManager __levelManager;
+        LevelManager __levelManager;
 
         #endregion
 

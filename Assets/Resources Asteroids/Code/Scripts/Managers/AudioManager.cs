@@ -72,11 +72,12 @@ namespace Game.Astroids
             }
             if (GameManager.IsGameStageComplete && _currentLevel != MusicLevel.stage)
                 PlayMusic(MusicLevel.stage);
+            else if (!GameManager.IsGameActive && _currentLevel != MusicLevel.menu)
+                _currentLevel = MusicLevel.none;
             else if (GameManager.IsGamePlaying)
                 CheckGameIntensity();
-            else if (!GameManager.IsGameActive)
+            else if (GameManager.IsGameQuit)
                 StopMusic();
-
             if (_currentTrack == null) return;
 
             if (_currentTrack.IsTrackEnding())
@@ -127,7 +128,7 @@ namespace Game.Astroids
 
             if (_currentLevel != newLevel)
             {
-                print("Current Level: " + _currentLevel + " - new: " + newLevel);
+                print("Current Level: " + _currentLevel + " - new level: " + newLevel);
                 PlayMusic(newLevel);
             }
 

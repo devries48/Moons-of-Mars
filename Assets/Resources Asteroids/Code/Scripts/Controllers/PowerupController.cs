@@ -59,8 +59,9 @@ namespace Game.Astroids
 
         void OnEnable()
         {
-            m_ScreenWrap= true;
+            m_ScreenWrap = true;
             _isAlive = true;
+
             Renderer.enabled = true;
             Renderer.material.SetFloat("_Dissolve", 0);
 
@@ -70,6 +71,8 @@ namespace Game.Astroids
             SetRandomPowerUp();
             StartCoroutine(PwrManager.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
             StartCoroutine(KeepAliveLoop());
+
+            GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupSpawn);
         }
 
         void OnCollisionEnter(Collision other)
@@ -148,6 +151,7 @@ namespace Game.Astroids
         {
             RemoveFromGame(bullet);
             Score(PwrManager.GetDestructionScore(false), gameObject);
+            GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupDestroyed);
             StartCoroutine(ExplodePowerup());
         }
 
@@ -190,6 +194,8 @@ namespace Game.Astroids
             Renderer.enabled = false;
 
             Score(PwrManager.GetPickupScore(ship.IsEnemy), gameObject);
+            if (!ship.IsEnemy)
+                GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupPickup);
 
             switch (m_powerup)
             {

@@ -207,11 +207,6 @@ namespace Game.Astroids
 
         public void DisableControls() => m_disableControls = false;
 
-        public void ResetPosition()
-        {
-            ResetTransform();
-        }
-
         void SpawnIn()
         {
             PlayAudioClip(SpaceShipSounds.Clip.spawn);
@@ -252,7 +247,7 @@ namespace Game.Astroids
             if (!m_isAlive)
             {
                 ResetRigidbody();
-                ResetTransform();
+                ResetPosition();
                 gameObject.SetActive(true);
             }
         }
@@ -284,7 +279,7 @@ namespace Game.Astroids
 
         void RaiseHudActionEvent(HudAction action) => HudActionEvent(action);
 
-        void ResetTransform() => transform.SetPositionAndRotation(Vector3.zero, _initialRotation);
+        public void ResetPosition() => transform.SetPositionAndRotation(Vector3.zero, _initialRotation);
 
         void ResetRigidbody() => RigidbodyUtil.Reset(GetComponent<Rigidbody>());
 
