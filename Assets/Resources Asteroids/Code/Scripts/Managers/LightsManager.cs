@@ -1,9 +1,11 @@
+using TMPro;
 using UnityEngine;
 
 namespace Game.Astroids
 {
     public class LightsManager : MonoBehaviour
     {
+        #region editor fields
         [Header("Night Lighting")]
 
         [SerializeField]
@@ -15,11 +17,14 @@ namespace Game.Astroids
         [SerializeField]
         float nightLightIntensity;
 
+        public Camera m_lightCheckCamera;
+
         [SerializeField, Tooltip("Select from 'Light Camera'")]
         LightCheckController lightCheckController;
 
         [SerializeField, Tooltip("Switch on below threshold")]
         int lightLevelThreshold;
+        #endregion
 
         #region properties
         protected AsteroidsGameManager GameManager
@@ -51,6 +56,12 @@ namespace Game.Astroids
         {
             if (lightCheckController)
                 lightCheckController.OnLevelChanged -= LevelChanged;
+        }
+
+        public void SetLightCheckOffset(float offset)
+        {
+            var p = m_lightCheckCamera.transform.position;
+            m_lightCheckCamera.transform.position = new Vector3(offset, p.y, p.z);
         }
 
         void LevelChanged(int level)

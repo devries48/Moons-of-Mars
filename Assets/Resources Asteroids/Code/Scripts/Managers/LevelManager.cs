@@ -24,12 +24,16 @@ namespace Game.Astroids
         [SerializeField] Transform stageCompleteStart;
         [SerializeField] Transform stageCompleteEnd;
 
-        [Header("Bonus")]
-        [Range(0, 200)] public int timeBonus = 100;
-        [Range(0, 200)] public int efficiencyBonus = 100;
-        [Range(0, 200)] public int destructionBonus = 100;
-        [Range(0, 200)] public int pickupBonus = 100;
+        [Header("Managers")]
+        public LightsManager m_LightsManager;
 
+        [Header("Bonus")]
+        [Range(0, 200)] public int m_TimeBonus = 100;
+        [Range(0, 200)] public int m_EfficiencyBonus = 100;
+        [Range(0, 200)] public int m_DestructionBonus = 100;
+        [Range(0, 200)] public int m_PickupBonus = 100;
+
+        [Header("Levels & stages")]
         [SerializeField] Level[] levels;
         [SerializeField] Stage[] stages;
 
@@ -167,6 +171,7 @@ namespace Game.Astroids
             {
                 if (_currentLevel.IsStageComplete())
                 {
+                    GameManager.m_HudManager.CancelPowerups();
                     StartCoroutine(AnnounceStageCleared(_currentLevel.Stage));
                     yield return Wait(2f);
 
@@ -395,6 +400,7 @@ namespace Game.Astroids
         public SceneName SceneName;
         public Transform PathStartPoint;
         public Transform PathEndPoint;
+        public float LightCamXposition;
         public LevelAction[] actions;
     }
 
@@ -431,32 +437,31 @@ namespace Game.Astroids
         readonly Stage _stage;
         readonly LevelManager _lvlManager;
 
-
         public void CalculateBonus()
         {
             if (ShotsFired > 0)
-                EfficiencyBonus = (int)Mathf.Round(ShotsHit / ShotsFired * _lvlManager.efficiencyBonus);
+                EfficiencyBonus = (int)Mathf.Round(ShotsHit / ShotsFired * _lvlManager.m_EfficiencyBonus);
 
             TimeBonus = CalcTimeBonus();
 
-            if (UfosSpawned> 0)
-                DestrucionBonus = (int)Mathf.Round(UfosDestroyed / UfosSpawned * _lvlManager.destructionBonus);
-            
-            if (PowerupsPickedUp> 0)
-                PickupBonus = (int)Mathf.Round((PowerupsSpawned + PowerupsDestroyed) / PowerupsPickedUp * _lvlManager.pickupBonus);
-            
-            TotalBonus = EfficiencyBonus + TimeBonus + DestrucionBonus + PickupBonus;
+            if (UfosSpawned > 0)
+                DestrucionBonus = (int)Mathf.Round(UfosDestroyed / UfosSpawned * _lvlManager.m_DestructionBonus);
+
+            if (PowerupsPickedUp > 0)
+                PickupBonus = ((int)Mathf.Round((PowerupsPickedUp + PowerupsDestroyed) / PowerupsSpawned) * _lvlManager.m_PickupBonus);
+
+            TotalBonus = (EfficiencyBonus + TimeBonus + DestrucionBonus + PickupBonus) * StageNr;
         }
 
         int CalcTimeBonus()
         {
             if (Playtime <= _stage.SecondsToComplete)
-                return _lvlManager.timeBonus;
+                return _lvlManager.m_TimeBonus;
             else
             {
                 var t = Playtime - (2 * _stage.SecondsToComplete);
                 if (t < 0)
-                    return (int)(Mathf.Abs(t) * .01f * _lvlManager.timeBonus);
+                    return (int)(Mathf.Abs(t) * .01f * _lvlManager.m_TimeBonus);
 
                 return 0;
             }
@@ -472,11 +477,13 @@ namespace Game.Astroids
             _levels = levels;
             _stages = stages;
             _stageStats = new List<StageStatistics>();
+            _lvlManager = Instance.m_LevelManager;
         }
 
         readonly Level[] _levels;
         readonly Stage[] _stages;
         readonly List<StageStatistics> _stageStats;
+        readonly LevelManager _lvlManager;
 
         int _level;
         int _stage;
@@ -579,6 +586,7 @@ namespace Game.Astroids
             {
                 _stageLevel = 1;
                 SetActionsForLevel(true);
+                SetLightCheckCamOffset();
             }
 
             SetActionsForLevel();
@@ -605,7 +613,13 @@ namespace Game.Astroids
             if (powerup > 0) _levelPowerup = true;
 
             _levelUfos += greenUfo + redUfo;
+        }
 
+        void SetLightCheckCamOffset()
+        {
+            var offset = _stages?[_stage - 1].LightCamXposition;
+            if (offset.HasValue)
+                _lvlManager.m_LightsManager.SetLightCheckOffset(offset.Value);
         }
 
         int CountAction(LevelAction action, bool isStage = false)

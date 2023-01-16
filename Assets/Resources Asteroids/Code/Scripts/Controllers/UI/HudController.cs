@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,6 +30,8 @@ namespace Game.Astroids
         public bool IsFuelEmpty => _fuel <= 0;
         public bool IsFuelHalf => _fuel > 49 && _fuel < 51;
 
+        internal bool m_hudCreated;
+
         float _thurst = 0;
         float _speed = 0;
         float _fuel = 100;
@@ -38,8 +41,7 @@ namespace Game.Astroids
 
         void Start()
         {
-            labelTemplate.gameObject.SetActive(false);
-            CreateLabels();
+            StartCoroutine(CreateLabels());
         }
 
         void Update()
@@ -87,8 +89,10 @@ namespace Game.Astroids
             }
         }
 
-        void CreateLabels()
+        IEnumerator CreateLabels()
         {
+            labelTemplate.gameObject.SetActive(false);
+
             for (int i = 0; i <= LABEL_COUNT; i++)
             {
                 var label = Instantiate(labelTemplate, hudThrustMeter);
@@ -114,6 +118,9 @@ namespace Game.Astroids
 
                 label.gameObject.SetActive(true);
             }
+            m_hudCreated = true;
+            yield return null;
+
         }
 
         float GetRotation(float value)

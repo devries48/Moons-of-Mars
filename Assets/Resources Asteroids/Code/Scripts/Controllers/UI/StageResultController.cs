@@ -6,6 +6,7 @@ namespace Game.Astroids
 {
     public class StageResultController : MonoBehaviour
     {
+        #region editor fields
         [Header("UI Statistics Elements")]
         [SerializeField] TextMeshProUGUI title;
         [SerializeField] TextMeshProUGUI playtime;
@@ -16,7 +17,6 @@ namespace Game.Astroids
         [SerializeField] TextMeshProUGUI ufosSpawned;
         [SerializeField] TextMeshProUGUI ufosDestroyed;
         [SerializeField] TextMeshProUGUI powerupsSpawned;
-        [SerializeField] TextMeshProUGUI powerupsDestroyed;
         [SerializeField] TextMeshProUGUI powerupsPickedUp;
 
         [Header("UI Bonus Elements")]
@@ -26,7 +26,9 @@ namespace Game.Astroids
         [SerializeField] TextMeshProUGUI destructionBonus;
         [SerializeField] TextMeshProUGUI pickupBonus;
         [SerializeField] TextMeshProUGUI totalBonus;
+        #endregion
 
+        #region properties
         AsteroidsGameManager GameManager
         {
             get
@@ -51,10 +53,9 @@ namespace Game.Astroids
         }
         LevelManager __levelManager;
 
-        void OnEnable()
-        {
-            StartCoroutine(DisplayResults());
-        }
+        #endregion
+
+        void OnEnable() => StartCoroutine(DisplayResults());
 
         IEnumerator DisplayResults()
         {
@@ -69,7 +70,6 @@ namespace Game.Astroids
             ufosSpawned.text = FmtInt(r.UfosSpawned);
             ufosDestroyed.text = FmtInt(r.UfosDestroyed);
             powerupsSpawned.text = FmtInt(r.PowerupsSpawned);
-            powerupsDestroyed.text = FmtInt(r.PowerupsDestroyed);
             powerupsPickedUp.text = FmtInt(r.PowerupsPickedUp);
             astroidsDestroyed.text = FmtInt(r.AstroidsDestroyed);
             playtime.text = FmtTime(r.Playtime);
@@ -86,23 +86,13 @@ namespace Game.Astroids
             totalBonus.text = FmtInt(r.TotalBonus);
 
             yield return null;
-
         }
 
-        string FmtInt(int value)
-        {
-            return value == 0 ? "0" : value.ToString();
-        }
+        string FmtInt(int value) => value == 0 ? "0" : value.ToString();
 
-        string FmtFloat(float value)
-        {
-            return value == 0 ? "0" : ((int)value).ToString();
-        }
+        string FmtFloat(float value) => value == 0 ? "0" : ((int)value).ToString();
 
-        string FmtPct(float value, float total)
-        {
-            return total > 0 ? (value / total * 100).ToString("0.0") : "0.0";
-        }
+        string FmtPct(float value, float total) => total > 0 ? (value / total * 100).ToString("0.0") : "0.0";
 
         string FmtTime(float t)
         {

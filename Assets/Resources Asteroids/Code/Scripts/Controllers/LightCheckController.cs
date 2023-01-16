@@ -1,5 +1,4 @@
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 // todo: documentation
 // https://www.youtube.com/watch?v=NYysvuyivc4

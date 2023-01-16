@@ -4,7 +4,6 @@ using TMPro;
 using UnityEngine;
 
 using static EffectsManager;
-using static Game.Astroids.UfoManagerData;
 using static MusicData;
 using static Utils;
 
@@ -202,7 +201,6 @@ namespace Game.Astroids
 		Application.Quit();
 #endif
         }
-
         #endregion
 
 

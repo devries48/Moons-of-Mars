@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,7 +58,7 @@ namespace Game.Astroids
             set
             {
                 __isDay = value;
-                SetHudColors(TRANSITION_LONG);
+                StartCoroutine(SetHudColors(TRANSITION_LONG));
                 if (value != _lightsOn)
                 {
                     _lightsOn = value;
@@ -79,7 +78,7 @@ namespace Game.Astroids
                 if (value)
                 {
                     hudShield.transform.parent.gameObject.SetActive(true);
-                    SetHudColors(TRANSITION_LONG);
+                    StartCoroutine(SetHudColors(TRANSITION_LONG));
                 }
                 else
                 {
@@ -141,10 +140,7 @@ namespace Game.Astroids
 
         public void HudShow() => HudActive = true;
 
-        public void HudHide()
-        {
-            StartCoroutine(HudHideCore());
-        }
+        public void HudHide() => StartCoroutine(HudHideCore());
 
         IEnumerator HudHideCore()
         {
@@ -153,7 +149,6 @@ namespace Game.Astroids
 
             hudShield.transform.parent.gameObject.SetActive(false);
             HudActive = false;
-
         }
 
         void DisconnectShip()
@@ -183,6 +178,14 @@ namespace Game.Astroids
         {
             _pwrHyperspaceCount--;
             SetHyperspaceColor();
+        }
+
+        public void CancelPowerups()
+        {
+            _pwrShieldTime = 0;
+            _pwrWeaponTime = 0;
+            shieldRing.fillAmount = 1;
+            weaponRing.fillAmount = 1;
         }
 
         public void ActivateShield(float t)
@@ -246,10 +249,7 @@ namespace Game.Astroids
                 PlayClip(clip.Value);
         }
 
-        public void PlayClip(HudSounds.Clip clip)
-        {
-            hudSounds.PlayClip(clip);
-        }
+        public void PlayClip(HudSounds.Clip clip) => hudSounds.PlayClip(clip);
 
         void HandleThrustChanged(float perc) => hudController.SetThrustPercentage(perc * 100f);
 
@@ -273,7 +273,7 @@ namespace Game.Astroids
 
             if (action == HudAction.none)
             {
-                SetHudColors(TRANSITION_DEFAULT);
+                StartCoroutine(SetHudColors(TRANSITION_DEFAULT));
                 PlayClip(HudSounds.Clip.deactivate);
             }
             else if (action == HudAction.hyperjumpStart)
@@ -336,16 +336,18 @@ namespace Game.Astroids
             SetHyperspaceColor();
         }
 
-        void SetHudColors(float t)
+        IEnumerator SetHudColors(float t)
         {
             _colorTransitionTime = t;
+
+            while (!hudController.m_hudCreated)
+                yield return null;
 
             var dashColor = ColorDefault;
             dashColor.a /= 2f;
 
             // meters
             SetImageColor(hudAutoLight, IsDay ? ColorDisabled : ColorBright);
-
             SetTextColor(hudThrustMeter, ColorDefault);
             SetImageColor(hudThrustMeter, ColorDefault, ColorHighlight, dashColor);
 
