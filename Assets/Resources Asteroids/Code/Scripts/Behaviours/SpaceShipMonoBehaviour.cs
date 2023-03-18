@@ -2,9 +2,11 @@ using System;
 using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
-using static Game.Astroids.PowerupManagerData;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+using static Game.Asteroids.PowerupManagerData;
+
+namespace Game.Asteroids
 {
     [SelectionBase]
     public class SpaceShipMonoBehaviour : GameMonoBehaviour
@@ -45,7 +47,7 @@ namespace Game.Astroids
             get
             {
                 if (__pwrManager == null)
-                    __pwrManager = GameManager.PowerupManager;
+                    __pwrManager = GmManager.PowerupManager;
 
                 return __pwrManager;
             }
@@ -154,7 +156,7 @@ namespace Game.Astroids
         {
             if (m_pwrWeaponTime > 0)
             {
-                m_pwrWeaponTime += GameManager.PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime += GmManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpWeapon();
 
                 yield return null;
@@ -165,7 +167,7 @@ namespace Game.Astroids
                 if (_weaponPowerup == PowerupWeapon.firerate)
                     fireRate *= .25f;
 
-                m_pwrWeaponTime = GameManager.PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime = GmManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpWeapon();
 
                 while (m_isAlive && m_pwrWeaponTime > 0)
@@ -186,7 +188,7 @@ namespace Game.Astroids
         {
             if (m_pwrShieldTime > 0)
             {
-                m_pwrShieldTime += GameManager.PowerupManager.m_PowerDuration;
+                m_pwrShieldTime += GmManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpShield();
 
                 yield return null;
@@ -194,7 +196,7 @@ namespace Game.Astroids
             else
             {
                 m_Shield.ShieldsUp = true;
-                m_pwrShieldTime = GameManager.PowerupManager.m_PowerDuration;
+                m_pwrShieldTime = GmManager.PowerupManager.m_PowerDuration;
                 RaisePowerUpShield();
 
                 while (m_isAlive && m_pwrShieldTime > 0)
@@ -268,19 +270,19 @@ namespace Game.Astroids
                 TryGetComponent(out UfoController ufo);
                 if (ufo != null)
                 {
-                    GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
-                    GameManager.m_LevelManager.RemoveUfo(ufo.m_ufoType, true);
+                    GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
+                    GmManager.m_LevelManager.RemoveUfo(ufo.m_ufoType, true);
                     Explode();
                 }
                 else
                     Debug.LogWarning("UFO Controller not found!");
             }
             else
-                GameManager.PlayerDestroyed();
+                GmManager.PlayerDestroyed();
         }
 
         /// <summary>
-        /// Only a player ship can be hit by a shield. (Astroids are handled in the AstroidsController)
+        /// Only a player ship can be hit by a shield. (Asteroids are handled in the AsteroidsController)
         /// Enemy ship can only be hit by bullets!
         /// </summary>
         void HitByShield(GameObject other)
@@ -290,10 +292,10 @@ namespace Game.Astroids
             if (otherShield == null)
                 return;
 
-            GameManager.PlayerDestroyed();
+            GmManager.PlayerDestroyed();
         }
 
-        void HitByAlienShip() => GameManager.PlayerDestroyed();
+        void HitByAlienShip() => GmManager.PlayerDestroyed();
 
         void BuilPool()
         {
@@ -311,7 +313,7 @@ namespace Game.Astroids
             _canShoot = false;
 
             if (m_shipType == ShipType.player)
-                GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotFired);
+                GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotFired);
 
             PlayAudioClip(SpaceShipSounds.Clip.shootBullet);
 

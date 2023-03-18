@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     // Send out thrust percentage of max thrust as event 
     [ExecuteAlways]

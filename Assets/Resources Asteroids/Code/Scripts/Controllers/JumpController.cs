@@ -4,7 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+
+namespace Game.Asteroids
 {
     public class JumpController : GameMonoBehaviour
     {
@@ -18,7 +20,7 @@ namespace Game.Astroids
             get
             {
                 if (__hud == null)
-                    __hud = GameManager.m_HudManager;
+                    __hud = GmManager.m_HudManager;
 
                 return __hud;
             }

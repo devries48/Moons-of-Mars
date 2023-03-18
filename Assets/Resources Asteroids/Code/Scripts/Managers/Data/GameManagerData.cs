@@ -1,8 +1,8 @@
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
-    [CreateAssetMenu(fileName = "Game Manager data", menuName = "Astroids/Game Manager Data")]
+    [CreateAssetMenu(fileName = "Game Manager data", menuName = "Asteroids/Game Manager Data")]
     public class GameManagerData : ScriptableObject
     {
         #region editor fields
@@ -28,7 +28,7 @@ namespace Game.Astroids
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }
@@ -61,7 +61,7 @@ namespace Game.Astroids
 
         public void SpawnAsteroids(float asteroidsNum, int generation = 1, Vector3 position = default)
         {
-            if (GameManager.m_debug.NoAstroids)
+            if (GameManager.m_debug.NoAsteroids)
                 return;
 
             var isRandom = position == default;

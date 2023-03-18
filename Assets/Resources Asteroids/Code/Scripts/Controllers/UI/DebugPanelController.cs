@@ -1,7 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
+using static MusicData;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class DebugPanelController : MonoBehaviour
     {
@@ -10,7 +11,7 @@ namespace Game.Astroids
 
         [SerializeField] bool debugOn;
         [SerializeField] bool godModeOn;
-        [SerializeField] bool spawnAstroids = true;
+        [SerializeField] bool spawnAsteroids = true;
         [SerializeField] bool spawnUfos = true;
         [SerializeField] bool spawnPowerups = true;
 
@@ -29,7 +30,7 @@ namespace Game.Astroids
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }
@@ -39,7 +40,7 @@ namespace Game.Astroids
         const float REFRESH_TIME = 1 / 30f;
 
         Toggle _toggleGodMode;
-        Toggle _toggleSpawnAstroids;
+        Toggle _toggleSpawnAsteroids;
         Toggle _toggleSpawnUfos;
         Toggle _toggleSpawnPowerup;
 
@@ -53,21 +54,22 @@ namespace Game.Astroids
         {
             version.text = Application.version + ".alpha";
 
-            _toggleSpawnAstroids = astroidToggle.GetComponent<Toggle>();
+            _toggleSpawnAsteroids = astroidToggle.GetComponent<Toggle>();
             _toggleSpawnUfos = ufoToggle.GetComponent<Toggle>();
             _toggleSpawnPowerup = powerupToggle.GetComponent<Toggle>();
             _toggleGodMode = godModeToggle.GetComponent<Toggle>();
 
-            _toggleSpawnAstroids.isOn = spawnAstroids;
+            _toggleSpawnAsteroids.isOn = spawnAsteroids;
             _toggleSpawnUfos.isOn = spawnUfos;
             _toggleSpawnPowerup.isOn = spawnPowerups;
             _toggleGodMode.isOn = godModeOn;
 
             if (debugOn)
             {
+                print("Debug is on");
                 GameManager.m_debug.IsActive = true;
                 GameManager.m_debug.IsGodMode = godModeOn;
-                GameManager.m_debug.NoAstroids = !spawnAstroids;
+                GameManager.m_debug.NoAsteroids = !spawnAsteroids;
                 GameManager.m_debug.NoUfos = !spawnUfos;
                 GameManager.m_debug.NoPowerups = !spawnPowerups;
 
@@ -84,15 +86,9 @@ namespace Game.Astroids
             debugPanel.SetActive(false);
         }
 
-        public void SpawnPowerupClick()
-        {
-            GameManager.PowerupManager.ShuttleLaunch();
-        }
+        public void SpawnPowerupClick() => GameManager.PowerupManager.ShuttleLaunch();
 
-        public void SpawnUfoClick()
-        {
-            GameManager.UfoManager.UfoLaunch();
-        }
+        public void SpawnUfoClick() => GameManager.UfoManager.UfoLaunch();
 
         public void ResetClick()
         {
@@ -100,47 +96,74 @@ namespace Game.Astroids
             GameManager.GameStart();
         }
 
-        public void ToggleUfoChanged()
-        {
-            GameManager.m_debug.NoUfos = !_toggleSpawnUfos.isOn;
-        }
+        public void ToggleUfoChanged() => GameManager.m_debug.NoUfos = !_toggleSpawnUfos.isOn;
 
-        public void ToggleAstroidChanged()
-        {
-            GameManager.m_debug.NoAstroids = !_toggleSpawnAstroids.isOn;
-        }
+        public void ToggleAstroidChanged() => GameManager.m_debug.NoAsteroids = !_toggleSpawnAsteroids.isOn;
 
-        public void TogglePowerupChanged()
-        {
-            GameManager.m_debug.NoPowerups = !_toggleSpawnPowerup.isOn;
-        }
+        public void TogglePowerupChanged() => GameManager.m_debug.NoPowerups = !_toggleSpawnPowerup.isOn;
 
-        public void ToggleGodModeChanged()
-        {
-            GameManager.m_debug.IsGodMode = _toggleGodMode.isOn;
-        }
+        public void ToggleGodModeChanged() => GameManager.m_debug.IsGodMode = _toggleGodMode.isOn;
 
         public void MusicDropdown(int value)
         {
 
         }
 
-        public void JumpClick()
-        {
-            GameManager.m_playerShip.Jump();
-        }
+        public void JumpClick() => GameManager.m_playerShip.Jump();
 
-        public void StageEndClick()
-        {
-
-            GameManager.m_GameManagerData.StageCompleteAnimation();
-        }
+        public void StageEndClick() => GameManager.m_GameManagerData.StageCompleteAnimation();
 
         void UpdatePanel()
         {
-            astroidsCount.text = GameManager.m_LevelManager.AstroidsActive.ToString();
+            astroidsCount.text = GameManager.m_LevelManager.AsteroidsActive.ToString();
             ufoCount.text = GameManager.m_LevelManager.UfosActive.ToString();
         }
+    }
 
+    public class DebugSettings
+    {
+        public bool IsActive { get; set; }
+
+        public bool IsGodMode
+        {
+            get => (__isGodMode ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+            set => __isGodMode = value;
+        }
+        bool __isGodMode;
+
+        public bool NoAsteroids
+        {
+            get => (__noAsteroids ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+            set => __noAsteroids = value;
+        }
+        bool __noAsteroids;
+
+        public bool NoUfos
+        {
+            get => (__noUfos ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+            set => __noUfos = value;
+        }
+        bool __noUfos;
+
+        public bool NoPowerups
+        {
+            get => (__noPowerups ? 1 : 0) * (IsActive ? 1 : 0) > 0;
+            set => __noPowerups = value;
+        }
+        bool __noPowerups;
+
+        internal bool OverrideMusic;
+        internal MusicLevel Level;
+
+        internal void SetMusic(int value)
+        {
+            if (value == 0)
+                OverrideMusic = false;
+            else
+            {
+                OverrideMusic = true;
+                Level = (MusicLevel)value - 1;
+            }
+        }
     }
 }

@@ -1,7 +1,9 @@
 using UnityEngine;
-using static Game.Astroids.SpaceShipMonoBehaviour;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+using static Game.Asteroids.SpaceShipMonoBehaviour;
+
+namespace Game.Asteroids
 {
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody))]
@@ -45,11 +47,8 @@ namespace Game.Astroids
 
         public virtual void Fire(Vector3 direction, ShipType type)
         {
-            if (type == ShipType.ufoGreen ||
-                type == ShipType.ufoRed)
-            {
-                GameManager.UfoManager.SetBulletMaterial(this, type);
-            }
+            if (type == ShipType.ufoGreen || type == ShipType.ufoRed)
+                GmManager.UfoManager.SetBulletMaterial(this, type);
 
             Rb.velocity = direction * bulletSpeed;
         }

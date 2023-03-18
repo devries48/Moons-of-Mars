@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class HudManager : MonoBehaviour
     {

@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using static MusicData;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class AudioManager : MonoBehaviour
     {
@@ -32,7 +32,7 @@ namespace Game.Astroids
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }
@@ -59,7 +59,7 @@ namespace Game.Astroids
 
         void Update()
         {
-            if (Time.time <= _nextActionTime)
+            if (Time.unscaledTime <= _nextActionTime)
                 return;
 
             _nextActionTime += _checkPeriod;
@@ -74,6 +74,8 @@ namespace Game.Astroids
                 PlayMusic(MusicLevel.stage);
             else if (!GameManager.IsGameActive && _currentLevel != MusicLevel.menu)
                 _currentLevel = MusicLevel.none;
+            else if (GameManager.IsGamePaused && _currentLevel != MusicLevel.pause)
+                PlayMusic(MusicLevel.pause);
             else if (GameManager.IsGamePlaying)
                 CheckGameIntensity();
             else if (GameManager.IsGameQuit)
@@ -138,7 +140,7 @@ namespace Game.Astroids
         int GetCurrentIntensity()
         {
             var lvl = GameManager.m_LevelManager;
-            return lvl.AstroidsActive + lvl.UfosActive;
+            return lvl.AsteroidsActive + lvl.UfosActive;
         }
 
         void PlayMusic(MusicLevel level)
@@ -173,7 +175,7 @@ namespace Game.Astroids
                 if (fadeOutSource.clip != null)
                     fadeOutSource.volume = 1 - (1 * (timeElapsed / timeToFade));
 
-                timeElapsed += Time.deltaTime;
+                timeElapsed += Time.unscaledDeltaTime;
                 yield return null;
             }
 
@@ -195,8 +197,7 @@ namespace Game.Astroids
                 while (timeElapsed < timeToFade)
                 {
                     fadeOutSource.volume = 1 - (1 * (timeElapsed / timeToFade));
-                    //print("vol: " + fadeOutSource.volume + "time: " + timeElapsed);
-                    timeElapsed += Time.deltaTime;
+                    timeElapsed += Time.unscaledDeltaTime;
                     yield return null;
                 }
 

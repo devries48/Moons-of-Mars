@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using static Game.Astroids.SpaceShipMonoBehaviour;
+using static Game.Asteroids.SpaceShipMonoBehaviour;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
-    [CreateAssetMenu(fileName = "Ufo Manager data", menuName = "Astroids/Ufo Manager")]
+    [CreateAssetMenu(fileName = "Ufo Manager data", menuName = "Asteroids/Ufo Manager")]
     public class UfoManagerData : ScriptableObject
     {
         #region editor fields
@@ -28,7 +28,7 @@ namespace Game.Astroids
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }
@@ -66,7 +66,7 @@ namespace Game.Astroids
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (LevelManager.AstroidsActive > 1 && GameManager.IsGamePlaying)
+                if (LevelManager.AsteroidsActive > 1 && GameManager.IsGamePlaying)
                     UfoLaunch();
             }
         }

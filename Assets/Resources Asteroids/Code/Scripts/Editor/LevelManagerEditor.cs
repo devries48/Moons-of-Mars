@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [CustomEditor(typeof(LevelManager))]
     public class LevelManagerEditor : Editor
@@ -14,11 +14,11 @@ namespace Game.Astroids
 
             if (GUILayout.Button("Gizmo Earth path"))
             {
-                level._gizmoStageIndex = 0;
+                level._gizmoStageIndex = 1;
             }
             if (GUILayout.Button("Gizmo Mars path"))
             {
-                level._gizmoStageIndex = 1;
+                level._gizmoStageIndex = 0;
             }
 
         }

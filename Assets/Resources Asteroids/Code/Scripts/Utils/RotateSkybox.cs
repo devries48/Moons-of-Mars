@@ -1,14 +1,11 @@
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class RotateSkybox : MonoBehaviour
     {
         [SerializeField] float speed;
 
-        void Update()
-        {
-            RenderSettings.skybox.SetFloat("_Rotation", speed * Time.time);
-        }
+        void Update() => RenderSettings.skybox.SetFloat("_Rotation", speed * Time.time);
     }
 }

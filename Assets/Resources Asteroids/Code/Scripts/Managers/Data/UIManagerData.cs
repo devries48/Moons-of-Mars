@@ -1,13 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
-using Announcers;
-using System;
-using static Cinemachine.DocumentationSortingAttribute;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+
+namespace Game.Asteroids
 {
-    [CreateAssetMenu(fileName = "UI Manager data", menuName = "Astroids/UI Manager")]
+    [CreateAssetMenu(fileName = "UI Manager data", menuName = "Asteroids/UI Manager")]
     public class UIManagerData : ScriptableObject
     {
         #region editor fields
@@ -25,20 +24,9 @@ namespace Game.Astroids
         #endregion
 
         #region properties
-        AsteroidsGameManager GameManager
-        {
-            get
-            {
-                if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
-
-                return __gameManager;
-            }
-        }
-        AsteroidsGameManager __gameManager;
-
-        GameObject UiMenu => GameManager != null ? GameManager.m_MainMenuWindow : null;
-        TextMeshProUGUI UiScore => GameManager != null ? GameManager.m_ScoreTextUI : null;
+        GameObject MainMenu => GmManager != null ? GmManager.m_MainMenuWindow : null;
+        GameObject PauseMenu => GmManager != null ? GmManager.m_PauseMenu : null;
+        TextMeshProUGUI UiScore => GmManager != null ? GmManager.m_ScoreTextUI : null;
 
         public bool AudioPlaying => uiSounds.IsPlaying();
 
@@ -70,7 +58,7 @@ namespace Game.Astroids
             uiSounds.m_UiAudio = source;
             UiScore.color = scoreColor;
             DisplayGameScore(false);
-            TweenUtil.MenuWindowClose(UiMenu, true);
+            TweenUtil.MenuWindowClose(MainMenu, true);
         }
 
         //TODO while loop and return selected
@@ -79,10 +67,10 @@ namespace Game.Astroids
             if (_firstRun)
                 _firstRun = false;
             else
-                yield return AsteroidsGameManager.Wait(2);
+                yield return Wait(2);
 
             DisplayGameScore(false);
-            TweenUtil.MenuWindowOpen(UiMenu);
+            TweenUtil.MenuWindowOpen(MainMenu);
 
             yield return null;
         }
@@ -90,13 +78,33 @@ namespace Game.Astroids
         public int HideMainMenu(bool startGame = true)
         {
             DisplayGameScore(startGame);
-            return TweenUtil.MenuWindowClose(UiMenu);
+            return TweenUtil.MenuWindowClose(MainMenu);
         }
 
+        public void ShowPauseMenu()
+        {
+            Time.timeScale = 0;
 
+            GmManager.SetGameStatus(GameStatus.paused);
+            GmManager.m_LightsManager.BlurBackground(true);
 
-        //public void ClearAnnouncements() => Announce.ClearAnnouncements();
+            TweenUtil.SetPivot(PauseMenu, new Vector2(.5f, 1.5f));
+            PauseMenu.SetActive(true);
+            TweenUtil.TweenPivot(PauseMenu, new Vector2(.5f, .5f), null, LeanTweenType.easeOutBack, .5f);
+        }
 
+        public void HidePauseMenu()
+        {
+            var id=TweenUtil.TweenPivot(PauseMenu, new Vector2(.5f, 1.5f), null, LeanTweenType.easeInBack, .5f);
+            var d = LeanTween.descr(id);
+
+            d.setOnComplete(() => {
+                PauseMenu.SetActive(false);
+                GmManager.m_LightsManager.BlurBackground(false);
+                GmManager.SetGameStatus(GameStatus.playing);
+                Time.timeScale = 1;
+            });
+        }
 
         public void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);
 
@@ -111,6 +119,7 @@ namespace Game.Astroids
             if (points == 0)
                 return;
 
+            Debug.Log("Score: " + points + ", pos: " + pos);
             var color = points > 0 ? positiveColor : negativeColor;
 
             SetScore(Score.Earned);
@@ -126,7 +135,7 @@ namespace Game.Astroids
 
         void DisplayGameScore(bool show)
         {
-            GameManager.m_ScoreTextUI.gameObject.SetActive(show);
+            GmManager.m_ScoreTextUI.gameObject.SetActive(show);
             SetScore(Score.Earned);
         }
 
@@ -163,7 +172,7 @@ namespace Game.Astroids
                 .setOnComplete(() => _displayPointsPool.ReturnToPool(pointsObj));
 
             var clip = (points > 0) ? UISounds.Clip.scorePlus : UISounds.Clip.scoreMinus;
-            GameManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
+            GmManager.StartCoroutine(PlayDelayedAudio(clip, .2f));
         }
 
         void TweenColor(Color begin, Color end, float time, float delay = default)

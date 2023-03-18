@@ -2,7 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class StageResultController : MonoBehaviour
     {
@@ -34,7 +34,7 @@ namespace Game.Astroids
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }
@@ -71,27 +71,22 @@ namespace Game.Astroids
             ufosDestroyed.text = FmtInt(r.UfosDestroyed);
             powerupsSpawned.text = FmtInt(r.PowerupsSpawned);
             powerupsPickedUp.text = FmtInt(r.PowerupsPickedUp);
-            astroidsDestroyed.text = FmtInt(r.AstroidsDestroyed);
+            astroidsDestroyed.text = FmtInt(r.AsteroidsDestroyed);
             playtime.text = FmtTime(r.Playtime);
-            
-            yield return null;
 
             stage.text = $"x  {r.StageNr}";
 
-            r.CalculateBonus();
+            totalBonus.text = FmtInt(r.TotalBonus);
             timeBonus.text = FmtInt(r.TimeBonus);
             efficiencyBonus.text = FmtInt(r.EfficiencyBonus);
             destructionBonus.text = FmtInt(r.DestrucionBonus);
             pickupBonus.text = FmtInt(r.PickupBonus);
-            totalBonus.text = FmtInt(r.TotalBonus);
 
             yield return null;
         }
 
         string FmtInt(int value) => value == 0 ? "0" : value.ToString();
-
         string FmtFloat(float value) => value == 0 ? "0" : ((int)value).ToString();
-
         string FmtPct(float value, float total) => total > 0 ? (value / total * 100).ToString("0.0") : "0.0";
 
         string FmtTime(float t)

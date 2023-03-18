@@ -65,7 +65,7 @@ public class MenuManager : MonoBehaviour
         _director.played += Director_played;
         _director.stopped += Director_stopped;
 
-        // TODO: Use ResetUI as in AstroidsGameManager, so menu is visible in editmode
+        // TODO: Use ResetUI as in AsteroidsGameManager, so menu is visible in editmode
     }
 
     void Start()
@@ -86,7 +86,7 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    // TODO: Use menu enum as in AstroidsGameManager
+    // TODO: Use menu enum as in AsteroidsGameManager
     public void MenuStartTour()
     {
         _director.Play();

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class MaterialFader
     {

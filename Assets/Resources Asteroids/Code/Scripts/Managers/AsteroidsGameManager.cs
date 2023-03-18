@@ -4,17 +4,16 @@ using TMPro;
 using UnityEngine;
 
 using static EffectsManager;
-using static MusicData;
 using static Utils;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [SelectionBase]
     [RequireComponent(typeof(EffectsManager))]
     public class AsteroidsGameManager : MonoBehaviour
     {
         #region singleton
-        public static AsteroidsGameManager Instance => __instance;
+        public static AsteroidsGameManager GmManager => __instance;
 
         static AsteroidsGameManager __instance;
 
@@ -33,19 +32,22 @@ namespace Game.Astroids
         }
         #endregion
 
-        enum Menu { none = 0, start = 1, exit = 2 }
+        enum Menu { none = 0, start = 1,settings=2, exit = 3}
         public enum GameStatus { intro, start, menu, playing, paused, stage, gameover, quit }
         public enum StageCamera { start, far, background, end }
 
         #region editor fields
         public GameManagerData m_GameManagerData;
+
         [Header("Managers")]
         public AudioManager m_AudioManager;
         public HudManager m_HudManager;
         public LevelManager m_LevelManager;
+        public LightsManager m_LightsManager;
 
         [Header("UI Elements")]
         public GameObject m_MainMenuWindow;
+        public GameObject m_PauseMenu;
         public TextMeshProUGUI m_ScoreTextUI;
         public TextMeshProUGUI m_AnnouncerTextUI;
 
@@ -78,11 +80,11 @@ namespace Game.Astroids
         public bool IsGameActive => _gameStatus != GameStatus.gameover;
         public bool IsGamePlaying => _gameStatus == GameStatus.playing;
         public bool IsGameStageComplete => _gameStatus == GameStatus.stage;
+        public bool IsGamePaused => _gameStatus == GameStatus.paused;
 
         public UfoManagerData UfoManager => m_GameManagerData.m_UfoManager;
         public PowerupManagerData PowerupManager => m_GameManagerData.m_PowerupManager;
         public UIManagerData UiManager => m_GameManagerData.m_UiManager;
-
         #endregion
 
         #region fields
@@ -164,6 +166,10 @@ namespace Game.Astroids
             StartCoroutine(StartNewGame());
             Score.Reset();
         }
+
+        public void GamePause() => UiManager.ShowPauseMenu();
+
+        public void GameResume() => UiManager.HidePauseMenu();
 
         public void StageStartNew() => StartCoroutine(StageStart());
 
@@ -289,6 +295,19 @@ namespace Game.Astroids
             return mainCamera.ScreenToViewportPoint(gameToWorld);
         }
 
+        public Vector3 GetWorldPlayerPosition()
+        {
+            var pos = m_playerShip.transform.position;
+            pos.z = 0;
+
+            var gameToWorld = gameCamera.ViewportToScreenPoint(pos);
+            gameToWorld.z = 0;
+            gameToWorld.x *= 1.85f;
+            gameToWorld.y *= 2;
+
+            return mainCamera.ScreenToViewportPoint(gameToWorld);
+        }
+
         #endregion
 
         public void SwitchStageCam(StageCamera camera)
@@ -387,52 +406,6 @@ namespace Game.Astroids
         #endregion
 
 
-        internal class DebugSettings
-        {
-            internal bool IsGodMode
-            {
-                get => (__isGodMode ? 1 : 0) * (IsActive ? 1 : 0) > 0;
-                set => __isGodMode = value;
-            }
-            bool __isGodMode;
-
-            internal bool NoAstroids
-            {
-                get => (__noAstroids ? 1 : 0) * (IsActive ? 1 : 0) > 0;
-                set => __noAstroids = value;
-            }
-            bool __noAstroids;
-
-            internal bool NoUfos
-            {
-                get => (__noUfos ? 1 : 0) * (IsActive ? 1 : 0) > 0;
-                set => __noUfos = value;
-            }
-            bool __noUfos;
-
-            internal bool NoPowerups
-            {
-                get => (__noPowerups ? 1 : 0) * (IsActive ? 1 : 0) > 0;
-                set => __noPowerups = value;
-            }
-            bool __noPowerups;
-
-            internal bool OverrideMusic;
-            internal MusicLevel Level;
-
-            internal bool IsActive { get; set; }
-
-            internal void SetMusic(int value)
-            {
-                print("SetMusic: " + value);
-                if (value == 0)
-                    OverrideMusic = false;
-                else
-                {
-                    OverrideMusic = true;
-                    Level = (MusicLevel)value - 1;
-                }
-            }
-        }
+ 
     }
 }

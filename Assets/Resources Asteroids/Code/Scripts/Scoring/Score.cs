@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public static class Score
     {
@@ -14,6 +14,12 @@ namespace Game.Astroids
         {
             Earned = 0;
             Invoke_onEarn(0, Vector3.zero);
+        }
+
+        public static void Earn(int points, Vector3 pos)
+        {
+            Earned += points;
+            Invoke_onEarn(points, pos);
         }
 
         public static void Earn(int points, GameObject target)

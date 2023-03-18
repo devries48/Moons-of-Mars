@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Music data", menuName = "Astroids/Music Data")]
+[CreateAssetMenu(fileName = "Music data", menuName = "Asteroids/Music Data")]
 
 public class MusicData : ScriptableObject
 {

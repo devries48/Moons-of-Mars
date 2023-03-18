@@ -1,10 +1,9 @@
-using Game.Astroids;
 using UnityEngine;
 
 public class TweenUtil
 {
     public static readonly float m_timeMenuOpenClose = 2f;
-    static readonly float _menuTilt= -10f;
+    static readonly float _menuTilt = -10f;
 
     /// <summary>
     /// Open the menu window.
@@ -13,7 +12,9 @@ public class TweenUtil
     /// <returns>LeanTween ID for optional waiting to complete.</returns>
     public static int MenuWindowOpen(GameObject window)
     {
-        return LeanTween.rotate(window, new Vector3(0, _menuTilt, 0), m_timeMenuOpenClose).setEase(LeanTweenType.easeOutQuad).id;
+        return LeanTween.rotate(window, new Vector3(0, _menuTilt, 0), m_timeMenuOpenClose)
+            .setIgnoreTimeScale(true)
+            .setEase(LeanTweenType.easeOutQuad).id;
     }
 
     /// <summary>
@@ -25,7 +26,15 @@ public class TweenUtil
     public static int MenuWindowClose(GameObject window, bool noTween = false)
     {
         var t = noTween ? 0f : m_timeMenuOpenClose;
-        return LeanTween.rotate(window, new Vector3(0, -270, 0), t).setEase(LeanTweenType.easeOutQuad).id;
+        return LeanTween.rotate(window, new Vector3(0, -270, 0), t)
+            .setIgnoreTimeScale(true)
+            .setEase(LeanTweenType.easeOutQuad).id;
+    }
+
+    public static void SetPivot(GameObject gameObj, Vector2 pivot)
+    {
+        var rect = gameObj.GetComponent<RectTransform>();
+        rect.pivot = pivot;
     }
 
     /// <summary>
@@ -33,7 +42,6 @@ public class TweenUtil
     /// </summary>
     /// <param name="menuCamera">The virtual menu camera used for the background.</param>
     /// <returns>LeanTween ID for optional waiting to complete.</returns>
-
 
     //TODO: simplify (eg: use float for pivot)
     public static int TweenPivot(GameObject gameObj, Vector2 newPivot, object rotateObj,
@@ -49,13 +57,15 @@ public class TweenUtil
             if (rotateEase == LeanTweenType.notUsed)
                 rect.Rotate(rotate);
             else
-                id_rotate = LeanTween.rotate(gameObj, rotate, rotateTime).setEase(rotateEase).id;
+                id_rotate = LeanTween.rotate(gameObj, rotate, rotateTime)
+                    .setIgnoreTimeScale(true)
+                    .setEase(rotateEase).id;
         }
 
-        id_pivot = LeanTween.value(gameObj, rect.pivot, newPivot, pivotTime).setEase(pivotEase).setOnUpdateVector2((Vector2 pos) =>
-        {
-            rect.pivot = pos;
-        }).id;
+        id_pivot = LeanTween.value(gameObj, rect.pivot, newPivot, pivotTime)
+            .setEase(pivotEase)
+            .setIgnoreTimeScale(true)
+            .setOnUpdateVector2((Vector2 pos) => rect.pivot = pos).id;
 
         return pivotTime > rotateTime ? id_pivot : id_rotate;
     }

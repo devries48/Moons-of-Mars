@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [Serializable]
     public class PowerupSounds

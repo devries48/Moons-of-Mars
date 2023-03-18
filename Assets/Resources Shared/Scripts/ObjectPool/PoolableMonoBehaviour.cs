@@ -1,4 +1,4 @@
-using Game.Astroids;
+using Game.Asteroids;
 using UnityEngine;
 
 [DisallowMultipleComponent]

@@ -277,7 +277,7 @@ public class KeplerOrbitLinesController : MonoBehaviour
                 break;
         }
 
-        if (SolarSystemController.IsMoon(name))
+        if (IsMoon(name))
             color = DarkenColor(color, 2f);
 
         var gradient = new Gradient();

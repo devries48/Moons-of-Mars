@@ -1,4 +1,4 @@
-using Game.Astroids;
+using Game.Asteroids;
 using System.Collections.Generic;
 using UnityEngine;
 using static Utils;

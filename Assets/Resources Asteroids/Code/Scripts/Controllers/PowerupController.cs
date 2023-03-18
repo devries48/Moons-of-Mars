@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+
+namespace Game.Asteroids
 {
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody), typeof(Renderer))]
@@ -43,7 +45,7 @@ namespace Game.Astroids
             get
             {
                 if (__pwrManager == null)
-                    __pwrManager = GameManager.PowerupManager;
+                    __pwrManager = GmManager.PowerupManager;
 
                 return __pwrManager;
             }
@@ -72,7 +74,7 @@ namespace Game.Astroids
             StartCoroutine(PwrManager.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
             StartCoroutine(KeepAliveLoop());
 
-            GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupSpawn);
+            GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupSpawn);
         }
 
         void OnCollisionEnter(Collision other)
@@ -151,7 +153,7 @@ namespace Game.Astroids
         {
             RemoveFromGame(bullet);
             Score(PwrManager.GetDestructionScore(false), gameObject);
-            GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupDestroyed);
+            GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupDestroyed);
             StartCoroutine(ExplodePowerup());
         }
 
@@ -195,7 +197,7 @@ namespace Game.Astroids
 
             Score(PwrManager.GetPickupScore(ship.IsEnemy), gameObject);
             if (!ship.IsEnemy)
-                GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupPickup);
+                GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupPickup);
 
             switch (m_powerup)
             {

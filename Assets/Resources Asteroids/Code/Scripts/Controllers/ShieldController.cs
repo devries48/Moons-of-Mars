@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [SelectionBase]
     public class ShieldController : MonoBehaviour

@@ -89,12 +89,12 @@ public struct KeplerVector3d
 
     public static bool operator ==(KeplerVector3d lhs, KeplerVector3d rhs)
     {
-        return KeplerVector3d.SqrMagnitude(lhs - rhs) < 0.0 / 1.0;
+        return SqrMagnitude(lhs - rhs) < 0.0 / 1.0;
     }
 
     public static bool operator !=(KeplerVector3d lhs, KeplerVector3d rhs)
     {
-        return KeplerVector3d.SqrMagnitude(lhs - rhs) >= 0.0 / 1.0;
+        return SqrMagnitude(lhs - rhs) >= 0.0 / 1.0;
     }
 
     public static KeplerVector3d Lerp(KeplerVector3d from, KeplerVector3d to, double t)
@@ -166,32 +166,32 @@ public struct KeplerVector3d
 
     public static KeplerVector3d Reflect(KeplerVector3d inDirection, KeplerVector3d inNormal)
     {
-        return -2d * KeplerVector3d.Dot(inNormal, inDirection) * inNormal + inDirection;
+        return -2d * Dot(inNormal, inDirection) * inNormal + inDirection;
     }
 
     public static KeplerVector3d Normalize(KeplerVector3d value)
     {
-        double num = KeplerVector3d.Magnitude(value);
+        double num = Magnitude(value);
         if (num > EPSILON)
         {
             return value / num;
         }
         else
         {
-            return KeplerVector3d.zero;
+            return zero;
         }
     }
 
     public void Normalize()
     {
-        double num = KeplerVector3d.Magnitude(this);
+        double num = Magnitude(this);
         if (num > EPSILON)
         {
             this /= num;
         }
         else
         {
-            this = KeplerVector3d.zero;
+            this = zero;
         }
     }
 
@@ -212,20 +212,20 @@ public struct KeplerVector3d
 
     public static KeplerVector3d Project(KeplerVector3d vector, KeplerVector3d onNormal)
     {
-        double num = KeplerVector3d.Dot(onNormal, onNormal);
+        double num = Dot(onNormal, onNormal);
         if (num < 1.40129846432482E-45d)
         {
-            return KeplerVector3d.zero;
+            return zero;
         }
         else
         {
-            return onNormal * KeplerVector3d.Dot(vector, onNormal) / num;
+            return onNormal * Dot(vector, onNormal) / num;
         }
     }
 
     public static KeplerVector3d Exclude(KeplerVector3d excludeThis, KeplerVector3d fromThat)
     {
-        return fromThat - KeplerVector3d.Project(fromThat, excludeThis);
+        return fromThat - Project(fromThat, excludeThis);
     }
 
     public static double Distance(KeplerVector3d a, KeplerVector3d b)

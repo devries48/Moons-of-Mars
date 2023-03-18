@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+
+namespace Game.Asteroids
 {
     public class AlliedShipController : GameMonoBehaviour
     {
@@ -69,7 +71,7 @@ namespace Game.Astroids
         {
             _skipUpdate = true;
             _oldPos = Vector3.zero;
-            var pos = GameManager.GetWorldJumpPosition();
+            var pos = GmManager.GetWorldJumpPosition();
             pos.z = -1;
 
             transform.SetPositionAndRotation(
@@ -88,9 +90,9 @@ namespace Game.Astroids
         {
             duration = 5;
             transform.localScale = transform.localScale * .1f;
-            transform.localPosition = GameManager.m_BackgroundCamera.transform.position;
+            transform.localPosition = GmManager.m_BackgroundCamera.transform.position;
 
-            GameManager.SwitchStageCam(AsteroidsGameManager.StageCamera.end);
+            GmManager.SwitchStageCam(StageCamera.end);
             StartCoroutine(FollowPath(duration));
         }
 
@@ -98,9 +100,9 @@ namespace Game.Astroids
         {
             float t = 0;
             float speedModifier = 1 / duration;
-            var path = GameManager.m_LevelManager.GetStageCompletePath();
+            var path = GmManager.m_LevelManager.GetStageCompletePath();
 
-            GameManager.PlayEffect(EffectsManager.Effect.hit4, path[0], .1f, Utils.OjectLayer.Background);
+            GmManager.PlayEffect(EffectsManager.Effect.hit4, path[0], .1f, Utils.OjectLayer.Background);
             PlaySpawnClip(duration);
             StartCoroutine(IncreaseThrust(.1f));
 
@@ -112,15 +114,15 @@ namespace Game.Astroids
                 yield return new WaitForEndOfFrame();
             }
 
-            GameManager.SwitchStageCam(AsteroidsGameManager.StageCamera.start);
-            while (!GameManager.IsStageStartCameraActive())
+            GmManager.SwitchStageCam(StageCamera.start);
+            while (!GmManager.IsStageStartCameraActive())
                 yield return null;
 
             AnimateThrust(3, false, LeanTweenType.easeInCubic);
             yield return new WaitForSeconds(.5f); // Custom blend time cinemachine brain
 
             // Move ship from bottom left to upper right (duraion: 2 seconds)
-            var p = GameManager.m_StageStartCamera.transform.position;
+            var p = GmManager.m_StageStartCamera.transform.position;
             var startPos = new Vector3(p.x + 4, p.y - 2, p.z + 3);
             var endPos = new Vector3(p.x - 3f, p.y + 1.5f, p.z - 7);
 
@@ -133,7 +135,7 @@ namespace Game.Astroids
         {
             HideModel();
             PlayStageEndClip();
-            GameManager.PlayEffect(EffectsManager.Effect.hit2, pos, 1, Utils.OjectLayer.Background);
+            GmManager.PlayEffect(EffectsManager.Effect.hit2, pos, 1, Utils.OjectLayer.Background);
             while (spawnAudio.isPlaying)
                 yield return null;
 
@@ -141,7 +143,7 @@ namespace Game.Astroids
             transform.localScale = transform.localScale * 10f;
 
             // Start loading new stage
-            GameManager.m_LevelManager.LoadNewStage();
+            GmManager.m_LevelManager.LoadNewStage();
         }
 
         IEnumerator IncreaseThrust(float delay)
@@ -202,7 +204,7 @@ namespace Game.Astroids
         void EjectPackage()
         {
             _isPackageEjected = true;
-            GameManager.PowerupManager.SpawnPowerup(transform.position);
+            GmManager.PowerupManager.SpawnPowerup(transform.position);
         }
 
         LTBezierPath CreatePath(int increments = 4)

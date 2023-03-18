@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [CustomEditor(typeof(HudManager))]
     public class HudManagerEditor : Editor

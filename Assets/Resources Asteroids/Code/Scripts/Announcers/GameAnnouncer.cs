@@ -1,7 +1,7 @@
 using Announcers;
 using System;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class GameAnnouncer : TextAnnouncerBase
     {

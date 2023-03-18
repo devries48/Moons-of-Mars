@@ -1,8 +1,9 @@
 using UnityEngine;
 
-using static Game.Astroids.UfoManagerData;
+using static Game.Asteroids.AsteroidsGameManager;
+using static Game.Asteroids.UfoManagerData;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [SelectionBase]
     public class UfoController : SpaceShipMonoBehaviour
@@ -24,7 +25,7 @@ namespace Game.Astroids
             get
             {
                 if (__ufoManager == null)
-                    __ufoManager = GameManager.UfoManager;
+                    __ufoManager = GmManager.UfoManager;
 
                 return __ufoManager;
             }
@@ -48,7 +49,7 @@ namespace Game.Astroids
             StartCoroutine(AudioUtil.FadeIn(engineAudio, .5f));
             SetRandomShipBehaviour();
             ShowLights();
-            GameManager.m_LevelManager.AddUfo(m_ufoType);
+            GmManager.m_LevelManager.AddUfo(m_ufoType);
 
             base.OnEnable();
         }
@@ -123,16 +124,16 @@ namespace Game.Astroids
         bool LevelAllowsUfo(UfoType type)
         {
             var acion = type == UfoType.green ? Level.LevelAction.greenUfo : Level.LevelAction.redUfo;
-            return GameManager.m_LevelManager.CanActivate(acion);
+            return GmManager.m_LevelManager.CanActivate(acion);
         }
 
         void MoveUfo()
         {
-            if (GameManager.m_playerShip == null)
+            if (GmManager.m_playerShip == null)
                 return;
 
             if (m_ufoType == UfoType.red)
-                _targetPos = GameManager.m_playerShip.transform.position;
+                _targetPos = GmManager.m_playerShip.transform.position;
 
             var step = speed * Time.fixedDeltaTime;
             transform.position = Vector3.MoveTowards(transform.position, _targetPos, step);
@@ -152,7 +153,7 @@ namespace Game.Astroids
         void RemoveShip()
         {
             CancelFire();
-            GameManager.m_LevelManager.RemoveUfo(m_ufoType, false);
+            GmManager.m_LevelManager.RemoveUfo(m_ufoType, false);
             _isShipRemoved = true;
             StartCoroutine(AudioUtil.FadeOut(engineAudio, 1, () => { RemoveFromGame(); }));
         }
@@ -173,19 +174,19 @@ namespace Game.Astroids
 
         Vector3 SpawnPoint(bool left)
         {
-            if (GameManager == null)
+            if (GmManager == null)
             {
                 Debug.Log("GameManager == null");
                 return Vector3.zero;
             }
 
             var xPos = (left)
-                 ? GameManager.m_camBounds.LeftEdge - 1
-                 : GameManager.m_camBounds.RightEdge + 1;
+                 ? GmManager.m_camBounds.LeftEdge - 1
+                 : GmManager.m_camBounds.RightEdge + 1;
 
             var yPos = Random.Range(
-                GameManager.m_camBounds.TopEdge - 1,
-                GameManager.m_camBounds.BottomEdge + 1);
+                GmManager.m_camBounds.TopEdge - 1,
+                GmManager.m_camBounds.BottomEdge + 1);
 
             return new Vector3(xPos, yPos);
         }

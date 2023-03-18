@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [System.Serializable]
     public class AsteroidSounds

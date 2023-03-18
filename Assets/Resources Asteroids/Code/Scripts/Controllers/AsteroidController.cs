@@ -1,7 +1,9 @@
 using System.Collections;
 using UnityEngine;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+
+namespace Game.Asteroids
 {
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody), typeof(Renderer))]
@@ -107,7 +109,7 @@ namespace Game.Astroids
 
             // TODO constant tag names shared static method: CompareTag(other, Tags.Player)
             if (c.CompareTag("Player"))
-                GameManager.PlayerDestroyed();
+                GmManager.PlayerDestroyed();
             else if (c.CompareTag("Astroid"))
                 HitByAstroid(o);
         }
@@ -140,8 +142,8 @@ namespace Game.Astroids
 
         void HitByBullet(GameObject bullet)
         {
-            GameManager.m_LevelManager.RemoveAstroid();
-            GameManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
+            GmManager.m_LevelManager.RemoveAstroid();
+            GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
 
             RemoveFromGame(bullet);
             StartCoroutine(ExplodeAstroid());
@@ -204,7 +206,7 @@ namespace Game.Astroids
             else
                 newGeneration = 3;
 
-            GameManager.m_GameManagerData.SpawnAsteroids(asteroidsNum, newGeneration, position);
+            GmManager.m_GameManagerData.SpawnAsteroids(asteroidsNum, newGeneration, position);
         }
 
         void PlayAudioClip(AsteroidSounds.Clip clip, float generation)

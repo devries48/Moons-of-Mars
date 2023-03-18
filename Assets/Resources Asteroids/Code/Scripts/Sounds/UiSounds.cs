@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [System.Serializable]
     public class UISounds
@@ -29,7 +29,7 @@ namespace Game.Astroids
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }

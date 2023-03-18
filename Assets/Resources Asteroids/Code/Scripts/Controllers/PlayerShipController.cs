@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using static Game.Astroids.HudManager;
 
-namespace Game.Astroids
+using static Game.Asteroids.AsteroidsGameManager;
+using static Game.Asteroids.HudManager;
+
+namespace Game.Asteroids
 {
     public class PlayerShipController : SpaceShipMonoBehaviour
     {
@@ -36,7 +38,7 @@ namespace Game.Astroids
         }
         Collider __cl;
 
-        HudManager HudManager => GameManager.m_HudManager;
+        HudManager HudManager => GmManager.m_HudManager;
         #endregion
 
         #region fields
@@ -73,6 +75,8 @@ namespace Game.Astroids
 
         void Update()
         {
+            if (GmManager.IsGamePaused) return;
+
             _turnInput = ShipInput.GetTurnAxis();
             _thrustInput = ShipInput.GetForwardThrust();
 
@@ -94,6 +98,9 @@ namespace Game.Astroids
 
             if (ShipInput.IsHyperspacing() && HudManager.HyperJumps > 0)
                 Jump();
+
+            if (ShipInput.IsPauseGame())
+                GmManager.GamePause();
         }
 
         protected override void FixedUpdate()
@@ -133,7 +140,7 @@ namespace Game.Astroids
 
             transform.rotation = Quaternion.Euler(0, transform.rotation.eulerAngles.y, 0);
 
-            var target = new Vector3(transform.position.x, GameManager.m_camBounds.TopEdge + 1f, 0);
+            var target = new Vector3(transform.position.x, GmManager.m_camBounds.TopEdge + 1f, 0);
             var currentPos = transform.position;
 
             LeanTween.move(gameObject, target, 1f)
@@ -152,17 +159,17 @@ namespace Game.Astroids
         IEnumerator HyperJump(Vector3 currentPos)
         {
             // Rocket moves towards camera out-of-view
-            var ctrl = GameManager.HyperJump(JUMP_MOVE_OUT_ANIMATION_TIME);
+            var ctrl = GmManager.HyperJump(JUMP_MOVE_OUT_ANIMATION_TIME);
             yield return new WaitForSeconds(JUMP_MOVE_OUT_ANIMATION_TIME);
 
             // Cursor selects new position of rocket
             RaiseHudActionEvent(HudAction.hyperjumpSelect);
-            GameManager.JumpSelect(currentPos, JUMP_SELECT_TIME);
+            GmManager.JumpSelect(currentPos, JUMP_SELECT_TIME);
 
-            while (!GameManager.JumpLaunched())
+            while (!GmManager.JumpLaunched())
                 yield return null;
 
-            var jumpPos = GameManager.JumpPosition();
+            var jumpPos = GmManager.JumpPosition();
 
             // Rocket move to new position in a straight line
             RaiseHudActionEvent(HudAction.none);
@@ -170,11 +177,11 @@ namespace Game.Astroids
             ctrl.PlayerShipJumpIn(JUMP_MOVE_IN_ANIMATION_TIME);
             yield return new WaitForSeconds(JUMP_MOVE_IN_ANIMATION_TIME * .2f);
 
-            GameManager.PlayEffect(EffectsManager.Effect.portal, jumpPos, .5f);
+            GmManager.PlayEffect(EffectsManager.Effect.portal, jumpPos, .5f);
             yield return new WaitForSeconds(JUMP_MOVE_IN_ANIMATION_TIME * .8f);
 
             // Activate rocket at new position
-            GameManager.JumpDeactivate();
+            GmManager.JumpDeactivate();
             transform.position = jumpPos;
 
             _isJumping = false;

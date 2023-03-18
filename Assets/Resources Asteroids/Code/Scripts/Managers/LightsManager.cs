@@ -1,21 +1,17 @@
-using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     public class LightsManager : MonoBehaviour
     {
         #region editor fields
+        [SerializeField] Volume volume;
+
         [Header("Night Lighting")]
-
-        [SerializeField]
-        Light lightDefault;
-
-        [SerializeField]
-        Color nightColor;
-
-        [SerializeField]
-        float nightLightIntensity;
+        [SerializeField] Light lightDefault;
+        [SerializeField] Color nightColor;
+        [SerializeField] float nightLightIntensity;
 
         public Camera m_lightCheckCamera;
 
@@ -27,12 +23,12 @@ namespace Game.Astroids
         #endregion
 
         #region properties
-        protected AsteroidsGameManager GameManager
+        AsteroidsGameManager GameManager
         {
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }
@@ -42,6 +38,20 @@ namespace Game.Astroids
 
         Color _dayColor;
         float _dayLightIntensity;
+
+        UnityEngine.Rendering.Universal.DepthOfField VolDepthOfField
+        {
+            get
+            {
+                if (__volDepthOfField == null)
+                {
+                    if (!volume.profile.TryGet(out __volDepthOfField)) throw new System.NullReferenceException(nameof(VolDepthOfField));
+                }
+                return __volDepthOfField;
+            }
+        }
+        UnityEngine.Rendering.Universal.DepthOfField __volDepthOfField;
+
 
         void OnEnable()
         {
@@ -62,6 +72,20 @@ namespace Game.Astroids
         {
             var p = m_lightCheckCamera.transform.position;
             m_lightCheckCamera.transform.position = new Vector3(offset, p.y, p.z);
+        }
+
+        public void BlurBackground(bool blur)
+        {
+            if (blur)
+            {
+                VolDepthOfField.active = true;
+                VolDepthOfField.focalLength.Override(300);
+            }
+            else
+            {
+                VolDepthOfField.focalLength.Override(50);
+                VolDepthOfField.active = false;
+            }
         }
 
         void LevelChanged(int level)

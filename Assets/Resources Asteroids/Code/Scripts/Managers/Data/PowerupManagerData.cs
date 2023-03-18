@@ -1,9 +1,9 @@
 using UnityEngine;
 using System.Collections;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
-    [CreateAssetMenu(fileName = "Powerup Manager data", menuName = "Astroids/Powerup Manager")]
+    [CreateAssetMenu(fileName = "Powerup Manager data", menuName = "Asteroids/Powerup Manager")]
     public class PowerupManagerData : ScriptableObject
     {
         #region editor fields
@@ -38,7 +38,7 @@ namespace Game.Astroids
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.Instance;
+                    __gameManager = AsteroidsGameManager.GmManager;
 
                 return __gameManager;
             }
@@ -76,7 +76,7 @@ namespace Game.Astroids
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (GameManager.m_LevelManager.AstroidsActive > 2 && GameManager.IsGamePlaying)
+                if (GameManager.m_LevelManager.AsteroidsActive > 2 && GameManager.IsGamePlaying)
                     ShuttleLaunch();
             }
         }

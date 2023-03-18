@@ -7,12 +7,12 @@ public class SceneLoader : MonoBehaviour
     // The id's of the scenes can be obtained in File/Build Settings...
     public enum SceneName
     {
-        Astroids_Earth = 2,
-        Astroids_Mars = 3
+        Asteroids_Earth = 2,
+        Asteroids_Mars = 3
     }
 
     internal const int SceneMain = 0;
-    internal const int SceneAstroids = 1;
+    internal const int SceneAsteroids = 1;
 
     [SerializeField] RectTransform fader;
 
@@ -44,14 +44,14 @@ public class SceneLoader : MonoBehaviour
         });
     }
 
-    public void OpenAstroids()
+    public void OpenAsteroids()
     {
         fader.gameObject.SetActive(true);
 
         LeanTween.alpha(fader, 0, 0);
         LeanTween.alpha(fader, 1, 0.5f).setOnComplete(() =>
         {
-            SceneManager.LoadScene(SceneAstroids);
+            SceneManager.LoadScene(SceneAsteroids);
         });
     }
 

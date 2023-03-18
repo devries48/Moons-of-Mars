@@ -1,15 +1,14 @@
 using Announcers;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using static Game.Astroids.AsteroidsGameManager;
-using static Game.Astroids.Level;
-using static Game.Astroids.UfoManagerData;
+using static Game.Asteroids.AsteroidsGameManager;
+using static Game.Asteroids.Level;
+using static Game.Asteroids.UfoManagerData;
 using static SceneLoader;
 
-namespace Game.Astroids
+namespace Game.Asteroids
 {
     [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour
@@ -17,15 +16,16 @@ namespace Game.Astroids
         #region editor fields
         [SerializeField] SceneLoader sceneLoader;
 
+        [Header("Test")]
+        [SerializeField, Tooltip("Do not load the first scene, use when designing stage")]
+        bool firstStageLoaded = false;
+
         [Header("Elements")]
         [SerializeField] GameObject gameIntro;
         [SerializeField] GameObject stageResults;
         [SerializeField] GameObject stageContinue;
         [SerializeField] Transform stageCompleteStart;
         [SerializeField] Transform stageCompleteEnd;
-
-        [Header("Managers")]
-        public LightsManager m_LightsManager;
 
         [Header("Bonus")]
         [Range(0, 200)] public int m_TimeBonus = 100;
@@ -48,36 +48,21 @@ namespace Game.Astroids
         #endregion
 
         #region properties
-        AsteroidsGameManager GameManager
-        {
-            get
-            {
-                if (__gameManager == null)
-                    __gameManager = Instance;
-
-                if (__gameManager == null)
-                    Debug.LogWarning("GameManager is null");
-
-                return __gameManager;
-            }
-        }
-        AsteroidsGameManager __gameManager;
-
         GameAnnouncer Announce
         {
             get
             {
                 if (__announce == null)
-                    __announce = GameAnnouncer.AnnounceTo(TextAnnouncerBase.TextComponent(GameManager.m_AnnouncerTextUI));
+                    __announce = GameAnnouncer.AnnounceTo(TextAnnouncerBase.TextComponent(GmManager.m_AnnouncerTextUI));
 
                 return __announce;
             }
         }
         GameAnnouncer __announce;
 
-        bool UIAudioPlaying => GameManager.UiManager.AudioPlaying;
+        bool UIAudioPlaying => GmManager.UiManager.AudioPlaying;
 
-        public int AstroidsActive
+        public int AsteroidsActive
         {
             get
             {
@@ -130,31 +115,30 @@ namespace Game.Astroids
 
         public void ShowGameIntro() => StartCoroutine(ShowGameIntroCore());
 
-
         public IEnumerator LevelStartLoop()
         {
             AnnounceLevelStart(_currentLevel.Level);
 
             if (_currentLevel.Level == 1)
             {
-                while (GameManager.UiManager.AudioPlaying)
+                while (GmManager.UiManager.AudioPlaying)
                     yield return null;
 
-                GameManager.m_playerShip.Spawn();
+                GmManager.m_playerShip.Spawn();
                 yield return Wait(2);
 
-                GameManager.m_HudManager.HudShow();
-                GameManager.m_playerShip.EnableControls();
+                GmManager.m_HudManager.HudShow();
+                GmManager.m_playerShip.EnableControls();
             }
             yield return Wait(1.5f);
 
-            GameManager.m_playerShip.Refuel();
-            GameManager.m_GameManagerData.SpawnAsteroids(_currentLevel.AsteroidsForLevel);
+            GmManager.m_playerShip.Refuel();
+            GmManager.m_GameManagerData.SpawnAsteroids(_currentLevel.AsteroidsForLevel);
         }
 
         public IEnumerator LevelPlayLoop()
         {
-            while (GameManager.m_playerShip.m_isAlive && _currentLevel.HasEnemy || GameManager.m_debug.NoAstroids)
+            while (GmManager.m_playerShip.m_isAlive && _currentLevel.HasEnemy || GmManager.m_debug.NoAsteroids)
             {
                 _currentLevel.StagePlaytime += Time.deltaTime;
                 yield return null;
@@ -163,20 +147,20 @@ namespace Game.Astroids
 
         public IEnumerator LevelEndLoop()
         {
-            bool gameover = !GameManager.m_playerShip.m_isAlive;
+            bool gameover = !GmManager.m_playerShip.m_isAlive;
 
             if (gameover)
-                GameManager.GameOver();
+                GmManager.GameOver();
             else
             {
                 if (_currentLevel.IsStageComplete())
                 {
-                    GameManager.m_HudManager.CancelPowerups();
+                    GmManager.m_HudManager.CancelPowerups();
                     StartCoroutine(AnnounceStageCleared(_currentLevel.Stage));
                     yield return Wait(2f);
 
-                    GameManager.m_GameManagerData.StageCompleteAnimation();
-                    while (!GameManager.IsGamePlaying)
+                    GmManager.m_GameManagerData.StageCompleteAnimation();
+                    while (!GmManager.IsGamePlaying)
                         yield return null;
                 }
                 else
@@ -267,14 +251,15 @@ namespace Game.Astroids
         }
 
         public void HideStageResuls() => HideGroup(stageResults);
-        public SceneName GetFirstStage() => GetStage(0).SceneName;
-        public SceneName GetNextStage() => GetStage(_currentStageIndex + 1).SceneName;
         public SceneName GetCurrentStage() => GetStage(_currentStageIndex).SceneName;
         public Vector3[] GetStageCompletePath() => GetStagePath(_currentStageIndex);
         public void LoadNewStage() => StartCoroutine(WaitForStageToLoad());
         public StageStatistics GetStageResults() => _currentLevel.GetStageResults();
 
         void HideGameIntro() => HideGroup(gameIntro);
+
+        SceneName GetFirstStage() => GetStage(0).SceneName;
+        SceneName GetNextStage() => GetStage(_currentStageIndex + 1).SceneName;
 
         Stage GetStage(int index)
         {
@@ -288,9 +273,9 @@ namespace Game.Astroids
 
             return new Vector3[]
             {
-                stageCompleteStart.position,
-                stage.PathStartPoint.position,
-                stage.PathEndPoint.position,
+                stage.PathPoint0.position,
+                stage.PathPoint1.position,
+                stage.PathPoint2.position,
                 stageCompleteEnd.position
             };
         }
@@ -309,10 +294,14 @@ namespace Game.Astroids
 
         IEnumerator WaitForStageToLoad()
         {
+            //Add bonus
+            var r = _currentLevel.GetStageResults();
+            Score.Earn(r.TotalBonus, new Vector3(7, -2, 0));
+
             sceneLoader.UnloadSceneAsync(GetCurrentStage());
             yield return new WaitForSeconds(1); // wait for music change (checks every .5 seconds). It interrupted the mixer group fade.
 
-            GameManager.m_AudioManager.FadeOutBackgroundSfx();
+            GmManager.m_AudioManager.FadeOutBackgroundSfx();
 
             StartCoroutine(LoadStage(GetNextStage()));
             while (!IsStageLoaded)
@@ -324,8 +313,8 @@ namespace Game.Astroids
             HideGroup(stageResults);
             yield return new WaitForSeconds(.5f);
 
-            GameManager.StageStartNew();
-            GameManager.m_AudioManager.FadeInBackgroundSfx();
+            GmManager.StageStartNew();
+            GmManager.m_AudioManager.FadeInBackgroundSfx();
         }
 
         bool IsAnyKeyPressed() => Input.anyKey;
@@ -334,24 +323,27 @@ namespace Game.Astroids
         {
             // Load first stage
             var t = 0f;
-            StartCoroutine(LoadStage(GetFirstStage()));
-            while (!IsStageLoaded)
-                yield return null;
+            if (!firstStageLoaded)
+            {
+                StartCoroutine(LoadStage(GetFirstStage()));
+                while (!IsStageLoaded)
+                    yield return null;
+            }
 
             t += Time.deltaTime;
 
             yield return Wait(5 - t);
             HideGameIntro();
             yield return Wait(.5f);
-            GameManager.SwitchStageCam(StageCamera.far);
+            GmManager.SwitchStageCam(StageCamera.far);
             yield return Wait(.1f);
-            GameManager.SwitchStageCam(StageCamera.background);
+            GmManager.SwitchStageCam(StageCamera.background);
             yield return Wait(2f);
 
-            GameManager.GameStart();
+            GmManager.GameStart();
         }
 
-        void UIAudio(UISounds.Clip clip) => GameManager.UiManager.PlayAudio(clip);
+        void UIAudio(UISounds.Clip clip) => GmManager.UiManager.PlayAudio(clip);
 
         void OnDrawGizmos()
         {
@@ -359,16 +351,20 @@ namespace Game.Astroids
                 return;
 
             var points = new Vector3[4];
-            points[0] = stageCompleteStart.position;
-            points[3] = stageCompleteEnd.position;
 
-            var trans = stages[_gizmoStageIndex].PathStartPoint;
+            var trans = stages[_gizmoStageIndex].PathPoint0;
+            if (trans != null)
+                points[0] = trans.position;
+
+            trans = stages[_gizmoStageIndex].PathPoint1;
             if (trans != null)
                 points[1] = trans.position;
 
-            trans = stages[_gizmoStageIndex].PathEndPoint;
+            trans = stages[_gizmoStageIndex].PathPoint2;
             if (trans != null)
                 points[2] = trans.position;
+
+            points[3] = stageCompleteEnd.position;
 
             foreach (var p in points)
                 if (p == null)
@@ -398,8 +394,9 @@ namespace Game.Astroids
         public string Name;
         public int SecondsToComplete;
         public SceneName SceneName;
-        public Transform PathStartPoint;
-        public Transform PathEndPoint;
+        public Transform PathPoint0;
+        public Transform PathPoint1;
+        public Transform PathPoint2;
         public float LightCamXposition;
         public LevelAction[] actions;
     }
@@ -410,13 +407,11 @@ namespace Game.Astroids
         {
             StageNr = nr;
             _stage = stage;
-            _lvlManager = Instance.m_LevelManager;
+            _lvlManager = GmManager.m_LevelManager;
         }
 
         public readonly int StageNr;
         public string Name => _stage.Name;
-
-        public int TotalBonus { get; internal set; }
 
         public float ShotsFired;
         public float ShotsHit;
@@ -425,7 +420,7 @@ namespace Game.Astroids
         public int PowerupsSpawned;
         public int PowerupsPickedUp;
         public int PowerupsDestroyed;
-        public int AstroidsDestroyed;
+        public int AsteroidsDestroyed;
 
         public float Playtime;
 
@@ -437,7 +432,19 @@ namespace Game.Astroids
         readonly Stage _stage;
         readonly LevelManager _lvlManager;
 
-        public void CalculateBonus()
+        public int TotalBonus
+        {
+            get
+            {
+                if (__totalBonus == 0)
+                    __totalBonus = CalculateBonus();
+
+                return __totalBonus;
+            }
+        }
+        int __totalBonus;
+
+        int CalculateBonus()
         {
             if (ShotsFired > 0)
                 EfficiencyBonus = (int)Mathf.Round(ShotsHit / ShotsFired * _lvlManager.m_EfficiencyBonus);
@@ -450,7 +457,7 @@ namespace Game.Astroids
             if (PowerupsPickedUp > 0)
                 PickupBonus = ((int)Mathf.Round((PowerupsPickedUp + PowerupsDestroyed) / PowerupsSpawned) * _lvlManager.m_PickupBonus);
 
-            TotalBonus = (EfficiencyBonus + TimeBonus + DestrucionBonus + PickupBonus) * StageNr;
+            return (EfficiencyBonus + TimeBonus + DestrucionBonus + PickupBonus) * StageNr;
         }
 
         int CalcTimeBonus()
@@ -477,7 +484,7 @@ namespace Game.Astroids
             _levels = levels;
             _stages = stages;
             _stageStats = new List<StageStatistics>();
-            _lvlManager = Instance.m_LevelManager;
+            _lvlManager = GmManager != null ? GmManager.m_LevelManager : null;
         }
 
         readonly Level[] _levels;
@@ -522,7 +529,7 @@ namespace Game.Astroids
         public void AstroidAdd() => _asteroidsActive++;
         public void AstroidRemove()
         {
-            _stats.AstroidsDestroyed++;
+            _stats.AsteroidsDestroyed++;
             _asteroidsActive--;
         }
 
@@ -619,7 +626,7 @@ namespace Game.Astroids
         {
             var offset = _stages?[_stage - 1].LightCamXposition;
             if (offset.HasValue)
-                _lvlManager.m_LightsManager.SetLightCheckOffset(offset.Value);
+                GmManager.m_LightsManager.SetLightCheckOffset(offset.Value);
         }
 
         int CountAction(LevelAction action, bool isStage = false)
