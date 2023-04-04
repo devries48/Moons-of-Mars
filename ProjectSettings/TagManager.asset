@@ -20,16 +20,16 @@ TagManager:
   - UI
   - 
   - 
-  - Player
+  - 
   - Game
   - OrbitLines
   - Background
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Player Shield
+  - Player Projectiles
+  - Enemy
+  - Enemy Shield
+  - Enemy Projectiles
   - 
   - 
   - 
