@@ -4,11 +4,11 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using UnityEditor;
+using System;
 
-namespace SlimUI.ModernMenu
+namespace MoonsOfMars.Shared
 {
-    public class MainMenuNew : MonoBehaviour
+    public class MainMenu : MonoBehaviour
     {
         public enum Theme { custom1, custom2, custom3 };
         public enum MenuAction { play, solarSystem, asteroids, newGame, loadGame }
@@ -25,15 +25,14 @@ namespace SlimUI.ModernMenu
 
         [Header("Panels")]
         [Tooltip("The UI Panel parenting all sub menus")] public GameObject mainCanvas;
-        [Tooltip("The UI Panel that holds the CONTROLS window tab")] public GameObject PanelControls;
-        [Tooltip("The UI Panel that holds the VIDEO window tab")] public GameObject PanelVideo;
+        [SerializeField, Tooltip("The UI Panel that holds the CONTROLS window tab")] GameObject _panelControls;
+        [SerializeField, Tooltip("The UI Panel that holds the VIDEO window tab")] GameObject _panelVideo;
         [SerializeField, Tooltip("The UI Panel that holds the GENERAL window tab")] GameObject _panelGeneral;
-        [SerializeField, Tooltip("The UI Panel that holds the GENERAL window tab")] GameObject _panelAudio;
-        [Tooltip("The UI Panel that holds the KEY BINDINGS window tab")]
-        public GameObject PanelKeyBindings; [Tooltip("The UI Sub-Panel under KEY BINDINGS for MOVEMENT")]
-        public GameObject PanelMovement;
-        [Tooltip("The UI Sub-Panel under KEY BINDINGS for COMBAT")] public GameObject PanelCombat;
-        [Tooltip("The UI Sub-Panel under KEY BINDINGS for GENERAL")] public GameObject _controlsGeneral;
+        [SerializeField, Tooltip("The UI Panel that holds the AUDIO window tab")] GameObject _panelAudio;
+        [SerializeField, Tooltip("The UI Panel that holds the KEY BINDINGS window tab")] GameObject _panelKeyBindings;
+        [SerializeField, Tooltip("The UI Sub-Panel under KEY BINDINGS for MOVEMENT")] GameObject _panelBindMovement;
+        [SerializeField, Tooltip("The UI Sub-Panel under KEY BINDINGS for COMBAT")] GameObject _panelBindCombat;
+        [SerializeField, Tooltip("The UI Sub-Panel under KEY BINDINGS for GENERAL")] GameObject _panelBindGeneral;
 
 
         [Header("SFX")]
@@ -88,14 +87,26 @@ namespace SlimUI.ModernMenu
         void Awake()
         {
             CameraObject = transform.GetComponent<Animator>();
+            _versionText.text = $"version {Application.version}.alpha";
 
             if (playMenu) playMenu.SetActive(false);
             exitMenu.SetActive(false);
             if (_gamesMenu) _gamesMenu.SetActive(false);
-            firstMenu.SetActive(true);
-            mainMenu.SetActive(true);
 
             SetThemeColors();
+
+            firstMenu.SetActive(true);
+            mainMenu.SetActive(true);
+        }
+
+        public void ShowMenu()
+        {
+            mainCanvas.SetActive(true);
+        }
+
+        public void HideMenu()
+        {
+            mainCanvas.SetActive(false);
         }
 
         #region Theme
@@ -136,14 +147,6 @@ namespace SlimUI.ModernMenu
             if (playMenu) playMenu.SetActive(true);
         }
 
-        public void PlayCampaignMobile()
-        {
-            exitMenu.SetActive(false);
-            if (_gamesMenu) _gamesMenu.SetActive(false);
-            if (playMenu) playMenu.SetActive(true);
-            mainMenu.SetActive(false);
-        }
-
         public void ReturnMenu()
         {
             if (playMenu) playMenu.SetActive(false);
@@ -176,13 +179,75 @@ namespace SlimUI.ModernMenu
             CameraObject.SetFloat("Animate", 0);
         }
 
+
+        #region Panels
+        public void ShowPanelGeneral()
+        {
+            DisablePanels();
+            _panelGeneral.SetActive(true);
+            _lineGeneral.SetActive(true);
+        }
+
+        public void ShowPanelVideo()
+        {
+            DisablePanels();
+            _panelVideo.SetActive(true);
+            lineVideo.SetActive(true);
+        }
+
+        public void ShowPanelAudio()
+        {
+            DisablePanels();
+            _panelAudio.SetActive(true);
+            _lineAudio.SetActive(true);
+        }
+
+        public void ShowPanelControls()
+        {
+            DisablePanels();
+            _panelControls.SetActive(true);
+            lineControls.SetActive(true);
+        }
+
+        public void ShowPanelKeyBindings()
+        {
+            DisablePanels();
+            ShowBindPanelMovement();
+            _panelKeyBindings.SetActive(true);
+            lineKeyBindings.SetActive(true);
+        }
+
+        public void ShowBindPanelMovement()
+        {
+            DisablePanels();
+            _panelKeyBindings.SetActive(true);
+            _panelBindMovement.SetActive(true);
+            lineMovement.SetActive(true);
+        }
+
+        public void ShowBindPanelCombat()
+        {
+            DisablePanels();
+            _panelKeyBindings.SetActive(true);
+            _panelBindCombat.SetActive(true);
+            lineCombat.SetActive(true);
+        }
+
+        public void ShowBindPanelGeneral()
+        {
+            DisablePanels();
+            _panelKeyBindings.SetActive(true);
+            _panelBindGeneral.SetActive(true);
+            lineGeneral.SetActive(true);
+        }
+
         void DisablePanels()
         {
-            PanelControls.SetActive(false);
-            PanelVideo.SetActive(false);
+            _panelControls.SetActive(false);
+            _panelVideo.SetActive(false);
             _panelGeneral.SetActive(false);
             _panelAudio.SetActive(false);
-            PanelKeyBindings.SetActive(false);
+            _panelKeyBindings.SetActive(false);
 
             _lineGeneral.SetActive(false);
             lineControls.SetActive(false);
@@ -190,73 +255,14 @@ namespace SlimUI.ModernMenu
             _lineAudio.SetActive(false);
             lineKeyBindings.SetActive(false);
 
-            PanelMovement.SetActive(false);
+            _panelBindMovement.SetActive(false);
             lineMovement.SetActive(false);
-            PanelCombat.SetActive(false);
+            _panelBindCombat.SetActive(false);
             lineCombat.SetActive(false);
-            _controlsGeneral.SetActive(false);
+            _panelBindGeneral.SetActive(false);
             lineGeneral.SetActive(false);
         }
-
-        public void SettingsGeneralPanel()
-        {
-            DisablePanels();
-            _panelGeneral.SetActive(true);
-            _lineGeneral.SetActive(true);
-        }
-
-        public void VideoPanel()
-        {
-            DisablePanels();
-            PanelVideo.SetActive(true);
-            lineVideo.SetActive(true);
-        }
-
-        public void AudioPanel()
-        {
-            DisablePanels();
-            _panelAudio.SetActive(true);
-            _lineAudio.SetActive(true);
-        }
-
-        public void ControlsPanel()
-        {
-            DisablePanels();
-            PanelControls.SetActive(true);
-            lineControls.SetActive(true);
-        }
-
-        public void KeyBindingsPanel()
-        {
-            DisablePanels();
-            MovementPanel();
-            PanelKeyBindings.SetActive(true);
-            lineKeyBindings.SetActive(true);
-        }
-
-        public void MovementPanel()
-        {
-            DisablePanels();
-            PanelKeyBindings.SetActive(true);
-            PanelMovement.SetActive(true);
-            lineMovement.SetActive(true);
-        }
-
-        public void CombatPanel()
-        {
-            DisablePanels();
-            PanelKeyBindings.SetActive(true);
-            PanelCombat.SetActive(true);
-            lineCombat.SetActive(true);
-        }
-
-        public void ControlsGeneralPanel()
-        {
-            DisablePanels();
-            PanelKeyBindings.SetActive(true);
-            _controlsGeneral.SetActive(true);
-            lineGeneral.SetActive(true);
-        }
+        #endregion
 
         public void PlayHover()
         {
@@ -278,14 +284,6 @@ namespace SlimUI.ModernMenu
         {
             exitMenu.SetActive(true);
             if (_gamesMenu) _gamesMenu.SetActive(false);
-            DisablePlayCampaign();
-        }
-
-        public void AreYouSureMobile()
-        {
-            exitMenu.SetActive(true);
-            if (_gamesMenu) _gamesMenu.SetActive(false);
-            mainMenu.SetActive(false);
             DisablePlayCampaign();
         }
 

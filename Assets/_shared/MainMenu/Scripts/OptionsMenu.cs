@@ -2,14 +2,13 @@
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Audio;
-using static SlimUI.ModernMenu.MainMenuNew;
 using UnityEngine.Events;
 using System.Collections.Generic;
-using System;
+using static MoonsOfMars.Shared.MainMenu;
 
-namespace SlimUI.ModernMenu
+namespace MoonsOfMars.Shared
 {
-    public class OptionsMenuNew : MonoBehaviour
+    public class OptionsMenu : MonoBehaviour
     {
         public enum ThemeColor { blue, green, orange };
 

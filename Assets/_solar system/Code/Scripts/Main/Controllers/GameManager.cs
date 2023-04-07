@@ -2,71 +2,77 @@ using Cinemachine;
 using System.Linq;
 using UnityEngine;
 
-[SelectionBase]
-[DisallowMultipleComponent]
-public class GameManager : MonoBehaviour
+namespace MoonsOfMars.SolarSystem
 {
-
-    #region singleton
-
-    public static GameManager Instance
+    [SelectionBase]
+    [DisallowMultipleComponent]
+    public class GameManager : MonoBehaviour
     {
-        get
+
+        #region singleton
+
+        public static GameManager Instance
         {
-            if (__instance == null)
-                __instance = FindObjectOfType<GameManager>();
+            get
+            {
+                if (__instance == null)
+                    __instance = FindObjectOfType<GameManager>();
 
-            return __instance;
+                return __instance;
+            }
         }
-    }
-    static GameManager __instance;
+        static GameManager __instance;
 
-    #endregion
+        #endregion
 
-    #region editor fields
-    [Header("Cameras")]
-    public Camera MainCamera;
-    public CinemachineVirtualCamera MenuCamera;
-    public CinemachineVirtualCamera SolarSystemCamera;
+        #region editor fields
+        [Header("Cameras")]
+        public Camera MainCamera;
+        public CinemachineVirtualCamera MenuCamera;
+        public CinemachineVirtualCamera SolarSystemCamera;
 
-    [Header("Solar System Controller")]
-    public GameObject SolarSystem;
-    #endregion
+        [Header("Solar System Controller")]
+        public GameObject SolarSystem;
+        #endregion
 
-    #region properties
+        #region properties
 
-    public float CameraSwitchTime { get; private set; }
+        public float CameraSwitchTime { get; private set; }
 
-    public int SolarSystemSpeed { get; internal set; }
+        public int SolarSystemSpeed { get; internal set; }
 
-    public SolarSystemController SolarSystemCtrl
-    {
-        get
+        public SolarSystemController SolarSystemCtrl
         {
-            if (__solarSystemCtrl == null)
-                SolarSystem.TryGetComponent(out __solarSystemCtrl);
+            get
+            {
+                if (__solarSystemCtrl == null)
+                    SolarSystem.TryGetComponent(out __solarSystemCtrl);
 
-            return __solarSystemCtrl;
+                return __solarSystemCtrl;
+            }
         }
-    }
-    SolarSystemController __solarSystemCtrl;
+        SolarSystemController __solarSystemCtrl;
 
-    #endregion
+       #endregion
 
-    CelestialBody[] _celestialBodies;
+        CelestialBody[] _celestialBodies;
 
-    void OnEnable() => __instance = this;
+        void OnEnable() => __instance = this;
 
-    void Awake()
-    {
-        _celestialBodies = FindObjectsOfType<CelestialBody>();
+        void Awake()
+        {
+            _celestialBodies = FindObjectsOfType<CelestialBody>();
 
-        if (MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
-            CameraSwitchTime = brain.m_DefaultBlend.BlendTime;
-    }
+            if (MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
+                CameraSwitchTime = brain.m_DefaultBlend.BlendTime;
+        }
 
-    public CelestialBody CelestialBody(SolarSystemController.CelestialBodyName name)
-    {
-        return _celestialBodies.First(b => b.Info.bodyName == name);
+        public CelestialBody CelestialBody(SolarSystemController.CelestialBodyName name)
+        {
+            return _celestialBodies.First(b => b.Info.bodyName == name);
+        }
+
+
+
     }
 }

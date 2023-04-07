@@ -1,24 +1,27 @@
 ﻿using UnityEngine;
 
-namespace SlimUI.ModernMenu{
-	[ExecuteInEditMode()]
-	[System.Serializable]
-	public class FlexibleUI : MonoBehaviour {
+namespace MoonsOfMars.Shared
+{
+    [ExecuteInEditMode()]
+    [System.Serializable]
+    public class FlexibleUI : MonoBehaviour
+    {
 
-		public FlexibleUIData themeController;
+        public FlexibleUIData themeController;
 
-		protected virtual void OnSkinUI(){
+        protected virtual void OnSkinUI()
+        {
 
-		}
+        }
 
-		public virtual void Awake(){
-			OnSkinUI();
-		}
+        public virtual void Awake()
+        {
+            OnSkinUI();
+        }
 
-		public virtual void Update(){
-			//if(Application.isEditor){
-				OnSkinUI();
-			//}
-		}
-	}
+        public virtual void Update()
+        {
+            OnSkinUI();
+        }
+    }
 }
