@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using static Utils;
 
-namespace Shared
+namespace MoonsOfMars.Shared
 {
     public class EffectsManager : MonoBehaviour
     {
@@ -54,7 +54,7 @@ namespace Shared
             while (i < _effectsPlaying.Count)
             {
                 var ctrl = _effectsPlaying[i];
-                if ( ctrl.IsAlive())
+                if (ctrl.IsAlive())
                 {
                     i++;
                     continue;

@@ -1,10 +1,10 @@
 using Cinemachine;
-using Shared;
+using MoonsOfMars.Shared;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 
-using static Shared.EffectsManager;
+using static MoonsOfMars.Shared.EffectsManager;
 using static Utils;
 
 namespace Game.Asteroids

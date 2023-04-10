@@ -1,13 +1,13 @@
 using UnityEngine;
 using System.Diagnostics.CodeAnalysis;
 
-namespace Shared
+namespace MoonsOfMars.Shared
 {
     public class EffectController : PoolableMonoBehaviour
     {
         internal ParticleSystem m_ps;
         internal EffectsManager.Effect m_effect;
-        
+
         Animator _animator;
         bool _animAlive;
         bool _isAnimation;

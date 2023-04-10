@@ -1,8 +1,8 @@
 using Cinemachine;
-using Shared;
+using MoonsOfMars.Shared;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using static Shared.EffectsManager;
+using static MoonsOfMars.Shared.EffectsManager;
 using static Utils;
 
 namespace Game.SpaceShooter

@@ -1,36 +1,56 @@
-﻿using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 
 namespace MoonsOfMars.Shared
 {
     [System.Serializable]
-    public class FlexibleUIElement : FlexibleUI
+    public class FlexibleUIElement : FlexibleUIBase
     {
-        [Header("Parameters")]
-        Color outline;
-        Image image;
-        GameObject message;
-        public enum OutlineStyle { solidThin, solidThick, dottedThin, dottedThick };
-        public bool hasImage = false;
-        public bool isText = false;
-
+        [SerializeField] bool _textIsThemeColor;
+        [SerializeField] bool _dimElement;
         protected override void OnSkinUI()
         {
             base.OnSkinUI();
 
-            if (hasImage)
+            gameObject.TryGetComponent<Image>(out var image);
+            if (image != null)
             {
                 image = GetComponent<Image>();
-                image.color = themeController.currentColor;
+                image.color = GetImageColor();
             }
 
-            message = gameObject;
-
-            if (isText)
+            gameObject.TryGetComponent<TextMeshPro>(out var tmp);
+            if (tmp != null)
+                tmp.color = GetTextColor();
+            else
             {
-                message.GetComponent<TextMeshPro>().color = themeController.textColor;
+                gameObject.TryGetComponent<TextMeshProUGUI>(out var tmpUi);
+                if (tmpUi != null)
+                    tmpUi.color = GetTextColor();
             }
+
         }
+
+        Color GetImageColor()
+        {
+            Color color= themeController.currentColor;
+            if (_dimElement)
+                color.a = .2f;
+
+            return color;
+        }
+
+        Color GetTextColor()
+        {
+            Color color= _textIsThemeColor ? themeController.currentColor : themeController.textColor;
+            if (_dimElement)
+                color.a = .2f;
+
+            return color;
+        }
+
+
+
     }
 }

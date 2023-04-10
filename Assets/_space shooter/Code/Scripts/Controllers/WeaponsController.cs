@@ -1,3 +1,4 @@
+using MoonsOfMars.Shared;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -155,7 +156,7 @@ namespace Game.SpaceShooter
                         laser.gameObject.SetActive(true);
                         laser.SetPosition(1, localHitPosition);
                     }
-                    GameManager.Instance.PlayEffect(Shared.EffectsManager.Effect.hitLaser, hitInfo.point, Quaternion.LookRotation(hitInfo.normal), 1.5f, OjectLayer.Default);
+                    GameManager.Instance.PlayEffect(EffectsManager.Effect.hitLaser, hitInfo.point, Quaternion.LookRotation(hitInfo.normal), 1.5f, OjectLayer.Default);
                 }
                 else
                 {

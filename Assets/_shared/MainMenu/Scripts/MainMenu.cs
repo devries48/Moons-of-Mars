@@ -96,6 +96,7 @@ namespace MoonsOfMars.Shared
             SetThemeColors();
 
             firstMenu.SetActive(true);
+
             mainMenu.SetActive(true);
         }
 
