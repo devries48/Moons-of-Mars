@@ -1,4 +1,5 @@
-using Announcers;
+using MoonsOfMars.Shared;
+using MoonsOfMars.Shared.Announcers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,7 +7,7 @@ using UnityEngine;
 using static Game.Asteroids.AsteroidsGameManager;
 using static Game.Asteroids.Level;
 using static Game.Asteroids.UfoManagerData;
-using static SceneLoader;
+using static MoonsOfMars.Shared.SceneLoader;
 
 namespace Game.Asteroids
 {

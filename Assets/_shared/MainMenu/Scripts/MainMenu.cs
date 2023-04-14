@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
-using System;
 
 namespace MoonsOfMars.Shared
 {
@@ -24,7 +23,7 @@ namespace MoonsOfMars.Shared
         [SerializeField] FlexibleUIData _themeController;
 
         [Header("Panels")]
-        [Tooltip("The UI Panel parenting all sub menus")] public GameObject mainCanvas;
+        [SerializeField, Tooltip("The UI Panel parenting all sub menus")] GameObject _mainCanvas;
         [SerializeField, Tooltip("The UI Panel that holds the CONTROLS window tab")] GameObject _panelControls;
         [SerializeField, Tooltip("The UI Panel that holds the VIDEO window tab")] GameObject _panelVideo;
         [SerializeField, Tooltip("The UI Panel that holds the GENERAL window tab")] GameObject _panelGeneral;
@@ -33,7 +32,6 @@ namespace MoonsOfMars.Shared
         [SerializeField, Tooltip("The UI Sub-Panel under KEY BINDINGS for MOVEMENT")] GameObject _panelBindMovement;
         [SerializeField, Tooltip("The UI Sub-Panel under KEY BINDINGS for COMBAT")] GameObject _panelBindCombat;
         [SerializeField, Tooltip("The UI Sub-Panel under KEY BINDINGS for GENERAL")] GameObject _panelBindGeneral;
-
 
         [Header("SFX")]
         [Tooltip("The GameObject holding the Audio Source component for the HOVER SOUND")]
@@ -94,20 +92,29 @@ namespace MoonsOfMars.Shared
             if (_gamesMenu) _gamesMenu.SetActive(false);
 
             SetThemeColors();
-
-            firstMenu.SetActive(true);
-
-            mainMenu.SetActive(true);
         }
 
+        void Start()
+        {
+            var rect = _mainCanvas.gameObject.GetComponent<RectTransform>();
+            var startScale = rect.localScale / 10; ;
+
+            rect.localScale = startScale;
+
+            firstMenu.SetActive(true);
+            mainMenu.SetActive(true);
+
+            //tween
+            LeanTween.scale(rect, startScale * 10, 1.2f).setEaseOutBounce().setDelay(1f);
+        }
         public void ShowMenu()
         {
-            mainCanvas.SetActive(true);
+            _mainCanvas.SetActive(true);
         }
 
         public void HideMenu()
         {
-            mainCanvas.SetActive(false);
+            _mainCanvas.SetActive(false);
         }
 
         #region Theme
@@ -164,14 +171,15 @@ namespace MoonsOfMars.Shared
             }
         }
 
-        public void DisablePlayCampaign()
+        public void DisableSubMenus()
         {
+            if (_gamesMenu) _gamesMenu.SetActive(false);
             if (playMenu) playMenu.SetActive(false);
         }
 
         public void Position2()
         {
-            DisablePlayCampaign();
+            DisableSubMenus();
             CameraObject.SetFloat("Animate", 1);
         }
 
@@ -284,8 +292,7 @@ namespace MoonsOfMars.Shared
         public void AreYouSure()
         {
             exitMenu.SetActive(true);
-            if (_gamesMenu) _gamesMenu.SetActive(false);
-            DisablePlayCampaign();
+            DisableSubMenus();
         }
 
         public void GamesMenu()
@@ -297,6 +304,8 @@ namespace MoonsOfMars.Shared
 
         public void InvokeMenuActionEvent(string action)
         {
+            DisableSubMenus();
+
             var val = (MenuAction)System.Enum.Parse(typeof(MenuAction), action);
 
             if (val == MenuAction.asteroids)
@@ -316,7 +325,7 @@ namespace MoonsOfMars.Shared
 
         IEnumerator LoadAsynchronously(string sceneName)
         {
-            mainCanvas.SetActive(false);
+            _mainCanvas.SetActive(false);
             loadingMenu.SetActive(true);
             loadText.SetActive(true);
             finishedLoadingText.gameObject.SetActive(false);

@@ -1,7 +1,7 @@
-using Game.Asteroids;
 using System.Collections.Generic;
 using UnityEngine;
-using static Utils;
+
+using static MoonsOfMars.Shared.Utils;
 
 namespace MoonsOfMars.Shared
 {

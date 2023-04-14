@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Announcers
+namespace MoonsOfMars.Shared.Announcers
 {
     public class ContextualLogAnnouncer : TextAnnouncerBase
     {

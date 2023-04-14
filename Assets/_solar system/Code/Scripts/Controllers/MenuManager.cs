@@ -6,6 +6,7 @@ using UnityEngine.Events;
 using Cinemachine;
 using MoonsOfMars.Shared;
 using static MoonsOfMars.SolarSystem.SolarSystemController;
+using Game.SpaceShooter;
 
 namespace MoonsOfMars.SolarSystem
 {
@@ -66,8 +67,6 @@ namespace MoonsOfMars.SolarSystem
             _director = GetComponent<PlayableDirector>();
             _director.played += Director_played;
             _director.stopped += Director_stopped;
-
-            // TODO: Use ResetUI as in AsteroidsGameManager, so menu is visible in editmode
         }
 
         void Start()
@@ -106,6 +105,7 @@ namespace MoonsOfMars.SolarSystem
             HideMainMenu();
 
             SystemPanelController.ShowControlPanel();
+            GmManager.SolarSystemCtrl.IsDemo = false;
 
             StartCoroutine(DelayExecute(GmManager.CameraSwitchTime, GmManager.SolarSystemCtrl.ShowOrbitLines));
 
@@ -169,7 +169,9 @@ namespace MoonsOfMars.SolarSystem
         void ShowMainMenu()
         {
             if (spaceDebriSystem == null) return;
+
             mainMenu.ShowMenu();
+            GmManager.SolarSystemCtrl.IsDemo = true;
 
             CameraSwitcher.SwitchCamera(GmManager.MenuCamera);
 

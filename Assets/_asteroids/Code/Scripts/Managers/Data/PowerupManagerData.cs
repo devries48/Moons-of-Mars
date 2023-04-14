@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using MoonsOfMars.Shared;
 
 namespace Game.Asteroids
 {

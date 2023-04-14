@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 
 using static MoonsOfMars.Shared.EffectsManager;
-using static Utils;
+using static MoonsOfMars.Shared.Utils;
 
 namespace Game.Asteroids
 {

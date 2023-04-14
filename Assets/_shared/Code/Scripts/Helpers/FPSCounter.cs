@@ -1,11 +1,9 @@
-using System;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace Utility
+namespace MoonsOfMars.Shared
 {
-    [RequireComponent(typeof (TextMeshProUGUI))]
+    [RequireComponent(typeof(TextMeshProUGUI))]
     public class FPSCounter : MonoBehaviour
     {
         private int m_FpsAccumulator = 0;
@@ -30,7 +28,7 @@ namespace Utility
             m_FpsAccumulator++;
             if (Time.realtimeSinceStartup > m_FpsNextPeriod)
             {
-                m_CurrentFps = (int) (m_FpsAccumulator/fpsMeasurePeriod);
+                m_CurrentFps = (int)(m_FpsAccumulator / fpsMeasurePeriod);
                 m_FpsAccumulator = 0;
                 m_FpsNextPeriod += fpsMeasurePeriod;
                 m_Text.text = string.Format(display, m_CurrentFps);

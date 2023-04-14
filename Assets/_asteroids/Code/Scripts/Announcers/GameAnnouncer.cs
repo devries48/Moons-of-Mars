@@ -1,4 +1,4 @@
-using Announcers;
+using MoonsOfMars.Shared.Announcers;
 using System;
 
 namespace Game.Asteroids

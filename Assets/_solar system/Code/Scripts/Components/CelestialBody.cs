@@ -65,10 +65,12 @@ namespace MoonsOfMars.SolarSystem
             if (_solarSystemController == null)
                 rotationSeconds = rotationTime;
             else if (_solarSystemController.IsDemo)
+            {
                 if (bodyType != CelestialBodyType.Sun)
                     rotationSeconds = 30.0f;
-                else
-                    rotationSeconds = RotationPeriod * 3600.0f;
+            }
+            else
+                rotationSeconds = RotationPeriod * 3600.0f;
 
             if (rotationSeconds > 0.0f)
             {

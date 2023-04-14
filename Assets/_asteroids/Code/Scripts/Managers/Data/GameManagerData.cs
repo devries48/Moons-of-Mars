@@ -1,3 +1,4 @@
+using MoonsOfMars.Shared;
 using UnityEngine;
 
 namespace Game.Asteroids

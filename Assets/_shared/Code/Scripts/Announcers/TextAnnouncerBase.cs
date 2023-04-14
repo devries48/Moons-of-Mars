@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace Announcers
+namespace MoonsOfMars.Shared.Announcers
 {
     public abstract class TextAnnouncerBase : ScriptableObject
     {

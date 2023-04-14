@@ -194,10 +194,14 @@ namespace MoonsOfMars.SolarSystem
                         //try to fix orbit if we can.
                         OrbitData.CalculateOrbitStateFromOrbitalVectors();
                     }
-
+                    
                     if (OrbitData.IsValidOrbit && GmManager)
                     {
-                        OrbitData.UpdateOrbitDataByTime(Time.deltaTime * GmManager.SolarSystemSpeed);
+                        int speed = GmManager.SolarSystemSpeed;
+                        if (GmManager.SolarSystemCtrl.IsDemo && CelestialBody.bodyType == CelestialBodyType.Moon)
+                            speed = Constants.SolarSystemSpeedHour;
+
+                        OrbitData.UpdateOrbitDataByTime(Time.deltaTime *  speed);
                         ForceUpdateViewFromInternalState();
                     }
                 }

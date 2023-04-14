@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Pool;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Shared
 {
     public class GameObjectPool
     {
@@ -52,7 +52,7 @@ namespace Game.Asteroids
                 instance.SetPool(this);
             else
                 Debug.LogError("Unable to find IPoolable interface: " + obj.ToString());
-            
+
             return obj;
         }
 
@@ -70,4 +70,5 @@ namespace Game.Asteroids
         void ReturnToPool(GameObject obj);
         void ReturnToPool();
     }
+
 }

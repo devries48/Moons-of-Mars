@@ -109,8 +109,8 @@ namespace MoonsOfMars.Shared
         {
             // default values
             masterMixer.GetFloat("MasterVolume", out Defaults.masterVolume);
-            masterMixer.GetFloat("MusicVolume", out Defaults.masterVolume);
-            effectsMixer.GetFloat("EffectsVolume", out Defaults.masterVolume);
+            masterMixer.GetFloat("MusicVolume", out Defaults.musicVolume);
+            effectsMixer.GetFloat("EffectsVolume", out Defaults.effectVolume);
 
             var volMaster = PlayerPrefs.GetFloat("MasterVolume", Defaults.masterVolume);
             var volMusic = PlayerPrefs.GetFloat("MusicVolume", Defaults.musicVolume);
@@ -167,8 +167,6 @@ namespace MoonsOfMars.Shared
 
                 i++;
             }
-
-            print("resolutionIndex " + resolutionIndex);
 
             dropdown.ClearOptions();
             dropdown.AddOptions(list);
