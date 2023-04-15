@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace MoonsOfMars.Shared
 {
-    public class EffectController : PoolableMonoBehaviour
+    public class EffectController : Poolable_MonoBehaviour
     {
         internal ParticleSystem m_ps;
         internal EffectsManager.Effect m_effect;

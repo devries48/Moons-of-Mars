@@ -119,7 +119,7 @@ namespace Game.Asteroids
             if (ShieldsUp)
             {
                 if (isAlien || m_spaceShip.m_shipType != SpaceShipMonoBehaviour.ShipType.player)
-                    PoolableMonoBehaviour.RemoveFromGame(bullet);
+                    Poolable_MonoBehaviour.RemoveFromGame(bullet);
             }
         }
 

@@ -3,6 +3,7 @@ using MoonsOfMars.Shared;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Game.Asteroids.AsteroidsGameManager;
 using static MoonsOfMars.SolarSystem.SolarSystemController;
 
 namespace MoonsOfMars.SolarSystem
@@ -38,7 +39,7 @@ namespace MoonsOfMars.SolarSystem
             get
             {
                 if (__camPivot == null)
-                    __camPivot = GmManager.SolarSystemCamera.gameObject.transform.parent.gameObject;
+                    __camPivot = GmManager.m_SolarSystemCamera.gameObject.transform.parent.gameObject;
 
                 return __camPivot;
             }
@@ -81,6 +82,7 @@ namespace MoonsOfMars.SolarSystem
         public void ShowControlPanel()
         {
             enabled = true;
+            _controlPanel.gameObject.SetActive(true);
 
             SolarSystemReset();
             // Pivot y from 0 to -0.1 rotate x from -90 to 15 
@@ -97,9 +99,18 @@ namespace MoonsOfMars.SolarSystem
             _slideSpeed.value = _slideSpeed.minValue;
 
             if (animate)
-                TweenUtil.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
+            {
+                var id=TweenUtil.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0), LeanTweenType.easeInQuint, .5f, LeanTweenType.easeOutQuad, 1f);
+                var d = LeanTween.descr(id);
+
+                d.setOnComplete(() => {
+                    _controlPanel.gameObject.SetActive(false);
+                });
+            }
             else
                 TweenUtil.TweenPivot(_controlPanel, new Vector2(0.5f, 0f), new Vector3(-90, 0, 0));
+
+ 
         }
 
         /// <summary>
@@ -107,7 +118,7 @@ namespace MoonsOfMars.SolarSystem
         /// </summary>
         public void SolarSystemZoom(float value)
         {
-            CinemachineComponentBase componentBase = GmManager.SolarSystemCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
+            CinemachineComponentBase componentBase = GmManager.m_SolarSystemCamera.GetCinemachineComponent(CinemachineCore.Stage.Body);
             if (componentBase is CinemachineFramingTransposer)
             {
                 var distance = 100f + ZoomEaseInCubic(value);
@@ -121,7 +132,7 @@ namespace MoonsOfMars.SolarSystem
         public void SolarSystemRotateVertical(float value)
         {
             // Get the parent of the camera for the rotation.
-            var camPivot = GmManager.SolarSystemCamera.gameObject.transform.parent.gameObject;
+            var camPivot = GmManager.m_SolarSystemCamera.gameObject.transform.parent.gameObject;
 
             LeanTween.rotateX(camPivot, value * 15, 0f);
         }
@@ -134,7 +145,7 @@ namespace MoonsOfMars.SolarSystem
             //var trans = GmManager.SolarSystemCamera.Follow.transform;
             print( value);
             //CamPivot.transform.RotateAround(trans.position, trans.up, value * 30);
-            var camPivot = GmManager.SolarSystemCamera.gameObject.transform.parent.gameObject;
+            var camPivot = GmManager.m_SolarSystemCamera.gameObject.transform.parent.gameObject;
 
             LeanTween.rotateY(camPivot, value * 30f, 0f);
         }
@@ -165,8 +176,8 @@ namespace MoonsOfMars.SolarSystem
 
             ResetCamRotation();
 
-            GmManager.SolarSystemCamera.transform.localRotation = Quaternion.Euler(30f + m_followBody.BodyAxialTilt, 0, 0);
-            GmManager.SolarSystemCamera.Follow = m_followBody.transform;
+            GmManager.m_SolarSystemCamera.transform.localRotation = Quaternion.Euler(30f + m_followBody.BodyAxialTilt, 0, 0);
+            GmManager.m_SolarSystemCamera.Follow = m_followBody.transform;
         }
 
         public void SolarSystemSpeed(float value)
@@ -205,7 +216,7 @@ namespace MoonsOfMars.SolarSystem
             _slideRotateHorizontal.value = _slideRotateHorizontal.minValue;
             CamPivot.transform.localRotation = Quaternion.Euler(0, 0, 0);
 
-            GmManager.SolarSystemCamera.transform.localRotation = Quaternion.Euler(30, 0, 0);
+            GmManager.m_SolarSystemCamera.transform.localRotation = Quaternion.Euler(30, 0, 0);
         }
 
         float ZoomEaseInCubic(float value)

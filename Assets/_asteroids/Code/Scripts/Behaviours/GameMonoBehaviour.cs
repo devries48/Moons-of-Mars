@@ -6,7 +6,7 @@ using static Game.Asteroids.AsteroidsGameManager;
 
 namespace Game.Asteroids
 {
-    public class GameMonoBehaviour : PoolableMonoBehaviour
+    public class GameMonoBehaviour : Poolable_MonoBehaviour
     {
         #region properties
 

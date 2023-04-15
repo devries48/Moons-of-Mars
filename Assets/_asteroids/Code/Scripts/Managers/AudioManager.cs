@@ -65,6 +65,16 @@ namespace Game.Asteroids
 
             _nextActionTime += _checkPeriod;
 
+            SelectMusicTrack();
+
+            if (_currentTrack == null) return;
+
+            if (_currentTrack.IsTrackEnding())
+                PlayMusic(_currentLevel);
+        }
+
+        void SelectMusicTrack()
+        {
             // Set initial music
             if (GameManager.IsGameActive && _currentLevel == MusicLevel.none)
             {
@@ -81,10 +91,6 @@ namespace Game.Asteroids
                 CheckGameIntensity();
             else if (GameManager.IsGameQuit)
                 StopMusic();
-            if (_currentTrack == null) return;
-
-            if (_currentTrack.IsTrackEnding())
-                PlayMusic(_currentLevel);
         }
 
         public void FadeOutBackgroundSfx()
