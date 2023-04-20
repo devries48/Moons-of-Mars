@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.Rendering;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     public class LightsManager : MonoBehaviour
     {

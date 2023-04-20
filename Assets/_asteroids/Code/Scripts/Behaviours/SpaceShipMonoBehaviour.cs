@@ -4,11 +4,11 @@ using System.Collections;
 using Unity.Mathematics;
 using UnityEngine;
 
-using static Game.Asteroids.AsteroidsGameManager;
-using static Game.Asteroids.PowerupManagerData;
-
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+    using static PowerupManagerData;
+
     [SelectionBase]
     public class SpaceShipMonoBehaviour : GameMonoBehaviour
     {

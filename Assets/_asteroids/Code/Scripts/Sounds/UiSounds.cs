@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     [System.Serializable]
     public class UISounds

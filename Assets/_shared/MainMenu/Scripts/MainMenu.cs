@@ -10,13 +10,16 @@ namespace MoonsOfMars.Shared
     public class MainMenu : MonoBehaviour
     {
         public enum Theme { custom1, custom2, custom3 };
+        public enum MoonsOfMars { solarSystem, asteroids };
         public enum MenuAction { play, solarSystem, asteroids, newGame, loadGame }
 
         [Header("Moons of Mars")]
+        [SerializeField] MoonsOfMars _application;
+        [SerializeField] bool _openOnStart = true;
+        [SerializeField] float _openDelay;
         [SerializeField] TMP_Text _versionText;
-        [SerializeField] GameObject _title;
         [SerializeField] GameObject _gamesMenu;
-        [SerializeField] GameObject[] _mainMenuItems;
+        [SerializeField] GameObject[] _title;
 
         [Header("Theme Settings")]
         [SerializeField] Theme _theme;
@@ -78,13 +81,14 @@ namespace MoonsOfMars.Shared
 
         [Header("EVENTS")]
         public UnityEvent<MenuAction> OnMenuAction;
+        public UnityEvent OnMenuExit;
 
-        Animator CameraObject;
+        Animator _camAnimator;
         float _loadProgress;
 
         void Awake()
         {
-            CameraObject = transform.GetComponent<Animator>();
+            _camAnimator = transform.GetComponent<Animator>();
             _versionText.text = $"version {Application.version}.alpha";
 
             if (playMenu) playMenu.SetActive(false);
@@ -96,17 +100,38 @@ namespace MoonsOfMars.Shared
 
         void Start()
         {
-            var rect = _mainCanvas.gameObject.GetComponent<RectTransform>();
-            var startScale = rect.localScale / 10; ;
+            if (_openOnStart)
+                OpenMenu();
+        }
+
+        public void OpenMenu()
+        {
+            var rect = _mainCanvas.GetComponent<RectTransform>();
+            var startScale = rect.localScale / 10;
 
             rect.localScale = startScale;
 
             firstMenu.SetActive(true);
             mainMenu.SetActive(true);
+            ShowMenu();
 
-            //tween
-            LeanTween.scale(rect, startScale * 10, 1.2f).setEaseOutBounce().setDelay(1f);
+            LeanTween.scale(rect, startScale * 10, 1.2f).setEaseOutBounce().setDelay(_openDelay);
         }
+
+        public int CloseMenu()
+        {
+            var rect = _mainCanvas.GetComponent<RectTransform>();
+            var targetScale = rect.localScale / 10; ;
+ 
+            return LeanTween.scale(rect, targetScale, .6f).setEaseInBack().
+                setOnComplete(() =>
+                {
+                    firstMenu.SetActive(false);
+                    mainMenu.SetActive(false);
+                    rect.localScale= targetScale*10;
+                }).id;
+        }
+
         public void ShowMenu()
         {
             _mainCanvas.SetActive(true);
@@ -177,17 +202,21 @@ namespace MoonsOfMars.Shared
             if (playMenu) playMenu.SetActive(false);
         }
 
-        public void Position2()
+        public void CameraToSettings()
         {
             DisableSubMenus();
-            CameraObject.SetFloat("Animate", 1);
+            _camAnimator.SetFloat("Animate", 1);
         }
 
-        public void Position1()
+        public void CameraToDefault()
         {
-            CameraObject.SetFloat("Animate", 0);
+            _camAnimator.SetFloat("Animate", 0);
         }
 
+        public void CameraToHighScore()
+        {
+            _camAnimator.SetFloat("Animate", 2);
+        }
 
         #region Panels
         public void ShowPanelGeneral()
@@ -312,6 +341,12 @@ namespace MoonsOfMars.Shared
                 LoadScene("Asteroids");
             else
                 OnMenuAction?.Invoke(val);
+        }
+
+        public void InvokeMenuExitEvent()
+        {
+            DisableSubMenus();
+            OnMenuExit?.Invoke();
         }
 
         public void QuitGame()

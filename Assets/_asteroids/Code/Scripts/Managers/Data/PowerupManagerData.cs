@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using MoonsOfMars.Shared;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     [CreateAssetMenu(fileName = "Powerup Manager data", menuName = "Asteroids/Powerup Manager")]
     public class PowerupManagerData : ScriptableObject
@@ -82,6 +82,7 @@ namespace Game.Asteroids
             }
         }
 
+        public int ActiveShuttleCount => _shuttlePool.CountActive;
         public void ShuttleLaunch() => _shuttlePool.GetFromPool();
         public void SpawnPowerup(Vector3 pos) => _powerupPool.GetFromPool(pos);
         public int GetPickupScore(bool isEnemy) => isEnemy ? enemyPickupScore : pickupScore;

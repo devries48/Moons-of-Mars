@@ -23,6 +23,7 @@ namespace MoonsOfMars.Shared
             return objPool;
         }
 
+        public int CountActive => _pool.CountActive;
         public GameObject GetFromPool() => _pool.Get();
 
         public GameObject GetFromPool(Vector3 position, Quaternion rotation = default, Vector3 size = default)

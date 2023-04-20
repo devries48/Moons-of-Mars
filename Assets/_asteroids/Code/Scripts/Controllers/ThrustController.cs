@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     // Send out thrust percentage of max thrust as event 
     [ExecuteAlways]

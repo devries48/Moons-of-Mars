@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     /// <summary>
     /// Listen to change in thrust, adjust particle values

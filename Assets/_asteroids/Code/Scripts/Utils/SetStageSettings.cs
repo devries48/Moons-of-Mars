@@ -1,5 +1,5 @@
 using Cinemachine;
-using Game.Asteroids;
+using MoonsOfMars.Game.Asteroids;
 using UnityEngine;
 
 public class SetStageSettings : MonoBehaviour

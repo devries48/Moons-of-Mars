@@ -2,10 +2,10 @@ using MoonsOfMars.Shared;
 using System.Collections;
 using UnityEngine;
 
-using static Game.Asteroids.AsteroidsGameManager;
-
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+
     public class AlliedShipController : GameMonoBehaviour
     {
         #region editor fields
@@ -208,9 +208,9 @@ namespace Game.Asteroids
             GmManager.PowerupManager.SpawnPowerup(transform.position);
         }
 
-        LTBezierPath CreatePath(int increments = 4)
+        LTBezierPath CreatePath()
         {
-            var path = new Vector3[increments];
+            var path = new Vector3[4];
 
             // first position, spawn
             _oldPos = new Vector3(Random.Range(-50f, 50f), Random.Range(-20f, 20f), 100f);
@@ -219,7 +219,7 @@ namespace Game.Asteroids
 
             // second position, bring within game cam view
             float x = Random.Range(-15f, 15f);
-            path[1] = new Vector3(x, Random.Range(-8f, -8f), 0);
+            path[1] = new Vector3(x, Random.Range(-8f, 8f), 0);
 
             // third position
             if (x < 0)
@@ -230,7 +230,7 @@ namespace Game.Asteroids
             path[2] = new Vector3(x, Random.Range(-8f, 8f), 0);
 
             // last position
-            _targetPos = new Vector3(Random.Range(-10f, 10f), Random.Range(-8f, 8f), -31f);
+            _targetPos = new Vector3(Random.Range(-10f, 10f), Random.Range(-6f, 6f), -31f);
             path[3] = _targetPos;
 
             return new LTBezierPath(path);

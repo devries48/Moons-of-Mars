@@ -1,12 +1,12 @@
 using UnityEngine;
 using System.Collections;
 using TMPro;
-
-using static Game.Asteroids.AsteroidsGameManager;
 using MoonsOfMars.Shared;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+
     [CreateAssetMenu(fileName = "UI Manager data", menuName = "Asteroids/UI Manager")]
     public class UIManagerData : ScriptableObject
     {
@@ -25,7 +25,7 @@ namespace Game.Asteroids
         #endregion
 
         #region properties
-        GameObject MainMenu => GmManager != null ? GmManager.m_MainMenuWindow : null;
+        MainMenu MainMenu => GmManager != null ? GmManager.m_MainMenu : null;
         GameObject PauseMenu => GmManager != null ? GmManager.m_PauseMenu : null;
         TextMeshProUGUI UiScore => GmManager != null ? GmManager.m_ScoreTextUI : null;
 
@@ -59,10 +59,10 @@ namespace Game.Asteroids
             uiSounds.m_UiAudio = source;
             UiScore.color = scoreColor;
             DisplayGameScore(false);
-            TweenUtil.MenuWindowClose(MainMenu, true);
+            MainMenu.HideMenu();
+            //TweenUtil.MenuWindowClose(MainMenu, true);
         }
 
-        //TODO while loop and return selected
         public IEnumerator ShowMainMenu()
         {
             if (_firstRun)
@@ -71,7 +71,8 @@ namespace Game.Asteroids
                 yield return Wait(2);
 
             DisplayGameScore(false);
-            TweenUtil.MenuWindowOpen(MainMenu);
+            MainMenu.OpenMenu();
+            //TweenUtil.MenuWindowOpen(MainMenu);
 
             yield return null;
         }
@@ -79,7 +80,8 @@ namespace Game.Asteroids
         public int HideMainMenu(bool startGame = true)
         {
             DisplayGameScore(startGame);
-            return TweenUtil.MenuWindowClose(MainMenu);
+            return MainMenu.CloseMenu();
+            //return TweenUtil.MenuWindowClose(MainMenu);
         }
 
         public void ShowPauseMenu()

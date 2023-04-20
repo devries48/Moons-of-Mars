@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static MusicData;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     public class DebugPanelController : MonoBehaviour
     {

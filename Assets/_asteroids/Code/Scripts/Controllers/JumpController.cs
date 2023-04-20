@@ -3,11 +3,11 @@ using System.Globalization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
-using static Game.Asteroids.AsteroidsGameManager;
-
-namespace Game.Asteroids
+ 
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+
     public class JumpController : GameMonoBehaviour
     {
         [SerializeField] float cursorSpeed = 10;

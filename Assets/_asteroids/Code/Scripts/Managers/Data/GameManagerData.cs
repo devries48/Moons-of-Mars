@@ -1,7 +1,7 @@
 using MoonsOfMars.Shared;
 using UnityEngine;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     [CreateAssetMenu(fileName = "Game Manager data", menuName = "Asteroids/Game Manager Data")]
     public class GameManagerData : ScriptableObject

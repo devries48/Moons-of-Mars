@@ -3,11 +3,11 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-using static Game.Asteroids.AsteroidsGameManager;
-using static Game.Asteroids.HudManager;
-
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+    using static HudManager;
+
     public class PlayerShipController : SpaceShipMonoBehaviour
     {
         #region constants

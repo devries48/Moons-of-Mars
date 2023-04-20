@@ -1,10 +1,10 @@
 using UnityEngine;
 
-using static Game.Asteroids.AsteroidsGameManager;
-using static Game.Asteroids.UfoManagerData;
-
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+    using static UfoManagerData;
+
     [SelectionBase]
     public class UfoController : SpaceShipMonoBehaviour
     {

@@ -3,7 +3,6 @@ using MoonsOfMars.Shared;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static Game.Asteroids.AsteroidsGameManager;
 using static MoonsOfMars.SolarSystem.SolarSystemController;
 
 namespace MoonsOfMars.SolarSystem

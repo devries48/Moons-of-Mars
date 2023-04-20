@@ -1,7 +1,6 @@
 using MoonsOfMars.Shared.Announcers;
-using System;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     public class GameAnnouncer : TextAnnouncerBase
     {

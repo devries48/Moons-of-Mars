@@ -6,7 +6,6 @@ using UnityEngine.Events;
 using Cinemachine;
 using MoonsOfMars.Shared;
 using static MoonsOfMars.SolarSystem.SolarSystemController;
-using Game.SpaceShooter;
 
 namespace MoonsOfMars.SolarSystem
 {

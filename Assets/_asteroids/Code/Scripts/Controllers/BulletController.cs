@@ -1,10 +1,10 @@
 using UnityEngine;
 
-using static Game.Asteroids.AsteroidsGameManager;
-using static Game.Asteroids.SpaceShipMonoBehaviour;
-
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+    using static SpaceShipMonoBehaviour;
+
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody))]
     public class BulletController : GameMonoBehaviour

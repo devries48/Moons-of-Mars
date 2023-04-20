@@ -2,10 +2,11 @@ using MoonsOfMars.Shared;
 using System.Collections;
 using UnityEngine;
 
-using static Game.Asteroids.AsteroidsGameManager;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+
     public class GameMonoBehaviour : Poolable_MonoBehaviour
     {
         #region properties

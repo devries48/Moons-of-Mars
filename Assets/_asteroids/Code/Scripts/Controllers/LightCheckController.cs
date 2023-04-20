@@ -2,7 +2,7 @@ using UnityEngine;
 
 // todo: documentation
 // https://www.youtube.com/watch?v=NYysvuyivc4
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     public class LightCheckController : MonoBehaviour
     {

@@ -3,10 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-using static Game.Asteroids.SpaceShipMonoBehaviour;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static SpaceShipMonoBehaviour;
+
     [CreateAssetMenu(fileName = "Ufo Manager data", menuName = "Asteroids/Ufo Manager")]
     public class UfoManagerData : ScriptableObject
     {

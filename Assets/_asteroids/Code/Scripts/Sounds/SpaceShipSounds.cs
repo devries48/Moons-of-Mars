@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     [Serializable]
     public class SpaceShipSounds

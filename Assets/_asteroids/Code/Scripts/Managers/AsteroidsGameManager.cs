@@ -4,11 +4,12 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-using static MoonsOfMars.Shared.EffectsManager;
-using static MoonsOfMars.Shared.Utils;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static EffectsManager;
+    using static Utils;
+
     [SelectionBase]
     [RequireComponent(typeof(EffectsManager))]
     public class AsteroidsGameManager : MonoBehaviour
@@ -47,7 +48,7 @@ namespace Game.Asteroids
         public LightsManager m_LightsManager;
 
         [Header("UI Elements")]
-        public GameObject m_MainMenuWindow;
+        public MainMenu m_MainMenu;
         public GameObject m_PauseMenu;
         public TextMeshProUGUI m_ScoreTextUI;
         public TextMeshProUGUI m_AnnouncerTextUI;
@@ -82,6 +83,7 @@ namespace Game.Asteroids
         public bool IsGamePlaying => _gameStatus == GameStatus.playing;
         public bool IsGameStageComplete => _gameStatus == GameStatus.stage;
         public bool IsGamePaused => _gameStatus == GameStatus.paused;
+        public bool IsGameInMenu => _gameStatus == GameStatus.menu;
 
         public UfoManagerData UfoManager => m_GameManagerData.m_UfoManager;
         public PowerupManagerData PowerupManager => m_GameManagerData.m_PowerupManager;
@@ -233,18 +235,22 @@ namespace Game.Asteroids
                     break;
 
                 case Menu.exit:
-                    SetGameStatus(GameStatus.quit);
-
-                    var id = UiManager.HideMainMenu(false);
-                    var d = LeanTween.descr(id);
-
-                    d?.setOnComplete(GameQuit);
                     break;
 
                 case Menu.none:
                 default:
                     break;
             }
+        }
+
+        public void MenuExit()
+        {
+            SetGameStatus(GameStatus.quit);
+
+            var id = UiManager.HideMainMenu(false);
+            var d = LeanTween.descr(id);
+
+            d?.setOnComplete(GameQuit);
         }
 
         public bool IsStageStartCameraActive()

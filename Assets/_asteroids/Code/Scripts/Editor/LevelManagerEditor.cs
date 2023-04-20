@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     [CustomEditor(typeof(LevelManager))]
     public class LevelManagerEditor : Editor

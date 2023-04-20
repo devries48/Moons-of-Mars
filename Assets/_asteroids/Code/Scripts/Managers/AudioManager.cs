@@ -7,7 +7,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using static MusicData;
 
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
     public class AudioManager : MonoBehaviour
     {

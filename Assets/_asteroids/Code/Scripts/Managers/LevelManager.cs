@@ -3,23 +3,20 @@ using MoonsOfMars.Shared.Announcers;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-using static Game.Asteroids.AsteroidsGameManager;
-using static Game.Asteroids.Level;
-using static Game.Asteroids.UfoManagerData;
-using static MoonsOfMars.Shared.SceneLoader;
-
-namespace Game.Asteroids
+namespace MoonsOfMars.Game.Asteroids
 {
+    using static AsteroidsGameManager;
+    using static Level;
+    using static UfoManagerData;
+    using static MoonsOfMars.Shared.SceneLoader;
+
     [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour
     {
         #region editor fields
         [SerializeField] SceneLoader sceneLoader;
-
-        [Header("Test")]
-        [SerializeField, Tooltip("Do not load the first scene, use when designing stage")]
-        bool firstStageLoaded = false;
 
         [Header("Elements")]
         [SerializeField] GameObject gameIntro;
@@ -46,6 +43,9 @@ namespace Game.Asteroids
         CurrentLevel _currentLevel;
         int _currentStageIndex;
         readonly float _moveToCam = 8;
+        [SerializeField, Tooltip("Do not load the first scene, use when designing stage")]
+        bool _debugFirstStageLoaded = false;
+
         #endregion
 
         #region properties
@@ -73,6 +73,8 @@ namespace Game.Asteroids
                 return _currentLevel.AsteroidsActive;
             }
         }
+
+        public bool HasActiveShuttle => GmManager.PowerupManager.ActiveShuttleCount > 0;
 
         public int UfosActive
         {
@@ -108,6 +110,9 @@ namespace Game.Asteroids
         {
             _currentStageIndex = 0;
             _currentLevel = new CurrentLevel(levels, stages);
+
+            if (SceneManager.sceneCountInBuildSettings > 1)
+                _debugFirstStageLoaded = true;
 
             gameIntro.SetActive(true);
             stageResults.SetActive(false);
@@ -324,7 +329,7 @@ namespace Game.Asteroids
         {
             // Load first stage
             var t = 0f;
-            if (!firstStageLoaded)
+            if (!_debugFirstStageLoaded)
             {
                 StartCoroutine(LoadStage(GetFirstStage()));
                 while (!IsStageLoaded)
@@ -485,13 +490,11 @@ namespace Game.Asteroids
             _levels = levels;
             _stages = stages;
             _stageStats = new List<StageStatistics>();
-            _lvlManager = GmManager != null ? GmManager.m_LevelManager : null;
         }
 
         readonly Level[] _levels;
         readonly Stage[] _stages;
         readonly List<StageStatistics> _stageStats;
-        readonly LevelManager _lvlManager;
 
         int _level;
         int _stage;
