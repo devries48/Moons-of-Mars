@@ -59,7 +59,7 @@ public class BossShipController : GameMonoBehaviour
         path[2] = new Vector3(x, Random.Range(-8f, 8f), 0);
 
         // last position
-        var _targetPos = new Vector3(Random.Range(-10f, 10f), Random.Range(-6f, 6f), -31f);
+        var _targetPos = new Vector3(Random.Range(-9f, 9f), Random.Range(-5f, 5f), -31f);
         path[3] = _targetPos;
 
         if (isReverse)

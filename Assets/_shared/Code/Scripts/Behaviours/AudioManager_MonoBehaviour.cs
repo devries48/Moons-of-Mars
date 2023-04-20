@@ -10,11 +10,11 @@ namespace MoonsOfMars.Shared
     {
         [SerializeField] float _fadeMusicTime = 4;
 
-        [Header("MIXER GROUPS")]
+        [Header("Audio Mixer Groups")]
         [SerializeField] AudioMixerGroup _musicMixerGroup;
         [SerializeField] AudioMixerGroup _backgroundFxMixerGroup;
 
-        public bool m_MusicStopped;
+        internal bool m_MusicStopped;
 
         #region fields
         readonly float _checkPeriod = .5f;
@@ -25,16 +25,15 @@ namespace MoonsOfMars.Shared
 
         List<AudioSource> _audioSources;
         List<MusicTrack> _musicTracks;
-        int _currentLevel = 0;
         MusicTrack _currentTrack;
         float _CurrentBackgroundSfxVolume;
         #endregion
 
-        public int CurrentLevel => _currentLevel;
+        public int CurrentLevel { get; set; }
 
-        protected virtual void Awake() => CreateAudioSources();
+        void Awake() => CreateAudioSources();
 
-        protected virtual void Update()
+        void Update()
         {
             if (Time.unscaledTime <= _nextActionTime)
                 return;
@@ -46,20 +45,23 @@ namespace MoonsOfMars.Shared
             if (_currentTrack == null) return;
 
             if (_currentTrack.IsTrackEnding())
-                PlayMusic(_currentLevel);
+                PlayMusic(CurrentLevel);
         }
 
-        protected virtual void PlayMusic(int level)
+        protected void PlayMusic(int level, float fadeTime = default)
         {
+            if (fadeTime == default)
+                fadeTime = _fadeMusicTime;
+
             _isPlayingFirstAudioSource = !_isPlayingFirstAudioSource;
 
             StopAllCoroutines();
-            StartCoroutine(FadeClip(level, _fadeMusicTime));
+            StartCoroutine(FadeClip(level, fadeTime));
 
-            _currentLevel = level;
+            CurrentLevel = level;
         }
 
-        protected virtual void StopMusic() => StartCoroutine(StopClip(_currentLevel, _endGameFade));
+        protected  void StopMusic() => StartCoroutine(StopClip(CurrentLevel, _endGameFade));
 
         protected abstract void SelectMusicTrack();
 
@@ -113,7 +115,7 @@ namespace MoonsOfMars.Shared
                 if (fadeOutSource.clip != null)
                     fadeOutSource.volume = 1 - (1 * (timeElapsed / timeToFade));
 
-                timeElapsed += Time.unscaledDeltaTime/timeToFade ;
+                timeElapsed += Time.unscaledDeltaTime / timeToFade;
                 yield return null;
             }
 

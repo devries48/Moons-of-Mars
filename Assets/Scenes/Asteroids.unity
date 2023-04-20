@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0006270524, g: 0.00055208616, b: 0.0006688691, a: 1}
+  m_IndirectSpecularColor: {r: 0.00062460057, g: 0.0005503285, b: 0.00066632865, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -11430,9 +11430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b96f164ed685ab8428fe7b0ed0531c46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fadeMusicTime: 4
+  _musicMixerGroup: {fileID: 7847922092003765503, guid: f0ee2cafe93b4944ea453c31432902d0, type: 2}
+  _backgroundFxMixerGroup: {fileID: 8703520674495269211, guid: ab1bd020727659345a310a8a133db8b8, type: 2}
   musicData: {fileID: 11400000, guid: 99f5d6b62f046bf4089a9d06579a8573, type: 2}
-  musicMixerGroup: {fileID: 7847922092003765503, guid: f0ee2cafe93b4944ea453c31432902d0, type: 2}
-  backgroundFxMixerGroup: {fileID: 8703520674495269211, guid: ab1bd020727659345a310a8a133db8b8, type: 2}
   startGameFade: 8
   inGameFade: 2
   mediumIntensityStart: 10
@@ -40434,6 +40435,10 @@ PrefabInstance:
     - target: {fileID: 3488976179539708001, guid: f44a48cfc85a0014d98df65baf7d8753, type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3488976179539708012, guid: f44a48cfc85a0014d98df65baf7d8753, type: 3}
+      propertyPath: m_Volume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3488976179539708014, guid: f44a48cfc85a0014d98df65baf7d8753, type: 3}
       propertyPath: m_RootOrder
