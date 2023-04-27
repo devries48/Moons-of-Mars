@@ -14,14 +14,14 @@ namespace MoonsOfMars.Game.Asteroids
 
             if (GUILayout.Button("Gizmo Earth path"))
             {
-                level._gizmoStageIndex = 1;
+                level._gizmoStageIndex = level.GetGizmoStageIndex("earth");
             }
             if (GUILayout.Button("Gizmo Mars path"))
             {
-                level._gizmoStageIndex = 0;
+                level._gizmoStageIndex = level.GetGizmoStageIndex("mars");
             }
-
         }
 
+ 
     }
 }

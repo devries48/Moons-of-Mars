@@ -42,7 +42,11 @@ namespace MoonsOfMars.Shared
             return GetFromPool(position, rotation).GetComponent<T>();
         }
 
-        public void ReturnToPool(GameObject obj) => _pool.Release(obj);
+        public void ReturnToPool(GameObject obj)
+        {
+            if (obj.activeSelf)
+                _pool.Release(obj);
+        }
 
         GameObject CreatePooledItem()
         {

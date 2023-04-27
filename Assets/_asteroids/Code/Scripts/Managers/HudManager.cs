@@ -140,7 +140,11 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void HudShow() => HudActive = true;
 
-        public void HudHide() => StartCoroutine(HudHideCore());
+        public void HudHide()
+        {
+            if (HudActive)
+                StartCoroutine(HudHideCore());
+        }
 
         IEnumerator HudHideCore()
         {

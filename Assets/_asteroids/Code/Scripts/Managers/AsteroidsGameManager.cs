@@ -4,7 +4,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-
 namespace MoonsOfMars.Game.Asteroids
 {
     using static EffectsManager;
@@ -34,8 +33,8 @@ namespace MoonsOfMars.Game.Asteroids
         }
         #endregion
 
-        enum Menu { none = 0, start = 1,settings=2, exit = 3}
-        public enum GameStatus { intro, start, menu, playing, paused, stage, gameover, quit }
+        enum Menu { none = 0, start = 1, settings = 2, exit = 3 }
+        public enum GameStatus { intro, start, menu, playing, paused, stage, gameover, exit }
         public enum StageCamera { start, far, background, end }
 
         #region editor fields
@@ -49,9 +48,9 @@ namespace MoonsOfMars.Game.Asteroids
 
         [Header("UI Elements")]
         public MainMenu m_MainMenu;
-        public GameObject m_PauseMenu;
         public TextMeshProUGUI m_ScoreTextUI;
         public TextMeshProUGUI m_AnnouncerTextUI;
+        public ParticleSystem m_SpaceDebriSystem;
 
         [Header("Camera's")]
         [SerializeField] Camera mainCamera;
@@ -78,8 +77,7 @@ namespace MoonsOfMars.Game.Asteroids
         }
         bool __isDay = true;
 
-        public bool IsGameQuit => _gameStatus == GameStatus.quit;
-        public bool IsGameActive => _gameStatus != GameStatus.gameover;
+        public bool IsGameExit => _gameStatus == GameStatus.exit;
         public bool IsGamePlaying => _gameStatus == GameStatus.playing;
         public bool IsGameStageComplete => _gameStatus == GameStatus.stage;
         public bool IsGamePaused => _gameStatus == GameStatus.paused;
@@ -94,7 +92,7 @@ namespace MoonsOfMars.Game.Asteroids
         internal PlayerShipController m_playerShip;
         internal CamBounds m_camBounds;
         internal DebugSettings m_debug = new();
-
+        internal bool m_gameAborted;
         CinemachineBrain _cinemachineBrain;
         GameStatus _gameStatus;
         EffectsManager _effects;
@@ -128,17 +126,17 @@ namespace MoonsOfMars.Game.Asteroids
         {
             m_LevelManager.ShowGameIntro();
 
-            while (_gameStatus != GameStatus.quit)
+            while (_gameStatus != GameStatus.exit)
             {
                 while (_gameStatus != GameStatus.playing)
                 {
                     if (_gameStatus == GameStatus.start)
                     {
+                        m_gameAborted = false;
+
                         Score.Reset();
                         SetGameStatus(GameStatus.menu);
-                        string result = null;
-
-                        yield return Run<string>(UiManager.ShowMainMenu(), (output) => result = output);
+                        StartCoroutine(UiManager.ShowMainMenu());
                     }
                     yield return null;
                 }
@@ -165,6 +163,19 @@ namespace MoonsOfMars.Game.Asteroids
         {
             SetGameStatus(GameStatus.gameover);
             StartCoroutine(m_LevelManager.AnnounceGameOver());
+            GameQuit();
+        }
+
+        public void GameAbort()
+        {
+            m_gameAborted = true;
+            UiManager.HidePauseMenu();
+            m_HudManager.HudHide();
+            GameQuit();
+        }
+
+        public void GameQuit()
+        {
             StartCoroutine(RemoveRemainingObjects());
             StartCoroutine(StartNewGame());
             Score.Reset();
@@ -172,12 +183,18 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void GamePause() => UiManager.ShowPauseMenu();
 
-        public void GameResume() => UiManager.HidePauseMenu();
+        public void GameResume()
+        {
+            UiManager.HidePauseMenu();
+            SetGameStatus(GameStatus.playing);
+        }
 
         public void StageStartNew() => StartCoroutine(StageStart());
 
         IEnumerator StageStart()
         {
+            Debug.Log("x Player: " + GmManager.m_playerShip);
+
             SwitchStageCam(StageCamera.far);
             yield return Wait(.1f);
 
@@ -202,7 +219,7 @@ namespace MoonsOfMars.Game.Asteroids
             SetGameStatus(GameStatus.playing);
         }
 
-        void GameQuit()
+        void GameExit()
         {
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
@@ -212,45 +229,54 @@ namespace MoonsOfMars.Game.Asteroids
         }
         #endregion
 
-
         public IEnumerator RemoveRemainingObjects()
         {
             foreach (var obj in FindObjectsOfType<GameMonoBehaviour>())
             {
-                if (!obj.gameObject.CompareTag("Player"))
+                if (m_gameAborted || !obj.gameObject.CompareTag("Player"))
                     obj.RemoveFromGame();
             }
 
             yield return null;
         }
 
-        public void MenuSelect(int i)
+        //public void MenuSelect(int i)
+        //{
+        //    var menu = (Menu)i;
+        //    switch (menu)
+        //    {
+        //        case Menu.start:
+        //            UiManager.HideMainMenu();
+        //            StartCoroutine(GamePlay(.5f));
+        //            break;
+
+        //        case Menu.exit:
+        //            break;
+
+        //        case Menu.none:
+        //        default:
+        //            break;
+        //    }
+        //}
+
+        /// <summary>
+        /// Starts the game (invoked by MainMenu event)
+        /// </summary>
+        public void MenuPlay()
         {
-            var menu = (Menu)i;
-            switch (menu)
-            {
-                case Menu.start:
-                    UiManager.HideMainMenu();
-                    StartCoroutine(GamePlay(.5f));
-                    break;
-
-                case Menu.exit:
-                    break;
-
-                case Menu.none:
-                default:
-                    break;
-            }
+            UiManager.HideMainMenu();
+            StartCoroutine(GamePlay(1.5f));
         }
 
+        /// <summary>
+        /// Quit the application (invoked by MainMenu event)
+        /// </summary>
         public void MenuExit()
         {
-            SetGameStatus(GameStatus.quit);
+            SetGameStatus(GameStatus.exit);
 
-            var id = UiManager.HideMainMenu(false);
-            var d = LeanTween.descr(id);
-
-            d?.setOnComplete(GameQuit);
+            UiManager.HideMainMenu(false);
+            GameExit();
         }
 
         public bool IsStageStartCameraActive()
@@ -317,6 +343,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         #endregion
 
+        // todo: cameraswitcher
         public void SwitchStageCam(StageCamera camera)
         {
             backgroundFarCamera.Priority = 1;
@@ -377,16 +404,16 @@ namespace MoonsOfMars.Game.Asteroids
 
         public static WaitForSeconds Wait(float duration) => new(duration);
 
-        static IEnumerator Run<T>(IEnumerator target, System.Action<T> output)
-        {
-            object result = null;
-            while (target.MoveNext())
-            {
-                result = target.Current;
-                yield return result;
-            }
-            output((T)result);
-        }
+        //static IEnumerator Run<T>(IEnumerator target, System.Action<T> output)
+        //{
+        //    object result = null;
+        //    while (target.MoveNext())
+        //    {
+        //        result = target.Current;
+        //        yield return result;
+        //    }
+        //    output((T)result);
+        //}
 
         #region struct CamBounds
 
@@ -413,6 +440,6 @@ namespace MoonsOfMars.Game.Asteroids
         #endregion
 
 
- 
+
     }
 }

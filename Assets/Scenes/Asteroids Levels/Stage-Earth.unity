@@ -385,8 +385,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b47beb5dc2ed770449507e8ffb3b891a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sun: {fileID: 934970957}
-  stageBackgroundCamera: {fileID: 205806088}
 --- !u!4 &1050978334 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5507501728083071776, guid: b570e19f3675e1448a0d5a3672cffc9e, type: 3}

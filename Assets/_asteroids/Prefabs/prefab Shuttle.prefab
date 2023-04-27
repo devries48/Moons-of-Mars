@@ -216,6 +216,7 @@ MonoBehaviour:
   spawnClips:
   - {fileID: 8300000, guid: 578e9fd3b00421540a6fdbb4b3408329, type: 3}
   - {fileID: 8300000, guid: 77fa0ebce64b68547b69b7d83d028d97, type: 3}
+  - {fileID: 8300000, guid: ac20d9840937170408378807dcf43151, type: 3}
   isPlayer: 0
   duration: 5
   endStageClip: {fileID: 0}

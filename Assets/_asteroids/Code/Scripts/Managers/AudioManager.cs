@@ -47,21 +47,32 @@ namespace MoonsOfMars.Game.Asteroids
         protected override void SelectMusicTrack()
         {
             // Set initial music
-            if (GameManager.IsGameActive && CurrentMusicLevel == MusicLevel.none)
+            //if (GameManager.IsGameActive && CurrentMusicLevel == MusicLevel.none)
+            //{
+            //    PlayMusic(MusicLevel.menu);
+            //    return;
+            //}
+
+            if (GameManager.IsGameStageComplete)
             {
-                PlayMusic(MusicLevel.menu);
-                return;
+                if (CurrentMusicLevel != MusicLevel.stage)
+                    PlayMusic(MusicLevel.stage);
             }
-            if (GameManager.IsGameStageComplete && CurrentMusicLevel != MusicLevel.stage)
-                PlayMusic(MusicLevel.stage);
-            else if (!GameManager.IsGameActive && CurrentMusicLevel != MusicLevel.menu)
-                CurrentMusicLevel = MusicLevel.none;
-            else if (GameManager.IsGamePaused && CurrentMusicLevel != MusicLevel.pause)
-                PlayMusic(MusicLevel.pause);
+            else if (GameManager.IsGamePaused)
+            {
+                if (CurrentMusicLevel != MusicLevel.pause)
+                    PlayMusic(MusicLevel.pause);
+            }
+            else if (GameManager.IsGameInMenu)
+            {
+                 if( CurrentMusicLevel != MusicLevel.menu)
+                    PlayMusic(MusicLevel.menu);
+            }
+
+            else if (GameManager.IsGameExit)
+                StopMusic();
             else if (GameManager.IsGamePlaying)
                 CheckGameIntensity();
-            else if (GameManager.IsGameQuit)
-                StopMusic();
         }
 
         protected override AudioClip GetMusicClip(int level)

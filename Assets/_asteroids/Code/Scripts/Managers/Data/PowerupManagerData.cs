@@ -70,14 +70,14 @@ namespace MoonsOfMars.Game.Asteroids
 
         public IEnumerator PowerupSpawnLoop()
         {
-            while (GameManager.IsGameActive)
+            while (!GameManager.IsGameExit)
             {
                 while (!GameManager.IsGamePlaying || !GameManager.m_LevelManager.CanActivate(Level.LevelAction.powerUp) || GameManager.m_debug.NoPowerups)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (GameManager.m_LevelManager.AsteroidsActive > 2 && GameManager.IsGamePlaying)
+                if ( GameManager.IsGamePlaying && GameManager.m_LevelManager.AsteroidsActive > 2 )
                     ShuttleLaunch();
             }
         }

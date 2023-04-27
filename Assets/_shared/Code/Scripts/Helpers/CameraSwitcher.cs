@@ -9,9 +9,9 @@ namespace MoonsOfMars.Shared
     /// <example>
     ///     CameraSwitcher.Register(_MenuCamera);
     ///     CameraSwitcher.Register(_SolarSystemCamera);
-    ///     
-    ///     CameraSwitcher.SwitchCamera(GmManager.SolarSystemCamera);
-    /// 
+    ///     ...
+    ///     CameraSwitcher.SwitchCamera(_SolarSystemCamera);
+    ///     ...
     ///     CameraSwitcher.Unregister...
     /// </example>
     public static class CameraSwitcher

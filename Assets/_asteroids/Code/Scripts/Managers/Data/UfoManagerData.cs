@@ -61,14 +61,14 @@ namespace MoonsOfMars.Game.Asteroids
             if (_ufoPool == null)
                 BuildPools();
 
-            while (GameManager.IsGameActive)
+            while (!GameManager.IsGameExit)
             {
                 while (!GameManager.IsGamePlaying || !LevelManager.CanAddUfo || GameManager.m_debug.NoUfos)
                     yield return null;
 
                 yield return new WaitForSeconds(Random.Range(minSpawnWait, maxSpawnWait));
 
-                if (LevelManager.AsteroidsActive > 1 && GameManager.IsGamePlaying)
+                if ( GameManager.IsGamePlaying &&  LevelManager.AsteroidsActive > 1 )
                     UfoLaunch();
             }
         }

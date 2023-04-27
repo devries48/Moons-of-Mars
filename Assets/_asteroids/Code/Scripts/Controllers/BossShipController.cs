@@ -2,21 +2,26 @@ using MoonsOfMars.Game.Asteroids;
 using MoonsOfMars.Shared;
 using UnityEngine;
 
-public class BossShipController : GameMonoBehaviour
+public class BossShipController : SpaceShipMonoBehaviour
 {
+    [Header("Boss")]
     [SerializeField] Transform _ship;
-    [SerializeField] float _spinSpeed = 100f;
+    [SerializeField] int _minSpinSpeed = 50;
+    [SerializeField] int _maxSpinSpeed = 200;
 
-    void OnEnable()
+    int _spinSpeed;
+
+    protected override void OnEnable()
     {
+        _spinSpeed = Random.Range(_minSpinSpeed, _maxSpinSpeed + 1);
         MoveShipIn(12f);
     }
 
     protected override void FixedUpdate()
     {
         _ship.Rotate(new Vector3(0, 0, _spinSpeed * Time.fixedDeltaTime));
-
     }
+
     void MoveShipIn(float duration)
     {
         var reverse = Random.value > 0.5f;
@@ -25,7 +30,7 @@ public class BossShipController : GameMonoBehaviour
         var tilt = Random.Range(-110f, -75f);
 
         transform.localRotation = Quaternion.Euler(tilt, 0, 0);
-
+        base.OnEnable();
         LeanTween.move(gameObject, path, duration)
             .setEase(curve)
             .setOrientToPath(true)
@@ -33,7 +38,8 @@ public class BossShipController : GameMonoBehaviour
             {
                 if (reverse)
                     AsteroidsGameManager.GmManager.PlayEffect(EffectsManager.Effect.hit2, transform.position, 3f, Utils.OjectLayer.Default);
-               
+
+                transform.position = new Vector3(0,0,-50);
                 RemoveFromGame();
             });
     }
@@ -59,7 +65,7 @@ public class BossShipController : GameMonoBehaviour
         path[2] = new Vector3(x, Random.Range(-8f, 8f), 0);
 
         // last position
-        var _targetPos = new Vector3(Random.Range(-9f, 9f), Random.Range(-5f, 5f), -31f);
+        var _targetPos = new Vector3(Random.Range(-9f, 9f), Random.Range(-5.5f, 5.5f), -29f);
         path[3] = _targetPos;
 
         if (isReverse)

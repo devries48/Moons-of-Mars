@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using System.Collections.Generic;
 
 namespace MoonsOfMars.Shared
 {
@@ -25,8 +26,12 @@ namespace MoonsOfMars.Shared
         [SerializeField] Theme _theme;
         [SerializeField] FlexibleUIData _themeController;
 
-        [Header("Panels")]
+        [Header("Main Canvasses")]
         [SerializeField, Tooltip("The UI Panel parenting all sub menus")] GameObject _mainCanvas;
+        [SerializeField] GameObject _settingsCanvas;
+        [SerializeField] GameObject _highScoreCanvas;
+
+        [Header("Panels")]
         [SerializeField, Tooltip("The UI Panel that holds the CONTROLS window tab")] GameObject _panelControls;
         [SerializeField, Tooltip("The UI Panel that holds the VIDEO window tab")] GameObject _panelVideo;
         [SerializeField, Tooltip("The UI Panel that holds the GENERAL window tab")] GameObject _panelGeneral;
@@ -72,6 +77,10 @@ namespace MoonsOfMars.Shared
         [Tooltip("Highlight Image for when GENERAL Sub-Tab is selected in KEY BINDINGS")]
         public GameObject lineGeneral;
 
+        [Header("PAUSE MENU")]
+        [SerializeField] GameObject _pauseMenu;
+        [SerializeField] GameObject _quitMenu;
+
         [Header("LOADING SCREEN")]
         public GameObject loadingMenu;
         public Slider loadBar;
@@ -80,20 +89,28 @@ namespace MoonsOfMars.Shared
         public bool requireInputForNextScene = false;
 
         [Header("EVENTS")]
-        public UnityEvent<MenuAction> OnMenuAction;
+        public UnityEvent OnMenuPlay;
         public UnityEvent OnMenuExit;
+        public UnityEvent OnMenuResumeGame;
+        public UnityEvent OnMenuAbortGame;
+        public UnityEvent<MenuAction> OnMenuAction;
 
         Animator _camAnimator;
         float _loadProgress;
+        List<GameObject> _subMenuList;
 
         void Awake()
         {
             _camAnimator = transform.GetComponent<Animator>();
             _versionText.text = $"version {Application.version}.alpha";
+            _subMenuList = new List<GameObject>();
 
-            if (playMenu) playMenu.SetActive(false);
-            exitMenu.SetActive(false);
-            if (_gamesMenu) _gamesMenu.SetActive(false);
+            if (_pauseMenu) _pauseMenu.SetActive(false);
+
+            if (playMenu) _subMenuList.Add(playMenu);
+            if (exitMenu) _subMenuList.Add(exitMenu);
+            if (_gamesMenu) _subMenuList.Add(_gamesMenu);
+            if (_quitMenu) _subMenuList.Add(_quitMenu);
 
             SetThemeColors();
         }
@@ -111,25 +128,52 @@ namespace MoonsOfMars.Shared
 
             rect.localScale = startScale;
 
-            firstMenu.SetActive(true);
-            mainMenu.SetActive(true);
+            SetMenuActive(true);
             ShowMenu();
 
             LeanTween.scale(rect, startScale * 10, 1.2f).setEaseOutBounce().setDelay(_openDelay);
         }
 
-        public int CloseMenu()
+        public void CloseMenu()
         {
             var rect = _mainCanvas.GetComponent<RectTransform>();
             var targetScale = rect.localScale / 10; ;
- 
-            return LeanTween.scale(rect, targetScale, .6f).setEaseInBack().
+
+            LeanTween.scale(rect, targetScale, .6f).setEaseInBack().
                 setOnComplete(() =>
                 {
-                    firstMenu.SetActive(false);
-                    mainMenu.SetActive(false);
-                    rect.localScale= targetScale*10;
-                }).id;
+                    SetMenuActive(false);
+                    rect.localScale = targetScale * 10;
+                });
+        }
+
+        void SetMenuActive(bool active)
+        {
+            firstMenu.SetActive(active);
+            _mainCanvas.SetActive(active);
+            _settingsCanvas.SetActive(active);
+            _highScoreCanvas.SetActive(active);
+        }
+
+        public void SetPauseMenuActive(bool active)
+        {
+            _pauseMenu.SetActive(active);
+            _settingsCanvas.SetActive(active);
+        }
+
+        public void OpenPauseMenu()
+        {
+            TweenUtil.SetPivot(_pauseMenu, new Vector2(.5f, -.1f));
+            SetPauseMenuActive(true);
+            TweenUtil.TweenPivot(_pauseMenu, new Vector2(.5f, .5f), null, LeanTweenType.easeOutBack, .5f);
+        }
+
+        public int ClosePauseMenu()
+        {
+            var id = TweenUtil.TweenPivot(_pauseMenu, new Vector2(.5f, 1.5f), null, LeanTweenType.easeInBack, .5f);
+            var d = LeanTween.descr(id);
+
+            return d.id;
         }
 
         public void ShowMenu()
@@ -141,6 +185,7 @@ namespace MoonsOfMars.Shared
         {
             _mainCanvas.SetActive(false);
         }
+
 
         #region Theme
         public void ThemeChanged(Theme theme)
@@ -180,26 +225,28 @@ namespace MoonsOfMars.Shared
             if (playMenu) playMenu.SetActive(true);
         }
 
-        public void ReturnMenu()
+        public void ReturnToMainMenu()
         {
-            if (playMenu) playMenu.SetActive(false);
-            if (_gamesMenu) _gamesMenu.SetActive(false);
-            exitMenu.SetActive(false);
+            DisableSubMenus();
             mainMenu.SetActive(true);
+        }
+
+        public void ReturnToPauseMenu()
+        {
+            DisableSubMenus();
+            _pauseMenu.SetActive(true);
         }
 
         public void LoadScene(string scene)
         {
             if (scene != "")
-            {
                 StartCoroutine(LoadAsynchronously(scene));
-            }
         }
 
-        public void DisableSubMenus()
+        public void DisableSubMenus(GameObject activateMenu = null)
         {
-            if (_gamesMenu) _gamesMenu.SetActive(false);
-            if (playMenu) playMenu.SetActive(false);
+            foreach (var item in _subMenuList)
+                item.SetActive(activateMenu != null && activateMenu == item);
         }
 
         public void CameraToSettings()
@@ -208,15 +255,13 @@ namespace MoonsOfMars.Shared
             _camAnimator.SetFloat("Animate", 1);
         }
 
-        public void CameraToDefault()
-        {
-            _camAnimator.SetFloat("Animate", 0);
-        }
-
         public void CameraToHighScore()
         {
+            DisableSubMenus();
             _camAnimator.SetFloat("Animate", 2);
         }
+
+        public void CameraToDefault() => _camAnimator.SetFloat("Animate", 0);
 
         #region Panels
         public void ShowPanelGeneral()
@@ -312,24 +357,13 @@ namespace MoonsOfMars.Shared
             sliderSound.Play();
         }
 
-        public void PlaySwoosh()
-        {
-            swooshSound.Play();
-        }
+        public void PlaySwoosh() => swooshSound.Play();
 
-        // Are You Sure - Quit Panel Pop Up
-        public void AreYouSure()
-        {
-            exitMenu.SetActive(true);
-            DisableSubMenus();
-        }
+        public void AreYouSure() => DisableSubMenus(exitMenu);
 
-        public void GamesMenu()
-        {
-            if (playMenu) playMenu.SetActive(false);
-            if (_gamesMenu) _gamesMenu.SetActive(true);
-            exitMenu.SetActive(false);
-        }
+        public void QuitCurrentGame() => DisableSubMenus(_quitMenu);
+
+        public void GamesMenu() => DisableSubMenus(_gamesMenu);
 
         public void InvokeMenuActionEvent(string action)
         {
@@ -341,6 +375,22 @@ namespace MoonsOfMars.Shared
                 LoadScene("Asteroids");
             else
                 OnMenuAction?.Invoke(val);
+        }
+
+        public void InvokeMenuPlayEvent()
+        {
+            OnMenuPlay?.Invoke();
+        }
+        public void InvokeMenuResumeGameEvent()
+        {
+            DisableSubMenus();
+            OnMenuResumeGame?.Invoke();
+        }
+
+        public void InvokeMenuAbortGameEvent()
+        {
+            DisableSubMenus();
+            OnMenuAbortGame?.Invoke();
         }
 
         public void InvokeMenuExitEvent()

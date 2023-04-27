@@ -1,3 +1,4 @@
+using MoonsOfMars.Game.Asteroids;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -67,6 +68,7 @@ namespace MoonsOfMars.Shared
 
         public void UnloadSceneAsync(SceneName scene)
         {
+            print("Unload scene: " + scene);
             m_stageUnloaded = false;
             StartCoroutine(UnloadAsync((int)scene));
         }
@@ -85,10 +87,14 @@ namespace MoonsOfMars.Shared
 
         IEnumerator UnloadAsync(int scene)
         {
+            Debug.Log("A Player: " + AsteroidsGameManager.GmManager.m_playerShip);
+
             yield return null;
-            SceneManager.UnloadSceneAsync(scene).completed += (Scene) =>
+            SceneManager.UnloadSceneAsync(scene,UnloadSceneOptions.UnloadAllEmbeddedSceneObjects).completed += (Scene) =>
                 {
-                    Resources.UnloadUnusedAssets();
+                    Debug.Log("B Player: " + AsteroidsGameManager.GmManager.m_playerShip);
+
+                    //Resources.UnloadUnusedAssets();
                     m_stageUnloaded = true;
                 };
         }

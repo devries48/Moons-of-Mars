@@ -23,21 +23,6 @@ namespace MoonsOfMars.Game.Asteroids
         [SerializeField] AudioClip[] stageComplete;
         [SerializeField] AudioClip[] gameOver;
 
-        #region properties
-        AsteroidsGameManager GameManager
-        {
-            get
-            {
-                if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.GmManager;
-
-                return __gameManager;
-            }
-        }
-        AsteroidsGameManager __gameManager;
-
-        #endregion
-
         public AudioSource m_UiAudio;
 
         public void PlayClip(Clip clip)

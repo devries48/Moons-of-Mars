@@ -34,18 +34,16 @@ namespace MoonsOfMars.Game.Asteroids
         [Header("Levels & stages")]
         [SerializeField] Level[] levels;
         [SerializeField] Stage[] stages;
-
-        Vector3 _gizmoPosition;
-        [HideInInspector] public int _gizmoStageIndex;
         #endregion
 
         #region fields
         CurrentLevel _currentLevel;
         int _currentStageIndex;
         readonly float _moveToCam = 8;
-        [SerializeField, Tooltip("Do not load the first scene, use when designing stage")]
-        bool _debugFirstStageLoaded = false;
-
+        bool _isFirstStageLoaded;
+        Vector3 _gizmoPosition;
+        [HideInInspector] public int _gizmoStageIndex;
+        int _gizmoCurrentIndex = -1;
         #endregion
 
         #region properties
@@ -109,10 +107,27 @@ namespace MoonsOfMars.Game.Asteroids
         void Start()
         {
             _currentStageIndex = 0;
+            _isFirstStageLoaded = false;
             _currentLevel = new CurrentLevel(levels, stages);
 
-            if (SceneManager.sceneCountInBuildSettings > 1)
-                _debugFirstStageLoaded = true;
+            // Set the active scene: the Scene which will be used as the target for new GameObjects instantiated by scripts and from what Scene the lighting settings are used
+            SceneManager.SetActiveScene(SceneManager.GetActiveScene());
+
+            if (SceneManager.sceneCount > 1)
+            {
+                _isFirstStageLoaded = true;
+               
+                var scene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
+               
+                for (int i = 0; i < stages.Length - 1; i++)
+                {
+                    if (scene.name.ToLower().Contains(stages[i].Name.ToLower()))
+                    {
+                        _currentStageIndex = i;
+                        break;
+                    }
+                }
+            }
 
             gameIntro.SetActive(true);
             stageResults.SetActive(false);
@@ -153,6 +168,9 @@ namespace MoonsOfMars.Game.Asteroids
 
         public IEnumerator LevelEndLoop()
         {
+            if (GmManager.m_gameAborted)
+                yield break;
+
             bool gameover = !GmManager.m_playerShip.m_isAlive;
 
             if (gameover)
@@ -204,7 +222,6 @@ namespace MoonsOfMars.Game.Asteroids
             UIAudio(UISounds.Clip.levelComplete);
             while (UIAudioPlaying)
                 yield return null;
-
         }
 
         IEnumerator AnnounceStageCleared(int stage)
@@ -300,12 +317,16 @@ namespace MoonsOfMars.Game.Asteroids
 
         IEnumerator WaitForStageToLoad()
         {
+            Debug.Log("1 Player: " + GmManager.m_playerShip.enabled);
+
             //Add bonus
             var r = _currentLevel.GetStageResults();
             Score.Earn(r.TotalBonus, new Vector3(7, -2, 0));
 
             sceneLoader.UnloadSceneAsync(GetCurrentStage());
             yield return new WaitForSeconds(1); // wait for music change (checks every .5 seconds). It interrupted the mixer group fade.
+
+            Debug.Log("2 Player: " + GmManager.m_playerShip);
 
             GmManager.m_AudioManager.FadeOutBackgroundSfx();
 
@@ -319,6 +340,8 @@ namespace MoonsOfMars.Game.Asteroids
             HideGroup(stageResults);
             yield return new WaitForSeconds(.5f);
 
+            Debug.Log("7 Player: " + GmManager.m_playerShip);
+
             GmManager.StageStartNew();
             GmManager.m_AudioManager.FadeInBackgroundSfx();
         }
@@ -329,7 +352,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             // Load first stage
             var t = 0f;
-            if (!_debugFirstStageLoaded)
+            if (!_isFirstStageLoaded)
             {
                 StartCoroutine(LoadStage(GetFirstStage()));
                 while (!IsStageLoaded)
@@ -337,7 +360,6 @@ namespace MoonsOfMars.Game.Asteroids
             }
 
             t += Time.deltaTime;
-
             yield return Wait(5 - t);
             HideGameIntro();
             yield return Wait(.5f);
@@ -384,13 +406,30 @@ namespace MoonsOfMars.Game.Asteroids
 
             Gizmos.DrawLine(new Vector3(points[0].x, points[0].y, points[0].z), new Vector3(points[1].x, points[1].y, points[1].z));
             Gizmos.DrawLine(new Vector3(points[2].x, points[2].y, points[2].z), new Vector3(points[3].x, points[3].y, points[3].z));
+
+            if (_gizmoStageIndex != _gizmoCurrentIndex)
+            {
+                print($"Gizmo path: {stages[_gizmoStageIndex].Name}");
+                _gizmoCurrentIndex = _gizmoStageIndex;
+            }
         }
+
+        public int GetGizmoStageIndex(string stage)
+        {
+            for (int i = 0; i < stages.Length; i++)
+            {
+                if (stages[i].Name.ToLower().Contains(stage.ToLower()))
+                    return i;
+            }
+            return -1;
+        }
+
     }
 
     [System.Serializable]
     public class Level
     {
-        public enum LevelAction { asteroidAdd, asteroidRemove, powerUp, greenUfo, redUfo }
+        public enum LevelAction { asteroidAdd, asteroidRemove, powerUp, greenUfo, redUfo, bossLevel }
         public LevelAction[] actions;
     }
 
@@ -516,8 +555,8 @@ namespace MoonsOfMars.Game.Asteroids
         public int AsteroidsForLevel => _levelAsteriods;
         public int AsteroidsActive => _asteroidsActive;
         public int TotalUfosActive => _ufosGreenActive + _ufosRedActive;
-        int UfosGreenActive => _ufosGreenActive;
-        int UfosRedActive => _ufosRedActive;
+        //int UfosGreenActive => _ufosGreenActive;
+        //int UfosRedActive => _ufosRedActive;
         public bool HasEnemy => _asteroidsActive > 0 || TotalUfosActive > 0;
         public bool CanAddUfo => TotalUfosActive < _levelUfos && _asteroidsActive > 0;
         public bool CanAddGreenUfo => _levelUfoGreen;

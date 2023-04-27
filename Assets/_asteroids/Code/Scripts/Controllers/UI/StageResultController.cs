@@ -63,7 +63,7 @@ namespace MoonsOfMars.Game.Asteroids
             print("Ufo spawn:" + r.UfosSpawned);
             print("Pwr spawn:" + r.PowerupsSpawned);
 
-            title.text = $"{r.Name} stage completed";
+            title.text = $"{r.Name} stage completed".ToLower();
             shotsFired.text = FmtFloat(r.ShotsFired);
             shotsHit.text = FmtFloat(r.ShotsHit);
             hitPercentage.text = FmtPct(r.ShotsHit, r.ShotsFired);

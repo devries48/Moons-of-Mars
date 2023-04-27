@@ -26,8 +26,8 @@ namespace MoonsOfMars.Game.Asteroids
 
         #region properties
         MainMenu MainMenu => GmManager != null ? GmManager.m_MainMenu : null;
-        GameObject PauseMenu => GmManager != null ? GmManager.m_PauseMenu : null;
         TextMeshProUGUI UiScore => GmManager != null ? GmManager.m_ScoreTextUI : null;
+        ParticleSystem SpaceDebris => GmManager != null ? GmManager.m_SpaceDebriSystem : null;
 
         public bool AudioPlaying => uiSounds.IsPlaying();
 
@@ -60,7 +60,6 @@ namespace MoonsOfMars.Game.Asteroids
             UiScore.color = scoreColor;
             DisplayGameScore(false);
             MainMenu.HideMenu();
-            //TweenUtil.MenuWindowClose(MainMenu, true);
         }
 
         public IEnumerator ShowMainMenu()
@@ -71,16 +70,15 @@ namespace MoonsOfMars.Game.Asteroids
                 yield return Wait(2);
 
             DisplayGameScore(false);
+            SpaceDebris.Play();
             MainMenu.OpenMenu();
-            //TweenUtil.MenuWindowOpen(MainMenu);
-
-            yield return null;
         }
 
-        public int HideMainMenu(bool startGame = true)
+        public void HideMainMenu(bool startGame = true)
         {
             DisplayGameScore(startGame);
-            return MainMenu.CloseMenu();
+            SpaceDebris.Stop();
+            MainMenu.CloseMenu();
             //return TweenUtil.MenuWindowClose(MainMenu);
         }
 
@@ -90,23 +88,20 @@ namespace MoonsOfMars.Game.Asteroids
 
             GmManager.SetGameStatus(GameStatus.paused);
             GmManager.m_LightsManager.BlurBackground(true);
-
-            TweenUtil.SetPivot(PauseMenu, new Vector2(.5f, 1.5f));
-            PauseMenu.SetActive(true);
-            TweenUtil.TweenPivot(PauseMenu, new Vector2(.5f, .5f), null, LeanTweenType.easeOutBack, .5f);
+            GmManager.m_MainMenu.OpenPauseMenu();
         }
 
         public void HidePauseMenu()
         {
-            var id=TweenUtil.TweenPivot(PauseMenu, new Vector2(.5f, 1.5f), null, LeanTweenType.easeInBack, .5f);
+            var id = MainMenu.ClosePauseMenu();
             var d = LeanTween.descr(id);
 
-            d.setOnComplete(() => {
-                PauseMenu.SetActive(false);
-                GmManager.m_LightsManager.BlurBackground(false);
-                GmManager.SetGameStatus(GameStatus.playing);
-                Time.timeScale = 1;
-            });
+            d.setOnComplete(() =>
+               {
+                   MainMenu.SetPauseMenuActive(false);
+                   GmManager.m_LightsManager.BlurBackground(false);
+                   Time.timeScale = 1;
+               });
         }
 
         public void PlayAudio(UISounds.Clip clip) => uiSounds.PlayClip(clip);
