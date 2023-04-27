@@ -42,7 +42,8 @@ namespace MoonsOfMars.Shared
                 if (m_ps == null)
                 {
                     TryGetComponent(out m_ps);
-                    print("Particle system was null");
+                    if (m_ps == null)
+                        print("Particle system was null");
                 }
 
                 return m_ps.IsAlive();

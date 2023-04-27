@@ -1,8 +1,10 @@
 using Cinemachine;
 using MoonsOfMars.Shared;
+using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MoonsOfMars.Game.Asteroids
 {
@@ -107,19 +109,28 @@ namespace MoonsOfMars.Game.Asteroids
 
             SwitchStageCam(StageCamera.start);
             TryGetComponent(out _effects);
-            UiManager.InitUI(uiAudioSource);
 
             m_camBounds = new CamBounds(gameCamera);
         }
 
-        void Start()
-        {
-            Camera.SetupCurrent(gameCamera);
-            StartCoroutine(GameLoop());
-        }
+        void Start() => StartCoroutine(Initialize());
 
         void OnEnable() => __instance = this;
         #endregion
+
+        // Wait until Objectpool stage is created
+        IEnumerator Initialize()
+        {
+            while (_effects.UseObjectPoolScene && !_effects.ObjectPoolSceneLoaded)
+                yield return null;
+
+            m_GameManagerData.Initialize();
+            UiManager.Initialize(uiAudioSource);
+            PowerupManager.Initialize();
+
+            Camera.SetupCurrent(gameCamera);
+            StartCoroutine(GameLoop());
+        }
 
         #region game loop
         IEnumerator GameLoop()
@@ -193,8 +204,6 @@ namespace MoonsOfMars.Game.Asteroids
 
         IEnumerator StageStart()
         {
-            Debug.Log("x Player: " + GmManager.m_playerShip);
-
             SwitchStageCam(StageCamera.far);
             yield return Wait(.1f);
 
@@ -228,6 +237,27 @@ namespace MoonsOfMars.Game.Asteroids
 #endif
         }
         #endregion
+
+        public void CreateObjectPool(Action buildPoolAction)
+        {
+            StartCoroutine(AddObjectPoolCore(buildPoolAction));
+        }
+
+        public void AddObjectToPoolScene(GameObject go)
+        {
+            SceneManager.MoveGameObjectToScene(go, _effects.ObjectPoolScene);
+        }
+
+        IEnumerator AddObjectPoolCore(Action action)
+        {
+            while (_effects == null || _effects.UseObjectPoolScene && !_effects.ObjectPoolSceneLoaded)
+                yield return null;
+
+            action();
+        }
+
+        public GameObjectPool CreateObjectPool(GameObject prefab, int initialCapacity, int maxCapacity = 1000)
+            => GameObjectPool.Build(prefab, initialCapacity, maxCapacity, _effects.ObjectPoolScene);
 
         public IEnumerator RemoveRemainingObjects()
         {
@@ -284,8 +314,8 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void SetGameStatus(GameStatus status)
         {
-            print("Game status: " + status.ToString());
             _gameStatus = status;
+            print("STATUS: " + status.ToString().ToUpper());
         }
 
         public void PlayEffect(Effect effect, Vector3 position, float scale = 1f, OjectLayer layer = OjectLayer.Game)
@@ -403,17 +433,6 @@ namespace MoonsOfMars.Game.Asteroids
         }
 
         public static WaitForSeconds Wait(float duration) => new(duration);
-
-        //static IEnumerator Run<T>(IEnumerator target, System.Action<T> output)
-        //{
-        //    object result = null;
-        //    while (target.MoveNext())
-        //    {
-        //        result = target.Current;
-        //        yield return result;
-        //    }
-        //    output((T)result);
-        //}
 
         #region struct CamBounds
 

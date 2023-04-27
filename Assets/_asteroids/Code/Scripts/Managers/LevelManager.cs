@@ -43,7 +43,8 @@ namespace MoonsOfMars.Game.Asteroids
         bool _isFirstStageLoaded;
         Vector3 _gizmoPosition;
         [HideInInspector] public int _gizmoStageIndex;
-        int _gizmoCurrentIndex = -1;
+        
+        public int _gizmoCurrentIndex = -1;
         #endregion
 
         #region properties
@@ -111,22 +112,23 @@ namespace MoonsOfMars.Game.Asteroids
             _currentLevel = new CurrentLevel(levels, stages);
 
             // Set the active scene: the Scene which will be used as the target for new GameObjects instantiated by scripts and from what Scene the lighting settings are used
-            SceneManager.SetActiveScene(SceneManager.GetActiveScene());
-
-            if (SceneManager.sceneCount > 1)
+            for (int s = 0; s < SceneManager.sceneCount; s++)
             {
-                _isFirstStageLoaded = true;
-               
-                var scene = SceneManager.GetSceneAt(SceneManager.sceneCount - 1);
-               
+                var scene = SceneManager.GetSceneAt(s);
+
                 for (int i = 0; i < stages.Length - 1; i++)
                 {
                     if (scene.name.ToLower().Contains(stages[i].Name.ToLower()))
                     {
+                        SceneManager.SetActiveScene(scene);
+
+                        _isFirstStageLoaded = true;
                         _currentStageIndex = i;
+                        
                         break;
                     }
                 }
+
             }
 
             gameIntro.SetActive(true);
@@ -197,7 +199,6 @@ namespace MoonsOfMars.Game.Asteroids
             }
             yield return Wait(1);
         }
-
 
         void AnnounceLevelStart(int level)
         {
@@ -317,16 +318,12 @@ namespace MoonsOfMars.Game.Asteroids
 
         IEnumerator WaitForStageToLoad()
         {
-            Debug.Log("1 Player: " + GmManager.m_playerShip.enabled);
-
             //Add bonus
             var r = _currentLevel.GetStageResults();
             Score.Earn(r.TotalBonus, new Vector3(7, -2, 0));
 
             sceneLoader.UnloadSceneAsync(GetCurrentStage());
             yield return new WaitForSeconds(1); // wait for music change (checks every .5 seconds). It interrupted the mixer group fade.
-
-            Debug.Log("2 Player: " + GmManager.m_playerShip);
 
             GmManager.m_AudioManager.FadeOutBackgroundSfx();
 
@@ -339,8 +336,6 @@ namespace MoonsOfMars.Game.Asteroids
 
             HideGroup(stageResults);
             yield return new WaitForSeconds(.5f);
-
-            Debug.Log("7 Player: " + GmManager.m_playerShip);
 
             GmManager.StageStartNew();
             GmManager.m_AudioManager.FadeInBackgroundSfx();

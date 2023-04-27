@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0006245365, g: 0.00055000343, b: 0.00066567364, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2805,6 +2805,7 @@ MonoBehaviour:
     LightCamXposition: 0.35
     actions: 00000000
   _gizmoStageIndex: 0
+  _gizmoCurrentIndex: 0
 --- !u!1 &302447571
 GameObject:
   m_ObjectHideFlags: 0
@@ -14617,7 +14618,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1552090157}
-  - component: {fileID: 1552090161}
   - component: {fileID: 1552090159}
   - component: {fileID: 1552090158}
   m_Layer: 0
@@ -14683,6 +14683,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0db21f9316090bd41a46a9d4f944c674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useObjectPoolScene: 1
   smallExplosionPrefab: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
   bigExplosionPrefab: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
   dustExplosionPrefab: {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
@@ -14693,19 +14694,6 @@ MonoBehaviour:
   hit2Prefab: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
   hit4Prefab: {fileID: 8443315704496310910, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
   hitLaserPrefab: {fileID: 0}
---- !u!114 &1552090161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552090156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eec028063d850c246ac3e2e8e6946563, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: -0.154
 --- !u!1 &1554623503
 GameObject:
   m_ObjectHideFlags: 0

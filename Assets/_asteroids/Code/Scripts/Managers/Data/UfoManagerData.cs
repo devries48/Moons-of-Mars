@@ -59,7 +59,7 @@ namespace MoonsOfMars.Game.Asteroids
         public IEnumerator UfoSpawnLoop()
         {
             if (_ufoPool == null)
-                BuildPools();
+                GameManager.CreateObjectPool(BuildPoolsAction);
 
             while (!GameManager.IsGameExit)
             {
@@ -162,7 +162,7 @@ namespace MoonsOfMars.Game.Asteroids
             return type == UfoType.green ? m_GreenUfo.score : m_RedUfo.score;
         }
 
-        void BuildPools()
+        void BuildPoolsAction()
         {
             if (ufoPrefab == null)
             {
@@ -170,7 +170,7 @@ namespace MoonsOfMars.Game.Asteroids
                 return;
             }
 
-            _ufoPool = GameObjectPool.Build(ufoPrefab, 1);
+            _ufoPool = GameManager.CreateObjectPool(ufoPrefab, 1);
         }
 
     }

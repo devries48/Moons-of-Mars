@@ -44,7 +44,6 @@ namespace MoonsOfMars.Game.Asteroids
         {
             _firstRun = true;
 
-            BuildPools();
             SetScore(Score.Earned);
             Score.OnEarn += ScoreEarned;
         }
@@ -54,8 +53,10 @@ namespace MoonsOfMars.Game.Asteroids
         /// <summary>
         /// Set window in start position & hide ui items
         /// </summary>
-        internal void InitUI(AudioSource source)
+        internal void Initialize(AudioSource source)
         {
+            GmManager.CreateObjectPool(BuildPoolsAction);
+
             uiSounds.m_UiAudio = source;
             UiScore.color = scoreColor;
             DisplayGameScore(false);
@@ -185,7 +186,6 @@ namespace MoonsOfMars.Game.Asteroids
                 UiScore.text = string.Format(scoreFormat, points);
         }
 
-        void BuildPools() => _displayPointsPool = GameObjectPool.Build(prefabDisplayPoints, 1);
-
+        void BuildPoolsAction() => _displayPointsPool = GmManager.CreateObjectPool(prefabDisplayPoints, 1);
     }
 }

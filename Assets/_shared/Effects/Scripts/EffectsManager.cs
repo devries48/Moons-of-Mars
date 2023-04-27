@@ -1,6 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
+using static MoonsOfMars.Shared.EffectsManager;
 using static MoonsOfMars.Shared.Utils;
 
 namespace MoonsOfMars.Shared
@@ -21,6 +23,9 @@ namespace MoonsOfMars.Shared
             hitLaser
         }
 
+        [SerializeField] bool useObjectPoolScene;
+
+        [Header("Effects")]
         [SerializeField] GameObject smallExplosionPrefab;
         [SerializeField] GameObject bigExplosionPrefab;
         [SerializeField] GameObject dustExplosionPrefab;
@@ -44,8 +49,13 @@ namespace MoonsOfMars.Shared
         GameObjectPool _hitLaserPool;
 
         readonly List<EffectController> _effectsPlaying = new();
+        Scene _objectPoolScene;
 
-        void Awake() => BuildPools();
+        public Scene ObjectPoolScene => _objectPoolScene;
+        public bool UseObjectPoolScene => useObjectPoolScene;
+        public bool ObjectPoolSceneLoaded => _objectPoolScene != null && _objectPoolScene.isLoaded;
+
+        void Start() => StartCoroutine(BuildPools());
 
         void Update()
         {
@@ -80,8 +90,14 @@ namespace MoonsOfMars.Shared
             }
         }
 
-        void BuildPools()
+        IEnumerator BuildPools()
         {
+            if (useObjectPoolScene)
+                CreateObjectPoolScene();
+
+            while (UseObjectPoolScene && !ObjectPoolSceneLoaded)
+                yield return null;
+
             _smallExplosionPool = CreatePool(smallExplosionPrefab);
             _bigExplosionPool = CreatePool(bigExplosionPrefab);
             _dustExplosionPool = CreatePool(dustExplosionPrefab);
@@ -94,10 +110,21 @@ namespace MoonsOfMars.Shared
             _hitLaserPool = CreatePool(hitLaserPrefab);
         }
 
+        void CreateObjectPoolScene()
+        {
+            _objectPoolScene = SceneManager.GetSceneByName(GameObjectPool.OBJECTPOOL_SCENE);
+            if (_objectPoolScene.isLoaded)
+                return;
+
+            _objectPoolScene = SceneManager.CreateScene(GameObjectPool.OBJECTPOOL_SCENE);
+        }
+
         GameObjectPool CreatePool(GameObject prefab)
         {
             if (prefab != null)
-                return GameObjectPool.Build(prefab, 1);
+            {
+                return GameObjectPool.Build(prefab, 1, 50, useObjectPoolScene ? _objectPoolScene : default);
+            }
 
             return null;
         }
@@ -106,7 +133,6 @@ namespace MoonsOfMars.Shared
         {
             StartEffect(effect, position, Quaternion.identity, scale, layer);
         }
-
 
         public void StartEffect(Effect effect, Vector3 position, Quaternion rotation = default, float scale = 1f, OjectLayer layer = OjectLayer.Default)
         {

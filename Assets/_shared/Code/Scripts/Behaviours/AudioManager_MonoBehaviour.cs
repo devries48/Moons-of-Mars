@@ -61,7 +61,7 @@ namespace MoonsOfMars.Shared
             CurrentLevel = level;
         }
 
-        protected  void StopMusic() => StartCoroutine(StopClip(CurrentLevel, _endGameFade));
+        protected void StopMusic() => StartCoroutine(StopClip(CurrentLevel, _endGameFade));
 
         protected abstract void SelectMusicTrack();
 
@@ -198,7 +198,7 @@ namespace MoonsOfMars.Shared
                 fadeInSource.clip = _clip;
                 fadeInSource.time = _time;
                 fadeInSource.Play();
-                print("Play music: " + _clip.name + " time: " + _time);
+                print($"MUSIC: {_clip.name} - ({_time})");
             }
 
             public bool IsTrackEnding() => _activeAudio != null && _clip.length - _activeAudio.time - _manager._fadeMusicTime - 1 < 0;

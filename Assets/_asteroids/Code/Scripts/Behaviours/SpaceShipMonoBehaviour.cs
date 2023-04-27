@@ -91,7 +91,7 @@ namespace MoonsOfMars.Game.Asteroids
         public event Action<float, Powerup, PowerupWeapon?> PowerUpActivatedEvent = delegate { };
 
         #region unity events
-        protected virtual void Awake() => BuilPool();
+        protected virtual void Start() => Initialize();
 
         protected virtual void OnEnable()
         {
@@ -135,6 +135,8 @@ namespace MoonsOfMars.Game.Asteroids
                     HitByShield(o);
         }
         #endregion
+
+        void Initialize() => GmManager.CreateObjectPool(BuildPoolsAction);
 
         #region Powerups
         public void ActivateShield()
@@ -298,10 +300,10 @@ namespace MoonsOfMars.Game.Asteroids
 
         void HitByAlienShip() => GmManager.PlayerDestroyed();
 
-        void BuilPool()
+        void BuildPoolsAction()
         {
             if (bulletPrefab)
-                _bulletPool = GameObjectPool.Build(bulletPrefab, 8, 16);
+                _bulletPool = GmManager.CreateObjectPool(bulletPrefab, 8, 16);
         }
 
         BulletController Bullet() => _bulletPool.GetComponentFromPool<BulletController>(weapon.transform.position, quaternion.identity);

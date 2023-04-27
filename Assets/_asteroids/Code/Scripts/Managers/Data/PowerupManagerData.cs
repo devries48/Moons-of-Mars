@@ -66,7 +66,10 @@ namespace MoonsOfMars.Game.Asteroids
             shotSpread
         }
 
-        void OnEnable() => BuildPools();
+        public void Initialize()
+        {
+            GameManager.CreateObjectPool(BuildPoolsAction);
+        }
 
         public IEnumerator PowerupSpawnLoop()
         {
@@ -82,7 +85,7 @@ namespace MoonsOfMars.Game.Asteroids
             }
         }
 
-        public int ActiveShuttleCount => _shuttlePool.CountActive;
+        public int ActiveShuttleCount => _shuttlePool != null ? _shuttlePool.CountActive:0;
         public void ShuttleLaunch() => _shuttlePool.GetFromPool();
         public void SpawnPowerup(Vector3 pos) => _powerupPool.GetFromPool(pos);
         public int GetPickupScore(bool isEnemy) => isEnemy ? enemyPickupScore : pickupScore;
@@ -108,10 +111,12 @@ namespace MoonsOfMars.Game.Asteroids
                 pwr.Renderer.material = mat;
         }
 
-        void BuildPools()
+        void BuildPoolsAction()
         {
-            _shuttlePool = GameObjectPool.Build(shuttle, 1);
-            _powerupPool = GameObjectPool.Build(powerup, 1);
+            _shuttlePool = GameManager.CreateObjectPool(shuttle, 1);
+            _powerupPool = GameManager.CreateObjectPool(powerup, 1);
+
+            Debug.Log("Shuttle Pool Created");
         }
 
     }

@@ -1,5 +1,6 @@
 using MoonsOfMars.Shared;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace MoonsOfMars.Game.Asteroids
 {
@@ -38,21 +39,20 @@ namespace MoonsOfMars.Game.Asteroids
         #endregion
 
         #region fields
-        GameObjectPool _astoidPool;
+        GameObjectPool _asteroidPool;
         GameObjectPool _rocketAnimationPool;
         #endregion
 
-        void OnEnable() => BuildPools();
-
-        void BuildPools()
+        public void Initialize()
         {
-            _rocketAnimationPool = GameObjectPool.Build(rocketAnimations, 1);
-            _astoidPool = GameObjectPool.Build(asteroidPrefab, 20, 100);
+            GameManager.CreateObjectPool(BuildPoolsAction);
         }
 
         public PlayerShipController CreatePlayer()
         {
             var ship = Instantiate(RocketPrefab);
+            GameManager.AddObjectToPoolScene(ship);
+
             ship.TryGetComponent(out PlayerShipController shipCtrl);
             if (ship)
                 GameManager.m_HudManager.ConnectToShip(shipCtrl);
@@ -79,7 +79,7 @@ namespace MoonsOfMars.Game.Asteroids
                     _ => .25f
                 };
 
-                var astroid = _astoidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
+                var astroid = _asteroidPool.GetFromPool(position, size: new Vector3(2f, 2f, 2f) * scale);
                 astroid.GetComponent<AsteroidController>().SetGeneration(generation);
 
                 GameManager.m_LevelManager.AddAstroid();
@@ -112,5 +112,13 @@ namespace MoonsOfMars.Game.Asteroids
             ship.TryGetComponent(out AlliedShipController ctrl);
             ctrl.PlayerShipStageCompleteAnimation();
         }
+
+        void BuildPoolsAction()
+        {
+            _rocketAnimationPool = GameManager.CreateObjectPool(rocketAnimations, 1);
+            _asteroidPool = GameManager.CreateObjectPool(asteroidPrefab, 20, 100);
+            Debug.Log("Asteroid Pool Created");
+        }
+
     }
 }

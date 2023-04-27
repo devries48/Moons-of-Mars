@@ -1,4 +1,3 @@
-using MoonsOfMars.Game.Asteroids;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,12 +9,12 @@ namespace MoonsOfMars.Shared
         // The id's of the scenes can be obtained in File/Build Settings...
         public enum SceneName
         {
+            Asteroids = 1,
             Asteroids_Earth = 2,
             Asteroids_Mars = 3
         }
 
         internal const int SceneMain = 0;
-        internal const int SceneAsteroids = 1;
 
         [SerializeField] RectTransform fader;
 
@@ -54,7 +53,7 @@ namespace MoonsOfMars.Shared
             LeanTween.alpha(fader, 0, 0);
             LeanTween.alpha(fader, 1, 0.5f).setOnComplete(() =>
             {
-                SceneManager.LoadScene(SceneAsteroids);
+                SceneManager.LoadScene((int)SceneName.Asteroids);
             });
         }
 
@@ -73,27 +72,25 @@ namespace MoonsOfMars.Shared
             StartCoroutine(UnloadAsync((int)scene));
         }
 
-        IEnumerator LoadAsync(int scene)
+        IEnumerator LoadAsync(int sceneIndex)
         {
-            var operation = SceneManager.LoadSceneAsync(scene, LoadSceneMode.Additive);
+            var operation = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Additive);
 
             while (!operation.isDone)
             {
                 Debug.Log("Scene load: " + operation.progress);
                 yield return null;
             }
+            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneIndex));
+
             m_stageLoaded = true;
         }
 
         IEnumerator UnloadAsync(int scene)
         {
-            Debug.Log("A Player: " + AsteroidsGameManager.GmManager.m_playerShip);
-
             yield return null;
-            SceneManager.UnloadSceneAsync(scene,UnloadSceneOptions.UnloadAllEmbeddedSceneObjects).completed += (Scene) =>
+            SceneManager.UnloadSceneAsync(scene).completed += (Scene) =>
                 {
-                    Debug.Log("B Player: " + AsteroidsGameManager.GmManager.m_playerShip);
-
                     //Resources.UnloadUnusedAssets();
                     m_stageUnloaded = true;
                 };
