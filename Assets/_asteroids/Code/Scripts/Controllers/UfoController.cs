@@ -180,7 +180,7 @@ namespace MoonsOfMars.Game.Asteroids
                 return Vector3.zero;
             }
 
-            var xPos = (left)
+            var xPos = left
                  ? GmManager.m_camBounds.LeftEdge - 1
                  : GmManager.m_camBounds.RightEdge + 1;
 

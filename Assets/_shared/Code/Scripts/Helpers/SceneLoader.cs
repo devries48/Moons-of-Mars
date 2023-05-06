@@ -81,6 +81,7 @@ namespace MoonsOfMars.Shared
                 Debug.Log("Scene load: " + operation.progress);
                 yield return null;
             }
+            // Set the active scene: the Scene which will be used as the target for new GameObjects instantiated by scripts and from what Scene the lighting settings are used
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneIndex));
 
             m_stageLoaded = true;

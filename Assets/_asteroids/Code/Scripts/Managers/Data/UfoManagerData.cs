@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 namespace MoonsOfMars.Game.Asteroids
 {
     using static SpaceShipMonoBehaviour;

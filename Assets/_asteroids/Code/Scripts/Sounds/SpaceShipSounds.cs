@@ -13,7 +13,8 @@ namespace MoonsOfMars.Game.Asteroids
             shieldsDown,
             shieldsHit,
             shipExplosion,
-            spawn
+            spawn,
+            warp
         }
 
         [SerializeField] AudioSource clipsAudioSource;
@@ -25,6 +26,7 @@ namespace MoonsOfMars.Game.Asteroids
         [SerializeField] AudioClip shieldsHit;
         [SerializeField] AudioClip shipExplosion;
         [SerializeField] AudioClip spawn;
+        [SerializeField] AudioClip warp;
 
         public void PlayClip(Clip clip)
         {
@@ -36,16 +38,20 @@ namespace MoonsOfMars.Game.Asteroids
                 Clip.shieldsHit => shieldsHit,
                 Clip.shipExplosion => shipExplosion,
                 Clip.spawn => spawn,
+                Clip.warp => warp,
                 _ => null
             };
 
             PlayClip(audioClip);
         }
 
+        public bool IsAudioPlaying => clipsAudioSource.isPlaying;
+
         void PlayClip(AudioClip clip)
         {
             if (clip !=null)
                 clipsAudioSource.PlayOneShot(clip);
         }
+
     }
 }

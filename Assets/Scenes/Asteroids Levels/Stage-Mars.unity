@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00062546536, g: 0.000550704, b: 0.00066723174, a: 1}
+  m_IndirectSpecularColor: {r: 0.0006241291, g: 0.00054902944, b: 0.00066419784, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,6 +123,103 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &880839704
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 880839705}
+  - component: {fileID: 880839708}
+  - component: {fileID: 880839707}
+  - component: {fileID: 880839706}
+  m_Layer: 0
+  m_Name: Meteor Detonator sphere
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &880839705
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880839704}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -12.23, y: 2.05, z: 95.4}
+  m_LocalScale: {x: 65.11, y: 65.11, z: 65.11}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 920050820}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &880839706
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880839704}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &880839707
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880839704}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: 962d9f368a8376e4781ba344416d9976, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &880839708
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 880839704}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1001 &902377817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -263,6 +360,7 @@ Transform:
   - {fileID: 1644980769}
   - {fileID: 1152910751}
   - {fileID: 902377825}
+  - {fileID: 880839705}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -280,8 +378,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _sun: {fileID: 934970957}
   _stageBackgroundCamera: {fileID: 1845860944}
-  _minSpawnWait: 10
-  _maxSpawnWait: 30
+  _skyboxSpeed: -0.154
+  _meteorMinSpawnWait: 10
+  _meteorMaxSpawnWait: 15
+  _meteorPrefab: {fileID: 4448039359926611266, guid: eb06c7dbb5a6dce4da47aa897c538297, type: 3}
+  _bossMinSpawnWait: 10
+  _bossMaxSpawnWait: 30
   _bossShipPrefab: {fileID: 3488976179539708001, guid: f44a48cfc85a0014d98df65baf7d8753, type: 3}
 --- !u!1 &924555381
 GameObject:
@@ -574,7 +676,7 @@ Transform:
   m_GameObject: {fileID: 1201114977}
   m_LocalRotation: {x: -0.15173602, y: -0, z: -0, w: 0.9884211}
   m_LocalPosition: {x: 0, y: -6.5, z: -57.448303}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 934970958}
@@ -658,7 +760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1644980763}
   targetVector: {x: 0, y: 0, z: 0}
-  degreesPerSecond: -1.8
+  degreesPerSecond: -1
   pivot: {x: 0, y: -1, z: 0}
 --- !u!1001 &1439052490
 PrefabInstance:

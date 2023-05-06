@@ -24,6 +24,7 @@ namespace MoonsOfMars.Game.Asteroids
         [SerializeField] TMPro.TextMeshProUGUI version;
         [SerializeField] TMPro.TextMeshProUGUI astroidsCount;
         [SerializeField] TMPro.TextMeshProUGUI ufoCount;
+        [SerializeField] TMPro.TextMeshProUGUI powerupCount;
 
         AsteroidsGameManager GameManager
         {
@@ -117,6 +118,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             astroidsCount.text = GameManager.m_LevelManager.AsteroidsActive.ToString();
             ufoCount.text = GameManager.m_LevelManager.UfosActive.ToString();
+            powerupCount.text = GameManager.m_LevelManager.GetStageResults()?.PowerupsPickedUp.ToString() ?? "0";
         }
     }
 

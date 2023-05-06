@@ -103,7 +103,7 @@ namespace MoonsOfMars.Game.Asteroids
             float speedModifier = 1 / duration;
             var path = GmManager.m_LevelManager.GetStageCompletePath();
 
-            GmManager.PlayEffect(EffectsManager.Effect.hit4, path[0], .1f, Utils.OjectLayer.Background);
+            GmManager.PlayEffect(EffectsManager.Effect.Teleport, path[0], .1f, Utils.OjectLayer.Background);
             PlaySpawnClip(duration);
             StartCoroutine(IncreaseThrust(.1f));
 
@@ -136,7 +136,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             HideModel();
             PlayStageEndClip();
-            GmManager.PlayEffect(EffectsManager.Effect.hit2, pos, 1, Utils.OjectLayer.Background);
+            GmManager.PlayEffect(EffectsManager.Effect.HyperJump, pos, 1, Utils.OjectLayer.Background);
             while (spawnAudio.isPlaying)
                 yield return null;
 

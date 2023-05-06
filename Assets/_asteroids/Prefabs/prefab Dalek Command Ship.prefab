@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3177048019857145461}
   - component: {fileID: 5831242054341457912}
   - component: {fileID: 6252970298067878175}
+  - component: {fileID: 1453921597}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -83,6 +84,102 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!82 &1453921597
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2201993675559943810}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 3539032862587296768, guid: ab1bd020727659345a310a8a133db8b8, type: 2}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 10
+  MaxDistance: 200
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0.5
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &3488976179539708001
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,13 +232,14 @@ MonoBehaviour:
   bulletPrefab: {fileID: 0}
   fireRate: 0.25
   sounds:
-    clipsAudioSource: {fileID: 0}
+    clipsAudioSource: {fileID: 1453921597}
     shootBullet: {fileID: 0}
     shieldsUp: {fileID: 0}
     shieldsDown: {fileID: 0}
     shieldsHit: {fileID: 0}
     shipExplosion: {fileID: 0}
     spawn: {fileID: 0}
+    warp: {fileID: 8300000, guid: 94144482b19698a48a5b743c421303b3, type: 3}
   _ship: {fileID: 3177048019857145461}
   _minSpinSpeed: 50
   _maxSpinSpeed: 200
@@ -157,7 +255,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 8703520674495269211, guid: ab1bd020727659345a310a8a133db8b8, type: 2}
   m_audioClip: {fileID: 8300000, guid: 4f28b18049d506f40b8735398e30f3cd, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0

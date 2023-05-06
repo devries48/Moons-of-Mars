@@ -43,8 +43,8 @@ namespace MoonsOfMars.Game.Asteroids
         bool _isFirstStageLoaded;
         Vector3 _gizmoPosition;
         [HideInInspector] public int _gizmoStageIndex;
-        
-        public int _gizmoCurrentIndex = -1;
+
+        public int _gizmoCurrentIndex = -1; // public for test purpose
         #endregion
 
         #region properties
@@ -111,26 +111,28 @@ namespace MoonsOfMars.Game.Asteroids
             _isFirstStageLoaded = false;
             _currentLevel = new CurrentLevel(levels, stages);
 
-            // Set the active scene: the Scene which will be used as the target for new GameObjects instantiated by scripts and from what Scene the lighting settings are used
             for (int s = 0; s < SceneManager.sceneCount; s++)
             {
                 var scene = SceneManager.GetSceneAt(s);
+                //print("scene " + s + " - " + scene.name);
 
-                for (int i = 0; i < stages.Length - 1; i++)
+                for (int i = 0; i < stages.Length; i++)
                 {
+                    print("stage " + i + " - " + stages[i].Name);
+
                     if (scene.name.ToLower().Contains(stages[i].Name.ToLower()))
                     {
                         SceneManager.SetActiveScene(scene);
+                        print("set active scene!");
 
                         _isFirstStageLoaded = true;
                         _currentStageIndex = i;
-                        
+
                         break;
                     }
                 }
 
             }
-
             gameIntro.SetActive(true);
             stageResults.SetActive(false);
             stageContinue.SetActive(false);
@@ -495,7 +497,7 @@ namespace MoonsOfMars.Game.Asteroids
                 DestrucionBonus = (int)Mathf.Round(UfosDestroyed / UfosSpawned * _lvlManager.m_DestructionBonus);
 
             if (PowerupsPickedUp > 0)
-                PickupBonus = ((int)Mathf.Round((PowerupsPickedUp + PowerupsDestroyed) / PowerupsSpawned) * _lvlManager.m_PickupBonus);
+                PickupBonus = (int)Mathf.Round(PowerupsPickedUp / PowerupsSpawned) * _lvlManager.m_PickupBonus;
 
             return (EfficiencyBonus + TimeBonus + DestrucionBonus + PickupBonus) * StageNr;
         }

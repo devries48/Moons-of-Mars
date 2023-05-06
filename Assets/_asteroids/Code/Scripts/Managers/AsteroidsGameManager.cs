@@ -212,7 +212,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             m_playerShip.ResetPosition();
 
-            PlayEffect(Effect.hit4, m_playerShip.transform.position, 1f, OjectLayer.Game);
+            PlayEffect(Effect.Teleport, m_playerShip.transform.position, 1f, OjectLayer.Game);
             yield return Wait(.5f);
 
             m_playerShip.Teleport(true);

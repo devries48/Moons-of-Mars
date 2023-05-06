@@ -209,7 +209,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -239,7 +239,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 1.1
+      value: 0
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -452,6 +452,7 @@ MonoBehaviour:
     shieldsHit: {fileID: 8300000, guid: 2240939744ed4a94fa1501c1edb6f844, type: 3}
     shipExplosion: {fileID: 8300000, guid: 813d3c4b45cbea74895ed1621255275e, type: 3}
     spawn: {fileID: 0}
+    warp: {fileID: 0}
   pivot: {fileID: 4516309652685547818}
   speed: 2
   rotationSpeed: 50

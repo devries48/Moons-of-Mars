@@ -183,7 +183,7 @@ namespace MoonsOfMars.Game.Asteroids
             _isAlive = false;
             Renderer.enabled = false;
 
-            PlayEffect(EffectsManager.Effect.smallExplosion, transform.position, .5f);
+            PlayEffect(EffectsManager.Effect.ExplosionSmall, transform.position, .5f);
             PwrManager.PlayAudio(PowerupSounds.Clip.Explode, clipsAudioSource);
 
             while (clipsAudioSource.isPlaying)
