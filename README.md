@@ -1,5 +1,10 @@
 # Moons of Mars
 
+## Description
+This project is my playground to learn Unity. I love space games and space related stuff.
+It is both distracting and therapeutic for me to 
+
+![Alt text](assets/images/moons-of-mars.png)
 Sun: 
 Unity3D Particle Sun Tutorial: https://www.youtube.com/watch?v=qJEBAPRt8AA
 
