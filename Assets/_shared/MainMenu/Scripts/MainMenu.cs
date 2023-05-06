@@ -152,7 +152,7 @@ namespace MoonsOfMars.Shared
             firstMenu.SetActive(active);
             _mainCanvas.SetActive(active);
             _settingsCanvas.SetActive(active);
-            _highScoreCanvas.SetActive(active);
+            if (_highScoreCanvas) _highScoreCanvas.SetActive(active);
         }
 
         public void SetPauseMenuActive(bool active)
