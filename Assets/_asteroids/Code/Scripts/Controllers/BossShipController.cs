@@ -43,7 +43,8 @@ namespace MoonsOfMars.Game.Asteroids
                         PlayAudioClip(SpaceShipSounds.Clip.warp);
                         AsteroidsGameManager.GmManager.PlayEffect(EffectsManager.Effect.HyperJump, transform.position, 3f, Utils.OjectLayer.Default);
                     }
-                    StartCoroutine(RemoveBossShip());
+                    if (gameObject.activeSelf)
+                        StartCoroutine(RemoveBossShip());
                 });
         }
         LTBezierPath CreatePath(bool isReverse)

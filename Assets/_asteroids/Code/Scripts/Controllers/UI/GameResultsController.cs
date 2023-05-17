@@ -4,9 +4,19 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    public class StageResultController : MonoBehaviour
+    public class GameResultsController : MonoBehaviour
     {
+        public enum GameResult { stage, gameOver, gameComplete}
+
         #region editor fields
+        [Header("Stage Result Canvas")]
+        [SerializeField] Vector3 stagePosition;
+        [SerializeField] Quaternion stageRotation;
+
+        [Header("Game Result Canvas")]
+        [SerializeField] Vector3 gamePosition;
+        [SerializeField] Quaternion gameRotation;
+
         [Header("UI Statistics Elements")]
         [SerializeField] TextMeshProUGUI title;
         [SerializeField] TextMeshProUGUI playtime;
@@ -55,9 +65,9 @@ namespace MoonsOfMars.Game.Asteroids
 
         #endregion
 
-        void OnEnable() => StartCoroutine(DisplayResults());
+        public void DisplayResults(GameResult result) => StartCoroutine(DisplayResultsCore(result));
 
-        IEnumerator DisplayResults()
+        IEnumerator DisplayResultsCore(GameResult result)
         {
             var r = LevelManager.GetStageResults();
             print("Ufo spawn:" + r.UfosSpawned);
@@ -81,6 +91,8 @@ namespace MoonsOfMars.Game.Asteroids
             efficiencyBonus.text = FmtInt(r.EfficiencyBonus);
             destructionBonus.text = FmtInt(r.DestrucionBonus);
             pickupBonus.text = FmtInt(r.PickupBonus);
+
+            gameObject.SetActive(true);
 
             yield return null;
         }

@@ -264,6 +264,7 @@ MonoBehaviour:
     shieldsHit: {fileID: 0}
     shipExplosion: {fileID: 8300000, guid: 52a1f7212f9e8aa4aa1595355508a0b6, type: 3}
     spawn: {fileID: 8300000, guid: eaa97151378228143b14a018f4bd7e98, type: 3}
+    warp: {fileID: 0}
   m_ThrustController: {fileID: 3574155173224500789}
   thrust: 500
   rotationSpeed: 180
@@ -451,6 +452,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5937630824893127726, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630824893127726, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630824893127726, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: InitialModule.startLifetime.scalar
       value: 1
       objectReference: {fileID: 0}
@@ -480,6 +489,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825657902569, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: cullingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630825657902569, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: InitialModule.startSpeed.scalar
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630825657902569, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: EmissionModule.rateOverTime.scalar
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825657902569, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
@@ -611,9 +628,17 @@ PrefabInstance:
       value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 5937630825843991805, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: InitialModule.startSize.minScalar
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5937630825843991805, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5937630825843991806, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 776677ab3818fb249adaca05f4e04545, type: 2}
     - target: {fileID: 5937630825843991807, guid: b9025ca99d70d32499fc2a5614c2658e, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.2

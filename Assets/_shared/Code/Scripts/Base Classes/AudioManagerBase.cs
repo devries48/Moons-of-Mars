@@ -6,7 +6,7 @@ using UnityEngine.Audio;
 
 namespace MoonsOfMars.Shared
 {
-    public abstract class AudioManager_MonoBehaviour : MonoBehaviour
+    public abstract class AudioManagerBase : MonoBehaviour
     {
         [SerializeField] float _fadeMusicTime = 4;
 
@@ -161,7 +161,7 @@ namespace MoonsOfMars.Shared
 
         class MusicTrack
         {
-            public MusicTrack(AudioManager_MonoBehaviour manager, int level)
+            public MusicTrack(AudioManagerBase manager, int level)
             {
                 _manager = manager;
                 _level = level;
@@ -170,7 +170,7 @@ namespace MoonsOfMars.Shared
             }
 
             readonly int _level;
-            readonly AudioManager_MonoBehaviour _manager;
+            readonly AudioManagerBase _manager;
             AudioSource _activeAudio;
 
             AudioClip _clip;

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    public class MeteorController : Poolable_MonoBehaviour
+    public class MeteorController : PoolableBase
     {
         public enum SpawnMeteor { Horizontal, BackGround, RightToBack }
 

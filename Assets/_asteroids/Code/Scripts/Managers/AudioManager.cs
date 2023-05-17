@@ -5,7 +5,7 @@ using static MusicData;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    public class AudioManager : AudioManager_MonoBehaviour
+    public class AudioManager : AudioManagerBase
     {
         #region editor fields
         [SerializeField] MusicData musicData;

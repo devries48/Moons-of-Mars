@@ -11,6 +11,7 @@ namespace MoonsOfMars.Game.Asteroids
     using static Level;
     using static UfoManagerData;
     using static MoonsOfMars.Shared.SceneLoader;
+    using static MoonsOfMars.Game.Asteroids.GameResultsController;
 
     [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour
@@ -20,7 +21,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         [Header("Elements")]
         [SerializeField] GameObject gameIntro;
-        [SerializeField] GameObject stageResults;
+        [SerializeField] GameResultsController gameResults;
         [SerializeField] GameObject stageContinue;
         [SerializeField] Transform stageCompleteStart;
         [SerializeField] Transform stageCompleteEnd;
@@ -134,7 +135,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             }
             gameIntro.SetActive(true);
-            stageResults.SetActive(false);
+            gameResults.gameObject.SetActive(false);
             stageContinue.SetActive(false);
         }
 
@@ -272,11 +273,11 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void ShowStageResults()
         {
-            stageResults.SetActive(true);
+            gameResults.DisplayResults(GameResult.stage);
             stageContinue.SetActive(false);
         }
 
-        public void HideStageResuls() => HideGroup(stageResults);
+        public void HideStageResuls() => HideGroup(gameResults.gameObject);
         public SceneName GetCurrentStage() => GetStage(_currentStageIndex).SceneName;
         public Vector3[] GetStageCompletePath() => GetStagePath(_currentStageIndex);
         public void LoadNewStage() => StartCoroutine(WaitForStageToLoad());
@@ -336,7 +337,7 @@ namespace MoonsOfMars.Game.Asteroids
             stageContinue.SetActive(true);
             yield return Utils.WaitUntilTrue(IsAnyKeyPressed);
 
-            HideGroup(stageResults);
+            HideGroup(gameResults.gameObject);
             yield return new WaitForSeconds(.5f);
 
             GmManager.StageStartNew();

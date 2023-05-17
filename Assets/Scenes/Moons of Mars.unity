@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0006245158, g: 0.00055026397, b: 0.0006663702, a: 1}
+  m_IndirectSpecularColor: {r: 0.00062506937, g: 0.0005498524, b: 0.00066617253, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1543,7 +1543,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 1b0c7e2677f40974b85e118703c4e77c, type: 3}
-  m_NotificationBehavior: 3
+  m_NotificationBehavior: 0
   m_UIInputModule: {fileID: 63260118}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -1572,9 +1572,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a092db40ce7af0741a25cf2bb9b0153b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _dontDestroyOnLoad: 0
   _playerInput: {fileID: 63260119}
   _cursorTransform: {fileID: 1639187653}
-  _canvasTransform: {fileID: 2103142392}
   _canvas: {fileID: 2103142395}
   _cursorSpeed: 500
   _padding: 35
@@ -20054,7 +20054,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bf58040f6846564e8d3b307fb10b324, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_AudioManager: {fileID: 1274093373}
+  _dontDestroyOnLoad: 0
+  _audioManager: {fileID: 1274093373}
   m_MainCamera: {fileID: 963194227}
   m_MenuCamera: {fileID: 1712329844}
   m_SolarSystemCamera: {fileID: 917288190}
@@ -33749,7 +33750,7 @@ MeshRenderer:
   m_RenderingLayerMask: 4294967295
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 5774329478888551352, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
+  - {fileID: 21809785584020342, guid: 0b65c99348f068b49bef5db0bb76a6e4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -38356,8 +38357,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: version 1.2.6
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
-  m_sharedMaterial: {fileID: 5774329478888551352, guid: b57dcb299ef9d11429d8c4659db3193d, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 0b65c99348f068b49bef5db0bb76a6e4, type: 2}
+  m_sharedMaterial: {fileID: 21809785584020342, guid: 0b65c99348f068b49bef5db0bb76a6e4, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -38381,8 +38382,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 250
-  m_fontSizeBase: 250
+  m_fontSize: 200
+  m_fontSizeBase: 200
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

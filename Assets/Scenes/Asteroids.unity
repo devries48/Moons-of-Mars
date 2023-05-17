@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.00062506937, g: 0.0005498524, b: 0.00066617253, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -331,7 +331,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -484,7 +484,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294945280
+    rgba: 4278235135
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -856,7 +856,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294945280
+    rgba: 4278235135
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1015,7 +1015,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1301,7 +1301,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1453,7 +1453,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1605,7 +1605,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2279,7 +2279,7 @@ Transform:
   - {fileID: 1589705178}
   - {fileID: 1043269015}
   m_Father: {fileID: 1951543358}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &233105733
 GameObject:
@@ -2350,7 +2350,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2814,7 +2814,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2944,7 +2944,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneLoader: {fileID: 1917910234}
   gameIntro: {fileID: 438808940}
-  stageResults: {fileID: 1169830128}
+  gameResults: {fileID: 1169830130}
   stageContinue: {fileID: 779801809}
   stageCompleteStart: {fileID: 1329417012}
   stageCompleteEnd: {fileID: 1043269015}
@@ -3344,7 +3344,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -3581,8 +3581,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389948649}
-  m_LocalRotation: {x: 0.16846389, y: 0.0250619, z: -0.0183284, w: 0.9852187}
-  m_LocalPosition: {x: 0.1, y: 0.6, z: 0.1800003}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3864,7 +3864,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4520,7 +4520,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -4931,7 +4931,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5082,7 +5082,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5237,7 +5237,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -5490,7 +5490,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -6295,7 +6295,7 @@ GameObject:
   - component: {fileID: 750159083}
   - component: {fileID: 750159082}
   m_Layer: 11
-  m_Name: Stage completed results
+  m_Name: Game completed results
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6452,7 +6452,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -6603,7 +6603,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -6754,7 +6754,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -7041,7 +7041,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -9244,7 +9244,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -9399,7 +9399,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294945280
+    rgba: 4278235135
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -9551,7 +9551,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -9981,7 +9981,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -10622,7 +10622,7 @@ GameObject:
   - component: {fileID: 1169830129}
   - component: {fileID: 1169830130}
   m_Layer: 0
-  m_Name: Stage results
+  m_Name: Game Results
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10641,8 +10641,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 750159081}
-  m_Father: {fileID: 1951543358}
-  m_RootOrder: 1
+  m_Father: {fileID: 1488235946089924505}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1169830130
 MonoBehaviour:
@@ -10656,6 +10656,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 917992ad34b4dd246a763bbbd6933e5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stagePosition: {x: 0, y: 0.2, z: -46}
+  stageRotation: {x: 0, y: 1, z: 0, w: -0.00000004371139}
+  gamePosition: {x: 0, y: 0, z: -23}
+  gameRotation: {x: 0, y: 0, z: 0, w: 0}
   title: {fileID: 213774111082644704}
   playtime: {fileID: 552942035}
   shotsFired: {fileID: 344632235}
@@ -10740,7 +10744,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -11330,7 +11334,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -13589,7 +13593,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -13740,7 +13744,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -13892,7 +13896,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -15182,7 +15186,7 @@ GameObject:
   - component: {fileID: 1582158367}
   - component: {fileID: 1582158368}
   m_Layer: 0
-  m_Name: Backtrace (keep in root)
+  m_Name: --- Backtrace (keep in root) ---
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16055,7 +16059,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294945280
+    rgba: 4278235135
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -16206,7 +16210,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -16564,7 +16568,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294945280
+    rgba: 4278235135
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -16715,7 +16719,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -16867,7 +16871,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -17775,7 +17779,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -17927,7 +17931,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -18084,7 +18088,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -19171,7 +19175,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -19283,7 +19287,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 438808941}
-  - {fileID: 1169830129}
   - {fileID: 226651758}
   m_Father: {fileID: 0}
   m_RootOrder: 6
@@ -19681,7 +19684,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294966499
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -20622,7 +20625,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 872393216
+    rgba: 855683071
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 0.2}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -20742,7 +20745,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294945280
+    rgba: 4278235135
   m_fontColor: {r: 1, g: 0.6862745, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -21901,6 +21904,7 @@ Transform:
   - {fileID: 5523063371193223404}
   - {fileID: 1488235946701692713}
   - {fileID: 363482910}
+  - {fileID: 1169830129}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -56474,7 +56478,7 @@ GameObject:
   - component: {fileID: 7764631575230400500}
   - component: {fileID: 7764631575230400504}
   m_Layer: 11
-  m_Name: ' Stage completed panel'
+  m_Name: Game completed panel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

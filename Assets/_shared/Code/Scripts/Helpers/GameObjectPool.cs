@@ -41,7 +41,7 @@ namespace MoonsOfMars.Shared
             return obj;
         }
 
-        public T GetComponentFromPool<T>(Vector3 position, Quaternion rotation) where T : Poolable_MonoBehaviour
+        public T GetComponentFromPool<T>(Vector3 position, Quaternion rotation) where T : PoolableBase
         {
             return GetFromPool(position, rotation).GetComponent<T>();
         }

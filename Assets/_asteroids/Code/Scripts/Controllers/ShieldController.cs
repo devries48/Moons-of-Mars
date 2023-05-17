@@ -119,7 +119,7 @@ namespace MoonsOfMars.Game.Asteroids
             if (ShieldsUp)
             {
                 if (isAlien || m_spaceShip.m_shipType != SpaceShipMonoBehaviour.ShipType.player)
-                    Poolable_MonoBehaviour.RemoveFromGame(bullet);
+                    PoolableBase.RemoveFromGame(bullet);
             }
         }
 

@@ -1,4 +1,5 @@
 using Cinemachine;
+using MoonsOfMars.Shared;
 using System.Linq;
 using UnityEngine;
 
@@ -6,29 +7,10 @@ namespace MoonsOfMars.SolarSystem
 {
     [SelectionBase]
     [DisallowMultipleComponent]
-    public class GameManager : MonoBehaviour
+    public class GameManager : GameManagerBase<GameManager>
     {
-        #region singleton
-
-        public static GameManager Instance
-        {
-            get
-            {
-                if (__instance == null)
-                    __instance = FindObjectOfType<GameManager>();
-
-                return __instance;
-            }
-        }
-        static GameManager __instance;
-
-        #endregion
 
         #region editor fields
-
-        [Header("Managers")]
-        public AudioManager m_AudioManager;
-
         [Header("Cameras")]
         public Camera m_MainCamera;
         public CinemachineVirtualCamera m_MenuCamera;
@@ -39,6 +21,7 @@ namespace MoonsOfMars.SolarSystem
         #endregion
 
         #region properties
+        public AudioManager AudioManager => AudioManager<AudioManager>();
 
         public float CameraSwitchTime { get; private set; }
 
@@ -59,14 +42,16 @@ namespace MoonsOfMars.SolarSystem
 
         SolarSystemController __solarSystemCtrl;
 
-       #endregion
+        #endregion
 
         CelestialBody[] _celestialBodies;
 
-        void OnEnable() => __instance = this;
+        ///void OnEnable() => __instance = this;
 
-        void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             _celestialBodies = FindObjectsOfType<CelestialBody>();
 
             if (m_MainCamera.TryGetComponent<CinemachineBrain>(out var brain))
@@ -77,8 +62,6 @@ namespace MoonsOfMars.SolarSystem
         {
             return _celestialBodies.First(b => b.Info.bodyName == name);
         }
-
-
 
     }
 }

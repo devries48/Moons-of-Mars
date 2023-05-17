@@ -1,35 +1,53 @@
-using System;
+using System.Diagnostics.CodeAnalysis;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.LowLevel;
+using UnityEngine.InputSystem.UI;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem.XInput;
 
 namespace MoonsOfMars.Shared
 {
-    public class GamepadCursor : MonoBehaviour
+    /// <summary>
+    /// Component to sit next to Player Input Component and Input System UI Input Module.
+    /// The Player Input Behavior must be set to 'Send Messages'.
+    /// </summary>
+    [SuppressMessage("", "IDE0051", Justification = "Methods used by Player Input SendMessages")]
+    [RequireComponent(typeof(PlayerInput), typeof(InputSystemUIInputModule))]
+    public class UserInputManagerBase : SingletonBase<UserInputManagerBase>
     {
+        const string GamepadScheme = "Gamepad";
+        const string MouseScheme = "Keyboard&Mouse";
 
-        [SerializeField] PlayerInput _playerInput;
+        enum GamepadType { init, none, generic, playstation, xbox }
+
         [SerializeField] RectTransform _cursorTransform;
-        [SerializeField] RectTransform _canvasTransform;
         [SerializeField] Canvas _canvas;
         [SerializeField] float _cursorSpeed = 10f;
         [SerializeField] float _padding = 35f;
         [SerializeField] Camera _uiCamera;
 
-        Mouse _virtualMouse;
-        Mouse _currentMouse;
-        Camera _camera;
+        public bool HasGamepad => _curGamepad > GamepadType.none;
+
+        PlayerInput _playerInput;
+        Mouse _virtualMouse, _currentMouse;
         bool _prevMouseState;
         string _prevControlSchema = "";
+        GamepadType _curGamepad = GamepadType.init;
 
-        const string GamepadScheme = "Gamepad";
-        const string mouseScheme = "Keyboard&Mouse";
+        protected override void Awake()
+        {
+            base.Awake();
+            InputSystem.onDeviceChange += (_, _) => CheckGamepads();
+
+            CheckGamepads();
+        }
 
         void OnEnable()
         {
-            //_camera = Camera.main;
             _currentMouse = Mouse.current;
+            _playerInput = GetComponent<PlayerInput>();
 
             var activeVirtualMouse = InputSystem.GetDevice("VirtualMouse");
 
@@ -50,7 +68,7 @@ namespace MoonsOfMars.Shared
             }
 
             InputSystem.onAfterUpdate += UpdateMotion;
-            _playerInput.onControlsChanged += OnControlsChanged;
+            //_playerInput.onControlsChanged += OnControlsChanged;
         }
 
         void OnDisable()
@@ -58,7 +76,47 @@ namespace MoonsOfMars.Shared
             InputSystem.RemoveDevice(_virtualMouse);
             InputSystem.onAfterUpdate -= UpdateMotion;
 
-            _playerInput.onControlsChanged -= OnControlsChanged;
+            //_playerInput.onControlsChanged -= OnControlsChanged;
+        }
+
+        /// <summary>
+        /// Override this method to handle Gamepad changes.
+        /// </summary>
+        protected virtual void OnGamepadChanged() { }
+
+        void CheckGamepads()
+        {
+            var result = GamepadType.none;
+
+            for (var i = 0; i < InputSystem.devices.Count - 1; i++)
+            {
+                var device = InputSystem.devices[i];
+
+                if (device is Gamepad)
+                {
+                    result = GamepadType.generic;
+                    if (device is DualShockGamepad)
+                    {
+                        print("Playstation gamepad");
+                        result = GamepadType.playstation;
+                    }
+                    else if (device is XInputController)
+                    {
+                        print("Xbox gamepad");
+                        result = GamepadType.xbox;
+                    }
+                }
+                else
+                {
+                    print(device.ToString());
+                }
+            }
+
+            if (result != _curGamepad)
+            {
+                _curGamepad = result;
+                OnGamepadChanged();
+            }
         }
 
         void UpdateMotion()
@@ -92,7 +150,9 @@ namespace MoonsOfMars.Shared
 
         void AnchorCursor(Vector2 position)
         {
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(_canvasTransform, position,
+            _canvas.gameObject.TryGetComponent(out RectTransform rect);
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(rect, position,
                 _canvas.renderMode == RenderMode.ScreenSpaceOverlay
                 ? null
                 : _uiCamera, out Vector2 anchoredPosition);
@@ -100,17 +160,20 @@ namespace MoonsOfMars.Shared
             _cursorTransform.anchoredPosition = anchoredPosition;
         }
 
+        /// <summary>
+        /// Player Input SendMessages
+        /// </summary>
         void OnControlsChanged(PlayerInput input)
         {
-            if(_virtualMouse == null)
+            if (_virtualMouse == null)
                 return;
 
-            if (_playerInput.currentControlScheme == mouseScheme && _prevControlSchema != mouseScheme)
+            if (_playerInput.currentControlScheme == MouseScheme && _prevControlSchema != MouseScheme)
             {
                 _cursorTransform.gameObject.SetActive(false);
                 Cursor.visible = true;
                 _currentMouse.WarpCursorPosition(_virtualMouse.position.ReadValue());
-                _prevControlSchema = mouseScheme;
+                _prevControlSchema = MouseScheme;
             }
             else if (_playerInput.currentControlScheme == GamepadScheme && _prevControlSchema != GamepadScheme)
             {

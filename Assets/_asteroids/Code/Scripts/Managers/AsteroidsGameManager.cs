@@ -35,7 +35,7 @@ namespace MoonsOfMars.Game.Asteroids
         }
         #endregion
 
-        enum Menu { none = 0, start = 1, settings = 2, exit = 3 }
+        //enum Menu { none = 0, start = 1, settings = 2, exit = 3 }
         public enum GameStatus { intro, start, menu, playing, paused, stage, gameover, exit }
         public enum StageCamera { start, far, background, end }
 

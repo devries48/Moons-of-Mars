@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.SolarSystem
 {
-    public class AudioManager : AudioManager_MonoBehaviour
+    public class AudioManager : AudioManagerBase
     {
         [Header("MUSIC CLIPS")]
         [SerializeField] AudioClip[] _music;

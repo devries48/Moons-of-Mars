@@ -7,7 +7,7 @@ namespace MoonsOfMars.Game.Asteroids
 {
     using static AsteroidsGameManager;
 
-    public class GameMonoBehaviour : Poolable_MonoBehaviour
+    public class GameMonoBehaviour : PoolableBase
     {
         #region properties
 

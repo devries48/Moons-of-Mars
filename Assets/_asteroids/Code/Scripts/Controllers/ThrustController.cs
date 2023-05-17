@@ -65,6 +65,5 @@ namespace MoonsOfMars.Game.Asteroids
 
         [ContextMenu("SetToMaxThrust")]
         void SetToMaxThrust() => ThrustChangedEvent(_maxThrust);
-
     }
 }

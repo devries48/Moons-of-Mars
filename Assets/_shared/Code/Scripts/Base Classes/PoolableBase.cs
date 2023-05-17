@@ -3,7 +3,7 @@ using UnityEngine;
 namespace MoonsOfMars.Shared
 {
     [DisallowMultipleComponent]
-    public class Poolable_MonoBehaviour : MonoBehaviour, IPoolable
+    public class PoolableBase : MonoBehaviour, IPoolable
     {
         public bool IsPooled => _pool != null;
 
@@ -26,7 +26,7 @@ namespace MoonsOfMars.Shared
         static void RequestDefaultDestruction(GameObject gameObject) => Destroy(gameObject);
         public static void RemoveFromGame(GameObject victim)
         {
-            var handler = victim.GetComponent<Poolable_MonoBehaviour>();
+            var handler = victim.GetComponent<PoolableBase>();
 
             if (handler)
                 handler.RemoveFromGame();
