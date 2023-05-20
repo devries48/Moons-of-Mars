@@ -7,7 +7,7 @@ namespace MoonsOfMars.Shared
 
         [SerializeField] bool _dontDestroyOnLoad;
         
-        static T _instance;
+        protected static T _instance;
 
         public static T Instance
         {

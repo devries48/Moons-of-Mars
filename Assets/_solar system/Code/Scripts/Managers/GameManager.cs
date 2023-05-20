@@ -9,7 +9,6 @@ namespace MoonsOfMars.SolarSystem
     [DisallowMultipleComponent]
     public class GameManager : GameManagerBase<GameManager>
     {
-
         #region editor fields
         [Header("Cameras")]
         public Camera m_MainCamera;
@@ -21,7 +20,7 @@ namespace MoonsOfMars.SolarSystem
         #endregion
 
         #region properties
-        public AudioManager AudioManager => AudioManager<AudioManager>();
+        public AudioManager AudioManager => GetAudioManager<AudioManager>();
 
         public float CameraSwitchTime { get; private set; }
 

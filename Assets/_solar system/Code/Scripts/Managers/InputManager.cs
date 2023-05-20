@@ -2,5 +2,5 @@ using MoonsOfMars.Shared;
 
 namespace MoonsOfMars.SolarSystem
 {
-    public class UserInputManager : UserInputManagerBase { }
+    public class InputManager : InputManagerBase { }
 }

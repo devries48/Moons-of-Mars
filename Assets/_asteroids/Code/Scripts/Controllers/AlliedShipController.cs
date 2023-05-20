@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
 
     public class AlliedShipController : GameMonoBehaviour
     {

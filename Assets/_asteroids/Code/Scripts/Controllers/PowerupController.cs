@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
 
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody), typeof(Renderer))]

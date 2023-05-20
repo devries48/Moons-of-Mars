@@ -2,10 +2,11 @@ using MoonsOfMars.Shared;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
     using static HudManager;
 
     public class PlayerShipController : SpaceShipMonoBehaviour
@@ -39,6 +40,7 @@ namespace MoonsOfMars.Game.Asteroids
         }
         Collider __cl;
 
+        InputManager InputManager => GmManager.InputManager;
         HudManager HudManager => GmManager.m_HudManager;
         #endregion
 
@@ -69,17 +71,28 @@ namespace MoonsOfMars.Game.Asteroids
             _fuelUsed = 0f;
             _spawnFader ??= new MaterialFader(m_Model);
 
+            InputManager.OnHyperJumpPressed += HandleHyperJump;
+            InputManager.OnPausePressed += HandlePauseGame;
+
             RaiseFuelChangedEvent();
             SpawnIn();
             base.OnEnable();
         }
 
+        protected override void OnDisable()
+        {
+            InputManager.OnHyperJumpPressed -= HandleHyperJump;
+            InputManager.OnPausePressed -= HandlePauseGame;
+        }
+
         void Update()
         {
-            if (GmManager.IsGamePaused) return;
+            if (GmManager.IsGamePaused || _disableControls) return;
 
-            _turnInput = ShipInput.GetTurnAxis();
-            _thrustInput = ShipInput.GetForwardThrust();
+            //_turnInput = ShipInput.GetTurnAxis();
+            //_thrustInput = ShipInput.GetForwardThrust();
+            _turnInput = InputManager.TurnInput;
+            _thrustInput = InputManager.Thrust;
 
             if (m_ThrustController)
             {
@@ -91,31 +104,35 @@ namespace MoonsOfMars.Game.Asteroids
                     m_ThrustController.DecreaseThrust();
             }
 
-            if (!m_disableControls)
-                return;
-
-            if (ShipInput.IsShooting())
+            if (InputManager.IsShooting)
                 FireWeapon();
 
-            if (ShipInput.IsHyperspacing() && HudManager.HyperJumps > 0)
-                Jump();
+            //if (ShipInput.IsHyperspacing() && HudManager.HyperJumps > 0)
+            //    Jump();
 
-            if (ShipInput.IsPauseGame())
-                GmManager.GamePause();
+            //if (InputManager.IsPauseGame)
+            //    GmManager.GamePause();
         }
 
         protected override void FixedUpdate()
         {
-            if (_isJumping)
-                return;
-
-            if (!m_disableControls)
+            if (_isJumping || _disableControls)
                 return;
 
             Move();
             Turn();
             ClampSpeed();
             base.FixedUpdate();
+        }
+        #endregion
+
+        #region InputManager
+        void HandlePauseGame() => GmManager.GamePause();
+
+        void HandleHyperJump()
+        {
+            if (HudManager.HyperJumps > 0)
+                HyperJump();
         }
         #endregion
 
@@ -130,7 +147,7 @@ namespace MoonsOfMars.Game.Asteroids
         /// <summary>
         /// Move ship to top, out of view.
         /// </summary>
-        public void Jump()
+        public void HyperJump()
         {
             _isJumping = true;
             m_ScreenWrap = false;
@@ -211,9 +228,9 @@ namespace MoonsOfMars.Game.Asteroids
             }
         }
 
-        public void EnableControls() => m_disableControls = true;
+        public void EnableControls() => _disableControls = false;
 
-        public void DisableControls() => m_disableControls = false;
+        public void DisableControls() => _disableControls = true;
 
         void SpawnIn()
         {

@@ -24,17 +24,17 @@ namespace MoonsOfMars.Game.Asteroids
         #endregion
 
         #region properties
-        protected AsteroidsGameManager GameManager
+        protected GameManager GameManager
         {
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.GmManager;
+                    __gameManager = GameManager.GmManager;
 
                 return __gameManager;
             }
         }
-        AsteroidsGameManager __gameManager;
+        GameManager __gameManager;
 
         LevelManager LevelManager
         {

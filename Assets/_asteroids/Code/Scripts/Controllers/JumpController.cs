@@ -6,7 +6,7 @@ using UnityEngine.UI;
  
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
 
     public class JumpController : GameMonoBehaviour
     {
@@ -26,6 +26,8 @@ namespace MoonsOfMars.Game.Asteroids
             }
         }
         HudManager __hud;
+
+        InputManager InputManager => GmManager.InputManager;
 
         internal Vector3 m_JumpPosition;
         internal bool m_Launched;
@@ -50,16 +52,17 @@ namespace MoonsOfMars.Game.Asteroids
         {
             if (!_started) return;
 
-            if (ShipInput.IsShooting() &&  !_activateLaunch)
+            if (InputManager.IsShooting &&  !_activateLaunch)
                 _activateLaunch = true;
 
             if (_activateLaunch) return;
 
-            float x = Input.GetAxis("Horizontal");
-            float y = Input.GetAxis("Vertical");
+            //float x = Input.GetAxis("Horizontal");
+            //float y = Input.GetAxis("Vertical");
 
-            Vector3 movement = new(x, y, 0);
-            movement = Vector3.ClampMagnitude(movement, 1);
+            //Vector3 movement = new(x, y, 0);
+            //movement = Vector3.ClampMagnitude(movement, 1);
+            var movement = Vector2.ClampMagnitude(InputManager.MoveCursorInput,1);
             transform.Translate(cursorSpeed * Time.deltaTime * movement);
         }
 

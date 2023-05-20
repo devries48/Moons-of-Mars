@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
     using static SpaceShipMonoBehaviour;
 
     [SelectionBase]

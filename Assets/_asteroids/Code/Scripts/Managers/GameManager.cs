@@ -13,37 +13,20 @@ namespace MoonsOfMars.Game.Asteroids
 
     [SelectionBase]
     [RequireComponent(typeof(EffectsManager))]
-    public class AsteroidsGameManager : MonoBehaviour
+    public class GameManager : GameManagerBase<GameManager>
     {
-        #region singleton
-        public static AsteroidsGameManager GmManager => __instance;
-
-        static AsteroidsGameManager __instance;
-
-        void SingletonInstanceGuard()
-        {
-            if (__instance == null)
-            {
-                __instance = this;
-                DontDestroyOnLoad(transform.root.gameObject);
-            }
-            else
-            {
-                Destroy(gameObject);
-                throw new System.Exception("Only one instance is allowed");
-            }
-        }
-        #endregion
+        public static GameManager GmManager => _instance;
 
         //enum Menu { none = 0, start = 1, settings = 2, exit = 3 }
         public enum GameStatus { intro, start, menu, playing, paused, stage, gameover, exit }
         public enum StageCamera { start, far, background, end }
 
         #region editor fields
+        [Header("Data")]
         public GameManagerData m_GameManagerData;
 
-        [Header("Managers")]
-        public AudioManager m_AudioManager;
+        [Header("Managers Asteroids")]
+        //public AudioManager m_AudioManager;
         public HudManager m_HudManager;
         public LevelManager m_LevelManager;
         public LightsManager m_LightsManager;
@@ -85,6 +68,9 @@ namespace MoonsOfMars.Game.Asteroids
         public bool IsGamePaused => _gameStatus == GameStatus.paused;
         public bool IsGameInMenu => _gameStatus == GameStatus.menu;
 
+        public AudioManager AudioManager => GetAudioManager<AudioManager>();
+        public InputManager InputManager => GetInputManager<InputManager>();
+
         public UfoManagerData UfoManager => m_GameManagerData.m_UfoManager;
         public PowerupManagerData PowerupManager => m_GameManagerData.m_PowerupManager;
         public UIManagerData UiManager => m_GameManagerData.m_UiManager;
@@ -101,10 +87,9 @@ namespace MoonsOfMars.Game.Asteroids
         #endregion
 
         #region unity events
-        void Awake()
+        protected override void Awake()
         {
-            SingletonInstanceGuard();
-
+            base.Awake();
             _cinemachineBrain = mainCamera.GetComponentInChildren<CinemachineBrain>();
 
             SwitchStageCam(StageCamera.start);
@@ -115,12 +100,12 @@ namespace MoonsOfMars.Game.Asteroids
 
         void Start() => StartCoroutine(Initialize());
 
-        void OnEnable() => __instance = this;
         #endregion
 
         // Wait until Objectpool stage is created
         IEnumerator Initialize()
         {
+            
             while (_effects.UseObjectPoolScene && !_effects.ObjectPoolSceneLoaded)
                 yield return null;
 
@@ -217,7 +202,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             m_playerShip.Teleport(true);
             m_HudManager.HudShow();
-            m_AudioManager.FadeInBackgroundSfx();
+            AudioManager.FadeInBackgroundSfx();
 
             SetGameStatus(GameStatus.playing);
         }
@@ -457,8 +442,6 @@ namespace MoonsOfMars.Game.Asteroids
             public readonly float BottomEdge;
         }
         #endregion
-
-
 
     }
 }

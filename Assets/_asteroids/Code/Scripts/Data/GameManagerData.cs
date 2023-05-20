@@ -25,17 +25,17 @@ namespace MoonsOfMars.Game.Asteroids
         #endregion
 
         #region properties
-        protected AsteroidsGameManager GameManager
+        protected GameManager GameManager
         {
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.GmManager;
+                    __gameManager = GameManager.GmManager;
 
                 return __gameManager;
             }
         }
-        AsteroidsGameManager __gameManager;
+        GameManager __gameManager;
         #endregion
 
         #region fields
@@ -98,7 +98,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void StageCompleteAnimation()
         {
-            GameManager.SetGameStatus(AsteroidsGameManager.GameStatus.stage);
+            GameManager.SetGameStatus(GameManager.GameStatus.stage);
             GameManager.m_HudManager.HudHide();
             GameManager.m_LevelManager.ShowStageResults();
 

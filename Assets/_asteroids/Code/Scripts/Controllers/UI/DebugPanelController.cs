@@ -26,17 +26,17 @@ namespace MoonsOfMars.Game.Asteroids
         [SerializeField] TMPro.TextMeshProUGUI ufoCount;
         [SerializeField] TMPro.TextMeshProUGUI powerupCount;
 
-        AsteroidsGameManager GameManager
+        GameManager GameManager
         {
             get
             {
                 if (__gameManager == null)
-                    __gameManager = AsteroidsGameManager.GmManager;
+                    __gameManager = GameManager.GmManager;
 
                 return __gameManager;
             }
         }
-        AsteroidsGameManager __gameManager;
+        GameManager __gameManager;
 
         const float REFRESH_TIME = 1 / 30f;
 
@@ -110,7 +110,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         }
 
-        public void JumpClick() => GameManager.m_playerShip.Jump();
+        public void JumpClick() => GameManager.m_playerShip.HyperJump();
 
         public void StageEndClick() => GameManager.m_GameManagerData.StageCompleteAnimation();
 

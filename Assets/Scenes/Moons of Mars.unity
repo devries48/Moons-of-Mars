@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00062506937, g: 0.0005498524, b: 0.00066617253, a: 1}
+  m_IndirectSpecularColor: {r: 0.00062459515, g: 0.0005494229, b: 0.0006656322, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1464,7 +1464,7 @@ GameObject:
   - component: {fileID: 63260119}
   - component: {fileID: 63260120}
   m_Layer: 0
-  m_Name: EventSystem
+  m_Name: Input Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1557,7 +1557,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: UI
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 1022311842}
 --- !u!114 &63260120
@@ -1573,7 +1573,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  _playerInput: {fileID: 63260119}
   _cursorTransform: {fileID: 1639187653}
   _canvas: {fileID: 2103142395}
   _cursorSpeed: 500
@@ -12272,7 +12271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: 33.500957, y: -2.3006637, z: 76.98259}
+  m_LocalPosition: {x: 33.500828, y: -2.3006637, z: 76.98272}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17409,7 +17408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: 33.500957, y: -2.3006637, z: 76.98259}
+  m_LocalPosition: {x: 33.500828, y: -2.3006637, z: 76.98272}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20056,6 +20055,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
   _audioManager: {fileID: 1274093373}
+  _inputManager: {fileID: 63260120}
   m_MainCamera: {fileID: 963194227}
   m_MenuCamera: {fileID: 1712329844}
   m_SolarSystemCamera: {fileID: 917288190}

@@ -186,7 +186,7 @@ namespace MoonsOfMars.Game.Asteroids
             var pos = contact.point;
 
             print("boem: " + collision.collider.name + " " + pos);
-            AsteroidsGameManager.GmManager.PlayEffect(EffectsManager.Effect.ExplosionSmall, pos, 1, Utils.OjectLayer.Default);
+            GameManager.GmManager.PlayEffect(EffectsManager.Effect.ExplosionSmall, pos, 1, Utils.OjectLayer.Default);
             _impactAudio.Play();
 
             StartCoroutine(RemoveMeteor());

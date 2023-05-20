@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
     using static Level;
     using static UfoManagerData;
     using static MoonsOfMars.Shared.SceneLoader;
@@ -328,7 +328,7 @@ namespace MoonsOfMars.Game.Asteroids
             sceneLoader.UnloadSceneAsync(GetCurrentStage());
             yield return new WaitForSeconds(1); // wait for music change (checks every .5 seconds). It interrupted the mixer group fade.
 
-            GmManager.m_AudioManager.FadeOutBackgroundSfx();
+            GmManager.AudioManager.FadeOutBackgroundSfx();
 
             StartCoroutine(LoadStage(GetNextStage()));
             while (!IsStageLoaded)
@@ -341,7 +341,7 @@ namespace MoonsOfMars.Game.Asteroids
             yield return new WaitForSeconds(.5f);
 
             GmManager.StageStartNew();
-            GmManager.m_AudioManager.FadeInBackgroundSfx();
+            GmManager.AudioManager.FadeInBackgroundSfx();
         }
 
         bool IsAnyKeyPressed() => Input.anyKey;

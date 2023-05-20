@@ -26,7 +26,7 @@ namespace MoonsOfMars.Game.Asteroids
         GameObjectPool _bossShipPool;
         GameObjectPool _meteorPool;
 
-        AsteroidsGameManager GameManager => AsteroidsGameManager.GmManager;
+        GameManager GameManager => GameManager.GmManager;
 
         void OnDisable() => StopAllCoroutines();
 

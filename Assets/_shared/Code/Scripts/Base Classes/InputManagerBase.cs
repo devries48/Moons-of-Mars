@@ -15,7 +15,7 @@ namespace MoonsOfMars.Shared
     /// </summary>
     [SuppressMessage("", "IDE0051", Justification = "Methods used by Player Input SendMessages")]
     [RequireComponent(typeof(PlayerInput), typeof(InputSystemUIInputModule))]
-    public class UserInputManagerBase : SingletonBase<UserInputManagerBase>
+    public class InputManagerBase : SingletonBase<InputManagerBase>
     {
         const string GamepadScheme = "Gamepad";
         const string MouseScheme = "Keyboard&Mouse";
@@ -24,7 +24,7 @@ namespace MoonsOfMars.Shared
 
         [SerializeField] RectTransform _cursorTransform;
         [SerializeField] Canvas _canvas;
-        [SerializeField] float _cursorSpeed = 10f;
+        [SerializeField] float _cursorSpeed = 500f;
         [SerializeField] float _padding = 35f;
         [SerializeField] Camera _uiCamera;
 
@@ -39,6 +39,9 @@ namespace MoonsOfMars.Shared
         protected override void Awake()
         {
             base.Awake();
+
+            // See https://answers.unity.com/questions/1919658/multiple-actions-bind-to-the-same-keyboard-key-do.html
+            InputSystem.settings.SetInternalFeatureFlag("DISABLE_SHORTCUT_SUPPORT", true);
             InputSystem.onDeviceChange += (_, _) => CheckGamepads();
 
             CheckGamepads();
@@ -182,7 +185,6 @@ namespace MoonsOfMars.Shared
                 InputState.Change(_virtualMouse.position, _currentMouse.position.ReadValue());
                 AnchorCursor(_currentMouse.position.ReadValue());
                 _prevControlSchema = GamepadScheme;
-
             }
         }
     }

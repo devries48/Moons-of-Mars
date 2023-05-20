@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
     using static PowerupManagerData;
 
     [SelectionBase]
@@ -73,14 +73,12 @@ namespace MoonsOfMars.Game.Asteroids
         #endregion
 
         #region fields
-
         internal ShipType m_shipType = ShipType.player;
-
-        protected bool m_disableControls = true;
         internal bool m_isAlive;
-
         internal float m_pwrShieldTime;
         internal float m_pwrWeaponTime;
+
+        protected bool _disableControls = true;
 
         GameObjectPool _bulletPool;
         PowerupWeapon _weaponPowerup;
@@ -310,7 +308,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         IEnumerator Shoot()
         {
-            if (!bulletPrefab || !m_isAlive || !m_disableControls || !_canShoot)
+            if (!bulletPrefab || !m_isAlive || _disableControls || !_canShoot)
                 yield break;
 
             _canShoot = false;

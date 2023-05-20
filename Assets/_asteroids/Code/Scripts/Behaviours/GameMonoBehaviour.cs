@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
 
     public class GameMonoBehaviour : PoolableBase
     {
@@ -46,7 +46,6 @@ namespace MoonsOfMars.Game.Asteroids
 
             if (pos.y < bounds.BottomEdge - offset.y)
                 transform.position = new Vector2(pos.x, bounds.TopEdge + offset.y);
-
         }
 
         protected void Score(int score, GameObject target) => Asteroids.Score.Earn(score, target);

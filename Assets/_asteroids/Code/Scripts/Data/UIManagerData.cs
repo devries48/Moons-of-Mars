@@ -5,7 +5,7 @@ using MoonsOfMars.Shared;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static AsteroidsGameManager;
+    using static GameManager;
 
     [CreateAssetMenu(fileName = "UI Manager data", menuName = "Asteroids/UI Manager")]
     public class UIManagerData : ScriptableObject
