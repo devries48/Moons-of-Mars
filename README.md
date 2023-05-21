@@ -20,12 +20,12 @@ An overview of the solar system with the major planets and moons.
 ## Credits
 | Asset  | Url |
 | --- | --- |
-| Unity3D Particle Sun Tutorial | https://www.youtube.com/watch?v=qJEBAPRt8AA |
-| Celestial Bodies Textures & Models | www.celestiamotherlode.net |
+| Particle Sun tutorial | https://www.youtube.com/watch?v=qJEBAPRt8AA |
+| Celestial Bodies textures & models | www.celestiamotherlode.net |
 | Kepler orbits | https://github.com/Karth42/SimpleKeplerOrbits |
 
-
-| Music  | Title | Link |
+## Music
+| Artist  | Title | Link |
 | --- | --- | --- |
 | Lexin Music | Cinematic Cello | https://pixabay.com/users/lexin_music-28841948 |
 | Lexin Music | Space Ambient  Sci-fi | |
@@ -40,11 +40,12 @@ At least I had fun creating it.
 ## Credits
 | Asset  | Url |
 | --- | --- |
-| Rocket Model | https://assetstore.unity.com/packages/3d/vehicles/space/atom-rocket-model-140021 |
+| Asteroids tutorial | https://www.youtube.com/watch?v=liGRMqYuLr0 |
+| Rocket model | https://assetstore.unity.com/packages/3d/vehicles/space/atom-rocket-model-140021 |
 | Dalek model | https://sketchfab.com/3d-models/dalek-1ddd381f853c455a8ba602b1fe2f71c1 |
 
-
-| Music  | Title | Link |
+## Music
+| Artist  | Title | Link |
 | --- | --- | --- |
 
 
