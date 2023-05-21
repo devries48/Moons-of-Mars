@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static SpaceShipMonoBehaviour;
+    using static SpaceShipBase;
 
     [CreateAssetMenu(fileName = "Ufo Manager data", menuName = "Asteroids/Ufo Manager")]
     public class UfoManagerData : ScriptableObject

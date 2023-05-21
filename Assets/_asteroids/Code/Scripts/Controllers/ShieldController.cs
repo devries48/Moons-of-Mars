@@ -6,7 +6,7 @@ namespace MoonsOfMars.Game.Asteroids
     [SelectionBase]
     public class ShieldController : MonoBehaviour
     {
-        public SpaceShipMonoBehaviour m_spaceShip;
+        public SpaceShipBase m_spaceShip;
 
         [SerializeField, Tooltip("The magnitude of the force when hit by an astroid")]
         int magnitude = 2000;
@@ -118,7 +118,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             if (ShieldsUp)
             {
-                if (isAlien || m_spaceShip.m_shipType != SpaceShipMonoBehaviour.ShipType.player)
+                if (isAlien || m_spaceShip.m_shipType != SpaceShipBase.ShipType.player)
                     PoolableBase.RemoveFromGame(bullet);
             }
         }

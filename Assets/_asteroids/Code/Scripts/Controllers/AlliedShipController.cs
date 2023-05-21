@@ -6,7 +6,7 @@ namespace MoonsOfMars.Game.Asteroids
 {
     using static GameManager;
 
-    public class AlliedShipController : GameMonoBehaviour
+    public class AlliedShipController : GameBase
     {
         #region editor fields
         [SerializeField] ThrustController thrustController;
@@ -72,7 +72,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             _skipUpdate = true;
             _oldPos = Vector3.zero;
-            var pos = GmManager.GetWorldJumpPosition();
+            var pos = ManagerGame.GetWorldJumpPosition();
             pos.z = -1;
 
             transform.SetPositionAndRotation(
@@ -91,9 +91,9 @@ namespace MoonsOfMars.Game.Asteroids
         {
             duration = 5;
             transform.localScale = transform.localScale * .1f;
-            transform.localPosition = GmManager.m_BackgroundCamera.transform.position;
+            transform.localPosition = ManagerGame.m_BackgroundCamera.transform.position;
 
-            GmManager.SwitchStageCam(StageCamera.end);
+            ManagerGame.SwitchStageCam(StageCamera.end);
             StartCoroutine(FollowPath(duration));
         }
 
@@ -101,9 +101,9 @@ namespace MoonsOfMars.Game.Asteroids
         {
             float t = 0;
             float speedModifier = 1 / duration;
-            var path = GmManager.m_LevelManager.GetStageCompletePath();
+            var path = ManagerLevel.GetStageCompletePath();
 
-            GmManager.PlayEffect(EffectsManager.Effect.Teleport, path[0], .1f, Utils.OjectLayer.Background);
+            ManagerGame.PlayEffect(EffectsManager.Effect.Teleport, path[0], .1f, Utils.OjectLayer.Background);
             PlaySpawnClip(duration);
             StartCoroutine(IncreaseThrust(.1f));
 
@@ -115,15 +115,15 @@ namespace MoonsOfMars.Game.Asteroids
                 yield return new WaitForEndOfFrame();
             }
 
-            GmManager.SwitchStageCam(StageCamera.start);
-            while (!GmManager.IsStageStartCameraActive())
+            ManagerGame.SwitchStageCam(StageCamera.start);
+            while (!ManagerGame.IsStageStartCameraActive())
                 yield return null;
 
             AnimateThrust(3, false, LeanTweenType.easeInCubic);
             yield return new WaitForSeconds(.5f); // Custom blend time cinemachine brain
 
             // Move ship from bottom left to upper right (duraion: 2 seconds)
-            var p = GmManager.m_StageStartCamera.transform.position;
+            var p = ManagerGame.m_StageStartCamera.transform.position;
             var startPos = new Vector3(p.x + 4, p.y - 2, p.z + 3);
             var endPos = new Vector3(p.x - 3f, p.y + 1.5f, p.z - 7);
 
@@ -136,7 +136,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             HideModel();
             PlayStageEndClip();
-            GmManager.PlayEffect(EffectsManager.Effect.HyperJump, pos, 1, Utils.OjectLayer.Background);
+            ManagerGame.PlayEffect(EffectsManager.Effect.HyperJump, pos, 1, Utils.OjectLayer.Background);
             while (spawnAudio.isPlaying)
                 yield return null;
 
@@ -144,7 +144,7 @@ namespace MoonsOfMars.Game.Asteroids
             transform.localScale = transform.localScale * 10f;
 
             // Start loading new stage
-            GmManager.m_LevelManager.LoadNewStage();
+            ManagerLevel.LoadNewStage();
         }
 
         IEnumerator IncreaseThrust(float delay)
@@ -205,7 +205,7 @@ namespace MoonsOfMars.Game.Asteroids
         void EjectPackage()
         {
             _isPackageEjected = true;
-            GmManager.PowerupManager.SpawnPowerup(transform.position);
+            ManagerPowerup.SpawnPowerup(transform.position);
         }
 
         LTBezierPath CreatePath()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    public class BossShipController : SpaceShipMonoBehaviour
+    public class BossShipController : SpaceShipBase
     {
         [Header("Boss")]
         [SerializeField] Transform _ship;
@@ -41,7 +41,7 @@ namespace MoonsOfMars.Game.Asteroids
                     if (reverse)
                     {
                         PlayAudioClip(SpaceShipSounds.Clip.warp);
-                        GameManager.GmManager.PlayEffect(EffectsManager.Effect.HyperJump, transform.position, 3f, Utils.OjectLayer.Default);
+                        ManagerGame.PlayEffect(EffectsManager.Effect.HyperJump, transform.position, 3f, Utils.OjectLayer.Default);
                     }
                     if (gameObject.activeSelf)
                         StartCoroutine(RemoveBossShip());

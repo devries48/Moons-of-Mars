@@ -9,7 +9,7 @@ namespace MoonsOfMars.Game.Asteroids
     using static GameManager;
     using static HudManager;
 
-    public class PlayerShipController : SpaceShipMonoBehaviour
+    public class PlayerShipController : SpaceShipBase
     {
         #region constants
         const float JUMP_MOVE_OUT_ANIMATION_TIME = 3;
@@ -25,6 +25,12 @@ namespace MoonsOfMars.Game.Asteroids
         [SerializeField] float rotationSpeed = 180f;
         [SerializeField] float maxSpeed = 4.5f;
         [SerializeField] float fuelPerSecond = 1f;
+        #endregion
+
+        #region events
+        public event Action<float> SpeedChangedEvent = delegate { };
+        public event Action<float> FuelChangedEvent = delegate { };
+        public event Action<HudAction> HudActionEvent = delegate { };
         #endregion
 
         #region properties
@@ -56,10 +62,6 @@ namespace MoonsOfMars.Game.Asteroids
 
         Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
         #endregion
-
-        public event Action<float> SpeedChangedEvent = delegate { };
-        public event Action<float> FuelChangedEvent = delegate { };
-        public event Action<HudAction> HudActionEvent = delegate { };
 
         #region unity events
         protected override void OnEnable()
@@ -126,7 +128,7 @@ namespace MoonsOfMars.Game.Asteroids
         }
         #endregion
 
-        #region InputManager
+        #region input manager
         void HandlePauseGame() => GmManager.GamePause();
 
         void HandleHyperJump()

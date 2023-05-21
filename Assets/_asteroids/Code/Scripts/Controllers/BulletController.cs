@@ -2,12 +2,12 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static GameManager;
-    using static SpaceShipMonoBehaviour;
+    //using static GameManager;
+    using static SpaceShipBase;
 
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody))]
-    public class BulletController : GameMonoBehaviour
+    public class BulletController : GameBase
     {
         [SerializeField, Tooltip("Lifetime in seconds")]
         float bulletLifetime = 10f;
@@ -48,7 +48,7 @@ namespace MoonsOfMars.Game.Asteroids
         public virtual void Fire(Vector3 direction, ShipType type)
         {
             if (type == ShipType.ufoGreen || type == ShipType.ufoRed)
-                GmManager.UfoManager.SetBulletMaterial(this, type);
+                ManagerGame.UfoManager.SetBulletMaterial(this, type);
 
             Rb.velocity = direction * bulletSpeed;
         }

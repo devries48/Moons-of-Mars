@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00062505854, g: 0.0005498464, b: 0.0006660457, a: 1}
+  m_IndirectSpecularColor: {r: 0.0006248873, g: 0.00054969895, b: 0.0006659907, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2948,8 +2948,8 @@ MonoBehaviour:
   stageContinue: {fileID: 779801809}
   stageCompleteStart: {fileID: 1329417012}
   stageCompleteEnd: {fileID: 1043269015}
-  m_TimeBonus: 50
-  m_EfficiencyBonus: 50
+  m_TimeBonus: 100
+  m_EfficiencyBonus: 100
   m_DestructionBonus: 50
   m_PickupBonus: 50
   levels:
@@ -3582,7 +3582,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389948649}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -31.6}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

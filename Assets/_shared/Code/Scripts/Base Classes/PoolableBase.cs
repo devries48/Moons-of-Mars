@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 namespace MoonsOfMars.Shared
@@ -22,6 +23,19 @@ namespace MoonsOfMars.Shared
         }
 
         protected virtual void RequestDestruction() => RequestDefaultDestruction(gameObject);
+
+        public void InvokeRemoveFromGame(float time) => Invoke(nameof(RemoveFromGame), time);
+
+        public void CancelInvokeRemoveFromGame() => CancelInvoke(nameof(RemoveFromGame));
+
+        public void RemoveFromGame(float t) => StartCoroutine(RemoveFromGameCore(t));
+
+        IEnumerator RemoveFromGameCore(float t)
+        {
+            yield return new WaitForSeconds(t);
+
+            RemoveFromGame();
+        }
 
         static void RequestDefaultDestruction(GameObject gameObject) => Destroy(gameObject);
         public static void RemoveFromGame(GameObject victim)

@@ -5,11 +5,9 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static GameManager;
-
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody), typeof(Renderer))]
-    public class AsteroidController : GameMonoBehaviour
+    public class AsteroidController : GameBase
     {
         #region editor fields
         [SerializeField]
@@ -111,7 +109,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             // TODO constant tag names shared static method: CompareTag(other, Tags.Player)
             if (c.CompareTag("Player"))
-                GmManager.PlayerDestroyed();
+                ManagerGame.PlayerDestroyed();
             else if (c.CompareTag("Astroid"))
                 HitByAstroid(o);
         }
@@ -144,8 +142,8 @@ namespace MoonsOfMars.Game.Asteroids
 
         void HitByBullet(GameObject bullet)
         {
-            GmManager.m_LevelManager.RemoveAstroid();
-            GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
+            ManagerLevel.RemoveAstroid();
+            ManagerLevel.AddStatistic(LevelManager.Statistic.shotHit);
 
             RemoveFromGame(bullet);
             StartCoroutine(ExplodeAstroid());
@@ -208,7 +206,7 @@ namespace MoonsOfMars.Game.Asteroids
             else
                 newGeneration = 3;
 
-            GmManager.m_GameManagerData.SpawnAsteroids(asteroidsNum, newGeneration, position);
+            ManagerGame.m_GameManagerData.SpawnAsteroids(asteroidsNum, newGeneration, position);
         }
 
         void PlayAudioClip(AsteroidSounds.Clip clip, float generation)

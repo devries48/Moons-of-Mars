@@ -6,11 +6,10 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static GameManager;
     using static PowerupManagerData;
 
     [SelectionBase]
-    public class SpaceShipMonoBehaviour : GameMonoBehaviour
+    public class SpaceShipBase : GameBase
     {
         public enum ShipType
         {
@@ -43,18 +42,6 @@ namespace MoonsOfMars.Game.Asteroids
         #endregion
 
         #region properties
-        protected PowerupManagerData PwrManager
-        {
-            get
-            {
-                if (__pwrManager == null)
-                    __pwrManager = GmManager.PowerupManager;
-
-                return __pwrManager;
-            }
-        }
-        PowerupManagerData __pwrManager;
-
         protected Rigidbody Rb
         {
             get
@@ -89,7 +76,7 @@ namespace MoonsOfMars.Game.Asteroids
         public event Action<float, Powerup, PowerupWeapon?> PowerUpActivatedEvent = delegate { };
 
         #region unity events
-        protected virtual void Start() => Initialize();
+        protected virtual void Start() => BuildObjectPools();
 
         protected virtual void OnEnable()
         {
@@ -112,7 +99,7 @@ namespace MoonsOfMars.Game.Asteroids
             if (!AreShieldsUp)
                 if (c.CompareTag("Enemy") && !IsEnemy)
                 {
-                    var ctrl = c.GetComponent<SpaceShipMonoBehaviour>();
+                    var ctrl = c.GetComponent<SpaceShipBase>();
                     if (ctrl.m_isAlive)
                         HitByAlienShip();
                 }
@@ -134,7 +121,7 @@ namespace MoonsOfMars.Game.Asteroids
         }
         #endregion
 
-        void Initialize() => GmManager.CreateObjectPool(BuildPoolsAction);
+        void BuildObjectPools() => ManagerGame.CreateObjectPool(BuildPoolsAction);
 
         #region Powerups
         public void ActivateShield()
@@ -157,7 +144,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             if (m_pwrWeaponTime > 0)
             {
-                m_pwrWeaponTime += GmManager.PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime += ManagerPowerup.m_PowerDuration;
                 RaisePowerUpWeapon();
 
                 yield return null;
@@ -168,7 +155,7 @@ namespace MoonsOfMars.Game.Asteroids
                 if (_weaponPowerup == PowerupWeapon.firerate)
                     fireRate *= .25f;
 
-                m_pwrWeaponTime = GmManager.PowerupManager.m_PowerDuration;
+                m_pwrWeaponTime = ManagerPowerup.m_PowerDuration;
                 RaisePowerUpWeapon();
 
                 while (m_isAlive && m_pwrWeaponTime > 0)
@@ -189,7 +176,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             if (m_pwrShieldTime > 0)
             {
-                m_pwrShieldTime += GmManager.PowerupManager.m_PowerDuration;
+                m_pwrShieldTime += ManagerPowerup.m_PowerDuration;
                 RaisePowerUpShield();
 
                 yield return null;
@@ -197,7 +184,7 @@ namespace MoonsOfMars.Game.Asteroids
             else
             {
                 m_Shield.ShieldsUp = true;
-                m_pwrShieldTime = GmManager.PowerupManager.m_PowerDuration;
+                m_pwrShieldTime = ManagerPowerup.m_PowerDuration;
                 RaisePowerUpShield();
 
                 while (m_isAlive && m_pwrShieldTime > 0)
@@ -271,15 +258,15 @@ namespace MoonsOfMars.Game.Asteroids
                 TryGetComponent(out UfoController ufo);
                 if (ufo != null)
                 {
-                    GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotHit);
-                    GmManager.m_LevelManager.RemoveUfo(ufo.m_ufoType, true);
+                    ManagerLevel.AddStatistic(LevelManager.Statistic.shotHit);
+                    ManagerLevel.RemoveUfo(ufo.m_ufoType, true);
                     Explode();
                 }
                 else
                     Debug.LogWarning("UFO Controller not found!");
             }
             else
-                GmManager.PlayerDestroyed();
+                ManagerGame.PlayerDestroyed();
         }
 
         /// <summary>
@@ -293,15 +280,15 @@ namespace MoonsOfMars.Game.Asteroids
             if (otherShield == null)
                 return;
 
-            GmManager.PlayerDestroyed();
+            ManagerGame.PlayerDestroyed();
         }
 
-        void HitByAlienShip() => GmManager.PlayerDestroyed();
+        void HitByAlienShip() => ManagerGame.PlayerDestroyed();
 
         void BuildPoolsAction()
         {
             if (bulletPrefab)
-                _bulletPool = GmManager.CreateObjectPool(bulletPrefab, 8, 16);
+                _bulletPool = ManagerGame.CreateObjectPool(bulletPrefab, 8, 16);
         }
 
         BulletController Bullet() => _bulletPool.GetComponentFromPool<BulletController>(weapon.transform.position, quaternion.identity);
@@ -314,7 +301,7 @@ namespace MoonsOfMars.Game.Asteroids
             _canShoot = false;
 
             if (m_shipType == ShipType.player)
-                GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.shotFired);
+                ManagerLevel.AddStatistic(LevelManager.Statistic.shotFired);
 
             PlayAudioClip(SpaceShipSounds.Clip.shootBullet);
 

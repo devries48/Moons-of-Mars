@@ -1,15 +1,29 @@
 using MoonsOfMars.Shared;
-using System.Collections;
 using UnityEngine;
-
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static GameManager;
+    //using static GameManager;
 
-    public class GameMonoBehaviour : PoolableBase
+    /// <summary>
+    /// Base class for poolable gameobjects.
+    /// </summary>
+    /// <remarks>
+    /// - GameManager access: GameManager property
+    /// - Screen wrapping: M_ScreenWrap field
+    /// - Play audio clips: PlaySound()
+    /// - Play effect: PlayEffect()
+    /// - Add score: Score()
+    /// </remarks>
+    public class GameBase : PoolableBase
     {
         #region properties
+
+        protected GameManager ManagerGame => GameManager.GmManager;
+        protected LevelManager ManagerLevel => ManagerGame.m_LevelManager;
+        protected InputManager ManagerInput => ManagerGame.InputManager;
+        protected PowerupManagerData ManagerPowerup => ManagerGame.PowerupManager;
+        protected HudManager ManagerHud => ManagerGame.m_HudManager;
 
         protected AudioSource Audio
         {
@@ -26,6 +40,8 @@ namespace MoonsOfMars.Game.Asteroids
 
         internal bool m_ScreenWrap;
 
+        protected virtual void OnDisable() => CancelInvokeRemoveFromGame();
+
         protected virtual void FixedUpdate()
         {
             if (!m_ScreenWrap)
@@ -33,7 +49,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             var pos = transform.position;
             var offset = transform.localScale / 2;
-            var bounds = GmManager.m_camBounds;
+            var bounds = ManagerGame.m_camBounds;
 
             if (pos.x > bounds.RightEdge + offset.x)
                 transform.position = new Vector2(bounds.LeftEdge - offset.x, pos.y);
@@ -61,22 +77,7 @@ namespace MoonsOfMars.Game.Asteroids
                 Audio.PlayOneShot(clip);
         }
 
-        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f)
-            => GmManager.PlayEffect(effect, position, scale);
+        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => ManagerGame.PlayEffect(effect, position, scale);
 
-        protected virtual void OnDisable() => CancelInvokeRemoveFromGame();
-
-        public void InvokeRemoveFromGame(float time) => Invoke(nameof(RemoveFromGame), time);
-
-        public void CancelInvokeRemoveFromGame() => CancelInvoke(nameof(RemoveFromGame));
-
-        public void RemoveFromGame(float t) => StartCoroutine(RemoveFromGameCore(t));
-
-        IEnumerator RemoveFromGameCore(float t)
-        {
-            yield return new WaitForSeconds(t);
-
-            RemoveFromGame();
-        }
     }
 }

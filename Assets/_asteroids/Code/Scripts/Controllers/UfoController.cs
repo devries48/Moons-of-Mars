@@ -6,7 +6,7 @@ namespace MoonsOfMars.Game.Asteroids
     using static UfoManagerData;
 
     [SelectionBase]
-    public class UfoController : SpaceShipMonoBehaviour
+    public class UfoController : SpaceShipBase
     {
         #region editor fields
         [Header("UFO")]

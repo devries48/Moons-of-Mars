@@ -6,28 +6,12 @@ using UnityEngine.UI;
  
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static GameManager;
-
-    public class JumpController : GameMonoBehaviour
+    public class JumpController : GameBase
     {
         [SerializeField] float cursorSpeed = 10;
         [SerializeField] TextMeshProUGUI countDownText;
         [SerializeField] TextMeshProUGUI launchText;
         [SerializeField] Image crosshair;
-
-        HudManager Hud
-        {
-            get
-            {
-                if (__hud == null)
-                    __hud = GmManager.m_HudManager;
-
-                return __hud;
-            }
-        }
-        HudManager __hud;
-
-        InputManager InputManager => GmManager.InputManager;
 
         internal Vector3 m_JumpPosition;
         internal bool m_Launched;
@@ -52,7 +36,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             if (!_started) return;
 
-            if (InputManager.IsShooting &&  !_activateLaunch)
+            if (ManagerInput.IsShooting &&  !_activateLaunch)
                 _activateLaunch = true;
 
             if (_activateLaunch) return;
@@ -62,7 +46,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             //Vector3 movement = new(x, y, 0);
             //movement = Vector3.ClampMagnitude(movement, 1);
-            var movement = Vector2.ClampMagnitude(InputManager.MoveCursorInput,1);
+            var movement = Vector2.ClampMagnitude(ManagerInput.MoveCursorInput,1);
             transform.Translate(cursorSpeed * Time.deltaTime * movement);
         }
 
@@ -78,9 +62,9 @@ namespace MoonsOfMars.Game.Asteroids
 
         void SetColors()
         {
-            crosshair.color = Hud.ColorJumpCrosshair;
-            countDownText.color = Hud.ColorHighlight;
-            launchText.color = Hud.ColorHighlight;
+            crosshair.color = ManagerHud.ColorJumpCrosshair;
+            countDownText.color = ManagerHud.ColorHighlight;
+            launchText.color = ManagerHud.ColorHighlight;
         }
 
         IEnumerator Countdown()

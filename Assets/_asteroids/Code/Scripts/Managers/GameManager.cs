@@ -246,7 +246,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         public IEnumerator RemoveRemainingObjects()
         {
-            foreach (var obj in FindObjectsOfType<GameMonoBehaviour>())
+            foreach (var obj in FindObjectsOfType<GameBase>())
             {
                 if (m_gameAborted || !obj.gameObject.CompareTag("Player"))
                     obj.RemoveFromGame();

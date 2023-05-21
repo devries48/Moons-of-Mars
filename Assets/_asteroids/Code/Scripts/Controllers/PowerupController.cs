@@ -4,11 +4,9 @@ using UnityEngine;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static GameManager;
-
     [SelectionBase]
     [RequireComponent(typeof(Rigidbody), typeof(Renderer))]
-    public class PowerupController : GameMonoBehaviour
+    public class PowerupController : GameBase
     {
         #region editor fields
 
@@ -41,17 +39,6 @@ namespace MoonsOfMars.Game.Asteroids
         }
         Renderer __renderer;
 
-        PowerupManagerData PwrManager
-        {
-            get
-            {
-                if (__pwrManager == null)
-                    __pwrManager = GmManager.PowerupManager;
-
-                return __pwrManager;
-            }
-        }
-        PowerupManagerData __pwrManager;
         #endregion
 
         #region fields
@@ -72,10 +59,10 @@ namespace MoonsOfMars.Game.Asteroids
             RigidbodyUtil.SetRandomTorque(Rb, 250f);
 
             SetRandomPowerUp();
-            StartCoroutine(PwrManager.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
+            StartCoroutine(ManagerPowerup.PlayDelayedAudio(PowerupSounds.Clip.Eject, clipsAudioSource, .1f));
             StartCoroutine(KeepAliveLoop());
 
-            GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupSpawn);
+            ManagerLevel.AddStatistic(LevelManager.Statistic.powerupSpawn);
         }
 
         void OnCollisionEnter(Collision other)
@@ -114,7 +101,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             float timePassed = 0;
 
-            while (_isAlive && timePassed < PwrManager.m_ShowTime)
+            while (_isAlive && timePassed < ManagerPowerup.m_ShowTime)
             {
                 timePassed += Time.deltaTime;
 
@@ -135,7 +122,7 @@ namespace MoonsOfMars.Game.Asteroids
         void HitByShip(GameObject o)
         {
             _isAlive = false;
-            o.TryGetComponent(out SpaceShipMonoBehaviour ship);
+            o.TryGetComponent(out SpaceShipBase ship);
 
             if (ship != null)
                 StartCoroutine(PickupPowerup(ship));
@@ -146,15 +133,15 @@ namespace MoonsOfMars.Game.Asteroids
         void HitByAlienBullet(GameObject alienBullet)
         {
             RemoveFromGame(alienBullet);
-            Score(PwrManager.GetDestructionScore(true), gameObject);
+            Score(ManagerPowerup.GetDestructionScore(true), gameObject);
             StartCoroutine(ExplodePowerup());
         }
 
         void HitByBullet(GameObject bullet)
         {
             RemoveFromGame(bullet);
-            Score(PwrManager.GetDestructionScore(false), gameObject);
-            GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupDestroyed);
+            Score(ManagerPowerup.GetDestructionScore(false), gameObject);
+            ManagerLevel.AddStatistic(LevelManager.Statistic.powerupDestroyed);
             StartCoroutine(ExplodePowerup());
         }
 
@@ -184,7 +171,7 @@ namespace MoonsOfMars.Game.Asteroids
             Renderer.enabled = false;
 
             PlayEffect(EffectsManager.Effect.ExplosionSmall, transform.position, .5f);
-            PwrManager.PlayAudio(PowerupSounds.Clip.Explode, clipsAudioSource);
+            ManagerPowerup.PlayAudio(PowerupSounds.Clip.Explode, clipsAudioSource);
 
             while (clipsAudioSource.isPlaying)
                 yield return null;
@@ -192,13 +179,13 @@ namespace MoonsOfMars.Game.Asteroids
             RemoveFromGame();
         }
 
-        IEnumerator PickupPowerup(SpaceShipMonoBehaviour ship)
+        IEnumerator PickupPowerup(SpaceShipBase ship)
         {
             Renderer.enabled = false;
 
-            Score(PwrManager.GetPickupScore(ship.IsEnemy), gameObject);
+            Score(ManagerPowerup.GetPickupScore(ship.IsEnemy), gameObject);
             if (!ship.IsEnemy)
-                GmManager.m_LevelManager.AddStatistic(LevelManager.Statistic.powerupPickup);
+                ManagerLevel.AddStatistic(LevelManager.Statistic.powerupPickup);
 
             switch (m_powerup)
             {
@@ -218,7 +205,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             if (ship.IsEnemy)
             {
-                PwrManager.PlayAudio(PowerupSounds.Clip.PickupEnemy, clipsAudioSource);
+                ManagerPowerup.PlayAudio(PowerupSounds.Clip.PickupEnemy, clipsAudioSource);
 
                 while (clipsAudioSource.isPlaying)
                     yield return null;
@@ -230,7 +217,7 @@ namespace MoonsOfMars.Game.Asteroids
         void SetRandomPowerUp()
         {
             m_powerup = RandomEnumUtil<PowerupManagerData.Powerup>.Get();
-            PwrManager.SetPowerupMaterial(this);
+            ManagerPowerup.SetPowerupMaterial(this);
         }
 
     }
