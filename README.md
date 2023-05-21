@@ -35,7 +35,7 @@ An overview of the solar system with the major planets and moons.
 Back in the days I didn't like to play Asteroids that much, too Difficult. Perhaps I can enjoy my own version more. 
 At least I had fun creating it.
 
-[Placeholder image]
+![Alt text](Assets/Images/Asteroids.png)
 
 ## Credits
 | Asset  | Url |
