@@ -42,7 +42,7 @@ namespace Game.SpaceShooter
 
         #region Input Methods
 
-        public void PlayEffect(Effect effect, Vector3 position, Quaternion rotation, float scale = 1f, OjectLayer layer = OjectLayer.Game)
+        public void PlayEffect(Effect effect, Vector3 position, Quaternion rotation, float scale = 1f, ObjectLayer layer = ObjectLayer.Effects)
              => EffectsManager.StartEffect(effect, position, rotation, scale, layer);
 
         public void OnSwitchCamera(InputAction.CallbackContext context)

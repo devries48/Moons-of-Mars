@@ -39,15 +39,13 @@ namespace MoonsOfMars.SolarSystem
 
         void OnEnable()
         {
-            CameraSwitcher.Register(GmManager.m_MenuCamera);
-            CameraSwitcher.Register(GmManager.m_SolarSystemCamera);
+            GmManager.RegisterCameras(GmManager.m_MenuCamera, GmManager.m_SolarSystemCamera);
             solarSystemController.HideControlPanel();
         }
 
         void OnDisable()
         {
-            CameraSwitcher.Unregister(GmManager.m_MenuCamera);
-            CameraSwitcher.Unregister(GmManager.m_SolarSystemCamera);
+            GmManager.UnregisterCameras(GmManager.m_MenuCamera, GmManager.m_SolarSystemCamera);
         }
 
         void Awake()
@@ -100,7 +98,7 @@ namespace MoonsOfMars.SolarSystem
             if (GmManager.SolarSystemCtrl.GetPlanetScaleMultiplier() == 1)
                 TweenPlanetScale(GmManager.CameraSwitchTime);
 
-            CameraSwitcher.SwitchCamera(GmManager.m_SolarSystemCamera);
+            GmManager.SwitchCamera(GmManager.m_SolarSystemCamera);
         }
 
         public void MenuQuit()
@@ -160,8 +158,7 @@ namespace MoonsOfMars.SolarSystem
 
             mainMenu.ShowMenu();
             GmManager.SolarSystemCtrl.IsDemo = true;
-
-            CameraSwitcher.SwitchCamera(GmManager.m_MenuCamera);
+            GmManager.SwitchCamera(GmManager.m_MenuCamera);
 
             if (GmManager.SolarSystemCtrl.GetPlanetScaleMultiplier() > 1)
                 TweenPlanetScale(1f, true);

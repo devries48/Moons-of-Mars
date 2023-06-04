@@ -44,8 +44,8 @@ namespace MoonsOfMars.Game.Asteroids
             GameManager.m_BackgroundCamera.transform.SetPositionAndRotation(t.position, t.rotation);
 
             BuildPools();
-            StartCoroutine(BackgroundBossSpawnLoop());
-            StartCoroutine(BackgroundMeteorSpawnLoop());
+            if (_bossShipPrefab) StartCoroutine(BackgroundBossSpawnLoop());
+            if (_meteorPrefab) StartCoroutine(BackgroundMeteorSpawnLoop());
         }
 
         public IEnumerator BackgroundBossSpawnLoop()
@@ -89,14 +89,10 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void MeteorLaunch() => _meteorPool.GetFromPool();
 
-        /// <summary>
-        /// Objectpool will be added to the level scene instead of the pool scene.
-        /// The pool will now be deleted when the level scene unloads.
-        /// </summary>
         void BuildPools()
         {
-            _bossShipPool = GameManager.CreateObjectPool(_bossShipPrefab, 1);
-            _meteorPool = GameManager.CreateObjectPool(_meteorPrefab, 1);
+            if (_bossShipPrefab) _bossShipPool = GameManager.CreateLocalObjectPool(_bossShipPrefab, 1);
+            if (_meteorPrefab) _meteorPool = GameManager.CreateObjectPool(_meteorPrefab, 1);
         }
     }
 }

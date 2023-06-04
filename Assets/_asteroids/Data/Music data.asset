@@ -30,3 +30,10 @@ MonoBehaviour:
   highIntenseMusic:
   - {fileID: 8300000, guid: fd454aa969e88ec4e946bddd09385374, type: 3}
   - {fileID: 8300000, guid: 18434733965c95d46ac81366fa7c1795, type: 3}
+  defeatMusic:
+  - {fileID: 8300000, guid: 1eab7097b59cee348a0f058242bdf0b4, type: 3}
+  - {fileID: 8300000, guid: 1136384fb2ce282409ef1fea98f657d6, type: 3}
+  victoryMusic:
+  - {fileID: 8300000, guid: 8397c86a16fb79f4e8cbab3eb0a9e3e2, type: 3}
+  - {fileID: 8300000, guid: ab63e24bf8b78474bb6ab8c53a932c25, type: 3}
+  - {fileID: 8300000, guid: 7ff4d42b6fbbd0b49b844b4d6ba095f3, type: 3}

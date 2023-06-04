@@ -106,7 +106,6 @@ namespace MoonsOfMars.Game.Asteroids
                 : UfoManager.m_RedUfo.engineSound;
 
             engineAudio.Play();
-
             UfoManager.SetUfoMaterials(this);
             pivot.transform.localRotation = Quaternion.identity;
 
@@ -145,10 +144,7 @@ namespace MoonsOfMars.Game.Asteroids
             }
         }
 
-        void SpinUfo()
-        {
-            transform.Rotate(new Vector3(0, rotationSpeed * speed * Time.fixedDeltaTime, 0));
-        }
+        void SpinUfo() => transform.Rotate(new Vector3(0, rotationSpeed * speed * Time.fixedDeltaTime, 0));
 
         void RemoveShip()
         {

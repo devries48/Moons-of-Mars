@@ -12,12 +12,12 @@ namespace MoonsOfMars.Shared
         /// </summary>
         /// <param name="window">The gameobject of the window.</param>
         /// <returns>LeanTween ID for optional waiting to complete.</returns>
-        public static int MenuWindowOpen(GameObject window)
-        {
-            return LeanTween.rotate(window, new Vector3(0, _menuTilt, 0), m_timeMenuOpenClose)
-                .setIgnoreTimeScale(true)
-                .setEase(LeanTweenType.easeOutQuad).id;
-        }
+        //public static int MenuWindowOpen(GameObject window)
+        //{
+        //    return LeanTween.rotate(window, new Vector3(0, _menuTilt, 0), m_timeMenuOpenClose)
+        //        .setIgnoreTimeScale(true)
+        //        .setEase(LeanTweenType.easeOutQuad).id;
+        //}
 
         /// <summary>
         /// Close the menu window.
@@ -25,13 +25,13 @@ namespace MoonsOfMars.Shared
         /// <param name="window">The gameobject of the window.</param>
         /// <param name="noTween">No animation will be played.</param>
         /// <returns>LeanTween ID for optional waiting to complete.</returns>
-        public static int MenuWindowClose(GameObject window, bool noTween = false)
-        {
-            var t = noTween ? 0f : m_timeMenuOpenClose;
-            return LeanTween.rotate(window, new Vector3(0, -270, 0), t)
-                .setIgnoreTimeScale(true)
-                .setEase(LeanTweenType.easeOutQuad).id;
-        }
+        //public static int MenuWindowClose(GameObject window, bool noTween = false)
+        //{
+        //    var t = noTween ? 0f : m_timeMenuOpenClose;
+        //    return LeanTween.rotate(window, new Vector3(0, -270, 0), t)
+        //        .setIgnoreTimeScale(true)
+        //        .setEase(LeanTweenType.easeOutQuad).id;
+        //}
 
         public static void SetPivot(GameObject gameObj, Vector2 pivot)
         {
@@ -72,5 +72,27 @@ namespace MoonsOfMars.Shared
             return pivotTime > rotateTime ? id_pivot : id_rotate;
         }
 
+        /// <summary>
+        /// Move RectTransform in or out of view.
+        /// </summary>
+        public static int TweenPivot(RectTransform rect, Vector2 newPivot, Vector2 startPivot = default
+            , LeanTweenType ease = LeanTweenType.easeInBack, float easeTime = 1f)
+        {
+            if (startPivot != default)
+            {
+                rect.pivot = startPivot;
+                rect.gameObject.SetActive(true);
+            }
+
+            var descr = LeanTween.value(rect.gameObject, rect.pivot, newPivot, easeTime)
+                .setEase(ease)
+                .setIgnoreTimeScale(true)
+                .setOnUpdateVector2((pos) => rect.pivot = pos);
+
+            if (startPivot == default)
+                descr.setOnComplete(() => rect.gameObject.SetActive(false));
+
+            return descr.id;
+        }
     }
 }

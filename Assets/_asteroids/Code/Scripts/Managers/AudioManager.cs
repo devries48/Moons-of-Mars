@@ -68,6 +68,11 @@ namespace MoonsOfMars.Game.Asteroids
                  if( CurrentMusicLevel != MusicLevel.menu)
                     PlayMusic(MusicLevel.menu);
             }
+            else if (GameManager.IsGameOver)
+            {
+                if (CurrentMusicLevel != MusicLevel.defeat)
+                    PlayMusic(MusicLevel.defeat);
+            }
 
             else if (GameManager.IsGameExit)
                 StopMusic();
@@ -75,10 +80,7 @@ namespace MoonsOfMars.Game.Asteroids
                 CheckGameIntensity();
         }
 
-        protected override AudioClip GetMusicClip(int level)
-        {
-            return musicData.GetMusicClip((MusicLevel)level);
-        }
+        protected override AudioClip GetMusicClip(int level) => musicData.GetMusicClip((MusicLevel)level);
 
         void CheckGameIntensity()
         {

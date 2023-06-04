@@ -70,7 +70,7 @@ namespace MoonsOfMars.Game.Asteroids
         GameObjectPool _bulletPool;
         PowerupWeapon _weaponPowerup;
         int _hyperJumps;
-        bool _canShoot = true;
+        bool _canShoot;
         #endregion
 
         public event Action<float, Powerup, PowerupWeapon?> PowerUpActivatedEvent = delegate { };
@@ -88,6 +88,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             _weaponPowerup = PowerupWeapon.normal;
             _hyperJumps = 0;
+            _canShoot = true;
         }
 
         protected virtual void OnCollision(Collision other)
@@ -295,7 +296,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         IEnumerator Shoot()
         {
-            if (!bulletPrefab || !m_isAlive || _disableControls || !_canShoot)
+            if (!bulletPrefab || !m_isAlive || !_canShoot || m_shipType == ShipType.player && _disableControls)
                 yield break;
 
             _canShoot = false;

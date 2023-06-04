@@ -156,7 +156,7 @@ namespace Game.SpaceShooter
                         laser.gameObject.SetActive(true);
                         laser.SetPosition(1, localHitPosition);
                     }
-                    GameManager.Instance.PlayEffect(EffectsManager.Effect.HitLaser, hitInfo.point, Quaternion.LookRotation(hitInfo.normal), 1.5f, OjectLayer.Default);
+                    GameManager.Instance.PlayEffect(EffectsManager.Effect.HitLaser, hitInfo.point, Quaternion.LookRotation(hitInfo.normal), 1.5f, ObjectLayer.Default);
                 }
                 else
                 {

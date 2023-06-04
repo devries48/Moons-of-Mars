@@ -142,7 +142,6 @@ namespace MoonsOfMars.SolarSystem
         public void SolarSystemRotateHorizontal(float value)
         {
             //var trans = GmManager.SolarSystemCamera.Follow.transform;
-            print( value);
             //CamPivot.transform.RotateAround(trans.position, trans.up, value * 30);
             var camPivot = GmManager.m_SolarSystemCamera.gameObject.transform.parent.gameObject;
 

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00062459515, g: 0.0005494229, b: 0.0006656322, a: 1}
+  m_IndirectSpecularColor: {r: 0.0006237167, g: 0.0005497302, b: 0.0006660827, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -12271,7 +12271,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: 33.500828, y: -2.3006637, z: 76.98272}
+  m_LocalPosition: {x: 33.521267, y: -2.3006637, z: 76.963135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -17226,7 +17226,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1659243070}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -199.99995, y: 0, z: 0.00018310547}
+  m_LocalPosition: {x: -199.99997, y: 0, z: 0.00018310547}
   m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -17408,7 +17408,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1712329842}
   m_LocalRotation: {x: 0.010888278, y: 0.37275398, z: -0.004374222, w: 0.9278561}
-  m_LocalPosition: {x: 33.500828, y: -2.3006637, z: 76.98272}
+  m_LocalPosition: {x: 33.521267, y: -2.3006637, z: 76.963135}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -20056,6 +20056,8 @@ MonoBehaviour:
   _dontDestroyOnLoad: 0
   _audioManager: {fileID: 1274093373}
   _inputManager: {fileID: 63260120}
+  _announcerText: {fileID: 0}
+  _announcerTime: 0
   m_MainCamera: {fileID: 963194227}
   m_MenuCamera: {fileID: 1712329844}
   m_SolarSystemCamera: {fileID: 917288190}

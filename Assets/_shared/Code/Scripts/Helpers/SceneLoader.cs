@@ -72,16 +72,16 @@ namespace MoonsOfMars.Shared
             StartCoroutine(UnloadAsync((int)scene));
         }
 
+        /// <summary>
+        /// Set the active scene: the Scene which will be used as the target for new GameObjects instantiated by scripts and from what Scene the lighting settings are used
+        /// </summary>
         IEnumerator LoadAsync(int sceneIndex)
         {
             var operation = SceneManager.LoadSceneAsync(sceneIndex, LoadSceneMode.Additive);
 
             while (!operation.isDone)
-            {
-                Debug.Log("Scene load: " + operation.progress);
                 yield return null;
-            }
-            // Set the active scene: the Scene which will be used as the target for new GameObjects instantiated by scripts and from what Scene the lighting settings are used
+            
             SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(sceneIndex));
 
             m_stageLoaded = true;

@@ -45,7 +45,7 @@ MonoBehaviour:
   - m_From: vCam Background-far
     m_To: vCam Background
     m_Blend:
-      m_Style: 2
+      m_Style: 1
       m_Time: 1
       m_CustomCurve:
         serializedVersion: 2

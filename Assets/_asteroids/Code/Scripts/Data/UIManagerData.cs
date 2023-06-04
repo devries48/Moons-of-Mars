@@ -27,7 +27,7 @@ namespace MoonsOfMars.Game.Asteroids
         #region properties
         MainMenu MainMenu => GmManager != null ? GmManager.m_MainMenu : null;
         TextMeshProUGUI UiScore => GmManager != null ? GmManager.m_ScoreTextUI : null;
-        ParticleSystem SpaceDebris => GmManager != null ? GmManager.m_SpaceDebriSystem : null;
+        //ParticleSystem SpaceDebris => GmManager != null ? GmManager.m_SpaceDebriSystem : null;
 
         public bool AudioPlaying => uiSounds.IsPlaying();
 
@@ -71,14 +71,14 @@ namespace MoonsOfMars.Game.Asteroids
                 yield return Wait(2);
 
             DisplayGameScore(false);
-            SpaceDebris.Play();
+            //SpaceDebris.Play();
             MainMenu.OpenMenu();
         }
 
         public void HideMainMenu(bool startGame = true)
         {
             DisplayGameScore(startGame);
-            SpaceDebris.Stop();
+            //SpaceDebris.Stop();
             MainMenu.CloseMenu();
             //return TweenUtil.MenuWindowClose(MainMenu);
         }
@@ -118,7 +118,6 @@ namespace MoonsOfMars.Game.Asteroids
             if (points == 0)
                 return;
 
-            Debug.Log("Score: " + points + ", pos: " + pos);
             var color = points > 0 ? positiveColor : negativeColor;
 
             SetScore(Score.Earned);

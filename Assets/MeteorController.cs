@@ -89,8 +89,8 @@ namespace MoonsOfMars.Game.Asteroids
             {
                 var spawn = RandomEnumUtil<SpawnMeteor>.Get();
                 Utils.SetGameObjectLayer(gameObject, spawn == SpawnMeteor.BackGround
-                    ? Utils.OjectLayer.Background
-                    : Utils.OjectLayer.Default);
+                    ? Utils.ObjectLayer.Background
+                    : Utils.ObjectLayer.Default);
 
                 switch (spawn)
                 {
@@ -120,7 +120,6 @@ namespace MoonsOfMars.Game.Asteroids
             yPos = Random.Range(-15f, 15f);
             zPos = 80f;
             end = new Vector3(xPos, yPos, zPos);
-            print("RIGHT");
 
         }
 
@@ -137,14 +136,7 @@ namespace MoonsOfMars.Game.Asteroids
             end = new Vector3(xPos, yPos, zPos);
 
             if (Random.value > 0.5f)
-            {
                 SwapVectors(ref start, ref end);
-
-                print("HORIZONTAL Reverse");
-            }
-            else
-                print("HORIZONTAL");
-
         }
 
         void SpawnBackground(out Vector3 start, out Vector3 end)
@@ -160,13 +152,7 @@ namespace MoonsOfMars.Game.Asteroids
             end = new Vector3(xPos, yPos, zPos);
 
             if (Random.value > 0.5f)
-            {
-                print("BACKGROUND Reverse");
                 SwapVectors(ref start, ref end);
-            }
-            else
-                print("BACKGROUND");
-
         }
 
         void SwapVectors(ref Vector3 v1, ref Vector3 v2) => (v2, v1) = (v1, v2);
@@ -185,8 +171,7 @@ namespace MoonsOfMars.Game.Asteroids
             var contact = collision.contacts[0];
             var pos = contact.point;
 
-            print("boem: " + collision.collider.name + " " + pos);
-            GameManager.GmManager.PlayEffect(EffectsManager.Effect.ExplosionSmall, pos, 1, Utils.OjectLayer.Default);
+            GameManager.GmManager.PlayEffect(EffectsManager.Effect.ExplosionSmall, pos, 1, Utils.ObjectLayer.Default);
             _impactAudio.Play();
 
             StartCoroutine(RemoveMeteor());

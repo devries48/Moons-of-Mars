@@ -6,14 +6,15 @@ namespace MoonsOfMars.Shared
 {
     public class Utils
     {
-        public enum OjectLayer
+        public enum ObjectLayer
         {
             Default = 0,
-            Game = 9,
+            Effects= 1,
+            //Game = 9,
             Background = 11,
         }
 
-        public static void SetGameObjectLayer(GameObject obj, OjectLayer layer)
+        public static void SetGameObjectLayer(GameObject obj, ObjectLayer layer)
         {
             int val = (int)layer;
             if (val == obj.layer) return;
@@ -41,6 +42,18 @@ namespace MoonsOfMars.Shared
             {
                 yield return null;
             }
+        }
+
+        public static void MoveToCamAndHide(GameObject obj, float zDelta)
+        {
+                var p = obj.transform.position;
+                var to = new Vector3(p.x, p.y, p.z + zDelta);
+                LeanTween.move(obj, to, .5f)
+                    .setOnComplete(() =>
+                    {
+                        obj.SetActive(false);
+                        obj.transform.position = p;
+                    });
         }
     }
 }

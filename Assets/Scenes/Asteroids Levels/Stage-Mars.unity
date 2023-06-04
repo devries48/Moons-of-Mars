@@ -37,8 +37,8 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0006241291, g: 0.00054902944, b: 0.00066419784, a: 1}
+  m_Sun: {fileID: 934970957}
+  m_IndirectSpecularColor: {r: 0.00062563387, g: 0.00055090815, b: 0.0006676136, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -382,7 +382,7 @@ MonoBehaviour:
   _meteorMinSpawnWait: 10
   _meteorMaxSpawnWait: 15
   _meteorPrefab: {fileID: 4448039359926611266, guid: eb06c7dbb5a6dce4da47aa897c538297, type: 3}
-  _bossMinSpawnWait: 10
+  _bossMinSpawnWait: 15
   _bossMaxSpawnWait: 30
   _bossShipPrefab: {fileID: 3488976179539708001, guid: f44a48cfc85a0014d98df65baf7d8753, type: 3}
 --- !u!1 &924555381
@@ -441,7 +441,7 @@ GameObject:
   - component: {fileID: 934970957}
   - component: {fileID: 934970959}
   m_Layer: 11
-  m_Name: light
+  m_Name: Sunlight (mars)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

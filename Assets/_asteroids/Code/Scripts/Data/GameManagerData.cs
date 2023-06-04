@@ -1,6 +1,5 @@
 using MoonsOfMars.Shared;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MoonsOfMars.Game.Asteroids
 {
@@ -89,7 +88,7 @@ namespace MoonsOfMars.Game.Asteroids
         public AlliedShipController HyperJumpAnimation(float duration)
         {
             var ship = _rocketAnimationPool.GetFromPool();
-            Utils.SetGameObjectLayer(ship, Utils.OjectLayer.Default);
+            Utils.SetGameObjectLayer(ship, Utils.ObjectLayer.Default);
             ship.TryGetComponent(out AlliedShipController ctrl);
             ctrl.PlayerShipJumpOut(duration);
 
@@ -98,7 +97,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void StageCompleteAnimation()
         {
-            GameManager.SetGameStatus(GameManager.GameStatus.stage);
+            GameManager.SetGameStatus(GameManager.GameStatus.stageResults);
             GameManager.m_HudManager.HudHide();
             GameManager.m_LevelManager.ShowStageResults();
 
@@ -106,7 +105,7 @@ namespace MoonsOfMars.Game.Asteroids
                 GameManager.m_playerShip.Teleport();
 
             var ship = _rocketAnimationPool.GetFromPool();
-            Utils.SetGameObjectLayer(ship, Utils.OjectLayer.Background);
+            Utils.SetGameObjectLayer(ship, Utils.ObjectLayer.Background);
             GameManager.m_StageEndCamera.Follow = ship.transform;
 
             ship.TryGetComponent(out AlliedShipController ctrl);

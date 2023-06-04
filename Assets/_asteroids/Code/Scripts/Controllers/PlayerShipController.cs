@@ -2,7 +2,6 @@ using MoonsOfMars.Shared;
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace MoonsOfMars.Game.Asteroids
 {
@@ -59,7 +58,6 @@ namespace MoonsOfMars.Game.Asteroids
         float _fuelUsed;
 
         MaterialFader _spawnFader;
-
         Quaternion _initialRotation = Quaternion.Euler(0, 186, 0);
         #endregion
 
@@ -72,7 +70,7 @@ namespace MoonsOfMars.Game.Asteroids
             _turnInput = 0f;
             _fuelUsed = 0f;
             _spawnFader ??= new MaterialFader(m_Model);
-
+            
             InputManager.OnHyperJumpPressed += HandleHyperJump;
             InputManager.OnPausePressed += HandlePauseGame;
 
@@ -232,7 +230,11 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void EnableControls() => _disableControls = false;
 
-        public void DisableControls() => _disableControls = true;
+        public void DisableControls()
+        {
+            m_ThrustController.SetThrust(0f);
+            _disableControls = true;
+        }
 
         void SpawnIn()
         {
@@ -308,7 +310,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void ResetPosition() => transform.SetPositionAndRotation(Vector3.zero, _initialRotation);
 
-        void ResetRigidbody() => RigidbodyUtil.Reset(GetComponent<Rigidbody>());
+        void ResetRigidbody() => RigidbodyUtil.Reset(Rb);
 
     }
 }

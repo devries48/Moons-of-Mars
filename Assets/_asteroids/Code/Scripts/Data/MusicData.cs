@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class MusicData : ScriptableObject
 {
-    public AudioClip[] menuMusic;
-    public AudioClip[] pauseMusic;
-    public AudioClip[] stageCompleteMusic;
-    public AudioClip[] lowIntenseMusic;
-    public AudioClip[] mediunIntenseMusic;
-    public AudioClip[] highIntenseMusic;
+    [SerializeField] AudioClip[] menuMusic;
+    [SerializeField] AudioClip[] pauseMusic;
+    [SerializeField] AudioClip[] stageCompleteMusic;
+    [SerializeField] AudioClip[] lowIntenseMusic;
+    [SerializeField] AudioClip[] mediunIntenseMusic;
+    [SerializeField] AudioClip[] highIntenseMusic;
+    [SerializeField, Tooltip("The game is over")] AudioClip[] defeatMusic;
+    [SerializeField, Tooltip("Game completed and/or high score reached")] AudioClip[] victoryMusic;
 
-    public enum MusicLevel { none, menu, pause, stage, low, medium, high }
+    public enum MusicLevel { none, menu, pause, stage, victory, defeat, low, medium, high }
 
     public AudioClip GetMusicClip(MusicLevel level)
     {
@@ -23,6 +25,8 @@ public class MusicData : ScriptableObject
             MusicLevel.low => RandomClip(lowIntenseMusic),
             MusicLevel.medium => RandomClip(mediunIntenseMusic),
             MusicLevel.high => RandomClip(highIntenseMusic),
+            MusicLevel.defeat => RandomClip(defeatMusic),
+            MusicLevel.victory => RandomClip(victoryMusic),
             _ => null
         };
 

@@ -118,7 +118,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             astroidsCount.text = GameManager.m_LevelManager.AsteroidsActive.ToString();
             ufoCount.text = GameManager.m_LevelManager.UfosActive.ToString();
-            powerupCount.text = GameManager.m_LevelManager.GetStageResults()?.PowerupsPickedUp.ToString() ?? "0";
+            powerupCount.text = GameManager.m_LevelManager.GetStageStatistics()?.PowerupsPickedUp.ToString() ?? "0";
         }
     }
 

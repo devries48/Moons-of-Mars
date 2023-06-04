@@ -92,7 +92,7 @@ namespace MoonsOfMars.Shared
         IEnumerator BuildPools()
         {
             if (useObjectPoolScene)
-                CreateObjectPoolScene();
+                _objectPoolScene= CreateObjectPoolScene();
 
             while (UseObjectPoolScene && !ObjectPoolSceneLoaded)
                 yield return null;
@@ -109,31 +109,29 @@ namespace MoonsOfMars.Shared
             _hitLaserPool = CreatePool(hitLaserPrefab);
         }
 
-        void CreateObjectPoolScene()
+        public Scene CreateObjectPoolScene()
         {
-            _objectPoolScene = SceneManager.GetSceneByName(GameObjectPool.OBJECTPOOL_SCENE);
-            if (_objectPoolScene.isLoaded)
-                return;
+            var scene = SceneManager.GetSceneByName(GameObjectPool.OBJECTPOOL_SCENE);
+            if (scene.isLoaded)
+                return scene;
 
-            _objectPoolScene = SceneManager.CreateScene(GameObjectPool.OBJECTPOOL_SCENE);
+            return SceneManager.CreateScene(GameObjectPool.OBJECTPOOL_SCENE);
         }
 
         GameObjectPool CreatePool(GameObject prefab)
         {
             if (prefab != null)
-            {
                 return GameObjectPool.Build(prefab, 1, 50, useObjectPoolScene ? _objectPoolScene : default);
-            }
 
             return null;
         }
 
-        public void StartEffect(Effect effect, Vector3 position, float scale, OjectLayer layer)
+        public void StartEffect(Effect effect, Vector3 position, float scale, ObjectLayer layer)
         {
             StartEffect(effect, position, Quaternion.identity, scale, layer);
         }
 
-        public void StartEffect(Effect effect, Vector3 position, Quaternion rotation = default, float scale = 1f, OjectLayer layer = OjectLayer.Default)
+        public void StartEffect(Effect effect, Vector3 position, Quaternion rotation = default, float scale = 1f, ObjectLayer layer = ObjectLayer.Effects)
         {
             var effectObj = effect switch
             {

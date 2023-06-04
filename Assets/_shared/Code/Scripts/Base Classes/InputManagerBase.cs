@@ -1,10 +1,13 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Diagnostics.Tracing;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.InputSystem.DualShock;
 using UnityEngine.InputSystem.LowLevel;
 using UnityEngine.InputSystem.UI;
 using UnityEngine.InputSystem.Users;
+using UnityEngine.InputSystem.Utilities;
 using UnityEngine.InputSystem.XInput;
 
 namespace MoonsOfMars.Shared
@@ -30,11 +33,15 @@ namespace MoonsOfMars.Shared
 
         public bool HasGamepad => _curGamepad > GamepadType.none;
 
+
         PlayerInput _playerInput;
         Mouse _virtualMouse, _currentMouse;
         bool _prevMouseState;
         string _prevControlSchema = "";
         GamepadType _curGamepad = GamepadType.init;
+
+        bool _anyKeyPressed;
+        private IDisposable _anyKeyListener;
 
         protected override void Awake()
         {
@@ -82,6 +89,19 @@ namespace MoonsOfMars.Shared
             //_playerInput.onControlsChanged -= OnControlsChanged;
         }
 
+        public void WaitForAnyKey()
+        {
+            _anyKeyListener = InputSystem.onAnyButtonPress.Call((_) =>
+            {
+                _anyKeyPressed = true;
+                _anyKeyListener = null;
+            });
+        }
+
+        public bool IsAnyKeyPressed() => _anyKeyPressed;
+
+        // Start listening.
+
         /// <summary>
         /// Override this method to handle Gamepad changes.
         /// </summary>
@@ -98,20 +118,11 @@ namespace MoonsOfMars.Shared
                 if (device is Gamepad)
                 {
                     result = GamepadType.generic;
+
                     if (device is DualShockGamepad)
-                    {
-                        print("Playstation gamepad");
                         result = GamepadType.playstation;
-                    }
                     else if (device is XInputController)
-                    {
-                        print("Xbox gamepad");
                         result = GamepadType.xbox;
-                    }
-                }
-                else
-                {
-                    print(device.ToString());
                 }
             }
 

@@ -161,6 +161,7 @@ namespace MoonsOfMars.Shared
             _settingsCanvas.SetActive(active);
         }
 
+        //TODO: Use TweenPivot for RectTransform
         public void OpenPauseMenu()
         {
             TweenUtil.SetPivot(_pauseMenu, new Vector2(.5f, -.1f));

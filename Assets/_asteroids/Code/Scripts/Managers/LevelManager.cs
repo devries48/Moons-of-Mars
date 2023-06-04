@@ -1,17 +1,16 @@
 using MoonsOfMars.Shared;
-using MoonsOfMars.Shared.Announcers;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+using static MoonsOfMars.Shared.SceneLoader;
 
 namespace MoonsOfMars.Game.Asteroids
 {
     using static GameManager;
     using static Level;
     using static UfoManagerData;
-    using static MoonsOfMars.Shared.SceneLoader;
-    using static MoonsOfMars.Game.Asteroids.GameResultsController;
+    using static GameResultsController;
 
     [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour
@@ -22,7 +21,6 @@ namespace MoonsOfMars.Game.Asteroids
         [Header("Elements")]
         [SerializeField] GameObject gameIntro;
         [SerializeField] GameResultsController gameResults;
-        [SerializeField] GameObject stageContinue;
         [SerializeField] Transform stageCompleteStart;
         [SerializeField] Transform stageCompleteEnd;
 
@@ -45,21 +43,10 @@ namespace MoonsOfMars.Game.Asteroids
         Vector3 _gizmoPosition;
         [HideInInspector] public int _gizmoStageIndex;
 
-        public int _gizmoCurrentIndex = -1; // public for test purpose
+        int _gizmoCurrentIndex = -1;
         #endregion
 
         #region properties
-        GameAnnouncer Announce
-        {
-            get
-            {
-                if (__announce == null)
-                    __announce = GameAnnouncer.AnnounceTo(TextAnnouncerBase.TextComponent(GmManager.m_AnnouncerTextUI));
-
-                return __announce;
-            }
-        }
-        GameAnnouncer __announce;
 
         bool UIAudioPlaying => GmManager.UiManager.AudioPlaying;
 
@@ -73,9 +60,7 @@ namespace MoonsOfMars.Game.Asteroids
                 return _currentLevel.AsteroidsActive;
             }
         }
-
         public bool HasActiveShuttle => GmManager.PowerupManager.ActiveShuttleCount > 0;
-
         public int UfosActive
         {
             get
@@ -86,9 +71,7 @@ namespace MoonsOfMars.Game.Asteroids
                 return _currentLevel.TotalUfosActive;
             }
         }
-
         public bool CanAddUfo => _currentLevel.CanAddUfo;
-
         public bool CanActivate(LevelAction action)
         {
             return action switch
@@ -99,9 +82,8 @@ namespace MoonsOfMars.Game.Asteroids
                 _ => true
             };
         }
-
         public bool IsStageLoaded => sceneLoader.m_stageLoaded;
-
+        public int CurrentLevel => _currentLevel.Level;
         #endregion
 
         public enum Statistic { powerupSpawn, powerupDestroyed, powerupPickup, shotFired, shotHit }
@@ -119,12 +101,10 @@ namespace MoonsOfMars.Game.Asteroids
 
                 for (int i = 0; i < stages.Length; i++)
                 {
-                    print("stage " + i + " - " + stages[i].Name);
-
                     if (scene.name.ToLower().Contains(stages[i].Name.ToLower()))
                     {
                         SceneManager.SetActiveScene(scene);
-                        print("set active scene!");
+                        print("Set active scene: "+ scene.name);
 
                         _isFirstStageLoaded = true;
                         _currentStageIndex = i;
@@ -135,8 +115,8 @@ namespace MoonsOfMars.Game.Asteroids
 
             }
             gameIntro.SetActive(true);
-            gameResults.gameObject.SetActive(false);
-            stageContinue.SetActive(false);
+            //gameResults.gameObject.SetActive(false);
+            //gameContinue.SetActive(false);
         }
 
         public void ShowGameIntro() => StartCoroutine(ShowGameIntroCore());
@@ -166,7 +146,7 @@ namespace MoonsOfMars.Game.Asteroids
         {
             while (GmManager.m_playerShip.m_isAlive && _currentLevel.HasEnemy || GmManager.m_debug.NoAsteroids)
             {
-                _currentLevel.StagePlaytime += Time.deltaTime;
+                _currentLevel.AddPlayTime(Time.deltaTime);
                 yield return null;
             }
         }
@@ -185,7 +165,7 @@ namespace MoonsOfMars.Game.Asteroids
                 if (_currentLevel.IsStageComplete())
                 {
                     GmManager.m_HudManager.CancelPowerups();
-                    StartCoroutine(AnnounceStageCleared(_currentLevel.Stage));
+                    StartCoroutine(AnnounceStageCompleted());
                     yield return Wait(2f);
 
                     GmManager.m_GameManagerData.StageCompleteAnimation();
@@ -203,24 +183,21 @@ namespace MoonsOfMars.Game.Asteroids
             yield return Wait(1);
         }
 
+
         void AnnounceLevelStart(int level)
         {
             if (level == 1)
             {
-                Announce.GameStart();
+                GmManager.Announce(GameAnnouncer.Ready);
                 UIAudio(UISounds.Clip.gameStart);
             }
             else
-                Announce.LevelStarts(level);
-
-            StartCoroutine(AnnounceClear());
+                GmManager.Announce(GameAnnouncer.LevelStart, level);
         }
 
         IEnumerator AnnounceLevelCleared(int level)
         {
-            Announce.LevelCleared();
-            StartCoroutine(AnnounceClear());
-
+            GmManager.Announce(GameAnnouncer.LevelCleared);
             Score.LevelCleared(level);
 
             UIAudio(UISounds.Clip.levelComplete);
@@ -228,32 +205,23 @@ namespace MoonsOfMars.Game.Asteroids
                 yield return null;
         }
 
-        IEnumerator AnnounceStageCleared(int stage)
+        IEnumerator AnnounceStageCompleted()
         {
-            Announce.StageCleared();
-            StartCoroutine(AnnounceClear());
+            GmManager.Announce(GameAnnouncer.StageCompleted);
 
             UIAudio(UISounds.Clip.stageComplete);
             while (UIAudioPlaying)
                 yield return null;
         }
 
-        IEnumerator AnnounceClear()
-        {
-            yield return Wait(1);
-            Announce.ClearAnnouncements();
-        }
-
         public IEnumerator AnnounceGameOver()
         {
-            Announce.GameOver();
+            GmManager.Announce(GameAnnouncer.Gameover);
             yield return Wait(2);
 
             UIAudio(UISounds.Clip.gameOver);
             while (UIAudioPlaying)
                 yield return null;
-
-            Announce.ClearAnnouncements();
         }
 
         public void StartLevel1() => _currentLevel.Level1();
@@ -273,17 +241,20 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void ShowStageResults()
         {
-            gameResults.DisplayResults(GameResult.stage);
-            stageContinue.SetActive(false);
+            gameResults.DisplayResults(GameResult.stageCleared);
         }
 
-        public void HideStageResuls() => HideGroup(gameResults.gameObject);
+        public void ShowGameResults(bool gameover)
+        {
+            StartCoroutine(ShowGameResultsCore(gameover ? GameResult.gameOver : GameResult.gameComplete));
+        }
+
+        //public void HideStageResuls() => HideGroup(gameResults.gameObject);
         public SceneName GetCurrentStage() => GetStage(_currentStageIndex).SceneName;
         public Vector3[] GetStageCompletePath() => GetStagePath(_currentStageIndex);
         public void LoadNewStage() => StartCoroutine(WaitForStageToLoad());
-        public StageStatistics GetStageResults() => _currentLevel.GetStageResults();
-
-        void HideGameIntro() => HideGroup(gameIntro);
+        public StageStatistics GetStageStatistics() => _currentLevel.GetStageStatistics();
+        public GameStatistics GetGameStatistics() => _currentLevel.GetGameStatistics();
 
         SceneName GetFirstStage() => GetStage(0).SceneName;
         SceneName GetNextStage() => GetStage(_currentStageIndex + 1).SceneName;
@@ -307,22 +278,9 @@ namespace MoonsOfMars.Game.Asteroids
             };
         }
 
-        void HideGroup(GameObject group)
-        {
-            var p = group.transform.position;
-            var to = new Vector3(p.x, p.y, p.z + _moveToCam);
-            LeanTween.move(group, to, .5f)
-                .setOnComplete(() =>
-                {
-                    group.SetActive(false);
-                    group.transform.position = p;
-                });
-        }
-
         IEnumerator WaitForStageToLoad()
         {
-            //Add bonus
-            var r = _currentLevel.GetStageResults();
+            var r = _currentLevel.GetStageStatistics();
             Score.Earn(r.TotalBonus, new Vector3(7, -2, 0));
 
             sceneLoader.UnloadSceneAsync(GetCurrentStage());
@@ -334,17 +292,19 @@ namespace MoonsOfMars.Game.Asteroids
             while (!IsStageLoaded)
                 yield return null;
 
-            stageContinue.SetActive(true);
-            yield return Utils.WaitUntilTrue(IsAnyKeyPressed);
+            gameResults.ShowContinueButton();
 
-            HideGroup(gameResults.gameObject);
+            //yield return Utils.WaitUntilTrue(IsAnyKeyPressed);
+            yield return Utils.WaitUntilTrue(GmManager.InputManager.IsAnyKeyPressed);
+          
+            gameResults.HideResults(GameResult.stageCleared);
             yield return new WaitForSeconds(.5f);
 
             GmManager.StageStartNew();
             GmManager.AudioManager.FadeInBackgroundSfx();
         }
 
-        bool IsAnyKeyPressed() => Input.anyKey;
+        // bool IsAnyKeyPressed() => Input.anyKey;
 
         IEnumerator ShowGameIntroCore()
         {
@@ -359,7 +319,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             t += Time.deltaTime;
             yield return Wait(5 - t);
-            HideGameIntro();
+            Utils.MoveToCamAndHide(gameIntro, _moveToCam);
             yield return Wait(.5f);
             GmManager.SwitchStageCam(StageCamera.far);
             yield return Wait(.1f);
@@ -367,6 +327,18 @@ namespace MoonsOfMars.Game.Asteroids
             yield return Wait(2f);
 
             GmManager.GameStart();
+        }
+
+        // Wait for the explosion to fade and show the game results
+        IEnumerator ShowGameResultsCore(GameResult result)
+        {
+            yield return new WaitForSeconds(2.5f);
+            gameResults.DisplayResults(result);
+
+            yield return Utils.WaitUntilTrue(GmManager.InputManager.IsAnyKeyPressed);
+
+            gameResults.HideResults(result);
+            GmManager.GameQuit();
         }
 
         void UIAudio(UISounds.Clip clip) => GmManager.UiManager.PlayAudio(clip);
@@ -421,7 +393,6 @@ namespace MoonsOfMars.Game.Asteroids
             }
             return -1;
         }
-
     }
 
     [System.Serializable]
@@ -444,28 +415,62 @@ namespace MoonsOfMars.Game.Asteroids
         public LevelAction[] actions;
     }
 
-    public class StageStatistics
+    public class GameStatistics
     {
-        public StageStatistics(int nr, Stage stage)
+        public GameStatistics() => Playtime = 0;
+
+        public int CurrentScore { get; set; }
+        public int CurrentLevel { get; set; }
+        public int CurrentLives { get; set; }
+
+        public float Playtime { get; private set; }
+        public float ShotsFired { get; private set; }
+        public float ShotsHit { get; private set; }
+        public int UfosSpawned { get; private set; }
+        public int UfosDestroyed { get; private set; }
+        public int PowerupsSpawned { get; private set; }
+        public int PowerupsPickedUp { get; private set; }
+        public int PowerupsDestroyed { get; private set; }
+        public int AsteroidsDestroyed { get; private set; }
+
+        public virtual void AddPlayTime(float t)
+        {
+            Playtime += t;
+        }
+
+        public virtual void ShotFired() => ShotsFired++;
+        public virtual void ShotHit() => ShotsHit++;
+        public virtual void UfoSpawned() => UfosSpawned++;
+        public virtual void UfoDestroyed() => UfosDestroyed++;
+        public virtual void PowerupSpawned() => PowerupsSpawned++;
+        public virtual void PowerupPickedUp() => PowerupsPickedUp++;
+        public virtual void PowerupDestroyed() => PowerupsDestroyed++;
+        public virtual void AsteroidDestroyed() => AsteroidsDestroyed++;
+    }
+
+    public class StageStatistics : GameStatistics
+    {
+        public StageStatistics(int nr, Stage stage, GameStatistics gameStats) : base()
         {
             StageNr = nr;
             _stage = stage;
-            _lvlManager = GmManager.m_LevelManager;
+            _gameStats = gameStats;
+            _lvlManager = GmManager != null ? GmManager.m_LevelManager : null;
+            if (_lvlManager != null)
+            {
+                CurrentLevel = _lvlManager.CurrentLevel;
+                CurrentScore = Score.Earned;
+                CurrentLives = 1;
+            }
         }
 
-        public readonly int StageNr;
+        public int StageNr { get; private set; }
         public string Name => _stage.Name;
 
-        public float ShotsFired;
-        public float ShotsHit;
-        public int UfosSpawned;
-        public int UfosDestroyed;
-        public int PowerupsSpawned;
-        public int PowerupsPickedUp;
-        public int PowerupsDestroyed;
-        public int AsteroidsDestroyed;
-
-        public float Playtime;
+        int BonusEfficiency => _lvlManager != null ? _lvlManager.m_EfficiencyBonus : 100;
+        int BonusDestruction => _lvlManager != null ? _lvlManager.m_DestructionBonus : 100;
+        int BonusPickup => _lvlManager != null ? _lvlManager.m_PickupBonus : 100;
+        int BonusTime => _lvlManager != null ? _lvlManager.m_TimeBonus : 100;
 
         public int EfficiencyBonus;
         public int TimeBonus;
@@ -474,6 +479,61 @@ namespace MoonsOfMars.Game.Asteroids
 
         readonly Stage _stage;
         readonly LevelManager _lvlManager;
+        readonly GameStatistics _gameStats;
+
+        public override void AddPlayTime(float t)
+        {
+            base.AddPlayTime(t);
+            _gameStats.AddPlayTime(t);
+        }
+
+        public override void ShotFired()
+        {
+            base.ShotFired();
+            _gameStats.ShotFired();
+        }
+
+        public override void ShotHit()
+        {
+            base.ShotHit();
+            _gameStats.ShotHit();
+        }
+
+        public override void UfoSpawned()
+        {
+            base.UfoSpawned();
+            _gameStats.UfoSpawned();
+        }
+
+        public override void UfoDestroyed()
+        {
+            base.UfoDestroyed();
+            _gameStats.UfoDestroyed();
+        }
+
+        public override void PowerupSpawned()
+        {
+            base.PowerupSpawned();
+            _gameStats.PowerupSpawned();
+        }
+
+        public override void PowerupPickedUp()
+        {
+            base.PowerupPickedUp();
+            _gameStats.PowerupPickedUp();
+        }
+
+        public override void PowerupDestroyed()
+        {
+            base.PowerupDestroyed();
+            _gameStats.PowerupDestroyed();
+        }
+
+        public override void AsteroidDestroyed()
+        {
+            base.AsteroidDestroyed();
+            _gameStats.AsteroidDestroyed();
+        }
 
         public int TotalBonus
         {
@@ -490,15 +550,15 @@ namespace MoonsOfMars.Game.Asteroids
         int CalculateBonus()
         {
             if (ShotsFired > 0)
-                EfficiencyBonus = (int)Mathf.Round(ShotsHit / ShotsFired * _lvlManager.m_EfficiencyBonus);
+                EfficiencyBonus = (int)Mathf.Round(ShotsHit / ShotsFired * BonusEfficiency);
 
             TimeBonus = CalcTimeBonus();
 
             if (UfosSpawned > 0)
-                DestrucionBonus = (int)Mathf.Round(UfosDestroyed / UfosSpawned * _lvlManager.m_DestructionBonus);
+                DestrucionBonus = (int)Mathf.Round(UfosDestroyed / UfosSpawned * BonusDestruction);
 
             if (PowerupsPickedUp > 0)
-                PickupBonus = (int)Mathf.Round(PowerupsPickedUp / PowerupsSpawned) * _lvlManager.m_PickupBonus;
+                PickupBonus = (int)Mathf.Round(PowerupsPickedUp / PowerupsSpawned) * BonusPickup;
 
             return (EfficiencyBonus + TimeBonus + DestrucionBonus + PickupBonus) * StageNr;
         }
@@ -506,16 +566,19 @@ namespace MoonsOfMars.Game.Asteroids
         int CalcTimeBonus()
         {
             if (Playtime <= _stage.SecondsToComplete)
-                return _lvlManager.m_TimeBonus;
+                return BonusTime;
             else
             {
                 var t = Playtime - (2 * _stage.SecondsToComplete);
                 if (t < 0)
-                    return (int)(Mathf.Abs(t) * .01f * _lvlManager.m_TimeBonus);
+                    return (int)(Mathf.Abs(t) * .01f * BonusTime);
 
                 return 0;
             }
         }
+
+
+
     }
 
     #region CurrentLevel
@@ -526,12 +589,12 @@ namespace MoonsOfMars.Game.Asteroids
         {
             _levels = levels;
             _stages = stages;
-            _stageStats = new List<StageStatistics>();
+            // _stageStats = new List<StageStatistics>();
         }
 
         readonly Level[] _levels;
         readonly Stage[] _stages;
-        readonly List<StageStatistics> _stageStats;
+        //readonly List<StageStatistics> _stageStats;
 
         int _level;
         int _stage;
@@ -546,7 +609,8 @@ namespace MoonsOfMars.Game.Asteroids
         int _ufosGreenActive;
         int _ufosRedActive;
 
-        StageStatistics _stats;
+        GameStatistics _gameStats;
+        StageStatistics _stageStats;
 
         public int Level => _level;
         public int Stage => _stage;
@@ -561,16 +625,11 @@ namespace MoonsOfMars.Game.Asteroids
         public bool CanAddRedUfo => _levelUfoRed;
         public bool CanAddPowerup => _levelPowerup;
 
-        public float StagePlaytime
-        {
-            get { return _stats.Playtime; }
-            set { _stats.Playtime = value; }
-        }
-
+        public void AddPlayTime(float t) => _stageStats.AddPlayTime(t);
         public void AstroidAdd() => _asteroidsActive++;
         public void AstroidRemove()
         {
-            _stats.AsteroidsDestroyed++;
+            _stageStats.AsteroidDestroyed();
             _asteroidsActive--;
         }
 
@@ -581,7 +640,7 @@ namespace MoonsOfMars.Game.Asteroids
             else
                 _ufosRedActive++;
 
-            _stats.UfosSpawned++;
+            _stageStats.UfoSpawned();
         }
 
         public void UfoRemove(UfoType type, bool destroyed)
@@ -592,7 +651,7 @@ namespace MoonsOfMars.Game.Asteroids
                 _ufosRedActive--;
 
             if (destroyed)
-                _stats.UfosDestroyed++;
+                _stageStats.UfoDestroyed();
         }
 
         public void Level1() => SetLevel(1);
@@ -605,7 +664,8 @@ namespace MoonsOfMars.Game.Asteroids
 
         public bool IsStageComplete() => _stageLevel == _levels.Length;
 
-        public StageStatistics GetStageResults() => _stats;
+        public StageStatistics GetStageStatistics() => _stageStats;
+        public GameStatistics GetGameStatistics() => _gameStats;
 
         void SetLevel(int level)
         {
@@ -621,6 +681,7 @@ namespace MoonsOfMars.Game.Asteroids
                 _levelUfoGreen = false;
                 _levelUfoRed = false;
                 _levelPowerup = false;
+                _gameStats = new GameStatistics();
 
                 loadStageActions = true;
             }
@@ -639,8 +700,9 @@ namespace MoonsOfMars.Game.Asteroids
 
             SetActionsForLevel();
 
-            _stats = new StageStatistics(_stage, _stages[_stage - 1]);
-            _stageStats.Add(_stats);
+            _stageStats = new StageStatistics(_stage, _stages[_stage - 1], _gameStats);
+
+            //_stageStats.Add(_stats);
 
             _asteroidsActive = 0;
             _ufosGreenActive = 0;
@@ -690,19 +752,19 @@ namespace MoonsOfMars.Game.Asteroids
             switch (stat)
             {
                 case LevelManager.Statistic.powerupSpawn:
-                    _stats.PowerupsSpawned++;
+                    _stageStats.PowerupSpawned();
                     break;
                 case LevelManager.Statistic.powerupDestroyed:
-                    _stats.PowerupsDestroyed++;
+                    _stageStats.PowerupDestroyed();
                     break;
                 case LevelManager.Statistic.powerupPickup:
-                    _stats.PowerupsPickedUp++;
+                    _stageStats.PowerupPickedUp();
                     break;
                 case LevelManager.Statistic.shotFired:
-                    _stats.ShotsFired++;
+                    _stageStats.ShotFired();
                     break;
                 case LevelManager.Statistic.shotHit:
-                    _stats.ShotsHit++;
+                    _stageStats.ShotHit();
                     break;
                 default:
                     break;
