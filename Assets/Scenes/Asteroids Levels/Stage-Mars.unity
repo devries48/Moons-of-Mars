@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 880839707}
   - component: {fileID: 880839706}
   m_Layer: 0
-  m_Name: Meteor Detonator sphere
+  m_Name: Meteor Detonator Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -382,8 +382,9 @@ MonoBehaviour:
   _meteorMinSpawnWait: 10
   _meteorMaxSpawnWait: 15
   _meteorPrefab: {fileID: 4448039359926611266, guid: eb06c7dbb5a6dce4da47aa897c538297, type: 3}
-  _bossMinSpawnWait: 15
-  _bossMaxSpawnWait: 30
+  _hasDetonationSphere: 1
+  _bossMinSpawnWait: 20
+  _bossMaxSpawnWait: 45
   _bossShipPrefab: {fileID: 3488976179539708001, guid: f44a48cfc85a0014d98df65baf7d8753, type: 3}
 --- !u!1 &924555381
 GameObject:

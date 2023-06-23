@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using static MoonsOfMars.Shared.EffectsData;
 using static MoonsOfMars.Shared.Utils;
 
 namespace MoonsOfMars.Shared
 {
-    public class EffectsManager : MonoBehaviour
+    public class EffectsManager1 : MonoBehaviour
     {
-        public enum Effect
+        public enum Effect1
         {
             ExplosionSmall,
             ExplosionBig,
@@ -121,30 +122,30 @@ namespace MoonsOfMars.Shared
         GameObjectPool CreatePool(GameObject prefab)
         {
             if (prefab != null)
-                return GameObjectPool.Build(prefab, 1, 50, useObjectPoolScene ? _objectPoolScene : default);
+                return GameObjectPool.Build(prefab, 1, 50, useObjectPoolScene);
 
             return null;
         }
 
-        public void StartEffect(Effect effect, Vector3 position, float scale, ObjectLayer layer)
+        public void StartEffect(Effect1 effect, Vector3 position, float scale, ObjectLayer layer)
         {
             StartEffect(effect, position, Quaternion.identity, scale, layer);
         }
 
-        public void StartEffect(Effect effect, Vector3 position, Quaternion rotation = default, float scale = 1f, ObjectLayer layer = ObjectLayer.Effects)
+        public void StartEffect(Effect1 effect, Vector3 position, Quaternion rotation = default, float scale = 1f, ObjectLayer layer = ObjectLayer.Effects)
         {
             var effectObj = effect switch
             {
-                Effect.ExplosionSmall => _explosionSmallPool.GetFromPool(),
-                Effect.ExplosionBig => _explosionBigPool.GetFromPool(),
-                Effect.ExplosionDust => _explosionDustPool.GetFromPool(),
-                Effect.ExplosionGreen => _explosionGreenPool.GetFromPool(),
-                Effect.ExplosionRed => _explosionRedPool.GetFromPool(),
-                Effect.Spawn => _spawnPool.GetFromPool(),
-                Effect.JumpPortal => _jumpPortalPool.GetFromPool(),
-                Effect.HyperJump => _hyperJumpPool.GetFromPool(),
-                Effect.Teleport => _teleportPool.GetFromPool(),
-                Effect.HitLaser => _hitLaserPool.GetFromPool(),
+                Effect1.ExplosionSmall => _explosionSmallPool.GetFromPool(),
+                Effect1.ExplosionBig => _explosionBigPool.GetFromPool(),
+                Effect1.ExplosionDust => _explosionDustPool.GetFromPool(),
+                Effect1.ExplosionGreen => _explosionGreenPool.GetFromPool(),
+                Effect1.ExplosionRed => _explosionRedPool.GetFromPool(),
+                Effect1.Spawn => _spawnPool.GetFromPool(),
+                Effect1.JumpPortal => _jumpPortalPool.GetFromPool(),
+                Effect1.HyperJump => _hyperJumpPool.GetFromPool(),
+                Effect1.Teleport => _teleportPool.GetFromPool(),
+                Effect1.HitLaser => _hitLaserPool.GetFromPool(),
                 _ => null
             };
 
@@ -156,7 +157,7 @@ namespace MoonsOfMars.Shared
             var ctrl = effectObj.GetComponent<EffectController>();
             var trans = effectObj.transform;
 
-            ctrl.m_effect = effect;
+            ctrl.m_effect = (Effect)effect;
             trans.localScale = new Vector3(scale, scale, scale);
             trans.localPosition = position;
 
@@ -164,7 +165,7 @@ namespace MoonsOfMars.Shared
             {
                 var eulerZ = new Vector3(0f, 0f, Random.Range(0, 360));
 
-                if (effect != Effect.Spawn)
+                if (effect != Effect1.Spawn)
                     trans.Rotate(eulerZ);
             }
             else

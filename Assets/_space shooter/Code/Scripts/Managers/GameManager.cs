@@ -2,16 +2,12 @@ using Cinemachine;
 using MoonsOfMars.Shared;
 using UnityEngine;
 using UnityEngine.InputSystem;
-
-using static MoonsOfMars.Shared.EffectsManager;
 using static MoonsOfMars.Shared.Utils;
 
 namespace Game.SpaceShooter
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : GameManagerBase<GameManager>
     {
-        public static GameManager Instance { get; private set; }
-        EffectsManager EffectsManager { get; set; }
 
         public enum PlayerCamera { panels, cockpit, follow }
 
@@ -21,15 +17,9 @@ namespace Game.SpaceShooter
         int _activeCameraIndex;
         bool _moveCamIn;
 
-        void Awake()
+        protected override void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-                return;
-            }
-            Instance = this;
-            EffectsManager = GetComponent<EffectsManager>();
+            base.Awake();
             ActivateMenuCamera(true);
             //Cursor.lockState = CursorLockMode.Confined;
             //Cursor.visible = false;
@@ -40,10 +30,10 @@ namespace Game.SpaceShooter
             _menuCamera.Priority = activate ? 1 : 10;
         }
 
-        #region Input Methods
+      //  public void PlayEffect(Effect effect, Vector3 position, Quaternion rotation, float scale = 1f, ObjectLayer layer = ObjectLayer.Effects)
+       //=> EffectsManager.StartEffect(effect, position, rotation, scale, layer);
 
-        public void PlayEffect(Effect effect, Vector3 position, Quaternion rotation, float scale = 1f, ObjectLayer layer = ObjectLayer.Effects)
-             => EffectsManager.StartEffect(effect, position, rotation, scale, layer);
+        #region Input Methods
 
         public void OnSwitchCamera(InputAction.CallbackContext context)
         {

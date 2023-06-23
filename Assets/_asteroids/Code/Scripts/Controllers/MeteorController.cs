@@ -116,13 +116,24 @@ namespace MoonsOfMars.Game.Asteroids
             float zPos = -30f;
             start = new Vector3(xPos, yPos, zPos);
 
-            xPos = Random.Range(-40f, 10f);
-            yPos = Random.Range(-15f, 15f);
-            zPos = 80f;
-            end = new Vector3(xPos, yPos, zPos);
-
+            //xPos = Random.Range(-40f, 10f);
+            //yPos = Random.Range(-15f, 15f);
+            //zPos = 80f;
+            //end = new Vector3(xPos, yPos, zPos);
+            end = GetDetonationPosition();
+            print("End: " + end);
         }
 
+        Vector3 GetDetonationPosition()
+        {
+            var sphere = GameObject.Find("Meteor Detonator Sphere");
+            if (sphere == null) 
+                return Vector3.zero;
+
+            var pos = sphere.transform.position;
+            return pos + Random.insideUnitSphere * sphere.transform.localScale.x;
+
+        }
         void SpawnHorizontal(out Vector3 start, out Vector3 end)
         {
             float xPos = -80f;
@@ -171,7 +182,7 @@ namespace MoonsOfMars.Game.Asteroids
             var contact = collision.contacts[0];
             var pos = contact.point;
 
-            GameManager.GmManager.PlayEffect(EffectsManager.Effect.ExplosionSmall, pos, 1, Utils.ObjectLayer.Default);
+            GameManager.GmManager.PlayEffect(EffectsData.Effect.ExplosionSmall, pos, 1, Utils.ObjectLayer.Default);
             _impactAudio.Play();
 
             StartCoroutine(RemoveMeteor());

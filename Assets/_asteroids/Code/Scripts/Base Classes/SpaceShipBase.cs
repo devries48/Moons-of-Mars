@@ -335,13 +335,13 @@ namespace MoonsOfMars.Game.Asteroids
             switch (m_shipType)
             {
                 case ShipType.player:
-                    PlayEffect(EffectsManager.Effect.ExplosionBig, transform.position, .8f);
+                    PlayEffect(EffectsData.Effect.ExplosionBig, transform.position, .8f);
                     break;
                 case ShipType.ufoGreen:
-                    PlayEffect(EffectsManager.Effect.ExplosionGreen, transform.position, 1.4f);
+                    PlayEffect(EffectsData.Effect.ExplosionGreen, transform.position, 1.4f);
                     break;
                 case ShipType.ufoRed:
-                    PlayEffect(EffectsManager.Effect.ExplosionRed, transform.position, 1.4f);
+                    PlayEffect(EffectsData.Effect.ExplosionRed, transform.position, 1.4f);
                     break;
                 default:
                     break;

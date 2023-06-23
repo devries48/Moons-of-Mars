@@ -15,6 +15,8 @@ namespace MoonsOfMars.Game.Asteroids
     [ExecuteInEditMode]
     public class LevelManager : MonoBehaviour
     {
+        public enum Statistic { powerupSpawn, powerupDestroyed, powerupPickup, shotFired, shotHit }
+
         #region editor fields
         [SerializeField] SceneLoader sceneLoader;
 
@@ -33,17 +35,6 @@ namespace MoonsOfMars.Game.Asteroids
         [Header("Levels & stages")]
         [SerializeField] Level[] levels;
         [SerializeField] Stage[] stages;
-        #endregion
-
-        #region fields
-        CurrentLevel _currentLevel;
-        int _currentStageIndex;
-        readonly float _moveToCam = 8;
-        bool _isFirstStageLoaded;
-        Vector3 _gizmoPosition;
-        [HideInInspector] public int _gizmoStageIndex;
-
-        int _gizmoCurrentIndex = -1;
         #endregion
 
         #region properties
@@ -86,10 +77,28 @@ namespace MoonsOfMars.Game.Asteroids
         public int CurrentLevel => _currentLevel.Level;
         #endregion
 
-        public enum Statistic { powerupSpawn, powerupDestroyed, powerupPickup, shotFired, shotHit }
+        #region fields
+        CurrentLevel _currentLevel;
+        int _currentStageIndex;
+        readonly float _moveToCam = 8;
+        bool _isFirstStageLoaded;
+        bool _isInitialized;
+        Vector3 _gizmoPosition;
+        [HideInInspector] public int _gizmoStageIndex;
 
-        void Start()
+        int _gizmoCurrentIndex = -1;
+        #endregion
+
+        // Check if application is playing and not in editmode
+        void OnEnable()
         {
+            if (Application.isPlaying)
+                StartCoroutine(Initialize());
+        }
+
+        IEnumerator Initialize()
+        {
+            _isInitialized = false;
             _currentStageIndex = 0;
             _isFirstStageLoaded = false;
             _currentLevel = new CurrentLevel(levels, stages);
@@ -98,23 +107,32 @@ namespace MoonsOfMars.Game.Asteroids
             {
                 var scene = SceneManager.GetSceneAt(s);
                 //print("scene " + s + " - " + scene.name);
+                while (!scene.isLoaded)
+                    yield return null;
 
                 for (int i = 0; i < stages.Length; i++)
                 {
                     if (scene.name.ToLower().Contains(stages[i].Name.ToLower()))
                     {
                         SceneManager.SetActiveScene(scene);
-                        print("Set active scene: "+ scene.name);
+
+                        print("Set active scene: " + scene.name);
 
                         _isFirstStageLoaded = true;
                         _currentStageIndex = i;
 
                         break;
                     }
+                    yield return null;
                 }
 
+                if (_isFirstStageLoaded)
+                    break;
             }
+
             gameIntro.SetActive(true);
+            _isInitialized = true;
+
             //gameResults.gameObject.SetActive(false);
             //gameContinue.SetActive(false);
         }
@@ -296,7 +314,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             //yield return Utils.WaitUntilTrue(IsAnyKeyPressed);
             yield return Utils.WaitUntilTrue(GmManager.InputManager.IsAnyKeyPressed);
-          
+
             gameResults.HideResults(GameResult.stageCleared);
             yield return new WaitForSeconds(.5f);
 
@@ -308,6 +326,10 @@ namespace MoonsOfMars.Game.Asteroids
 
         IEnumerator ShowGameIntroCore()
         {
+            // wait until levelmanager is initialized
+            while (!_isInitialized)
+                yield return null;
+
             // Load first stage
             var t = 0f;
             if (!_isFirstStageLoaded)

@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 152eeff55223c644cab4733bbbc4576a, type: 3}
+  m_Name: Effects Data
+  m_EditorClassIdentifier: 
+  _smallExplosion: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
+  _bigExplosion: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
+  _dustExplosion: {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
+  _greenExplosion: {fileID: 2181198869971512289, guid: 0f968a0cd567c954a89c439f5c9c75f8, type: 3}
+  _redExplosion: {fileID: 8395387404256592789, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
+  _spawn: {fileID: 4271578057717866504, guid: 145ac813ef7981d44a30f70e7d442ee4, type: 3}
+  _jumpPortal: {fileID: 2404503940993261051, guid: 54da882f6c4635f47a51b072431afedd, type: 3}
+  _hyperJump: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
+  _teleport: {fileID: 8443315704496310910, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
+  _hitLaser: {fileID: 1656530326135573919, guid: f0c883e0f7e51604ba5edc43026536fd, type: 3}

@@ -16,6 +16,7 @@ namespace MoonsOfMars.Game.Asteroids
         [SerializeField, Range(10, 120)] int _meteorMinSpawnWait = 10;
         [SerializeField, Range(10, 120)] int _meteorMaxSpawnWait = 30;
         [SerializeField, Tooltip("The meteor prefab")] GameObject _meteorPrefab;
+        [SerializeField, Tooltip("The stage contains a detonation sphere")] bool _hasDetonationSphere;
 
         [Header("Background Boss ship")]
         [SerializeField, Range(10, 120)] int _bossMinSpawnWait = 10;

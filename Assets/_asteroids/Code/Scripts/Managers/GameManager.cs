@@ -4,15 +4,14 @@ using System;
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace MoonsOfMars.Game.Asteroids
 {
-    using static EffectsManager;
+    using static EffectsData;
+    //using static EffectsManager;
     using static Utils;
 
     [SelectionBase]
-    [RequireComponent(typeof(EffectsManager))]
     public class GameManager : GameManagerBase<GameManager>
     {
         public static GameManager GmManager => _instance;
@@ -84,7 +83,7 @@ namespace MoonsOfMars.Game.Asteroids
         internal bool m_gameAborted;
         CinemachineBrain _cinemachineBrain;
         GameStatus _gameStatus;
-        EffectsManager _effects; // TODO: EffectsManager to base class
+        //EffectsManager _effects; // TODO: EffectsManager to base class
         #endregion
 
         #region unity events
@@ -94,24 +93,19 @@ namespace MoonsOfMars.Game.Asteroids
             _cinemachineBrain = mainCamera.GetComponentInChildren<CinemachineBrain>();
 
             SwitchStageCam(StageCamera.start);
-            TryGetComponent(out _effects);
+            //TryGetComponent(out _effects);
 
             m_camBounds = new CamBounds(gameCamera);
         }
-
-        void Start() => StartCoroutine(Initialize());
 
         void OnEnable() => RegisterCameras(m_StageStartCamera, m_BackgroundCamera, m_StageEndCamera, backgroundFarCamera);
         void OnDisable() => UnregisterCameras(m_StageStartCamera, m_BackgroundCamera, m_StageEndCamera, backgroundFarCamera);
 
         #endregion
 
-        // Wait until Objectpool stage is created
-        IEnumerator Initialize()
+        protected override void Initialize()
         {
-
-            while (_effects.UseObjectPoolScene && !_effects.ObjectPoolSceneLoaded)
-                yield return null;
+            base.Initialize();
 
             m_GameManagerData.Initialize();
             UiManager.Initialize(uiAudioSource);
@@ -248,31 +242,6 @@ namespace MoonsOfMars.Game.Asteroids
 
         // TODO: Objectpool to base class (also integrate effectsmanager (scriptable object)
  
-
-        public void CreateObjectPool(Action buildPoolAction) => StartCoroutine(AddObjectPoolCore(buildPoolAction));
-
-        public void AddObjectToPoolScene(GameObject go) => SceneManager.MoveGameObjectToScene(go, _effects.ObjectPoolScene);
-
-        IEnumerator AddObjectPoolCore(Action action)
-        {
-            while (_effects == null || _effects.UseObjectPoolScene && !_effects.ObjectPoolSceneLoaded)
-                yield return null;
-
-            action();
-        }
-
-        /// <summary>
-        /// Creates an object pool in a separate designated scene. 
-        /// </summary>
-        public GameObjectPool CreateObjectPool(GameObject prefab, int initialCapacity, int maxCapacity = 1000)
-            => GameObjectPool.Build(prefab, initialCapacity, maxCapacity, _effects.ObjectPoolScene);
-
-        /// <summary>
-        /// Creates an object pool in the active scene.
-        /// </summary>
-        public GameObjectPool CreateLocalObjectPool(GameObject prefab, int initialCapacity, int maxCapacity = 1000)
-            => GameObjectPool.Build(prefab, initialCapacity, maxCapacity);
-
         public IEnumerator RemoveRemainingObjects()
         {
             foreach (var obj in FindObjectsOfType<GameBase>())
@@ -293,8 +262,6 @@ namespace MoonsOfMars.Game.Asteroids
             print("STATUS: " + status.ToString().ToUpper());
         }
 
-        public void PlayEffect(Effect effect, Vector3 position, float scale = 1f, ObjectLayer layer = ObjectLayer.Effects)
-            => _effects.StartEffect(effect, position, scale, layer);
 
         #region Hyperjump
         public AlliedShipController HyperJump(float duration) => m_GameManagerData.HyperJumpAnimation(duration);

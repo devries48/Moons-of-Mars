@@ -116,7 +116,6 @@ namespace MoonsOfMars.Game.Asteroids
         {
             _rocketAnimationPool = GameManager.CreateObjectPool(rocketAnimations, 1);
             _asteroidPool = GameManager.CreateObjectPool(asteroidPrefab, 20, 100);
-            Debug.Log("Asteroid Pool Created");
         }
 
     }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.00062491506, g: 0.00054965063, b: 0.0006657228, a: 1}
+  m_IndirectSpecularColor: {r: 0.0006233038, g: 0.00054929603, b: 0.00066556945, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2088,9 +2088,7 @@ Transform:
   - {fileID: 294564719}
   - {fileID: 1129248844}
   - {fileID: 511433432}
-  - {fileID: 1411462130}
   - {fileID: 1626431862}
-  - {fileID: 2017064932}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3731,8 +3729,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 389948649}
-  m_LocalRotation: {x: 0.16846389, y: 0.0250619, z: -0.0183284, w: 0.9852187}
-  m_LocalPosition: {x: 0.1, y: 0.6, z: 0.1800003}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -31.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -13838,7 +13836,7 @@ GameObject:
   - component: {fileID: 1411462130}
   - component: {fileID: 1411462131}
   m_Layer: 0
-  m_Name: Manager Audio/Music
+  m_Name: Audio / Music
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13851,13 +13849,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1411462129}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 161570623}
-  m_RootOrder: 4
+  m_Father: {fileID: 1552090157}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1411462131
 MonoBehaviour:
@@ -13875,7 +13873,7 @@ MonoBehaviour:
   _musicMixerGroup: {fileID: 7847922092003765503, guid: f0ee2cafe93b4944ea453c31432902d0, type: 2}
   _backgroundFxMixerGroup: {fileID: 8703520674495269211, guid: ab1bd020727659345a310a8a133db8b8, type: 2}
   musicData: {fileID: 11400000, guid: 99f5d6b62f046bf4089a9d06579a8573, type: 2}
-  startGameFade: 8
+  startGameFade: 6
   inGameFade: 2
   mediumIntensityStart: 10
   mediumIntensityStop: 5
@@ -15731,7 +15729,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1552090157}
-  - component: {fileID: 1552090159}
   - component: {fileID: 1552090158}
   m_Layer: 0
   m_Name: Manager Game
@@ -15751,7 +15748,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 2017064932}
+  - {fileID: 1411462130}
   m_Father: {fileID: 161570623}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15772,6 +15771,8 @@ MonoBehaviour:
   _inputManager: {fileID: 2017064934}
   _announcerText: {fileID: 584194351}
   _announcerTime: 1
+  _useObjectPoolScene: 1
+  _effectsData: {fileID: 11400000, guid: 5ca4aca0e9fec804798ae9a101cf46c8, type: 2}
   m_GameManagerData: {fileID: 11400000, guid: 96e75fb90e583784c977abc69fb93dd2, type: 2}
   m_HudManager: {fileID: 1129248845}
   m_LevelManager: {fileID: 294564720}
@@ -15786,29 +15787,6 @@ MonoBehaviour:
   backgroundFarCamera: {fileID: 1762168760}
   uiAudioSource: {fileID: 363482911}
   jumpController: {fileID: 563307891}
---- !u!114 &1552090159
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1552090156}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0db21f9316090bd41a46a9d4f944c674, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  useObjectPoolScene: 1
-  smallExplosionPrefab: {fileID: 1828176872806910, guid: 64891a0eb28db934898420d80ca07cb3, type: 3}
-  bigExplosionPrefab: {fileID: 1121192042590650, guid: e1b08032bec16ba4eb1ae23cbd572664, type: 3}
-  dustExplosionPrefab: {fileID: 1025285306637258, guid: d8f0099df63275647a8bcf646df1ca00, type: 3}
-  greenExplosionPrefab: {fileID: 2181198869971512289, guid: 0f968a0cd567c954a89c439f5c9c75f8, type: 3}
-  redExplosionPrefab: {fileID: 8395387404256592789, guid: 0bc5bcf6b07533846b7f619c0540133b, type: 3}
-  spawnPrefab: {fileID: 4271578057717866504, guid: 145ac813ef7981d44a30f70e7d442ee4, type: 3}
-  portalPrefab: {fileID: 2404503940993261051, guid: 54da882f6c4635f47a51b072431afedd, type: 3}
-  hit2Prefab: {fileID: 5024009746357069194, guid: ec3f674830402cc45bce805cf6493db7, type: 3}
-  hit4Prefab: {fileID: 8443315704496310910, guid: 6ef35fa36e3a65043b2d800600204bdd, type: 3}
-  hitLaserPrefab: {fileID: 0}
 --- !u!1 &1554623503
 GameObject:
   m_ObjectHideFlags: 0
@@ -16335,7 +16313,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8a2e008a8ec96e4f8210130d470d496, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  debugOn: 1
+  debugOn: 0
   godModeOn: 1
   spawnAsteroids: 1
   spawnUfos: 1
@@ -16362,7 +16340,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 161570623}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1632186443 stripped
 Transform:
@@ -20834,7 +20812,7 @@ GameObject:
   - component: {fileID: 2017064935}
   - component: {fileID: 2017064934}
   m_Layer: 0
-  m_Name: Manager User Input
+  m_Name: User Input
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -20867,8 +20845,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 161570623}
-  m_RootOrder: 6
+  m_Father: {fileID: 1552090157}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &2017064933
 MonoBehaviour:

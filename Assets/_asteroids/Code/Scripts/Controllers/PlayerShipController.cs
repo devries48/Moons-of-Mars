@@ -138,7 +138,7 @@ namespace MoonsOfMars.Game.Asteroids
 
         public void Spawn()
         {
-            PlayEffect(EffectsManager.Effect.Spawn, transform.position, .7f);
+            PlayEffect(EffectsData.Effect.Spawn, transform.position, .7f);
             Recover();
         }
 
@@ -195,7 +195,7 @@ namespace MoonsOfMars.Game.Asteroids
             ctrl.PlayerShipJumpIn(JUMP_MOVE_IN_ANIMATION_TIME);
             yield return new WaitForSeconds(JUMP_MOVE_IN_ANIMATION_TIME * .2f);
 
-            GmManager.PlayEffect(EffectsManager.Effect.JumpPortal, jumpPos, .5f);
+            GmManager.PlayEffect(EffectsData.Effect.JumpPortal, jumpPos, .5f);
             yield return new WaitForSeconds(JUMP_MOVE_IN_ANIMATION_TIME * .8f);
 
             // Activate rocket at new position

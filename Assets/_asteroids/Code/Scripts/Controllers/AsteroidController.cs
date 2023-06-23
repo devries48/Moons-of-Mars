@@ -158,7 +158,7 @@ namespace MoonsOfMars.Game.Asteroids
 
             if (Generation < 3)
             {
-                PlayEffect(EffectsManager.Effect.ExplosionDust, transform.position, smallAstroidScale);
+                PlayEffect(EffectsData.Effect.ExplosionDust, transform.position, smallAstroidScale);
                 PlayAudioClip(AsteroidSounds.Clip.Explode, 3);
                 CreateSmallAsteriods(1, bullet.transform.position);
             }
@@ -183,7 +183,7 @@ namespace MoonsOfMars.Game.Asteroids
                 _ => smallAstroidScore
             };
 
-            PlayEffect(EffectsManager.Effect.ExplosionDust, transform.position, scale);
+            PlayEffect(EffectsData.Effect.ExplosionDust, transform.position, scale);
             PlayAudioClip(AsteroidSounds.Clip.Explode, Generation);
             Score(points, gameObject);
 

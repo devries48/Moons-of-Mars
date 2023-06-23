@@ -6,7 +6,7 @@ namespace MoonsOfMars.Shared
     public class EffectController : PoolableBase
     {
         internal ParticleSystem m_ps;
-        internal EffectsManager.Effect m_effect;
+        internal EffectsData.Effect m_effect;
 
         Animator _animator;
         bool _animAlive;
@@ -50,7 +50,7 @@ namespace MoonsOfMars.Shared
             }
         }
 
-        [SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
+        //[SuppressMessage("CodeQuality", "IDE0051:Remove unused private members", Justification = "<Pending>")]
         void AnimationCompleteHandler(string name)
         {
             _animAlive = false;

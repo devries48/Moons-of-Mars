@@ -12,9 +12,21 @@ namespace MoonsOfMars.Shared
         ObjectPool<GameObject> _pool;
         Scene _poolScene;
 
-        public static GameObjectPool Build(GameObject prefab, int initialCapacity, int maxCapacity = 1000, Scene poolScene = default)
+        static Scene s_poolScene;
+
+        public static bool ObjectPoolSceneLoaded => s_poolScene != null && s_poolScene.isLoaded;
+
+        public static void CreateObjectPoolScene()
         {
-            var objPool = new GameObjectPool { _prefab = prefab, _poolScene = poolScene };
+            var scene = SceneManager.GetSceneByName(OBJECTPOOL_SCENE);
+            s_poolScene = scene.isLoaded ? scene : SceneManager.CreateScene(OBJECTPOOL_SCENE);
+        }
+
+        public static GameObjectPool Build(GameObject prefab, int initialCapacity, int maxCapacity = 1000, bool usePoolScene = false)
+        {
+            var objPool = new GameObjectPool { _prefab = prefab };
+            if (usePoolScene)
+                objPool._poolScene = s_poolScene;
 
             objPool._pool = new ObjectPool<GameObject>(
                                     objPool.CreatePooledItem,
@@ -26,6 +38,8 @@ namespace MoonsOfMars.Shared
 
             return objPool;
         }
+
+        public static void MoveToPoolScene(GameObject go) => SceneManager.MoveGameObjectToScene(go, s_poolScene);
 
         public int CountActive => _pool.CountActive;
         public GameObject GetFromPool() => _pool.Get();
@@ -41,10 +55,7 @@ namespace MoonsOfMars.Shared
             return obj;
         }
 
-        public T GetComponentFromPool<T>(Vector3 position, Quaternion rotation) where T : PoolableBase
-        {
-            return GetFromPool(position, rotation).GetComponent<T>();
-        }
+        public T GetComponentFromPool<T>(Vector3 position, Quaternion rotation) where T : PoolableBase => GetFromPool(position, rotation).GetComponent<T>();
 
         public void ReturnToPool(GameObject obj)
         {
@@ -75,6 +86,7 @@ namespace MoonsOfMars.Shared
         void OnReturnedToPool(GameObject obj) => obj.SetActive(false);
 
         void OnDestroyPoolObject(GameObject obj) => obj.SetActive(false);
+
     }
 
     interface IPoolable

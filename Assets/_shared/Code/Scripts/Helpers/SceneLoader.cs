@@ -59,7 +59,7 @@ namespace MoonsOfMars.Shared
 
         public void LoadSceneAsync(SceneName scene)
         {
-            print("Scene: " + scene);
+            print("Load scene: " + scene);
 
             m_stageLoaded = false;
             StartCoroutine(LoadAsync((int)scene));

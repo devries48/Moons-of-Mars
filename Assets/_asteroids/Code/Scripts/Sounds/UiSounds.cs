@@ -23,7 +23,7 @@ namespace MoonsOfMars.Game.Asteroids
         [SerializeField] AudioClip[] stageComplete;
         [SerializeField] AudioClip[] gameOver;
 
-        public AudioSource m_UiAudio;
+        internal AudioSource m_UiAudio;
 
         public void PlayClip(Clip clip)
         {

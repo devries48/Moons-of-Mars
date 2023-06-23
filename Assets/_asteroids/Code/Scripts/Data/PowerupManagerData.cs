@@ -115,8 +115,6 @@ namespace MoonsOfMars.Game.Asteroids
         {
             _shuttlePool = GameManager.CreateObjectPool(shuttle, 1);
             _powerupPool = GameManager.CreateObjectPool(powerup, 1);
-
-            Debug.Log("Shuttle Pool Created");
         }
 
     }

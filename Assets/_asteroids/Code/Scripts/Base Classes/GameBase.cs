@@ -1,5 +1,6 @@
 using MoonsOfMars.Shared;
 using UnityEngine;
+using static MoonsOfMars.Shared.EffectsData;
 
 namespace MoonsOfMars.Game.Asteroids
 {
@@ -77,7 +78,7 @@ namespace MoonsOfMars.Game.Asteroids
                 Audio.PlayOneShot(clip);
         }
 
-        protected void PlayEffect(EffectsManager.Effect effect, Vector3 position, float scale = 1f) => ManagerGame.PlayEffect(effect, position, scale);
+        protected void PlayEffect(Effect effect, Vector3 position, float scale = 1f) => ManagerGame.PlayEffect(effect, position, scale);
 
     }
 }
